@@ -10,9 +10,12 @@
 }
 
 .container-login {
-  display: grid;
-  place-items: center;
+  display: flex;
   justify-content: center;
+  align-items: center;
+  /* display: grid;
+  place-items: center;
+  justify-content: center; */
   height: 90vh;
   width: 5vw;
   padding: 15rem;
@@ -20,7 +23,7 @@
   font-family: "Labrada", serif;
   border-radius: 0.5rem 0 0 0.5rem;
   z-index: 1;
-  box-shadow: 0rem 0 2rem 0.5rem #aeb6bf;
+  box-shadow: -1rem 0 2rem 0.5rem #aeb6bf;
 }
 
 .label-title {
@@ -90,8 +93,14 @@ main {
   background-color: #EDE9E7;
   height: 90vh;
   width: 80vw;
+  overflow: hidden;
+}
+
+.container-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   z-index: 1;
   border-radius: 0 0.5rem 0.5rem 0;
-  box-shadow: 2rem 0 3rem -1.2rem #aeb6bf;
-  overflow: hidden;
+  box-shadow: 1rem 0 2rem 0.5rem #aeb6bf;
 }
