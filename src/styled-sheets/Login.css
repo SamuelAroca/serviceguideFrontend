@@ -33,6 +33,7 @@
   padding: 10px;
   display: flex;
   flex-direction: column;
+  font-size: 1.1rem;
 }
 
 .btn-login {
