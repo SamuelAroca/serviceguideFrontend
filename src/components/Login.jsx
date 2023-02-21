@@ -1,4 +1,6 @@
 import "../styled-sheets/Login.css";
+import Slideshow from "./Slideshow";
+import styled from "styled-components";
 import { RiArrowRightSLine } from "react-icons/ri";
 
 const Login = () => {
@@ -30,11 +32,19 @@ const Login = () => {
           </div>
         </form>
       </div>
-      <div className="container-image">
-        
-      </div>
+      <main className="container-image">
+        <Titulo>Servicios publicos</Titulo>
+        <Slideshow />
+      </main>
     </div>
   );
 };
+
+const Titulo = styled.p`
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+`;
 
 export default Login;
