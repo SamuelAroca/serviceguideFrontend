@@ -192,4 +192,4 @@ const Boton = styled.button`
   ${(props) => (props.derecho ? "right: 0" : "left: 0")}
 `;
 
-export {Slideshow, Slide, TextoSlide};
+export default Slideshow;

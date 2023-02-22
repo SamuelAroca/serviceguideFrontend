@@ -41,24 +41,12 @@
   border: black solid;
 }
 
-.main {
+.main-container {
   display: grid;
   grid-template-columns: 0.5fr 0.5fr;
   box-sizing: border-box;
   padding: 1.5rem;
   margin: none;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  height: 90vh;
-  width: 100%;
-  border: black solid;
-  border-radius: 0 0.5rem 0.5rem 0;
 }
 
 .container_logo {
@@ -79,6 +67,14 @@ form {
   display: flex;
 }
 
-.container-form{
-
+.form-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  height: 90vh;
+  width: 100%;
+  border: black solid;
+  border-radius: 0 0.5rem 0.5rem 0;
 }

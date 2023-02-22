@@ -5,11 +5,11 @@ import CarouselDemo from "./CarouselDemo.jsx";
 
 const Register = () => {
   return (
-    <div className="main">
+    <div className="main-container">
       <div className="container_image">
         <CarouselDemo />
       </div>
-      <form>
+      <form className="container-form">
         <h2 className="container_logo"><RiWaterFlashFill className="title-image" />ServiceGuide</h2>
         <div className="container-write">
           <h2 className="title">Sign Up</h2>

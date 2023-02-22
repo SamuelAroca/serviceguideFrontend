@@ -6,8 +6,8 @@ function App() {
 
   return (
     <div className="container">
-      {/* <Login /> */}
-      <Register/>
+      <Login />
+      {/* <Register/> */}
     </div>
   )
 }

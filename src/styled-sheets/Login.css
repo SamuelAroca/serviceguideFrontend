@@ -5,6 +5,7 @@
   place-items: center;
   height: 100vh;
 }
+
 .title-sign {
   font-size: 2.7rem;
 }
@@ -22,8 +23,9 @@
   /* border: 0.1rem solid; */
   font-family: "Labrada", serif;
   border-radius: 0.5rem 0 0 0.5rem;
-  z-index: 1;
+  z-index: 10;
   box-shadow: -1rem 0 2rem 0.5rem #aeb6bf;
+  position: relative;
 }
 
 .label-title {
@@ -42,17 +44,17 @@
 .btn-login {
   display: flex;
   justify-content: center;
-  gap: 0.5rem;
+  gap: 1rem;
   align-items: center;
   background-color: #0096c7;
   color: #edede9;
-  padding: 0.5rem 1.5rem;
+  padding: 0.8rem 1.5rem;
   border: none;
   border-radius: 0.5rem;
-  font-size: 1.3rem;
+  font-size: 2rem;
   font-family: 'Roboto', cursive;
   width: 100%;
-  margin-top: 0.5rem;
+  margin-top: 1rem;
   transition: 0.3s all;
 }
 
@@ -102,5 +104,18 @@ main {
   align-items: center;
   z-index: 1;
   border-radius: 0 0.5rem 0.5rem 0;
-  box-shadow: 1rem 0 2rem 0.5rem #aeb6bf;
+  box-shadow: 1.5rem 0 2rem 0.5rem #aeb6bf;
+}
+
+.container-logo {
+  /* display: flex; */
+  align-items: center;
+  /* position: absolute; */
+  top: 5rem;
+  font-size: 1.3rem;
+  margin-bottom: 5rem;
+}
+
+.logo {
+  color: #33A7FF;
 }

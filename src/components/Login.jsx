@@ -1,13 +1,15 @@
 import "../styled-sheets/Login.css";
-import {Slideshow, Slide, TextoSlide} from "./Slideshow";
+import Slideshow from "./Slideshow";
 import styled from "styled-components";
 import { RiArrowRightSLine } from "react-icons/ri";
+import { RiWaterFlashFill } from "react-icons/ri";
 
 const Login = () => {
   return (
     <div className="main">
       <div className="container-login">
         <form className="container-form">
+          <h2 className="container-logo"><RiWaterFlashFill className="logo"/>ServiceGuide</h2>
           <h2 className="title-sign">Sign in</h2>
           <div className="container-label">
             <label className="label-title">Email</label>
