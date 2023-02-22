@@ -9,7 +9,7 @@ const Register = () => {
       <div className="container_image">
         <CarouselDemo />
       </div>
-      <form className="container-form">
+      <form className="form-container">
         <h2 className="container_logo"><RiWaterFlashFill className="title-image" />ServiceGuide</h2>
         <div className="container-write">
           <h2 className="title">Sign Up</h2>

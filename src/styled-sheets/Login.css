@@ -14,18 +14,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  /* display: grid;
-  place-items: center;
-  justify-content: center; */
-  height: 90vh;
+  height: 80vh;
   width: 5vw;
   padding: 15rem;
-  /* border: 0.1rem solid; */
   font-family: "Labrada", serif;
   border-radius: 0.5rem 0 0 0.5rem;
   z-index: 10;
   box-shadow: -1rem 0 2rem 0.5rem #aeb6bf;
-  position: relative;
+  /* position: relative; */
 }
 
 .label-title {
@@ -90,27 +86,22 @@
   width: 25rem;
 }
 
-main {
-  /* border: 1px solid; */
-  background-color: #EDE9E7;
-  height: 90vh;
-  width: 80vw;
-  overflow: hidden;
-}
-
 .container-image {
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 80vh;
   z-index: 1;
   border-radius: 0 0.5rem 0.5rem 0;
   box-shadow: 1.5rem 0 2rem 0.5rem #aeb6bf;
+  background-color: #EDE9E7;
+  height: 80vh;
+  width: 100vw;
+  overflow: hidden;
 }
 
 .container-logo {
-  /* display: flex; */
   align-items: center;
-  /* position: absolute; */
   top: 5rem;
   font-size: 1.3rem;
   margin-bottom: 5rem;
