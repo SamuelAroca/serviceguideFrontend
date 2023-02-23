@@ -14,7 +14,7 @@ const Register = () => {
         <div className="container-write">
           <h2 className="title">Sign Up</h2>
           <div className="container-register">
-            <div className="input-name-lastname">
+            <div className="input-name-lastName">
               <div>
                 <label className="lbl-title">Name</label>
                 <input className="form-control" type="text" placeholder="Name" />
