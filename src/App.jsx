@@ -4,7 +4,7 @@ import Register from './components/Register'
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Index from './components/Index';
 
-function App() {
+const App = () => {
 
   return (
 
