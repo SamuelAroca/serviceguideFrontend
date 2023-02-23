@@ -8,26 +8,14 @@
 
 .title-sign {
   font-size: 2.7rem;
-}
-
-.container-login {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 80vh;
-  width: 5vw;
-  padding: 15rem;
-  font-family: "Labrada", serif;
-  border-radius: 0.5rem 0 0 0.5rem;
-  z-index: 10;
-  box-shadow: -1rem 0 2rem 0.5rem #aeb6bf;
-  /* position: relative; */
+  user-select: none;
 }
 
 .label-title {
   margin-top: 1rem;
   width: 18rem;
   font-size: 1.2rem;
+  user-select: none;
 }
 
 .forgot-password {
@@ -35,6 +23,7 @@
   display: flex;
   flex-direction: column;
   font-size: 1.1rem;
+  user-select: none;
 }
 
 .btn-login {
@@ -52,34 +41,12 @@
   width: 100%;
   margin-top: 1rem;
   transition: 0.3s all;
+  user-select: none;
 }
 
 .btn-login:hover {
   background-color: #096a8a;
   scale: 0.9;
-}
-
-.btn-login p {
-  margin: 0;
-}
-
-.icon {
-  display: block;
-  place-items: center;
-  height: 100%;
-  font-size: 2rem;
-  transition: 0.3s all;
-}
-
-.input-password {
-  width: 23rem;
-  height: 2.35rem;
-  border-radius: 0.3rem;
-  border-color: #6c757d;
-}
-
-.input-password:focus {
-  outline: none;
 }
 
 .container-label {
@@ -95,9 +62,25 @@
   border-radius: 0 0.5rem 0.5rem 0;
   box-shadow: 1.5rem 0 2rem 0.5rem #aeb6bf;
   background-color: #EDE9E7;
-  height: 80vh;
+  height: 70.4vh;
   width: 100vw;
   overflow: hidden;
+  user-select: none;
+}
+
+.container-login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70.4vh;
+  width: 5vw;
+  padding: 15em;
+  font-family: "Labrada", serif;
+  border-radius: 0.5rem 0 0 0.5rem;
+  z-index: 10;
+  box-shadow: -1rem 0 2rem 0.5rem #aeb6bf;
+  /* position: relative; */
+  user-select: none;
 }
 
 .container-logo {
@@ -109,4 +92,18 @@
 
 .logo {
   color: #33A7FF;
+}
+
+.icon-password {
+  transform: translateY(-0.2rem);
+  font-size: 1.5rem;
+}
+
+.password-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+  width: 27rem;
 }
