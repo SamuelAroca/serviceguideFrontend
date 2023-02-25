@@ -3,12 +3,13 @@ import Login from './components/Login'
 import Register from './components/Register'
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Index from './components/Index';
+import NavbarComp from './components/NavbarComp';
 
 const App = () => {
 
   return (
-
-    <div className="container">
+    <div className='container-app'>
+      <NavbarComp />
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Index />} />
