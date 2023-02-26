@@ -58,7 +58,7 @@
   justify-content: center;
   align-items: center;
   height: 40rem;
-  z-index: 1;
+  /* z-index: 1; */
   border-radius: 0 0.5rem 0.5rem 0;
   /* box-shadow: 1.5rem 0 2rem 0.5rem #aeb6bf; */
   background-color: #ede9e7;
@@ -130,7 +130,7 @@
     height: 30rem;
     font-family: "Labrada", serif;
     border-radius: 0.5rem 0 0 0.5rem;
-    z-index: 10;
+    /* z-index: 10; */
     /* box-shadow: -1rem 0 2rem 0.5rem #aeb6bf; */
     user-select: none;
   }
@@ -140,7 +140,7 @@
     justify-content: center;
     align-items: center;
     height: 30rem;
-    z-index: 10;
+    /* z-index: 10; */
     border-radius: 0 0.5rem 0.5rem 0;
     /* box-shadow: 1.5rem 0 2rem 0.5rem #aeb6bf; */
     /* width: 70vw; */
@@ -193,7 +193,7 @@
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 768px) {
   .components {
     flex-wrap: wrap;
   }
