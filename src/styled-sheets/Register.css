@@ -39,14 +39,17 @@
   width: 100%;
   height: 100%;
   border: black solid;
+  background-color: white;
 }
 
 .main-container {
   display: grid;
   grid-template-columns: 0.5fr 0.5fr;
   box-sizing: border-box;
+  background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
   padding: 1.5rem;
   margin: none;
+  margin-top: 5rem;
 }
 
 .container_logo {
@@ -77,4 +80,5 @@
   width: 100%;
   border: black solid;
   border-radius: 0 0.5rem 0.5rem 0;
+  background-color: white;
 }
