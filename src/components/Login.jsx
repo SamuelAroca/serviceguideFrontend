@@ -1,6 +1,6 @@
 import React from "react";
 import Swal from "sweetalert2";
-import "../styled-sheets/Login.css";
+import styles from "../styled-sheets/Login.module.css";
 import { RiArrowRightSLine } from "react-icons/ri";
 import { RiWaterFlashFill } from "react-icons/ri";
 import { RiEyeLine } from "react-icons/ri";
@@ -29,43 +29,45 @@ window.onload = f => {
 
 const Login = () => {
   return (
-    <div className="main">
-      <div className="container-login">
-        <form className="container-form">
-          <h2 className="container-logo">
-            <RiWaterFlashFill className="logo" />
-            ServiceGuide
-          </h2>
-          <h2 className="title-sign">Sign in</h2>
-          <div className="container-label">
-            <label className="label-title">Email</label>
-            <input
-              className="form-control"
-              type="email"
-              placeholder="Type your email"
-            />
-            <label className="label-title">Password</label>
-            <div className="password-container">
+    <div className={styles.main}>
+      <div className={styles.components}>
+        <div className={styles.container_login}>
+          <form className={styles.container_form}>
+            <h2 className={styles.container_logo}>
+              <RiWaterFlashFill className={styles.logo} />
+              ServiceGuide
+            </h2>
+            <h2 className={styles.title_sign}>Sign in</h2>
+            <div className={styles.container_label}>
+              <label className={styles.label_title}>Email</label>
               <input
-                className="input-password form-control"
-                type="password"
-                placeholder="Type your password"
-                id="Input"
+                className="form-control"
+                type="email"
+                placeholder="Type your email"
               />
-              <RiEyeLine className="icon-password" id="Eye" />
+              <label className={styles.label_title}>Password</label>
+              <div className={styles.password_container}>
+                <input
+                  className="form-control"
+                  type="password"
+                  placeholder="Type your password"
+                  id="Input"
+                />
+                <RiEyeLine className={styles.icon_password} id="Eye" />
+              </div>
+              <a href="forgot-password" className={styles.forgot_password}>
+                Forgot password?
+              </a>
+              <button className={styles.btn_login}>
+                LOGIN
+                <RiArrowRightSLine className={styles.icon} />
+              </button>
             </div>
-            <a href="forgot-password" className="forgot-password">
-              Forgot password?
-            </a>
-            <button className="btn-login">
-              LOGIN
-              <RiArrowRightSLine className="icon" />
-            </button>
-          </div>
-        </form>
-      </div>
-      <div className="container-image">
-        <CarouselDemo />
+          </form>
+        </div>
+        <div className={styles.container_image}>
+          <CarouselDemo />
+        </div>
       </div>
     </div>
   );
