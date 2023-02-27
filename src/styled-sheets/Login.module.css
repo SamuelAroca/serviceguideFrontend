@@ -4,19 +4,19 @@
   align-items: center;
 }
 
-.title-sign {
+.title_sign {
   font-size: 2.7rem;
   user-select: none;
 }
 
-.label-title {
+.label_title {
   margin-top: 1rem;
   width: 18rem;
   font-size: 1.2rem;
   user-select: none;
 }
 
-.forgot-password {
+.forgot_password {
   padding: 10px;
   display: flex;
   flex-direction: column;
@@ -24,14 +24,13 @@
   user-select: none;
 }
 
-.btn-login {
+.btn_login {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 1rem;
   background-color: #0096c7;
   color: #edede9;
-  /* padding: 0.8rem 1.5rem; */
   border: none;
   border-radius: 0.5rem;
   font-size: 1.5rem;
@@ -44,23 +43,21 @@
   margin-bottom: 10%;
 }
 
-.btn-login:hover {
+.btn_login:hover {
   background-color: #096a8a;
   scale: 0.9;
 }
 
-.container-label {
+.container_label {
   width: 25rem;
 }
 
-.container-image {
+.container_image {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 40rem;
-  /* z-index: 1; */
   border-radius: 0 0.5rem 0.5rem 0;
-  /* box-shadow: 1.5rem 0 2rem 0.5rem #aeb6bf; */
   background-color: #ede9e7;
   width: 100vw;
   overflow: hidden;
@@ -70,13 +67,12 @@
   background-color: white;
 }
 
-.container-login {
+.container_login {
   padding: 2.5rem;
   height: 40rem;
   font-family: "Labrada", serif;
   border-radius: 0.5rem 0 0 0.5rem;
   z-index: 10;
-  /* box-shadow: -1rem 0 2rem 0.5rem #aeb6bf; */
   user-select: none;
   background-color: white;
 }
@@ -91,7 +87,7 @@
   padding-right: 7rem;
 }
 
-.container-logo {
+.container_logo {
   align-items: center;
   top: 5rem;
   font-size: 1.3rem;
@@ -102,7 +98,7 @@
   color: #33a7ff;
 }
 
-.icon-password {
+.icon_password {
   transform: translateX(11.3rem);
   font-size: 1.5rem;
   position: absolute;
@@ -110,7 +106,7 @@
   margin-top: 0.5rem;
 }
 
-.password-container {
+.password_container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -126,29 +122,28 @@
     margin: 5rem;
   }
 
-  .container-login {
+  .container_login {
     padding: 0.5rem;
     height: 30rem;
     font-family: "Labrada", serif;
     border-radius: 0.5rem 0 0 0.5rem;
-    /* z-index: 10; */
-    /* box-shadow: -1rem 0 2rem 0.5rem #aeb6bf; */
     user-select: none;
   }
 
-  .container-image {
+  .container_image {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 30rem;
-    /* z-index: 10; */
     border-radius: 0 0.5rem 0.5rem 0;
-    /* box-shadow: 1.5rem 0 2rem 0.5rem #aeb6bf; */
-    /* width: 70vw; */
+    width: 100vw;
+    overflow: hidden;
     user-select: none;
+    min-width: 561px;
+    background-color: white;
   }
 
-  .btn-login {
+  .btn_login {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -168,19 +163,19 @@
     padding-right: 1rem;
   }
 
-  .icon-password {
+  .icon_password {
     transform: translateX(8rem);
     font-size: 1.5rem;
     margin-bottom: 0.5rem;
   }
 
-  .container-label {
+  .container_label {
     width: 20rem;
     padding-left: 1rem;
     padding-right: 1rem;
   }
 
-  .password-container {
+  .password_container {
     display: flex;
     justify-content: center;
     align-items: center;

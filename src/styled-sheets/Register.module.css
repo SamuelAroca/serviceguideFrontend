@@ -151,7 +151,11 @@
     align-items: center;
     height: 30rem;
     border-radius: 0.5rem 0 0 0.5rem;
+    width: 100vw;
+    overflow: hidden;
     user-select: none;
+    min-width: 561px;
+    background-color: white;
   }
 
   .btn_register {
