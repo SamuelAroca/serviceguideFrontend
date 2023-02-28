@@ -58,7 +58,7 @@ const Login = () => {
                   placeholder="Type your password"
                   id="Input"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(ev) => setPassword(ev.target.value)}
                 />
                 <RiEyeLine className={styles.icon_password} id="Eye" />
               </div>
