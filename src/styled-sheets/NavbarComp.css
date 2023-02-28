@@ -1,3 +1,7 @@
 .span-guide {
   font-weight: bold;
 }
+
+.bgNavbar {
+  background-color: rgba(0, 0, 0, 0.6);
+}
