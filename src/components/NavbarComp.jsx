@@ -2,9 +2,9 @@ import '../styled-sheets/NavbarComp.css'
 
 const NavbarComp = () => {
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light bg-transparent fixed-top bgNavbar">
+    <nav className="navbar navbar-expand-lg navbar-light bg-light bg-transparent fixed-top">
       <div className="container-fluid">
-        <a className="nav-link" href="/">Service<span className='span-guide'>Guide</span></a>
+        <a className="navbar-brand" href="/">Service<span className='span-guide'>Guide</span></a>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon color"></span>
         </button>
