@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Swal from "sweetalert2";
 import styles from "../styled-sheets/Login.module.css";
 import { RiArrowRightSLine } from "react-icons/ri";
@@ -28,6 +28,9 @@ window.onload = f => {
 }
 
 const Login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   return (
     <div className={styles.main}>
       <div className={styles.components}>
@@ -44,6 +47,8 @@ const Login = () => {
                 className="form-control"
                 type="email"
                 placeholder="Type your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
               <label className={styles.label_title}>Password</label>
               <div className={styles.password_container}>
@@ -52,14 +57,16 @@ const Login = () => {
                   type="password"
                   placeholder="Type your password"
                   id="Input"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
                 <RiEyeLine className={styles.icon_password} id="Eye" />
               </div>
               <div className={styles.links}>
-                <a href="forgot-password" className={styles.forgot_password}>
+                <a href="forgot-password">
                   Forgot password?
                 </a>
-                <a href="/register" className={styles.create_account}>Create new account</a>
+                <a href="/register">Create new account</a>
               </div>
               <button className={styles.btn_login}>
                 LOGIN

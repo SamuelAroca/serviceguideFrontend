@@ -1,5 +1,6 @@
-.main_container {
-  width: 100vw;
-  height: 100vh;
+.header {
   background-image: url(../assets/backgroundMain1920.webp);
+  height: 100vh;
+  min-height: 400px;
+  background-size: cover;
 }
