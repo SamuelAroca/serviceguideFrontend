@@ -2,7 +2,7 @@ import '../styled-sheets/NavbarComp.css'
 
 const NavbarComp = () => {
   return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary">
+    <nav className="navbar navbar-expand-lg bgNavbar">
       <div className="container-fluid">
         <a className="navbar-brand" href="/">Service<span className='span-guide'>Guide</span></a>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
