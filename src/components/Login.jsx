@@ -7,11 +7,11 @@ import { RiEyeLine } from "react-icons/ri";
 import CarouselDemo from "./CarouselDemo.jsx";
 
 window.onload = f => {
-  var eye = document.getElementById('Eye');
-  var input = document.getElementById('Input');
-
   f.preventDefault();
   eye.onclick = e => {
+    var eye = document.getElementById('Eye');
+    var input = document.getElementById('Input');
+    console.log(eye)
     e.preventDefault();
     if (input.value.length > 0) {
       if (input.type == 'password') {
@@ -55,9 +55,12 @@ const Login = () => {
                 />
                 <RiEyeLine className={styles.icon_password} id="Eye" />
               </div>
-              <a href="forgot-password" className={styles.forgot_password}>
-                Forgot password?
-              </a>
+              <div className={styles.links}>
+                <a href="forgot-password" className={styles.forgot_password}>
+                  Forgot password?
+                </a>
+                <a href="/register" className={styles.create_account}>Create new account</a>
+              </div>
               <button className={styles.btn_login}>
                 LOGIN
                 <RiArrowRightSLine className={styles.icon} />

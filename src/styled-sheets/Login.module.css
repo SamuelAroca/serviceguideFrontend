@@ -114,6 +114,18 @@
   width: 25rem;
 }
 
+.links {
+  display: flex;
+}
+
+.create_account {
+  padding: 10px;
+  display: flex;
+  font-size: 1.1rem;
+  user-select: none;
+  margin-left: 5.3rem;
+}
+
 @media (max-width: 1366px) {
   .components {
     display: flex;
