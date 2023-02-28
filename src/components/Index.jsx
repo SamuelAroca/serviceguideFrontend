@@ -1,6 +1,8 @@
+import styles from '../styled-sheets/Index.module.css';
+
 const Index = () => {
   return (
-    <div>
+    <div className={styles.main_container}>
       <h1>Pagina principal</h1>
     </div>
   )
