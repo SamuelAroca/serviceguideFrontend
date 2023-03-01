@@ -5,6 +5,8 @@ import { RiArrowRightSLine } from "react-icons/ri";
 import { RiWaterFlashFill } from "react-icons/ri";
 import { RiEyeLine } from "react-icons/ri";
 import CarouselDemo from "./CarouselDemo.jsx";
+import { redirect } from "react-router-dom";
+import Prueba from "./Prueba";
 
 window.onload = f => {
   f.preventDefault();
@@ -28,8 +30,23 @@ window.onload = f => {
 }
 
 const Login = () => {
-  const [email, setEmail] = useState('');
+  const [usuario, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    console.log('hola');
+
+    const user = { usuario, password }
+    console.log(user)
+    fetch("http://89.116.25.43:3000/api/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(user)
+    })
+    .then(response => response.json())
+    .then(redirect => location.href = 'https://www.google.com/?hl=es')
+  }
 
   return (
     <div className={styles.main}>
@@ -45,9 +62,10 @@ const Login = () => {
               <label className={styles.label_title}>Email</label>
               <input
                 className="form-control"
-                type="email"
+                type="text"
                 placeholder="Type your email"
-                value={email}
+                id="User"
+                value={usuario}
                 onChange={(e) => setEmail(e.target.value)}
               />
               <label className={styles.label_title}>Password</label>
@@ -68,7 +86,7 @@ const Login = () => {
                 </a>
                 <a href="/register">Create new account</a>
               </div>
-              <button className={styles.btn_login}>
+              <button className={styles.btn_login} onClick={handleLogin}>
                 LOGIN
                 <RiArrowRightSLine className={styles.icon} />
               </button>
