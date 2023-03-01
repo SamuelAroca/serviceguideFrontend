@@ -26,4 +26,5 @@
 
 .navbar {
   user-select: none;
+  padding-left: 100%;
 }
