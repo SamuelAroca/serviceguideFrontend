@@ -6,12 +6,6 @@ const Index = () => {
   return (
     <div className={styles.main_container}>
       <header className={styles.header}></header>
-      <div>
-        <Register />
-      </div>
-      <div>
-        <Login />
-      </div>
     </div>
   )
 };
