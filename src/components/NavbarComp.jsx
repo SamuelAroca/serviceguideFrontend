@@ -1,23 +1,51 @@
-import '../styled-sheets/NavbarComp.css'
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import "../styled-sheets/NavbarComp.css";
+import { RiWaterFlashFill } from "react-icons/ri";
 
 const NavbarComp = () => {
-  return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary">
-      <div className="container-fluid">
-        <a className="navbar-brand" href="/">Service<span className='span-guide'>Guide</span></a>
-        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div className="navbar-nav">
-            <a className="nav-link active" aria-current="page" href="/">Home</a>
-            <a className="nav-link" href="/login">Login</a>
-            <a className="nav-link" href="/register">Register</a>
-          </div>
-        </div>
-      </div>
-    </nav>
-  )
-}
+  const [isOpen, setIsOpen] = useState(false);
 
-export default NavbarComp
+  const [fix, setFix] = useState(false);
+
+  function setFixed() {
+    if (window.scrollY >= 392) {
+      setFix(true);
+    } else {
+      setFix(false);
+    }
+  }
+
+  window.addEventListener("scroll", setFixed);
+
+  return (
+    <div className="NavbarComp">
+      <Link className="nav_logo_texto" to='/'><RiWaterFlashFill className="nav_logo" />ServiceGuide</Link>
+      <div className={`nav_items ${isOpen && "open"}`}>
+        <Link to="/" className="link">
+          Home
+        </Link>
+        <Link to="/about" className="link">
+          Nosotros
+        </Link>
+        <Link to="/news" className="link">
+          Noticias
+        </Link>
+        <Link to="/register" className="link">
+          Registrar
+        </Link>
+        <Link to="/login" className="link">
+          Ingresar
+        </Link>
+      </div>
+      <div
+        className={`nav_toggle ${isOpen && "open"}`}
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <div className="bar"></div>
+      </div>
+    </div>
+  );
+};
+
+export default NavbarComp;

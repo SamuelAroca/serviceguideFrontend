@@ -2,6 +2,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100vh;
+  background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%);
 }
 
 .container_register{
@@ -9,7 +11,7 @@
   height: 40rem;
   font-family: "Labrada", serif;
   border-radius: 0rem 0.5rem 0.5rem 0;
-  z-index: 10;
+  z-index: 1;
   user-select: none;
   background-color: white;
 }
@@ -73,10 +75,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 9rem;
   width: 70%;
   padding-left: 7rem;
   padding-right: 7rem;
+  height: 100vh;
+  padding-top: 4rem;
 }
 
 .container_logo{
@@ -125,7 +128,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 5rem;
+    /* margin: 5rem; */
   }
 
   .container_logo{

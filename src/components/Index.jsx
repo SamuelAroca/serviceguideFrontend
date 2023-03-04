@@ -1,7 +1,11 @@
+import styles from '../styled-sheets/Index.module.css';
+import Login from './Login';
+import Register from './Register';
+
 const Index = () => {
   return (
-    <div>
-      <h1>Pagina principal</h1>
+    <div className={styles.main_container}>
+      <header className={styles.header}></header>
     </div>
   )
 };
