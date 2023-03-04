@@ -8,6 +8,8 @@ import CarouselDemo from "./CarouselDemo.jsx";
 import { redirect } from "react-router-dom";
 import Prueba from "./Prueba";
 
+
+//Cambiar show password
 window.onload = f => {
   f.preventDefault();
   eye.onclick = e => {
