@@ -72,7 +72,7 @@ const Register = () => {
                   <RiEyeLine className={styles.icon_password} id="Eye" />
               </div>
               <p className={styles.subtitle}>already have an account?</p>
-              <a className={styles.sign_in} href="">Sign in</a>
+              <a className={styles.sign_in} href="/login">Sign in</a>
               <button className={styles.btn_register}>
                 Sign Up
                 <RiArrowRightSLine className={styles.icon} />

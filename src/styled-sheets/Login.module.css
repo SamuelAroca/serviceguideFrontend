@@ -2,6 +2,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background: linear-gradient(
+    90deg,
+    rgba(58, 90, 180, 1) 0%,
+    rgba(29, 50, 253, 1) 50%,
+    rgba(69, 99, 252, 1) 100%
+  );
+  /* max-height: 1100px; */
 }
 
 .title_sign {
@@ -13,14 +20,6 @@
   margin-top: 1rem;
   width: 18rem;
   font-size: 1.2rem;
-  user-select: none;
-}
-
-.forgot_password {
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  font-size: 1.1rem;
   user-select: none;
 }
 
@@ -62,7 +61,7 @@
   width: 100vw;
   overflow: hidden;
   user-select: none;
-  min-width: 735px;
+  min-width: 736px;
   max-width: 735px;
   background-color: white;
 }
@@ -75,16 +74,20 @@
   z-index: 10;
   user-select: none;
   background-color: white;
+  z-index: 1;
 }
 
 .components {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 9rem;
   width: 70%;
   padding-left: 7rem;
   padding-right: 7rem;
+  height: 100vh;
+  /* padding-top: 4rem; */
+  margin: 0;
+  padding-top: 4rem;
 }
 
 .container_logo {
@@ -114,12 +117,19 @@
   width: 25rem;
 }
 
+.links {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+}
+
 @media (max-width: 1366px) {
   .components {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 5rem;
+    /* margin: 5rem; */
+    padding-top: 4rem;
   }
 
   .container_login {
@@ -139,7 +149,7 @@
     width: 100vw;
     overflow: hidden;
     user-select: none;
-    min-width: 561px;
+    min-width: 562px;
     background-color: white;
   }
 
@@ -186,6 +196,11 @@
 
   .icon {
     font-size: 2rem;
+  }
+
+  .links {
+    display: flex;
+    font-size: 1rem;
   }
 }
 
