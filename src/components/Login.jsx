@@ -8,47 +8,46 @@ import CarouselDemo from "./CarouselDemo.jsx";
 import { redirect } from "react-router-dom";
 import Prueba from "./Prueba";
 
-
+var eye = document.getElementById("Eye");
+var input = document.getElementById("Input");
 //Cambiar show password
-window.onload = f => {
+window.onload = (f) => {
   f.preventDefault();
-  eye.onclick = e => {
-    var eye = document.getElementById('Eye');
-    var input = document.getElementById('Input');
-    console.log(eye)
+  eye.onclick = (e) => {
+    console.log(eye);
     e.preventDefault();
     if (input.value.length > 0) {
-      if (input.type == 'password') {
-        input.type = 'text'
-        eye.style.opacity = 0.8
+      if (input.type == "password") {
+        input.type = "text";
+        eye.style.opacity = 0.8;
       } else {
-        input.type = 'password'
-        eye.style.opacity = 0.4
+        input.type = "password";
+        eye.style.opacity = 0.4;
       }
     } else {
-      console.log('Paila');
+      console.log("Paila");
     }
-  }
-}
+  };
+};
 
 const Login = () => {
-  const [usuario, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [usuario, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleLogin = (e) => {
     e.preventDefault();
-    console.log('hola');
+    console.log("hola");
 
-    const user = { usuario, password }
-    console.log(user)
+    const user = { usuario, password };
+    console.log(user);
     fetch("http://89.116.25.43:3000/api/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(user)
+      body: JSON.stringify(user),
     })
-    .then(response => response.json())
-    .then(redirect => location.href = 'https://www.google.com/?hl=es')
-  }
+      .then((response) => response.json())
+      .then((redirect) => (location.href = "https://www.google.com/?hl=es"));
+  };
 
   return (
     <div className={styles.main}>
@@ -83,9 +82,7 @@ const Login = () => {
                 <RiEyeLine className={styles.icon_password} id="Eye" />
               </div>
               <div className={styles.links}>
-                <a href="forgot-password">
-                  Forgot password?
-                </a>
+                <a href="forgot-password">Forgot password?</a>
                 <a href="/register">Create new account</a>
               </div>
               <button className={styles.btn_login} onClick={handleLogin}>

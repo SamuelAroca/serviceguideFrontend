@@ -4,26 +4,27 @@ import { RiWaterFlashFill } from "react-icons/ri";
 import CarouselDemo from "./CarouselDemo.jsx";
 import { RiEyeLine } from "react-icons/ri";
 
-window.onload = f => {
-  var eye = document.getElementById('Eye');
-  var input = document.getElementById('Input');
-
+var eye = document.getElementById("Eye");
+var input = document.getElementById("Input");
+//Cambiar show password
+window.onload = (f) => {
   f.preventDefault();
-  eye.onclick = e => {
+  eye.onclick = (e) => {
+    console.log(eye);
     e.preventDefault();
     if (input.value.length > 0) {
-      if (input.type == 'password') {
-        input.type = 'text'
-        eye.style.opacity = 0.8
+      if (input.type == "password") {
+        input.type = "text";
+        eye.style.opacity = 0.8;
       } else {
-        input.type = 'password'
-        eye.style.opacity = 0.4
+        input.type = "password";
+        eye.style.opacity = 0.4;
       }
     } else {
-      console.log('Paila');
+      console.log("Paila");
     }
-  }
-}
+  };
+};
 
 const Register = () => {
   return (

@@ -13,19 +13,19 @@ const NavbarComp = () => {
   }
 
   return (
-    <header>
-      <h3>Logo</h3>
-      <nav ref={navRef}>
+    <header className="header-main">
+      <h3><RiWaterFlashFill className="main-logo" />ServiceGuide</h3>
+      <nav className="nav-main" ref={navRef}>
         <Link className="link" to='/'>Home</Link>
         <Link className="link" to='/about'>Nosotros</Link>
         <Link className="link" to='/news'>Noticias</Link>
         <Link className="link" to='/register'>Registrar</Link>
         <Link className="link" to='/login'>Ingresar</Link>
-        <button onClick={showNavbar}>
+        <button className="nav-btn nav-close-btn" onClick={showNavbar}>
           <FaTimes />
         </button>
       </nav>
-      <button onClick={showNavbar}>
+      <button className="nav-btn" onClick={showNavbar}>
         <FaBars />
       </button>
     </header>
