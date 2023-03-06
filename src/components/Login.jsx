@@ -4,6 +4,7 @@ import { RiArrowRightSLine } from "react-icons/ri";
 import { RiWaterFlashFill } from "react-icons/ri";
 import { RiEyeLine } from "react-icons/ri";
 import CarouselDemo from "./CarouselDemo.jsx";
+import { Link } from "react-router-dom";
 
 const Login = () => {
 
@@ -46,7 +47,7 @@ const Login = () => {
               </div>
               <div className={styles.links}>
                 <a href="forgot-password">Forgot password?</a>
-                <a href="/register">Create new account</a>
+                <Link to="/register">Create new account</Link>
               </div>
               <button className={styles.btn_login}>
                 LOGIN
