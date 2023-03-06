@@ -3,29 +3,16 @@ import { RiArrowRightSLine } from "react-icons/ri";
 import { RiWaterFlashFill } from "react-icons/ri";
 import CarouselDemo from "./CarouselDemo.jsx";
 import { RiEyeLine } from "react-icons/ri";
-
-window.onload = f => {
-  var eye = document.getElementById('Eye');
-  var input = document.getElementById('Input');
-
-  f.preventDefault();
-  eye.onclick = e => {
-    e.preventDefault();
-    if (input.value.length > 0) {
-      if (input.type == 'password') {
-        input.type = 'text'
-        eye.style.opacity = 0.8
-      } else {
-        input.type = 'password'
-        eye.style.opacity = 0.4
-      }
-    } else {
-      console.log('Paila');
-    }
-  }
-}
+import { useState } from 'react';
 
 const Register = () => {
+
+  const [showPassword, setShowPassword] = useState(false)
+
+  const handleShow = () => {
+    setShowPassword(!showPassword)
+  }
+  
   return (
     <div className={styles.main}>
       <div className={styles.components}>
@@ -66,10 +53,10 @@ const Register = () => {
               <div className={styles.password_container}>
                 <input 
                   className="form-control" 
-                  type="password" 
+                  type={showPassword ? 'text' : 'password'}
                   placeholder="Password"
-                  id="Input"/>
-                  <RiEyeLine className={styles.icon_password} id="Eye" />
+                />
+                  <RiEyeLine className={styles.icon_password} onClick={handleShow} />
               </div>
               <p className={styles.subtitle}>already have an account?</p>
               <a className={styles.sign_in} href="/login">Sign in</a>
