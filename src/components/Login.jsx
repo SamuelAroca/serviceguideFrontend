@@ -8,45 +8,16 @@ import CarouselDemo from "./CarouselDemo.jsx";
 import { redirect } from "react-router-dom";
 import Prueba from "./Prueba";
 
-window.onload = f => {
-  f.preventDefault();
-  eye.onclick = e => {
-    var eye = document.getElementById('Eye');
-    var input = document.getElementById('Input');
-    console.log(eye)
-    e.preventDefault();
-    if (input.value.length > 0) {
-      if (input.type == 'password') {
-        input.type = 'text'
-        eye.style.opacity = 0.8
-      } else {
-        input.type = 'password'
-        eye.style.opacity = 0.4
-      }
-    } else {
-      console.log('Paila');
-    }
-  }
-}
-
 const Login = () => {
-  const [usuario, setEmail] = useState('');
-  const [password, setPassword] = useState('');
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    console.log('hola');
+  const [showPassword, setShowPassword] = useState(false)
 
-    const user = { usuario, password }
-    console.log(user)
-    fetch("http://89.116.25.43:3000/api/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(user)
-    })
-    .then(response => response.json())
-    .then(redirect => location.href = 'https://www.google.com/?hl=es')
+  const handleShow = () => {
+    setShowPassword(!showPassword)
   }
+
+  const [usuario, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   return (
     <div className={styles.main}>
@@ -64,29 +35,23 @@ const Login = () => {
                 className="form-control"
                 type="text"
                 placeholder="Type your email"
-                id="User"
-                value={usuario}
                 onChange={(e) => setEmail(e.target.value)}
               />
               <label className={styles.label_title}>Password</label>
               <div className={styles.password_container}>
                 <input
                   className="form-control"
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   placeholder="Type your password"
-                  id="Input"
-                  value={password}
                   onChange={(ev) => setPassword(ev.target.value)}
                 />
-                <RiEyeLine className={styles.icon_password} id="Eye" />
+                <RiEyeLine className={styles.icon_password} onClick={handleShow} />
               </div>
               <div className={styles.links}>
-                <a href="forgot-password">
-                  Forgot password?
-                </a>
+                <a href="forgot-password">Forgot password?</a>
                 <a href="/register">Create new account</a>
               </div>
-              <button className={styles.btn_login} onClick={handleLogin}>
+              <button className={styles.btn_login}>
                 LOGIN
                 <RiArrowRightSLine className={styles.icon} />
               </button>

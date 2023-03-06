@@ -1,50 +1,34 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useRef } from "react";
 import "../styled-sheets/NavbarComp.css";
 import { RiWaterFlashFill } from "react-icons/ri";
+import { FaBars, FaTimes } from "react-icons/fa";
 
 const NavbarComp = () => {
-  const [isOpen, setIsOpen] = useState(false);
 
-  const [fix, setFix] = useState(false);
+  const navRef = useRef();
 
-  function setFixed() {
-    if (window.scrollY >= 392) {
-      setFix(true);
-    } else {
-      setFix(false);
-    }
+  const showNavbar = () => {
+    navRef.current.classList.toggle("responsive_nav")
   }
 
-  window.addEventListener("scroll", setFixed);
-
   return (
-    <div className="NavbarComp">
-      <Link className="nav_logo_texto" to='/'><RiWaterFlashFill className="nav_logo" />ServiceGuide</Link>
-      <div className={`nav_items ${isOpen && "open"}`}>
-        <Link to="/" className="link">
-          Home
-        </Link>
-        <Link to="/about" className="link">
-          Nosotros
-        </Link>
-        <Link to="/news" className="link">
-          Noticias
-        </Link>
-        <Link to="/register" className="link">
-          Registrar
-        </Link>
-        <Link to="/login" className="link">
-          Ingresar
-        </Link>
-      </div>
-      <div
-        className={`nav_toggle ${isOpen && "open"}`}
-        onClick={() => setIsOpen(!isOpen)}
-      >
-        <div className="bar"></div>
-      </div>
-    </div>
+    <header className="header-main">
+      <h3><RiWaterFlashFill className="main-logo" />ServiceGuide</h3>
+      <nav className="nav-main" ref={navRef}>
+        <Link className="link" to='/'>Home</Link>
+        <Link className="link" to='/about'>Nosotros</Link>
+        <Link className="link" to='/news'>Noticias</Link>
+        <Link className="link" to='/register'>Registrar</Link>
+        <Link className="link" to='/login'>Ingresar</Link>
+        <button className="nav-btn nav-close-btn" onClick={showNavbar}>
+          <FaTimes />
+        </button>
+      </nav>
+      <button className="nav-btn" onClick={showNavbar}>
+        <FaBars />
+      </button>
+    </header>
   );
 };
 
