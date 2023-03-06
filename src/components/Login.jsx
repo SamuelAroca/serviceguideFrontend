@@ -1,12 +1,9 @@
 import React, { useState } from "react";
-import Swal from "sweetalert2";
 import styles from "../styled-sheets/Login.module.css";
 import { RiArrowRightSLine } from "react-icons/ri";
 import { RiWaterFlashFill } from "react-icons/ri";
 import { RiEyeLine } from "react-icons/ri";
 import CarouselDemo from "./CarouselDemo.jsx";
-import { redirect } from "react-router-dom";
-import Prueba from "./Prueba";
 
 const Login = () => {
 

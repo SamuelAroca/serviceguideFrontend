@@ -56,6 +56,10 @@
   width: 100%;
 }
 
+.header-main.fixed > .nav-main >.link::before {
+  background: black;
+}
+
 .header-main .nav-btn {
   padding: 5px;
   cursor: pointer;
@@ -68,10 +72,32 @@
   font-size: 1.8rem;
 }
 
+.header-main.fixed {
+  background-color: white;
+  transition: .3s ease-in-out;
+  color: black;
+}
+
+.header-main.fixed > .nav-main > .link{
+  color: black;
+}
+
 @media only screen and (max-width: 1119px) {
   .header-main .nav-btn {
     visibility: visible;
     opacity: 1;
+  }
+
+  .header-main.fixed > .nav-btn {
+    color: black;
+  }
+
+  .header-main.fixed > .nav-main .nav-close-btn {
+    color: black;
+  }
+
+  .header-main.fixed > .nav-main >.link::before {
+    background: black;
   }
 
   .header-main .nav-main {
@@ -98,7 +124,6 @@
     position: absolute;
     top: 2rem;
     right: 2rem;
-    transition: 1s;
   }
 
   .nav-main .link {
