@@ -4,7 +4,7 @@ import { IoWaterOutline } from "react-icons/io5";
 import { SlEnergy } from "react-icons/sl";
 import { BsCloudy } from "react-icons/bs";
 import { BiWater } from "react-icons/bi";
-import CarouselDemo from "./CarouselDemo.jsx";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const AboutUs = () => {
   return (
@@ -69,6 +69,14 @@ const AboutUs = () => {
             <div className={styles.picture}>
             
             </div>
+          </div>
+          <div className={styles.paragraph_us}>
+            <FontAwesomeIcon icon="fa-solid fa-quote-left" />
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+              Est libero dignissimos impedit earum eius aut reiciendis deserunt iste maiores, 
+              tempore nobis tempora culpa eos molestias optio modi provident consequuntur id.
+            </p>
           </div>
         </div>
       </div>
