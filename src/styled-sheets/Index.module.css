@@ -1,8 +1,55 @@
-.header {
-  background-image: url(../assets/backgroundMain1920.webp);
+.header_section{
   height: 100vh;
+  position: relative;
+}
+
+.header {
+  position: relative;
+  background-image: url(../assets/backgroundMain.png);
+  height: 80vh;
   min-height: 400px;
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
+}
+
+.container_title{
+  position: absolute;
+  top: 12rem;
+  left: 5rem;
+  color: #ffff;
+}
+
+
+.subtitle_header{
+  font-weight: 100;
+  font-size: 1.5rem;
+}
+
+.statistics_cont{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: absolute;
+  height: 50vh;
+  width: 100%;
+  top: 53%;
+}
+
+.sta_1,.sta_2,.sta_3{
+  height: 35vh;
+  width: 30vh;
+  background-color: #ececec;
+  align-items: flex-end;
+  border: 0.1rem black solid;
+  border-radius: 0.5rem;
+}
+.sta_1{
+  background-color: #020024;
+}
+.sta_2{
+  background-color: #090979;
+}
+.sta_3{
+  background-color: #00D4FF;
 }
