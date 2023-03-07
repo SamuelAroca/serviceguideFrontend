@@ -28,8 +28,8 @@ const NavbarComp = () => {
     <header className={fix ? 'header-main fixed' : 'header-main'}>
       <h3><RiWaterFlashFill className="main-logo" />ServiceGuide</h3>
       <nav className='nav-main' ref={navRef}>
-        <Link className="link" to='/'>Home</Link>
-        <Link className="link" to='/about'>Nosotros</Link>
+        <a className="link" href="#home">Home</a>
+        <a className="link" href="#aboutUs">Nosotros</a>
         <Link className="link" to='/news'>Noticias</Link>
         <Link className="link" to='/register'>Registrar</Link>
         <Link className="link" to='/login'>Ingresar</Link>
