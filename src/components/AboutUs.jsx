@@ -69,15 +69,18 @@ const AboutUs = () => {
             <div className={styles.picture}>
             
             </div>
+            <div className={styles.paragraph_us}>
+
+            </div>
           </div>
-          <div className={styles.paragraph_us}>
-            <FontAwesomeIcon icon="fa-solid fa-quote-left" />
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-              Est libero dignissimos impedit earum eius aut reiciendis deserunt iste maiores, 
-              tempore nobis tempora culpa eos molestias optio modi provident consequuntur id.
-            </p>
-          </div>
+{/*           <div>
+              <FontAwesomeIcon icon="fa-solid fa-quote-left" />
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                Est libero dignissimos impedit earum eius aut reiciendis deserunt iste maiores, 
+                tempore nobis tempora culpa eos molestias optio modi provident consequuntur id.
+              </p>
+          </div> */}
         </div>
       </div>
       <div className={styles.cotainer_footer}>

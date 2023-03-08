@@ -91,3 +91,7 @@
   justify-content: flex-end;
   background-color: red;
 }
+
+.picture{
+  background-image: url("../assets/AyJ.jpg");
+}
