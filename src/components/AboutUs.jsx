@@ -4,7 +4,7 @@ import { IoWaterOutline } from "react-icons/io5";
 import { SlEnergy } from "react-icons/sl";
 import { BsCloudy } from "react-icons/bs";
 import { BiWater } from "react-icons/bi";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { VscQuote } from "react-icons/vsc";
 
 const AboutUs = () => {
   return (
@@ -22,10 +22,10 @@ const AboutUs = () => {
           </div>
           <h2>Water</h2>
           <p>
-            El uso mundial del agua es esencial para la supervivencia humana y
-            el desarrollo económico, pero muchas regiones enfrentan escasez de
-            agua debido al crecimiento de la población, el cambio climático y la
-            mala gestión de los recursos hídricos.
+            The global use of water is essential for human survival and
+            economic development, but many regions face shortages of
+            water due to population growth, climate change and the
+            poor management of water resources.
           </p>
         </div>
 
@@ -35,11 +35,11 @@ const AboutUs = () => {
           </div>
           <h2>Energy</h2>
           <p>
-            La energía es fundamental para el crecimiento económico y el
-            desarrollo humano, pero la mayoría de las fuentes de energía son
-            finitas y contribuyen al cambio climático. Es necesario un cambio
-            hacia fuentes de energía renovable y sostenible para garantizar un
-            suministro de energía a largo plazo.
+            Energy is essential for economic growth and the
+            human development, but most energy sources are
+            finite and contribute to climate change. a change is needed
+            towards renewable and sustainable energy sources to guarantee a
+            long-term power supply.
           </p>
         </div>
 
@@ -49,11 +49,11 @@ const AboutUs = () => {
           </div>
           <h2>Gas</h2>
           <p>
-            El gas natural es una fuente importante de energía que se utiliza en
-            la industria, el transporte y la calefacción. Sin embargo, el uso
-            del gas también tiene impactos ambientales, como la emisión de gases
-            de efecto invernadero. Es necesario un equilibrio entre el uso del
-            gas y la protección del medio ambiente.
+            Natural gas is an important source of energy used in
+            industry, transport and heating. However, the use
+            of gas also has environmental impacts, such as the emission of gases
+            greenhouse effect. A balance is necessary between the use of
+            gas and environmental protection.
           </p>
         </div>
 
@@ -63,11 +63,11 @@ const AboutUs = () => {
           </div>
           <h2>Sewerage</h2>
           <p>
-            El alcantarillado es crucial para garantizar la eliminación segura y
-            efectiva de los desechos humanos y proteger la salud pública. Sin
-            embargo, muchos países aún carecen de sistemas de alcantarillado
-            adecuados, lo que puede llevar a la contaminación del agua y la
-            propagación de enfermedades.
+            The sewer system is crucial to ensure the safe disposal and
+            effective disposal of human waste and protect public health. Without
+            However, many countries still lack sewage systems
+            adequate, which can lead to contamination of water and
+            disease spread.
           </p>
         </div>
       </div>
@@ -81,12 +81,14 @@ const AboutUs = () => {
               <div className={styles.picture}></div>
             </div>
             <div className={styles.paragraph_us}>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit
-                accusantium veritatis libero possimus aperiam hic laborum, non
-                atque adipisci, dicta enim dolorem facilis asperiores doloribus
-                ea, nostrum minus nemo est?
+              <VscQuote className={styles.icon_paragraph}/>
+              <p className={styles.text_us}>
+                "Personal and team growth is essential to achieve goals and objectives in life.
+                By working together, we can continually learn and improve. By investing in our growth,
+                we can increase our capacity for leadership, collaboration and problem solving,
+                allowing us to face challenges with confidence and reach our full potential."
               </p>
+              <p className={styles.name_us}>Jim Díaz y Samuel Aroca</p>
             </div>
           </div>
         </div>
