@@ -4,6 +4,7 @@ import { RiWaterFlashFill } from "react-icons/ri";
 import CarouselDemo from "./CarouselDemo.jsx";
 import { RiEyeLine } from "react-icons/ri";
 import { useState } from 'react';
+import losLindos from '../assets/AyJ.jpg';
 
 const Register = () => {
 
@@ -17,7 +18,7 @@ const Register = () => {
     <div className={styles.main}>
       <div className={styles.components}>
         <div className={styles.container_image}>
-        <CarouselDemo />
+        <CarouselDemo img1={losLindos}/>
         </div>
         <div className={styles.container_register}>
           <form className="container_form">
