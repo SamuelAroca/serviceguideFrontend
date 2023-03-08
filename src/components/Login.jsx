@@ -7,6 +7,8 @@ import CarouselDemo from "./CarouselDemo.jsx";
 import { Link } from "react-router-dom";
 import img1 from "../assets/agua-potable.jpg";
 import img2 from "../assets/alcantarillado.jpg";
+import img3 from "../assets/Electricistas-scaled.jpg";
+import img4 from "../assets/gas natural.jpeg";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -36,7 +38,9 @@ const Login = () => {
                 placeholder="Type your email"
                 onChange={(e) => setEmail(e.target.value)}
               />
+
               <label className={styles.label_title}>Password</label>
+
               <div className={styles.password_container}>
                 <input
                   className="form-control"
@@ -49,6 +53,7 @@ const Login = () => {
                   onClick={handleShow}
                 />
               </div>
+
               <div className={styles.links}>
                 <a href="forgot-password">Forgot password?</a>
                 <Link to="/register">Create new account</Link>
@@ -61,7 +66,7 @@ const Login = () => {
           </form>
         </div>
         <div className={styles.container_image}>
-          <CarouselDemo img1={img1} img2={img2} />
+          <CarouselDemo img1={img1} img2={img2} img3={img3} img4={img4} />
         </div>
       </div>
     </div>
