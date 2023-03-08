@@ -1,10 +1,8 @@
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
 import styles from '../styled-sheets/Carousel.module.css';
-import img3 from "../assets/Electricistas-scaled.jpg";
-import img4 from "../assets/gas natural.jpeg";
 
-const CarouselDemo = ({img1, img2}) => {
+const CarouselDemo = ({img1, img2, img3, img4}) => {
         return (
             <Carousel 
             showThumbs={false} 
