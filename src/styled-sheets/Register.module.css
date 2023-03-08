@@ -1,19 +1,7 @@
-.main {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background: linear-gradient(
-    90deg,
-    rgba(58, 90, 180, 1) 0%,
-    rgba(29, 50, 253, 1) 50%,
-    rgba(69, 99, 252, 1) 100%
-  );
-}
-
 .title_signUp {
   font-size: 2.7rem;
   user-select: none;
+  margin: 1rem 0;
 }
 
 .lbl_title {
@@ -21,6 +9,33 @@
   width: 18rem;
   font-size: 1.2rem;
   user-select: none;
+}
+
+.inputs_gap {
+  display: flex;
+  gap: 1.5rem;
+  flex-direction: column;
+}
+
+.close_button { 
+  position: absolute;
+  top: 1rem;
+  left: 2rem;
+  z-index: 10;
+  font-size: 2rem;
+  background-color: #0096c7;
+  color: white;
+  border-radius: 50%;
+  box-sizing: border-box;
+  height: 2.5rem;
+  width: 2.5rem;
+  padding: 0.5rem;
+  transition: 0.3s all;
+}
+.close_button:hover {
+  background-color: #096a8a;
+  scale: 0.9;
+  cursor: pointer;
 }
 
 .btn_register {
@@ -86,9 +101,9 @@
 .container_logo {
   display: flex;
   align-items: center;
-  top: 5rem;
   font-size: 1.3rem;
   justify-content: flex-end;
+  margin: 0;
 }
 
 .logo{
