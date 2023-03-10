@@ -30,44 +30,40 @@ const NavbarComp = () => {
   };
 
   return (
-    <header className={fix ? "header-main fixed" : "header-main"}>
-      <div className="logo_container">
-        <RiWaterFlashFill className="main-logo" />
-        ServiceGuide
-      </div>
-      <nav className="nav-main" ref={navRef}>
-        <a className="link" href="#home">
-          Home
-        </a>
-        <a className="link" href="#aboutUs">
-          Nosotros
-        </a>
-        <Link className="link" to="/news">
-          Noticias
-        </Link>
-        <Link className="link" onClick={() => setOpenRegister(!openRegister)}>
-          Registrar
-        </Link>
-        <Link className="link" onClick={() => setOpen(!open)}>
-          Ingresar
-        </Link>
-        <button className="nav-btn nav-close-btn" onClick={showNavbar}>
-          <FaTimes />
+    <>
+      <header className={fix ? "header-main fixed" : "header-main"}>
+        <div className="logo_container">
+          <RiWaterFlashFill className="main-logo" />
+          ServiceGuide
+        </div>
+        <nav className="nav-main" ref={navRef}>
+          <a className="link" href="#home">
+            Home
+          </a>
+          <a className="link" href="#aboutUs">
+            Nosotros
+          </a>
+          <Link className="link" to="/news">
+            Noticias
+          </Link>
+          <Link className="link" onClick={() => setOpenRegister(!openRegister)}>
+            Registrar
+          </Link>
+          <Link className="link" onClick={() => setOpen(!open)}>
+            Ingresar
+          </Link>
+          <button className="nav-btn nav-close-btn" onClick={showNavbar}>
+            <FaTimes />
+          </button>
+        </nav>
+        <button className="nav-btn" onClick={showNavbar}>
+          <FaBars />
         </button>
-      </nav>
-      <button className="nav-btn" onClick={showNavbar}>
-        <FaBars />
-      </button>
+      </header>
       {/* Modales para registro y login */}
-      <Modal
-        open={open}
-        setOpen={setOpen}
-      />
-      <ModalRegister
-        open={openRegister}
-        setOpen={setOpenRegister}
-      />
-    </header>
+      <Modal open={open} setOpen={setOpen} />
+      <ModalRegister open={openRegister} setOpen={setOpenRegister} />
+    </>
   );
 };
 

@@ -13,6 +13,8 @@ const Modal = ({ open, setOpen }) => {
           borderRadius: "0.5rem",
           maxWidth: "1100px",
           height: "550px",
+          padding: "0",
+          margin: "0",
         },
       }}
     >

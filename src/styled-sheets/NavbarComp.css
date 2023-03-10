@@ -11,12 +11,23 @@
   justify-content: space-between;
   height: 80px;
   padding: 0 2rem;
+  box-sizing: border-box;
   background-color: var(--mainColor);
   color: var(--textColor);
   position: fixed;
   width: 100%;
   z-index: 10;
   user-select: none;
+}
+
+.nav-close-btn {
+  display: none;
+}
+
+.nav-main {
+  display: flex;
+  width: auto;
+  gap: 1rem;
 }
 
 .logo-link {
@@ -26,14 +37,13 @@
 }
 
 .header-main > .nav-main >.link {
-  margin: 0 2rem;
   color: var(--textColor);
   text-decoration: none;
   font-size: 1.5rem;
   position: relative;
 }
 
-.header-main > .nav-main >.link:hover {
+.header-main > .nav-main > .link:hover {
   opacity: 1;
 }
 
@@ -61,7 +71,7 @@
 }
 
 .header-main .nav-btn {
-  /* padding: 5px; */
+  padding: 5px;
   cursor: pointer;
   background: transparent;
   border: none;
@@ -82,8 +92,6 @@
   color: black;
 }
 
-/* Logo container */
-
 .logo_container {
   display: flex;
   align-items: center;
@@ -100,6 +108,9 @@
 
 @media only screen and (max-width: 1119px) {
   .nav-btn {
+    display: block;
+  }
+  .nav-close-btn {
     display: block;
   }
 
