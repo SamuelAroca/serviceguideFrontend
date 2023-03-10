@@ -1,7 +1,7 @@
 import React from "react";
 import Dialog from "@mui/material/Dialog";
 import Login from "./Login";
-import styles from "../styled-sheets/Modal.module.css";
+import styles from "../styles/Modal.module.css";
 
 const Modal = ({ open, setOpen }) => {
   return (

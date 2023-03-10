@@ -1,16 +1,16 @@
 import React, { useState } from "react";
-import styles from "../styled-sheets/Login.module.css";
+import styles from "../styles/Login.module.css";
 import { RiArrowRightSLine } from "react-icons/ri";
 import { RiWaterFlashFill } from "react-icons/ri";
 import { RiEyeLine } from "react-icons/ri";
 import { AiOutlineClose } from "react-icons/ai";
-import CarouselDemo from "./CarouselDemo.jsx";
+import CarouselDemo from "../../../components/CarouselDemo";
 import { Link } from "react-router-dom";
 import TextField from "@mui/material/TextField";
-import img1 from "../assets/agua-potable.jpg";
-import img2 from "../assets/alcantarillado.jpg";
-import img3 from "../assets/Electricistas-scaled.jpg";
-import img4 from "../assets/gas natural.jpeg";
+import img1 from "../../../assets/agua-potable.jpg";
+import img2 from "../../../assets/alcantarillado.jpg";
+import img3 from "../../../assets/Electricistas-scaled.jpg";
+import img4 from "../../../assets/gas natural.jpeg";
 
 const Login = ({ open, setOpen }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -39,7 +39,7 @@ const Login = ({ open, setOpen }) => {
             <div className={styles.inputs_gap}>
               <div>
                 <TextField
-                  id="outlined-basic"
+                  /* id="outlined-basic" */
                   label="Email"
                   variant="outlined"
                   placeholder="Type your email"
@@ -50,7 +50,7 @@ const Login = ({ open, setOpen }) => {
               </div>
               <div className={styles.password_container}>
                 <TextField
-                  id="outlined-basic"
+                  /* id="outlined-basic" */
                   label="Password"
                   variant="outlined"
                   type={showPassword ? "text" : "password"}

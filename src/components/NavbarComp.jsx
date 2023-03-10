@@ -3,9 +3,9 @@ import { useRef, useState } from "react";
 import "../styled-sheets/NavbarComp.css";
 import { RiWaterFlashFill } from "react-icons/ri";
 import { FaBars, FaTimes } from "react-icons/fa";
-import Modal from "./Modal";
-import ModalRegister from "./ModalRegister";
-import Login from "./Login";
+import Modal from "../pages/home/components/Modal";
+import ModalRegister from "../pages/home/components/ModalRegister";
+import Login from "../pages/home/components/Login";
 
 const NavbarComp = () => {
   const [fix, setFix] = useState(false);
@@ -31,10 +31,10 @@ const NavbarComp = () => {
 
   return (
     <header className={fix ? "header-main fixed" : "header-main"}>
-      <h3>
+      <div className="logo_container">
         <RiWaterFlashFill className="main-logo" />
         ServiceGuide
-      </h3>
+      </div>
       <nav className="nav-main" ref={navRef}>
         <a className="link" href="#home">
           Home

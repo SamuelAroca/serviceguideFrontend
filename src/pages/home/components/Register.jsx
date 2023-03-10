@@ -1,14 +1,14 @@
-import styles from "../styled-sheets/Register.module.css";
+import styles from "../styles/Register.module.css";
 import { RiArrowRightSLine } from "react-icons/ri";
 import { RiWaterFlashFill } from "react-icons/ri";
-import CarouselDemo from "./CarouselDemo.jsx";
+import CarouselDemo from "../../../components/CarouselDemo.jsx";
 import { RiEyeLine } from "react-icons/ri";
 import { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
-import img1 from "../assets/agua-potable.jpg";
-import img2 from "../assets/alcantarillado.jpg";
-import img3 from "../assets/Electricistas-scaled.jpg";
-import img4 from "../assets/gas natural.jpeg";
+import img1 from "../../../assets/agua-potable.jpg";
+import img2 from "../../../assets/alcantarillado.jpg";
+import img3 from "../../../assets/Electricistas-scaled.jpg";
+import img4 from "../../../assets/gas natural.jpeg";
 import TextField from "@mui/material/TextField";
 
 const Register = ({open, setOpen}) => {

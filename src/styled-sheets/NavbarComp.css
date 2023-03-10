@@ -25,11 +25,6 @@
   opacity: 0;
 }
 
-.main-logo {
-  margin-bottom: 3px;
-  color: #33a7ff;
-}
-
 .header-main > .nav-main >.link {
   margin: 0 2rem;
   color: var(--textColor);
@@ -61,8 +56,12 @@
   background: black;
 }
 
+.nav-btn {
+  display: none;
+}
+
 .header-main .nav-btn {
-  padding: 5px;
+  /* padding: 5px; */
   cursor: pointer;
   background: transparent;
   border: none;
@@ -83,7 +82,27 @@
   color: black;
 }
 
+/* Logo container */
+
+.logo_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  box-sizing: border-box;
+  height: 100%;
+  width: auto;
+  font-size: 2rem;
+}
+.main-logo {
+  color: #33a7ff;
+}
+
 @media only screen and (max-width: 1119px) {
+  .nav-btn {
+    display: block;
+  }
+
   .header-main .nav-btn {
     visibility: visible;
     opacity: 1;

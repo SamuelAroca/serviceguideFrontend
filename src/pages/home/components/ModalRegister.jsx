@@ -1,7 +1,7 @@
 import React from "react";
 import Dialog from "@mui/material/Dialog";
 import Register from "./Register";
-import styles from "../styled-sheets/Modal.module.css";
+import styles from "../styles/Modal.module.css";
 
 const ModalRegister = ({ open, setOpen }) => {
   return (
