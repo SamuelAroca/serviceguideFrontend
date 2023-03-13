@@ -5,7 +5,6 @@ import { RiWaterFlashFill } from "react-icons/ri";
 import { FaBars, FaTimes } from "react-icons/fa";
 import Modal from "../pages/home/components/Modal";
 import ModalRegister from "../pages/home/components/ModalRegister";
-import Login from "../pages/home/components/Login";
 
 const NavbarComp = () => {
   const [fix, setFix] = useState(false);
