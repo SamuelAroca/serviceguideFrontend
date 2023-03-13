@@ -1,11 +1,12 @@
 .header_section{
   height: 100vh;
+  width: 100%;
   position: relative;
 }
 
 .header {
   position: relative;
-  background-image: url(../assets/backgroundMain.png);
+  background-image: url(../../../assets/backgroundMain.png);
   height: 80vh;
   min-height: 400px;
   background-size: cover;

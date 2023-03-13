@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../styled-sheets/AboutUs.module.css";
+import styles from "../styles/AboutUs.module.css";
 import { IoWaterOutline } from "react-icons/io5";
 import { SlEnergy } from "react-icons/sl";
 import { BsCloudy } from "react-icons/bs";
