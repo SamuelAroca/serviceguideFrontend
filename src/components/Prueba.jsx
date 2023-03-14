@@ -1,9 +1,9 @@
 const Prueba = () => {
-    return (
-        <div>
-            <h1>Despues de login</h1>
-        </div>
-    )
-}
+  return (
+    <div>
+      <h1>Despues de login</h1>
+    </div>
+  );
+};
 
-export default Prueba
+export default Prueba;

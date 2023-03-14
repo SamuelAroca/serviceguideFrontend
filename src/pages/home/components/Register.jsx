@@ -10,13 +10,38 @@ import img2 from "../../../assets/alcantarillado.jpg";
 import img3 from "../../../assets/Electricistas-scaled.jpg";
 import img4 from "../../../assets/gas natural.jpeg";
 import TextField from "@mui/material/TextField";
+import axios from "axios";
+import Swal from "sweetalert2";
 
-const Register = ({open, setOpen}) => {
+const Register = ({ open, setOpen }) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleShow = () => {
     setShowPassword(!showPassword);
   };
+
+  const [name, setName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  async function save(e) {
+    e.preventDefault();
+    try {
+      await axios.post("http://localhost:8080/api/users/save", {
+        name: name,
+        lastName: lastName,
+        email: email,
+        password: password,
+      });
+      alert("Successfully registered user");
+      /* Swal.fire(
+        'Successfully registered user'
+      ) */
+    } catch (error) {
+      alert("Email already exists", error);
+    }
+  }
 
   return (
     <div className={styles.components}>
@@ -43,6 +68,10 @@ const Register = ({open, setOpen}) => {
                 placeholder="Type your email"
                 fullWidth
                 size="small"
+                value={name}
+                onChange={(e) => {
+                  setName(e.target.value);
+                }}
               />
               <TextField
                 id="outlined-basic"
@@ -51,6 +80,10 @@ const Register = ({open, setOpen}) => {
                 placeholder="Type your email"
                 fullWidth
                 size="small"
+                value={lastName}
+                onChange={(e) => {
+                  setLastName(e.target.value);
+                }}
               />
               <TextField
                 id="outlined-basic"
@@ -59,6 +92,10 @@ const Register = ({open, setOpen}) => {
                 placeholder="Type your email"
                 fullWidth
                 size="small"
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
               />
               <div className={styles.password_container}>
                 <TextField
@@ -69,6 +106,10 @@ const Register = ({open, setOpen}) => {
                   placeholder="Type your password"
                   fullWidth
                   size="small"
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
                 />
                 <RiEyeLine
                   className={styles.icon_password}
@@ -84,7 +125,7 @@ const Register = ({open, setOpen}) => {
               </a>
             </div>
 
-            <button className={styles.btn_register}>
+            <button className={styles.btn_register} onClick={save}>
               Sign Up
               <RiArrowRightSLine className={styles.icon} />
             </button>

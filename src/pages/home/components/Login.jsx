@@ -5,12 +5,13 @@ import { RiWaterFlashFill } from "react-icons/ri";
 import { RiEyeLine } from "react-icons/ri";
 import { AiOutlineClose } from "react-icons/ai";
 import CarouselDemo from "../../../components/CarouselDemo";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import img1 from "../../../assets/agua-potable.jpg";
 import img2 from "../../../assets/alcantarillado.jpg";
 import img3 from "../../../assets/Electricistas-scaled.jpg";
 import img4 from "../../../assets/gas natural.jpeg";
+import axios from "axios";
 
 const Login = ({ open, setOpen }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -19,8 +20,39 @@ const Login = ({ open, setOpen }) => {
     setShowPassword(!showPassword);
   };
 
-  const [usuario, setEmail] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  async function login(e) {
+    e.preventDefault();
+    try {
+      await axios
+        .post("http://localhost:8080/api/users/login", {
+          email: email,
+          password: password,
+        })
+        .then(
+          (res) => {
+            console.log(res.data);
+
+            if (res.data.message == "Email not exits") {
+              alert("Email not exist");
+            } else if (res.data.message == "Login Success") {
+              setOpen(!open)
+              navigate("/prueba");
+            } else {
+              alert("Incorrect Email or Password not match");
+            }
+          },
+          (fail) => {
+            console.log(fail);
+          }
+        );
+    } catch (error) {
+      alert(error);
+    }
+  }
 
   return (
     <div className={styles.components}>
@@ -43,9 +75,10 @@ const Login = ({ open, setOpen }) => {
                   label="Email"
                   variant="outlined"
                   placeholder="Type your email"
-                  onChange={(e) => setEmail(e.target.value)}
                   className={styles.inputsMaterial}
                   fullWidth
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
               <div className={styles.password_container}>
@@ -55,9 +88,10 @@ const Login = ({ open, setOpen }) => {
                   variant="outlined"
                   type={showPassword ? "text" : "password"}
                   placeholder="Type your password"
-                  onChange={(ev) => setPassword(ev.target.value)}
                   fullWidth
                   className={styles.inputsMaterial}
+                  value={password}
+                  onChange={(ev) => setPassword(ev.target.value)}
                 />
                 <RiEyeLine
                   className={styles.icon_password}
@@ -70,7 +104,7 @@ const Login = ({ open, setOpen }) => {
               <a href="forgot-password">Forgot password?</a>
               <Link to="/register">Create new account</Link>
             </div>
-            <button className={styles.btn_login}>
+            <button className={styles.btn_login} onClick={login}>
               LOGIN
               <RiArrowRightSLine className={styles.icon} />
             </button>
