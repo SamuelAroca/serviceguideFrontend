@@ -28,18 +28,19 @@ const Register = ({ open, setOpen }) => {
   async function save(e) {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:8080/api/users/save", {
+      await axios.post("http://localhost:8080/api/users/auth/register", {
         name: name,
         lastName: lastName,
         email: email,
         password: password,
       });
       alert("Successfully registered user");
+      setOpen(!open)
       /* Swal.fire(
         'Successfully registered user'
       ) */
     } catch (error) {
-      alert("Email already exists", error);
+      alert(error);
     }
   }
 
