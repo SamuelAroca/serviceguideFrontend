@@ -28,7 +28,7 @@ const Login = ({ open, setOpen }) => {
     e.preventDefault();
     try {
       await axios
-        .post("http://localhost:8080/api/users/login", {
+        .post("http://localhost:8080/api/users/auth/authenticate", {
           email: email,
           password: password,
         })
