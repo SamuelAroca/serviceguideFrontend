@@ -1,7 +1,5 @@
-import styles from "../styled-sheets/Index.module.css";
-import AboutUs from "./AboutUs";
-import Login from "./Login";
-import Register from "./Register";
+import styles from "./styles/Index.module.css";
+import AboutUs from "./components/AboutUs";
 
 const Index = () => {
   return (
