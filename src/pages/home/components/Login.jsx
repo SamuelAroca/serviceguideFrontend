@@ -27,28 +27,11 @@ const Login = ({ open, setOpen }) => {
   async function login(e) {
     e.preventDefault();
     try {
-      await axios
-        .post("http://localhost:8080/api/users/auth/authenticate", {
-          email: email,
-          password: password,
-        })
-        .then(
-          (res) => {
-            console.log(res.data);
-
-            if (res.data.message == "Email not exits") {
-              alert("Email not exist");
-            } else if (res.data.message == "Login Success") {
-              setOpen(!open)
-              navigate("/prueba");
-            } else {
-              alert("Incorrect Email or Password not match");
-            }
-          },
-          (fail) => {
-            console.log(fail);
-          }
-        );
+      await axios.post("http://localhost:8080/api/users/auth/login", {
+        login: email,
+        password: password,
+      });
+        
     } catch (error) {
       alert(error);
     }
