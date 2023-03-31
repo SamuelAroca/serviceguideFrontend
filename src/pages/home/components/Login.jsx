@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../styles/Login.module.css";
 import { RiArrowRightSLine } from "react-icons/ri";
 import { RiWaterFlashFill } from "react-icons/ri";
@@ -24,18 +24,36 @@ const Login = ({ open, setOpen }) => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  async function login(e) {
-    e.preventDefault();
+  const url = "http://localhost:8080/api/users/auth/login";
+
+  const login = async (e) => {
+    e.preventDefault()
     try {
-      await axios.post("http://localhost:8080/api/users/auth/login", {
+      await axios
+      .post(url, {
         login: email,
         password: password,
+      })
+      .then((response) => {
+        console.log(response.data)
+        console.log(response.data.firstName)
+        sessionStorage.setItem('token', response.data.token)
+        sessionStorage.setItem('user', response.data.login)
+
+        /* if (response.data.status != 200) {
+          console.log('hola');
+          throw new Error(`Error! : ${response.data.message}`);
+        } else {
+          console.log(response.data);
+          sessionStorage.setItem("token", response["token"]);
+          sessionStorage.setItem("user", JSON.stringify(response.login));
+        } */
       });
-        
-    } catch (error) {
-      alert(error);
+      
+    } catch(error) {
+      console.log(error);
     }
-  }
+  };
 
   return (
     <div className={styles.components}>
