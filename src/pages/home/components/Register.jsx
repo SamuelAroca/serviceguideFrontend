@@ -29,9 +29,9 @@ const Register = ({ open, setOpen }) => {
     e.preventDefault();
     try {
       await axios.post("http://localhost:8080/api/users/auth/register", {
-        name: name,
+        firstName: name,
         lastName: lastName,
-        email: email,
+        login: email,
         password: password,
       });
       alert("Successfully registered user");
