@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Index from './pages/home/Index';
 import NavbarComp from './components/NavbarComp';
 import News from './pages/News/News';
-import P_main from './pages/private/P_main';
+import Home from './pages/private/Home';
 
 const App = () => {
 
@@ -17,7 +17,7 @@ const App = () => {
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path='/news' element={<News/>} />
-        <Route path='/P_main' element={<P_main />} />
+        <Route path='/Home' element={<Home />} />
         <Route path='*' element={<h1>404 Not Found</h1>} />
       </Routes>
     </Router>
