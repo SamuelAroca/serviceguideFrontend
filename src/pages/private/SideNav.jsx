@@ -19,6 +19,12 @@ import Typography from "@mui/material/Typography";
 import Button from '@mui/material/Button';
 import styled from './styles/SideNav.module.css';
 import { useNavigate } from "react-router-dom";
+import { AiFillHome } from "react-icons/ai";
+import { BsReception4 } from "react-icons/bs";
+import { IoReceipt } from "react-icons/io5";
+import Home from "./Home";
+import Statistics from "./Statistics";
+import Receipts from "./Receipts";
 
 const drawerWidth = 240;
 
@@ -27,6 +33,7 @@ function ResponsiveDrawer(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
   const [menudata, setMenudata] = useState("Home");
+
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -40,35 +47,38 @@ function ResponsiveDrawer(props) {
   const drawer = (
     <div className={styled.div_main}>
       <Toolbar />
+        <h3></h3>
       <Divider />
       <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+        <ListItem disablePadding onClick={() =>setMenudata("Home")}>
+          <ListItemButton>
+            <ListItemIcon>
+              <AiFillHome />
+            </ListItemIcon>
+            <ListItemText primary ='Home' />
+          </ListItemButton>
+        </ListItem>
+
+        <ListItem disablePadding onClick={() =>setMenudata("Receipts")}>
+          <ListItemButton>
+            <ListItemIcon>
+              <IoReceipt />
+            </ListItemIcon>
+            <ListItemText primary ='Receipts' />
+          </ListItemButton>
+        </ListItem>
+
+        <ListItem disablePadding onClick={() =>setMenudata("Statistics")}>
+          <ListItemButton>
+            <ListItemIcon>
+              <BsReception4 />
+            </ListItemIcon>
+            <ListItemText primary ='Statistics' />
+          </ListItemButton>
+        </ListItem>
+
       </List>
       <Divider />
-      <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-      <div className={styled.div_button}>
-        <Button variant="contained" onClick={handleLogOut}>LOGOUT</Button>
-      </div>
     </div>
   );
 
@@ -96,7 +106,7 @@ function ResponsiveDrawer(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Responsive drawer
+            Home
           </Typography>
         </Toolbar>
       </AppBar>
@@ -147,16 +157,16 @@ function ResponsiveDrawer(props) {
         }}
       >
         <Toolbar />
+        {menudata == "Home" && <Home />}
+        {menudata == "Receipts" && <Receipts />}
+        {menudata == "Statistics" && <Statistics />}
       </Box>
     </Box>
   );
 }
 
 ResponsiveDrawer.propTypes = {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
+
   window: PropTypes.func,
 };
 
