@@ -27,30 +27,27 @@ const Login = ({ open, setOpen }) => {
   const url = "http://localhost:8080/api/users/auth/login";
 
   const login = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
       await axios
-      .post(url, {
-        login: email,
-        password: password,
-      })
-      .then((response) => {
-        console.log(response.data)
-        console.log(response.data.firstName)
-        sessionStorage.setItem('token', response.data.token)
-        sessionStorage.setItem('user', response.data.login)
-
-        /* if (response.data.status != 200) {
-          console.log('hola');
-          throw new Error(`Error! : ${response.data.message}`);
-        } else {
-          console.log(response.data);
-          sessionStorage.setItem("token", response["token"]);
-          sessionStorage.setItem("user", JSON.stringify(response.login));
-        } */
-      });
-      
-    } catch(error) {
+        .post(url, {
+          login: email,
+          password: password,
+        })
+        .then((response) => {
+          if (response.status != 200) {
+            
+            console.log(response.data.message)
+          } else {
+            console.log(response.data);
+            console.log(response.data.firstName);
+            sessionStorage.setItem("token", response.data.token);
+            let user = [response.data.id, response.data.firstName, response.data.lastName, response.data.login, response.data.token]
+            sessionStorage.setItem("user", user);
+            navigate('/home')
+          }
+        });
+    } catch (error) {
       console.log(error);
     }
   };
