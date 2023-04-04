@@ -16,10 +16,14 @@ import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
+import Button from '@mui/material/Button';
+import styled from './styles/SideNav.module.css';
+import { useNavigate } from "react-router-dom";
 
 const drawerWidth = 240;
 
 function ResponsiveDrawer(props) {
+  const navigate = useNavigate();
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
   const [menudata, setMenudata] = useState("Home");
@@ -28,8 +32,13 @@ function ResponsiveDrawer(props) {
     setMobileOpen(!mobileOpen);
   };
 
+  const handleLogOut = () => {
+    sessionStorage.clear();
+    navigate('/');
+  }
+
   const drawer = (
-    <div>
+    <div className={styled.div_main}>
       <Toolbar />
       <Divider />
       <List>
@@ -57,6 +66,9 @@ function ResponsiveDrawer(props) {
           </ListItem>
         ))}
       </List>
+      <div className={styled.div_button}>
+        <Button variant="contained" onClick={handleLogOut}>LOGOUT</Button>
+      </div>
     </div>
   );
 
