@@ -2,8 +2,16 @@
   position: relative;
 }
 
-.div_button {
-  position: absolute;
-  bottom: auto;
-  left: 1rem;
+.toolbar_title{
+  place-content: center;
+}
+
+.toolbar_button {
+  display: flex;
+  align-items: flex-end;
+}
+
+.toolbar_button{
+  display: flex;
+  align-items: flex-end;
 }

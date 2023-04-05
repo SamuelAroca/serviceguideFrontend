@@ -46,8 +46,9 @@ function ResponsiveDrawer(props) {
 
   const drawer = (
     <div className={styled.div_main}>
-      <Toolbar />
-        <h3></h3>
+      <Toolbar className={styled.toolbar_title}>
+        <h3>ServiceGuide</h3>
+      </Toolbar>
       <Divider />
       <List>
         <ListItem disablePadding onClick={() =>setMenudata("Home")}>
@@ -95,7 +96,7 @@ function ResponsiveDrawer(props) {
           ml: { sm: `${drawerWidth}px` },
         }}
       >
-        <Toolbar>
+        <Toolbar className={styled.toolbar_button}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -105,8 +106,17 @@ function ResponsiveDrawer(props) {
           >
             <MenuIcon />
           </IconButton>
+          <Button
+            className={styled.add_button}
+            variant="contained"
+            color="secondary"
+            size="large"
+          >
+            ADD RECEIPT
+        </Button>
           <Typography variant="h6" noWrap component="div">
-            Home
+            
+
           </Typography>
         </Toolbar>
       </AppBar>
@@ -157,9 +167,9 @@ function ResponsiveDrawer(props) {
         }}
       >
         <Toolbar />
-        {menudata == "Home" && <Home />}
-        {menudata == "Receipts" && <Receipts />}
-        {menudata == "Statistics" && <Statistics />}
+        {menudata == "Home" ? <Home /> : null}
+        {menudata == "Receipts" ? <Receipts /> : null}
+        {menudata == "Statistics" ? <Statistics /> : null}
       </Box>
     </Box>
   );
