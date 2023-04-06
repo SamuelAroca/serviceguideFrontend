@@ -6,7 +6,6 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -16,24 +15,22 @@ import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Button from '@mui/material/Button';
-import styled from './styles/SideNav.module.css';
+import Button from "@mui/material/Button";
+import styled from "./styles/SideNav.module.css";
+/* import {Menu, MenuItem} from '@mui/material'; */
 import { useNavigate } from "react-router-dom";
 import { AiFillHome } from "react-icons/ai";
 import { BsReception4 } from "react-icons/bs";
 import { IoReceipt } from "react-icons/io5";
-import Home from "./Hom";
-import Statistics from "./Statistics";
-import Receipts from "./Receipts";
 import { BrowserRouter as Switch, Router, Route, Link } from "react-router-dom";
+import { MenuItem } from "@mui/material";
 
 const drawerWidth = 240;
-
 function ResponsiveDrawer(props) {
-  const navigate = useNavigate();
-  const { window } = props;
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const rute = window.location.pathname;
 
+  const navigate = useNavigate();
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -41,8 +38,8 @@ function ResponsiveDrawer(props) {
 
   const handleLogOut = () => {
     sessionStorage.clear();
-    navigate('/');
-  }
+    navigate("/");
+  };
 
   const drawer = (
     <div className={styled.div_main}>
@@ -57,7 +54,7 @@ function ResponsiveDrawer(props) {
               <ListItemIcon>
                 <AiFillHome />
               </ListItemIcon>
-              <ListItemText primary ='Home' />
+              <ListItemText primary="Home" />
             </ListItemButton>
           </ListItem>
         </Link>
@@ -68,7 +65,7 @@ function ResponsiveDrawer(props) {
               <ListItemIcon>
                 <IoReceipt />
               </ListItemIcon>
-              <ListItemText primary ='Receipts' />
+              <ListItemText primary="Receipts" />
             </ListItemButton>
           </ListItem>
         </Link>
@@ -79,18 +76,17 @@ function ResponsiveDrawer(props) {
               <ListItemIcon>
                 <BsReception4 />
               </ListItemIcon>
-              <ListItemText primary ='Statistics' />
+              <ListItemText primary="Statistics" />
             </ListItemButton>
           </ListItem>
         </Link>
-
       </List>
       <Divider />
     </div>
   );
 
   const container =
-    window !== undefined ? () => window().document.body : undefined;
+    props.window !== undefined ? () => window().document.body : undefined;
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -102,7 +98,13 @@ function ResponsiveDrawer(props) {
           ml: { sm: `${drawerWidth}px` },
         }}
       >
-        <Toolbar className={styled.toolbar_button}>
+        <Toolbar
+          sx={{
+            display: "flex",
+            justifyContent: "end",
+          }}
+          className={styled.toolbar_button}
+        >
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -112,18 +114,16 @@ function ResponsiveDrawer(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Button
-            className={styled.add_button}
-            variant="contained"
-            color="secondary"
-            size="large"
-          >
-            ADD RECEIPT
-        </Button>
-          <Typography variant="h6" noWrap component="div">
-            
-
-          </Typography>
+          {rute === "/major/receipts" ? (
+            <Button
+              className={styled.add_button}
+              variant="contained"
+              color="secondary"
+              size="large"
+            >
+              ADD RECEIPT
+            </Button>
+          ) : null}
         </Toolbar>
       </AppBar>
       <Box
@@ -179,7 +179,6 @@ function ResponsiveDrawer(props) {
 }
 
 ResponsiveDrawer.propTypes = {
-
   window: PropTypes.func,
 };
 

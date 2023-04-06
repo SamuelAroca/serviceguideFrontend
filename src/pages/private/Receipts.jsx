@@ -21,15 +21,15 @@ const Receipts = () => {
   ]
   
   return (
-    <>
+    <div style={{display: 'flex', flexDirection:'column', alignItems: "flex-end", marginRight:'10rem'}}>
       <SideNav />
       <h1></h1>
-      <div style={{display: 'flex', gap: '1rem', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+      <div style={{display: 'flex', gap: '2rem', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
       {
         receipts.map((c, index) =>  <ReceiptCard key={index} data={c}/>)
       }
       </div>
-    </>
+    </div>
   );
 };
 

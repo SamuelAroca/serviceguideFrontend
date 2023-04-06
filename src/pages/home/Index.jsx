@@ -1,6 +1,8 @@
 import styles from "./styles/Index.module.css";
 import AboutUs from "./components/AboutUs";
 import NavbarComp from "../../components/NavbarComp";
+import Footer from "./components/Footer"
+import Information from "./components/Information";
 
 const Index = () => {
   return (
@@ -23,9 +25,19 @@ const Index = () => {
           <div className={styles.sta_3}></div>
         </div>
       </section>
-      <section id="aboutUs">
-        <AboutUs />
-      </section>
+      <div className={styles.container_AboutUs}>
+        <section id="aboutUs">
+          <AboutUs />
+        </section>
+        <section id="info">
+          <Information />
+        </section>
+      </div>
+      <footer>
+        <section>
+          <Footer />
+        </section>
+      </footer>
     </div>
   );
 };

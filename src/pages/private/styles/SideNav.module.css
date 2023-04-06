@@ -21,3 +21,7 @@
   color: #454545;
 }
 
+.link:hover{
+  text-decoration: none;
+}
+
