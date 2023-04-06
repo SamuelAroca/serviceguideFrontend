@@ -22,9 +22,10 @@ import { useNavigate } from "react-router-dom";
 import { AiFillHome } from "react-icons/ai";
 import { BsReception4 } from "react-icons/bs";
 import { IoReceipt } from "react-icons/io5";
-import Home from "./Home";
+import Home from "./Hom";
 import Statistics from "./Statistics";
 import Receipts from "./Receipts";
+import { BrowserRouter as Switch, Router, Route, Link } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -32,7 +33,6 @@ function ResponsiveDrawer(props) {
   const navigate = useNavigate();
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [menudata, setMenudata] = useState("Home");
 
 
   const handleDrawerToggle = () => {
@@ -51,32 +51,38 @@ function ResponsiveDrawer(props) {
       </Toolbar>
       <Divider />
       <List>
-        <ListItem disablePadding onClick={() =>setMenudata("Home")}>
-          <ListItemButton>
-            <ListItemIcon>
-              <AiFillHome />
-            </ListItemIcon>
-            <ListItemText primary ='Home' />
-          </ListItemButton>
-        </ListItem>
+        <Link className={styled.link} to={"/major/home"}>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <AiFillHome />
+              </ListItemIcon>
+              <ListItemText primary ='Home' />
+            </ListItemButton>
+          </ListItem>
+        </Link>
 
-        <ListItem disablePadding onClick={() =>setMenudata("Receipts")}>
-          <ListItemButton>
-            <ListItemIcon>
-              <IoReceipt />
-            </ListItemIcon>
-            <ListItemText primary ='Receipts' />
-          </ListItemButton>
-        </ListItem>
+        <Link className={styled.link} to={"/major/receipts"}>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <IoReceipt />
+              </ListItemIcon>
+              <ListItemText primary ='Receipts' />
+            </ListItemButton>
+          </ListItem>
+        </Link>
 
-        <ListItem disablePadding onClick={() =>setMenudata("Statistics")}>
-          <ListItemButton>
-            <ListItemIcon>
-              <BsReception4 />
-            </ListItemIcon>
-            <ListItemText primary ='Statistics' />
-          </ListItemButton>
-        </ListItem>
+        <Link className={styled.link} to={"/major/statistics"}>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <BsReception4 />
+              </ListItemIcon>
+              <ListItemText primary ='Statistics' />
+            </ListItemButton>
+          </ListItem>
+        </Link>
 
       </List>
       <Divider />
@@ -167,9 +173,6 @@ function ResponsiveDrawer(props) {
         }}
       >
         <Toolbar />
-        {menudata == "Home" ? <Home /> : null}
-        {menudata == "Receipts" ? <Receipts /> : null}
-        {menudata == "Statistics" ? <Statistics /> : null}
       </Box>
     </Box>
   );

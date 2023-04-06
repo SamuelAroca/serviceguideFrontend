@@ -1,4 +1,5 @@
-import ReceiptCard from './components/ReceiptCard'
+import ReceiptCard from './components/ReceiptCard';
+import SideNav from './SideNav';
 
 const Receipts = () => {
 
@@ -21,10 +22,11 @@ const Receipts = () => {
   
   return (
     <>
+      <SideNav />
       <h1></h1>
       <div style={{display: 'flex', gap: '1rem', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
       {
-        receipts.map(c =>  <ReceiptCard data={c}/>)
+        receipts.map((c, index) =>  <ReceiptCard key={index} data={c}/>)
       }
       </div>
     </>
