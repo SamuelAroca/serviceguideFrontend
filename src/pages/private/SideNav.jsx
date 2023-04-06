@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -17,13 +17,12 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import styled from "./styles/SideNav.module.css";
-/* import {Menu, MenuItem} from '@mui/material'; */
+import {Menu, MenuItem} from '@mui/material';
 import { useNavigate } from "react-router-dom";
 import { AiFillHome } from "react-icons/ai";
 import { BsReception4 } from "react-icons/bs";
 import { IoReceipt } from "react-icons/io5";
 import { BrowserRouter as Switch, Router, Route, Link } from "react-router-dom";
-import { MenuItem } from "@mui/material";
 
 const drawerWidth = 240;
 function ResponsiveDrawer(props) {
@@ -31,6 +30,18 @@ function ResponsiveDrawer(props) {
 
   const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const handleClose = () =>{
+    setAnchorEl(null);
+    setMenuOpen(false);
+  }
+
+  const handleClick = (e) =>{
+    setAnchorEl(e.currentTarget);
+    setMenuOpen(true);
+  }
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -120,10 +131,18 @@ function ResponsiveDrawer(props) {
               variant="contained"
               color="secondary"
               size="large"
+              onClick={handleClick}
             >
               ADD RECEIPT
             </Button>
           ) : null}
+          <Menu anchorEl={anchorEl} open={menuOpen} onClose={handleClose}>
+            <MenuItem onClick={handleClose}>All</MenuItem>
+            <MenuItem onClick={handleClose}>Water</MenuItem>
+            <MenuItem onClick={handleClose}>Energy</MenuItem>
+            <MenuItem onClick={handleClose}>Gas</MenuItem>
+            <MenuItem onClick={handleClose}>Sewerage</MenuItem>
+          </Menu>
         </Toolbar>
       </AppBar>
       <Box
