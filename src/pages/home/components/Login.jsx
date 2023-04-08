@@ -29,24 +29,19 @@ const Login = ({ open, setOpen }) => {
   const login = async (e) => {
     e.preventDefault();
     try {
-      await axios
-        .post(url, {
-          login: email,
-          password: password,
-        })
-        .then((response) => {
-          if (response.status != 200) {
-            
-            console.log(response.data.message)
-          } else {
-            console.log(response.data);
-            console.log(response.data.firstName);
-            sessionStorage.setItem("token", response.data.token);
-            let user = [response.data.id, response.data.firstName, response.data.lastName, response.data.login, response.data.token]
-            sessionStorage.setItem("user", user);
-            navigate('/home')
-          }
-        });
+      let response = await axios.post(url, {
+        login: email,
+        password: password,
+      });
+
+      if (response.status != 200) {
+        throw new alert("Login Error");
+      } else {
+        document.cookie = `token=${
+          response.data.token
+        }; max-age=${3600}; path=/; samesite=strict`;
+        navigate("/major");
+      }
     } catch (error) {
       console.log(error);
     }
