@@ -11,37 +11,43 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import styled from "./styles/SideNav.module.css";
-import {Menu, MenuItem} from '@mui/material';
+import { Menu, MenuItem } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { AiFillHome } from "react-icons/ai";
 import { BsReception4 } from "react-icons/bs";
 import { IoReceipt } from "react-icons/io5";
-import { BrowserRouter as Switch, Router, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter as Switch,
+  Router,
+  Route,
+  Link,
+  useLocation,
+  useParams,
+} from "react-router-dom";
 
 const drawerWidth = 240;
 function ResponsiveDrawer(props) {
-  const rute = window.location.pathname;
+  const location = useLocation();
+  const { "*": path } = useParams();
 
   const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const handleClose = () =>{
+  const handleClose = () => {
     setAnchorEl(null);
     setMenuOpen(false);
-  }
+  };
 
-  const handleClick = (e) =>{
+  const handleClick = (e) => {
     setAnchorEl(e.currentTarget);
     setMenuOpen(true);
-  }
+  };
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -125,7 +131,7 @@ function ResponsiveDrawer(props) {
           >
             <MenuIcon />
           </IconButton>
-          {rute === "/major/receipts" ? (
+          {location.pathname === "/major/receipts" || path ? (
             <Button
               className={styled.add_button}
               variant="contained"
@@ -137,11 +143,18 @@ function ResponsiveDrawer(props) {
             </Button>
           ) : null}
           <Menu anchorEl={anchorEl} open={menuOpen} onClose={handleClose}>
-            <MenuItem onClick={handleClose}>All</MenuItem>
-            <MenuItem onClick={handleClose}>Water</MenuItem>
-            <MenuItem onClick={handleClose}>Energy</MenuItem>
+            <Link to="/major/receipts/water">
+              <MenuItem onClick={handleClose}>Water</MenuItem>
+            </Link>
+            <Link to="/major/receipts/energy">
+              <MenuItem onClick={handleClose}>Energy</MenuItem>
+            </Link>
+            <Link to="/major/receipts/gas">
             <MenuItem onClick={handleClose}>Gas</MenuItem>
+            </Link>
+            <Link to="/major/receipts/sewerage">
             <MenuItem onClick={handleClose}>Sewerage</MenuItem>
+            </Link>
           </Menu>
         </Toolbar>
       </AppBar>
