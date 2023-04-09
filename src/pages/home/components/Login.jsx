@@ -12,6 +12,8 @@ import img2 from "../../../assets/alcantarillado.jpg";
 import img3 from "../../../assets/Electricistas-scaled.jpg";
 import img4 from "../../../assets/gas natural.jpeg";
 import axios from "axios";
+import ModalRegister from "./ModalRegister";
+import Modal from "./Modal";
 
 const Login = ({ open, setOpen }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -22,6 +24,8 @@ const Login = ({ open, setOpen }) => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [openRegister, setOpenRegister] = useState(false)
+  const [openLogin, setOpenLogin] = useState(false)
   const navigate = useNavigate();
 
   const url = "http://localhost:8080/api/users/auth/login";
@@ -47,8 +51,15 @@ const Login = ({ open, setOpen }) => {
     }
   };
 
+  const createNewAccount = () => {
+    setOpen(!open)
+    setOpenRegister(!openRegister)
+  }
+
   return (
     <div className={styles.components}>
+      <ModalRegister open={openRegister} setOpen={setOpenRegister} />
+      <Modal open={openLogin} setOpen={setOpenLogin} />
       <AiOutlineClose
         onClick={() => setOpen(!open)}
         className={styles.close_button}
@@ -95,7 +106,7 @@ const Login = ({ open, setOpen }) => {
 
             <div className={styles.links}>
               <a href="forgot-password">Forgot password?</a>
-              <Link to="/register">Create new account</Link>
+              <a onClick={() => createNewAccount()}>Create new account</a>
             </div>
             <button className={styles.btn_login} onClick={login}>
               LOGIN

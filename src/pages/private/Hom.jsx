@@ -4,12 +4,11 @@ import styled from "./styles/Hom.module.css";
 import AxiosInterceptor from "../../AxiosInterceptor";
 
 const Home = () => {
-
   const apiUrl = "http://localhost:8080";
 
   const prueba = async () => {
     try {
-      AxiosInterceptor()
+      AxiosInterceptor();
       const result = await axios.get(`${apiUrl}/messages`);
       console.log(result.data);
     } catch (error) {
