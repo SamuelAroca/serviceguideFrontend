@@ -12,7 +12,7 @@ const ReceiptCard = ({ data }) => {
       onClick={() => setIsOpen(!isOpen)}
       initial={{ height: "8rem", backgroundColor: "white" }}
       animate={{ height: isOpen ? "13rem" : "8rem", backgroundColor: isOpen ? "lightgrey" : "white"}}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0 }}
     >
       <h2>{data.name}</h2>
       <p>{data.date}</p>

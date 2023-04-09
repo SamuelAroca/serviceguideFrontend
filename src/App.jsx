@@ -7,7 +7,7 @@ import News from './pages/News/News';
 import NotFound from './pages/home/components/NotFound';
 import Receipts from './pages/private/Receipts';
 import Statistics from './pages/private/Statistics';
-import Hom from './pages/private/Hom';
+import Home from './pages/private/Home';
 
 const App = () => {
 
@@ -18,9 +18,9 @@ const App = () => {
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path='/news' element={<News/>} />
-        <Route path='/major' element={<Hom />} />
-        <Route path='/major/home' element={<Hom />} />
-        <Route path='/major/receipts' element={<Receipts />} />
+        <Route path='/major' element={<Home />} />
+        <Route path='/major/home' element={<Home />} />
+        <Route path='/major/receipts/*' element={<Receipts />} />
         <Route path='/major/statistics' element={<Statistics />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
