@@ -1,14 +1,30 @@
-import SideNav from './SideNav';
-
+import SideNav from "./SideNav";
+import axios from "axios";
+import styled from "./styles/Hom.module.css";
+import AxiosInterceptor from "../../AxiosInterceptor";
 
 const Home = () => {
+  const apiUrl = "http://localhost:8080";
 
-  return(
+  const prueba = async () => {
+    try {
+      AxiosInterceptor();
+      const result = await axios.get(`${apiUrl}/messages`);
+      console.log(result.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  return (
     <>
-     <SideNav />
-     <h1>ESTE ES EL HOME</h1>
+      <SideNav />
+      <div className={styled.prueba}>
+        <h1>ESTE ES EL HOME</h1>
+        <button onClick={prueba}>Click</button>
+      </div>
     </>
-  )
+  );
 };
 
 export default Home;

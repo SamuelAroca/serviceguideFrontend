@@ -25,7 +25,7 @@ const Register = ({ open, setOpen }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  async function save(e) {
+  const save = async (e) => {
     e.preventDefault();
     try {
       await axios.post("http://localhost:8080/api/users/auth/register", {
