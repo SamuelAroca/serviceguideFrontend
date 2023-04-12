@@ -1,6 +1,8 @@
 import styles from "../styles/Footer.module.css";
+import { Fab } from '@mui/material';
 import { RiWaterFlashFill } from "react-icons/ri";
-
+/* import {AddIcon} from ""
+ */
 const Footer = () => {
 
   return(
@@ -21,7 +23,9 @@ const Footer = () => {
           </div>
         </div>
         <div className={styles.linea} />
-        
+        <div className={styles.redes_icon}>
+          <Fab className="Fab_Aroca"></Fab>
+        </div>
       </div>
     </>
   )
