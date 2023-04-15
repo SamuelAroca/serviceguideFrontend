@@ -26,7 +26,7 @@ const Slideshow = () => {
       slideshow.current.style.transform = `translateX(-${slideSize}px)`;
 
       const transition = () => {
-        slideshow.current.style.transition = 'none';
+        slideshow.current.style.transition = "none";
         slideshow.current.style.transform = `translateX(0)`;
 
         slideshow.current.appendChild(firstElement);
@@ -65,12 +65,12 @@ const Slideshow = () => {
       next();
     }, 10000);
 
-    slideshow.current.addEventListener('mouseenter', () => {
-      console.log('pause');
+    slideshow.current.addEventListener("mouseenter", () => {
+      console.log("pause");
       clearInterval(slideshowInterval.current);
     });
 
-    slideshow.current.addEventListener('mouseleave', () => {
+    slideshow.current.addEventListener("mouseleave", () => {
       slideshowInterval.current = setInterval(() => {
         next();
       }, 5000);
@@ -81,7 +81,7 @@ const Slideshow = () => {
     <ContenedorPrincipal>
       <ContenedorSlideshow ref={slideshow}>
         <Slide>
-            <img src={img1} alt="Agua" />
+          <img src={img1} alt="Agua" />
           <TextoSlide
             colorFondo="rgba(133, 193, 233, .7)"
             colorTexto="##0B3769"

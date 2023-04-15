@@ -17,7 +17,7 @@
   flex-direction: column;
 }
 
-.close_button { 
+.close_button {
   position: absolute;
   top: 1rem;
   left: 2rem;
@@ -106,7 +106,7 @@
   margin: 0;
 }
 
-.logo{
+.logo {
   color: #33a7ff;
 }
 
@@ -140,7 +140,7 @@
 }
 
 @media (max-width: 1090px) {
-  .main{
+  .main {
     width: 100%;
     flex-wrap: wrap;
     height: auto;
@@ -158,11 +158,11 @@
     border-radius: 1rem 1rem 0 0;
     margin: 0;
   }
-  .container_form{
+  .container_form {
     width: 100%;
     box-sizing: border-box;
   }
-  .container_image{
+  .container_image {
     border-radius: 0 0 1rem 1rem;
     width: 100%;
     height: auto;

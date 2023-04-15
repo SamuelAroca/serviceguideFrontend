@@ -3,7 +3,6 @@ import { ReceiptCardContainer } from "../styled-components/receipt-card-containe
 import { AnimatePresence } from "framer-motion";
 
 const ReceiptCard = ({ data }) => {
-  
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -11,7 +10,10 @@ const ReceiptCard = ({ data }) => {
       open={isOpen}
       onClick={() => setIsOpen(!isOpen)}
       initial={{ height: "8rem", backgroundColor: "white" }}
-      animate={{ height: isOpen ? "13rem" : "8rem", backgroundColor: isOpen ? "lightgrey" : "white"}}
+      animate={{
+        height: isOpen ? "13rem" : "8rem",
+        backgroundColor: isOpen ? "lightgrey" : "white",
+      }}
       transition={{ duration: 0 }}
     >
       <h2>{data.name}</h2>

@@ -1,13 +1,12 @@
-import SideNav from './SideNav';
+import SideNav from "./SideNav";
 
 const Statistics = () => {
-
-  return(
+  return (
     <>
       <SideNav />
       <h1>ESTAS SON LAS ESTADISTICAS</h1>
     </>
-  )
+  );
 };
 
 export default Statistics;

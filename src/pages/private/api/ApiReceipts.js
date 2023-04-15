@@ -1,19 +1,17 @@
-import axios from "axios"
+import axios from "axios";
 
-const saveReceipts = async(receiptData) => {
-
-  let url = "http://localhost:8080/api/receipts/add"
+const saveReceipts = async (receiptData) => {
+  let url = "http://localhost:8080/api/receipts/add";
 
   try {
-    
     const response = await axios({
       url: url,
-      method: 'POST',
+      method: "POST",
       data: receiptData,
-    })
+    });
 
-    return response
+    return response;
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};

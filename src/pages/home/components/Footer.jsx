@@ -1,11 +1,10 @@
 import styles from "../styles/Footer.module.css";
-import { Fab } from '@mui/material';
+import { Fab } from "@mui/material";
 import { RiWaterFlashFill } from "react-icons/ri";
 /* import {AddIcon} from ""
  */
 const Footer = () => {
-
-  return(
+  return (
     <>
       <div className={styles.main}>
         <div className={styles.container_footer}>
@@ -28,7 +27,7 @@ const Footer = () => {
         </div>
       </div>
     </>
-  )
+  );
 };
 
 export default Footer;

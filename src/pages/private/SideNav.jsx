@@ -53,10 +53,10 @@ function ResponsiveDrawer(props) {
     setMobileOpen(!mobileOpen);
   };
 
-  const handleLogOut = () => {
-    sessionStorage.clear();
+  /* const handleLogOut = () => {
+    window.cookie.clear()
     navigate("/");
-  };
+  }; */
 
   const drawer = (
     <div className={styled.div_main}>
@@ -150,10 +150,10 @@ function ResponsiveDrawer(props) {
               <MenuItem onClick={handleClose}>Energy</MenuItem>
             </Link>
             <Link to="/major/receipts/gas">
-            <MenuItem onClick={handleClose}>Gas</MenuItem>
+              <MenuItem onClick={handleClose}>Gas</MenuItem>
             </Link>
             <Link to="/major/receipts/sewerage">
-            <MenuItem onClick={handleClose}>Sewerage</MenuItem>
+              <MenuItem onClick={handleClose}>Sewerage</MenuItem>
             </Link>
           </Menu>
         </Toolbar>
