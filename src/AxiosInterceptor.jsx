@@ -3,11 +3,10 @@ import axios from "axios";
 const AxiosInterceptor = () => {
   let accessToken = document.cookie.replace("token=", "");
 
-  if (accessToken === '') {
-
+  if (accessToken === "") {
     axios.interceptors.request.clear(
       (config) => {
-        config.headers.Authorization = '';
+        config.headers.Authorization = "";
         return config;
       },
       (error) => {
@@ -30,11 +29,15 @@ const AxiosInterceptor = () => {
 const TokenIsPresent = () => {
   let accessToken = document.cookie.replace("token=", "");
 
-  if (accessToken == '') {
-    return false;
+  console.log(accessToken);
+
+  if (accessToken) {
+    console.log("true");
+    return true;
   } else {
-
+    console.log("false");
+    return false;
   }
-}
+};
 
-export default AxiosInterceptor;
+export { AxiosInterceptor, TokenIsPresent };

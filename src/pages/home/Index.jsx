@@ -1,7 +1,7 @@
 import styles from "./styles/Index.module.css";
 import AboutUs from "./components/AboutUs";
 import NavbarComp from "../../components/NavbarComp";
-import Footer from "./components/Footer"
+import Footer from "./components/Footer";
 import Information from "./components/Information";
 
 const Index = () => {

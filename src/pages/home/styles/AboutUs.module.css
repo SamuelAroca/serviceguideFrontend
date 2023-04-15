@@ -3,42 +3,45 @@
   width: 100%;
   background-color: #ececec;
   position: relative;
-  font-family: 'Nunito', sans-serif;
+  font-family: "Nunito", sans-serif;
 }
 
-.subtitle_abs h2{
+.subtitle_abs h2 {
   font-size: 4rem;
   margin: 2rem;
   padding: 1rem;
 }
 
-.subtitle{
+.subtitle {
   font-size: 3rem;
   margin: 2rem;
   padding: 1rem;
   color: #83f084;
 }
 
-.container_services{
+.container_services {
   display: flex;
   margin: 2rem;
 }
 
-.container_services p{
+.container_services p {
   font-size: 16px;
 }
 
-.p_water, .p_energy, .p_gas, .p_sewerage{
+.p_water,
+.p_energy,
+.p_gas,
+.p_sewerage {
   padding: 1rem;
   justify-content: space-between;
   width: 100%;
 }
 
-.icon{
+.icon {
   font-size: 3rem;
 }
 
-.cont_icon{
+.cont_icon {
   display: flex;
   height: 3.5rem;
   width: 3.5rem;
@@ -49,12 +52,13 @@
   border-radius: 0.7rem;
 }
 
-@media (max-width: 1280px){
-  .flex_container{
+@media (max-width: 1280px) {
+  .flex_container {
     flex-direction: column;
   }
 
-  .us, .container_info{
+  .us,
+  .container_info {
     height: auto;
   }
 }

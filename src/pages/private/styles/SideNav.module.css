@@ -2,7 +2,7 @@
   position: relative;
 }
 
-.toolbar_title{
+.toolbar_title {
   place-content: center;
 }
 
@@ -11,17 +11,16 @@
   align-items: flex-end;
 }
 
-.toolbar_button{
+.toolbar_button {
   display: flex;
   align-items: flex-end;
 }
 
-.link{
+.link {
   text-decoration: none;
   color: #454545;
 }
 
-.link:hover{
+.link:hover {
   text-decoration: none;
 }
-

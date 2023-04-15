@@ -35,14 +35,14 @@ const Register = ({ open, setOpen }) => {
         password: password,
       });
       alert("Successfully registered user");
-      setOpen(!open)
+      setOpen(!open);
       /* Swal.fire(
         'Successfully registered user'
       ) */
     } catch (error) {
       alert(error);
     }
-  }
+  };
 
   return (
     <div className={styles.components}>

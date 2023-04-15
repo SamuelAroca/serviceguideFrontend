@@ -24,8 +24,8 @@ const Login = ({ open, setOpen }) => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [openRegister, setOpenRegister] = useState(false)
-  const [openLogin, setOpenLogin] = useState(false)
+  const [openRegister, setOpenRegister] = useState(false);
+  const [openLogin, setOpenLogin] = useState(false);
   const navigate = useNavigate();
 
   const url = "http://localhost:8080/api/users/auth/login";
@@ -52,9 +52,9 @@ const Login = ({ open, setOpen }) => {
   };
 
   const createNewAccount = () => {
-    setOpen(!open)
-    setOpenRegister(!openRegister)
-  }
+    setOpen(!open);
+    setOpenRegister(!openRegister);
+  };
 
   return (
     <div className={styles.components}>

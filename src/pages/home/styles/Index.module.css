@@ -1,4 +1,4 @@
-.header_section{
+.header_section {
   height: 100vh;
   width: 100%;
   position: relative;
@@ -15,20 +15,19 @@
   border-radius: 0rem 0rem 2rem 2rem;
 }
 
-.container_title{
+.container_title {
   position: absolute;
   top: 12rem;
   left: 5rem;
   color: #ffff;
 }
 
-
-.subtitle_header{
+.subtitle_header {
   font-weight: 100;
   font-size: 1.5rem;
 }
 
-.statistics_cont{
+.statistics_cont {
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -38,7 +37,9 @@
   top: 53%;
 }
 
-.sta_1,.sta_2,.sta_3{
+.sta_1,
+.sta_2,
+.sta_3 {
   height: 35vh;
   width: 30vh;
   background-color: #ececec;
@@ -46,12 +47,12 @@
   border: 0.1rem black solid;
   border-radius: 0.5rem;
 }
-.sta_1{
+.sta_1 {
   background-color: #020024;
 }
-.sta_2{
+.sta_2 {
   background-color: #090979;
 }
-.sta_3{
-  background-color: #00D4FF;
+.sta_3 {
+  background-color: #00d4ff;
 }

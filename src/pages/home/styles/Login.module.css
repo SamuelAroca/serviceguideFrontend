@@ -6,7 +6,7 @@
   width: 1100px;
   position: relative;
 }
-.close_button { 
+.close_button {
   position: absolute;
   top: 1rem;
   right: 2rem;
@@ -20,7 +20,7 @@
   width: 2.5rem;
   padding: 0.5rem;
   transition: 0.3s all;
-} 
+}
 .close_button:hover {
   background-color: #096a8a;
   scale: 0.9;
@@ -74,7 +74,6 @@
   flex-direction: column;
 }
 
-
 .container_image {
   display: flex;
   justify-content: center;
@@ -99,7 +98,6 @@
   z-index: 1;
   box-sizing: border-box;
 }
-
 
 .container_logo {
   align-items: center;
@@ -147,7 +145,7 @@
   .container_login {
     width: 100%;
     border-radius: 1rem 1rem 0 0;
-  } 
+  }
   .container_login {
     width: 100%;
     margin: 0;
