@@ -9,14 +9,14 @@ const Receipts = () => {
 
   const receipts = [
     {
-      name: "Monda",
+      name: "Recibo 1",
       date: "21/02/2023",
       consumo: "9kWh",
       tipo: "Energía",
       price: "500.000",
     },
     {
-      name: "Monda numero 2",
+      name: "Recibo 2",
       date: "21/02/2023",
       consumo: "9kWh",
       tipo: "Energía",

@@ -12,7 +12,8 @@ h4{
 
 .container_footer{
   width: 100%;
-  padding: 3rem 2rem 0 5rem;
+  height: 100%;
+  padding: 0 0 0 5rem;
 
 }
 
@@ -55,7 +56,7 @@ a:hover{
   height: 2px;
   width: 90%;
   padding: 0;
-  margin: 5rem auto 0 auto;
+  margin: 0;
 }
 
 .important_logos{
@@ -64,4 +65,10 @@ a:hover{
   display: flex;
   align-items: flex-end;
   width: 100vw;
+}
+
+.redes_icon{
+  align-items: flex-end;
+  position: relative;
+  left: 1rem;
 }

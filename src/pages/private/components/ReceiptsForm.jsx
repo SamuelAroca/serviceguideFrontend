@@ -4,11 +4,12 @@ import { useState } from "react";
 import { FormReceiptsLayout } from "../styled-components/form-receipts-layout.styled";
 import { BsWater, BsFillLightbulbFill, BsFillCloudFill } from "react-icons/bs";
 import { FaToilet } from "react-icons/fa";
+import axios from "axios";
 
 const ReceiptsForm = () => {
-  const { "*": path } = useParams();
+  /* const { "*": path } = useParams(); */
 
-  const [consumo, setConsumo] = useState("");
+  /* const [consumo, setConsumo] = useState(""); */
 
   const [receiptType, setReceiptType] = useState("water");
 
