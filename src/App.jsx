@@ -10,6 +10,9 @@ import Statistics from "./pages/private/Statistics";
 import Home from "./pages/private/Home";
 
 const App = () => {
+
+  
+
   return (
     <Router>
       <Routes>

@@ -1,42 +1,72 @@
 import { TextField, Button, Grid, Box } from "@mui/material";
 import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FormReceiptsLayout } from "../styled-components/form-receipts-layout.styled";
 import { BsWater, BsFillLightbulbFill, BsFillCloudFill } from "react-icons/bs";
 import { FaToilet } from "react-icons/fa";
 import axios from "axios";
 
-const ReceiptsForm = () => {
-  /* const { "*": path } = useParams(); */
-
-  /* const [consumo, setConsumo] = useState(""); */
+const ReceiptsForm = ({ userId }) => {
+  const apiUrl = "http://localhost:8080";
+  console.log(userId, "ID USER DESDE RECEIPTFORM");
 
   const [receiptType, setReceiptType] = useState("water");
 
-  const medida = receiptType === "water" ? "m3" : "kwh";
+  const [receipt, setReceipt] = useState({
+    receiptName: "",
+    price: "",
+    amount: "",
+    date: "",
+    user: {
+      id: userId,
+    },
+  });
 
-  const handleSend = (e) => {
-    e.preventDefault();
-    console.log(formValues);
-    console.log("Se envió la información");
-    setFormValues([]);
-  };
+  /*   const myID = async () => {
+    let accessToken = document.cookie.replace("token=", "");
+    console.log(accessToken, "ACCESS TOKEN");
+    try {
+      const result = await axios.get(
+        `${apiUrl}/api/users/auth/whoismyid/${accessToken}`
+      );
+      setUserActive(result.data);
+      console.log(result.data, "result función MYID()");
+    } catch (error) {
+      alert(error);
+    }
+  }; */
+
+  /*  useEffect(() => {
+    myID();
+  }, []); */
 
   // ------------------------------
 
-  const [receipt, setReceipt] = useState({
-    price: "",
-    quantity: "",
-    date: "",
-  });
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert(`El consumo de ${receipt.quantity}`);
+
+       try {
+      const response = await axios.post(
+        `${apiUrl}/api/receipt/${receiptType}/add`,
+        receipt
+      );
+      console.log(response, "POST RECEIPT");
+    } catch (error) {
+      console.log(error);
+    }
+
+    /* alert(`El consumo de ${receipt.quantity} de ${receiptType}`); */
+
+    console.log(receipt, "OBJETO RECIBO QUE SE ENVIA");
+    // Se setea el recibo a vacio para que se limpie el formulario
     setReceipt({
+      receiptName: "",
       price: "",
-      quantity: "",
+      amount: "",
       date: "",
+      user: {
+        id: "",
+      },
     });
   };
 
@@ -80,7 +110,17 @@ const ReceiptsForm = () => {
           <Grid item xs={12}>
             <TextField
               fullWidth
-              label="Precio"
+              label="Title"
+              name="receiptName"
+              type="text"
+              value={receipt.receiptName}
+              onChange={handleInputChange}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              label="Price"
               name="price"
               type="number"
               value={receipt.price}
@@ -90,17 +130,17 @@ const ReceiptsForm = () => {
           <Grid item xs={12}>
             <TextField
               fullWidth
-              label="Cantidad"
-              name="quantity"
+              label="Quantity"
+              name="amount"
               type="number"
-              value={receipt.quantity}
+              value={receipt.amount}
               onChange={handleInputChange}
             />
           </Grid>
           <Grid item xs={12}>
             <TextField
               fullWidth
-              label="Fecha"
+              label="Date"
               name="date"
               type="date"
               value={receipt.date}
@@ -108,7 +148,12 @@ const ReceiptsForm = () => {
             />
           </Grid>
           <Grid sx={{ display: "flex", justifyContent: "end" }} item xs={12}>
-            <Button type="submit" variant="contained" color="primary">
+            <Button
+              onClick={handleSubmit}
+              type="submit"
+              variant="contained"
+              color="primary"
+            >
               Guardar
             </Button>
           </Grid>
