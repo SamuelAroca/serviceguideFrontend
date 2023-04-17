@@ -27,7 +27,7 @@ const ReceiptCard = ({ data }) => {
       <h2>{data.receiptName}</h2>
       <p>{FormatDate(data.date)}</p>
       <p>{data.amount}</p>
-      <p>{data.tipo}</p>
+      <p>{data.price}</p>
     </ReceiptCardContainer>
   );
 };
