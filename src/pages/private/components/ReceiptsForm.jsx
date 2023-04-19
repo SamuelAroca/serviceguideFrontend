@@ -123,6 +123,7 @@ const ReceiptsForm = ({ userId }) => {
               label="Price"
               name="price"
               type="number"
+              step="0.01"
               value={receipt.price}
               onChange={handleInputChange}
             />
@@ -133,6 +134,7 @@ const ReceiptsForm = ({ userId }) => {
               label="Quantity"
               name="amount"
               type="number"
+              step="0.01"
               value={receipt.amount}
               onChange={handleInputChange}
             />
