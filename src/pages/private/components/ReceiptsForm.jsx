@@ -139,16 +139,20 @@ const ReceiptsForm = ({ userId }) => {
               onChange={handleInputChange}
             />
           </Grid>
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              label="Date"
-              name="date"
-              type="date"
-              value={receipt.date}
-              onChange={handleInputChange}
-            />
+          <Grid item xs>
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
+                label="Date"
+                name="date"
+                type="date"
+                value={receipt.date}
+                onChange={handleInputChange}
+              />
+            </Grid>
+            
           </Grid>
+          
           <Grid sx={{ display: "flex", justifyContent: "end" }} item xs={12}>
             <Button
               onClick={handleSubmit}
