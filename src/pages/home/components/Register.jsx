@@ -12,6 +12,7 @@ import img4 from "../../../assets/gas natural.jpeg";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const Register = ({ open, setOpen }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -20,25 +21,53 @@ const Register = ({ open, setOpen }) => {
     setShowPassword(!showPassword);
   };
 
+  const navigate = useNavigate();
+
   const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const registerAlert = () => {
+    Swal.fire("Successfully registered user", "", "success", {
+      showDenyButton: false,
+      showCancelButton: false,
+      confirmButtonText: "Ok",
+      denyButtonText: `Don't save`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigate("/major");
+      }
+    });
+  };
+
   const save = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:8080/api/users/auth/register", {
-        firstName: name,
-        lastName: lastName,
-        login: email,
-        password: password,
-      });
-      alert("Successfully registered user");
-      setOpen(!open);
-      /* Swal.fire(
-        'Successfully registered user'
-      ) */
+      let response = await axios.post(
+        "http://localhost:8080/api/users/auth/register",
+        {
+          firstName: name,
+          lastName: lastName,
+          login: email,
+          password: password,
+        }
+      );
+
+      if (response.status != 201) {
+        setOpen(!open);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+        });
+      } else {
+        document.cookie = `token=${
+          response.data.token
+        }; max-age=${3600}; path=/; samesite=strict`;
+        setOpen(!open);
+        registerAlert();
+      }
     } catch (error) {
       alert(error);
     }
@@ -121,9 +150,7 @@ const Register = ({ open, setOpen }) => {
 
             <div className={styles.links}>
               <p className={styles.subtitle}>already have an account?</p>
-              <a className={styles.sign_in} href="/login">
-                Sign in
-              </a>
+              <a className={styles.sign_in}>Sign in</a>
             </div>
 
             <button className={styles.btn_register} onClick={save}>
