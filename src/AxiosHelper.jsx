@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const AxiosInterceptor = () => {
+const initAxiosInterceptor = () => {
   let accessToken = document.cookie.replace("token=", "");
 
   if (accessToken === "") {
@@ -26,18 +26,9 @@ const AxiosInterceptor = () => {
   }
 };
 
-const TokenIsPresent = () => {
-  let accessToken = document.cookie.replace("token=", "");
-
-  console.log(accessToken);
-
-  if (accessToken) {
-    console.log("true");
-    return true;
-  } else {
-    console.log("false");
-    return false;
-  }
+const getToken = () => {
+  let accessToken = document.cookie.replace("token=", "")
+  return (accessToken);
 };
 
-export { AxiosInterceptor, TokenIsPresent };
+export { initAxiosInterceptor, getToken };

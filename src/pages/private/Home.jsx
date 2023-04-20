@@ -1,27 +1,40 @@
 import SideNav from "./SideNav";
 import axios from "axios";
 import styled from "./styles/Hom.module.css";
-import { TokenIsPresent, AxiosInterceptor } from "../../AxiosInterceptor";
+import { getToken, initAxiosInterceptor } from "../../AxiosHelper";
 import moment from "moment/moment";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-AxiosInterceptor();
+initAxiosInterceptor();
 
 const Home = () => {
   const apiUrl = "http://localhost:8080";
   const navigate = useNavigate();
   const [loadUser, setLoadUser] = useState(true);
+  const [user, setUser] = useState(null);
 
   /* Aqui se llamaria a el endpoint whoiam */
   useEffect(() => {
     const loadUser = async () => {
-      if (!TokenIsPresent()) {
+      if (!getToken()) {
         setLoadUser(false);
         return;
       }
+
+      try {
+        const { data: user } = await axios.get(
+          `${apiUrl}/api/users/auth/whoiam/${getToken()}`
+        );
+        setUser(user);
+        setLoadUser(false);
+      } catch (error) {
+        console.log(error);
+      }
     };
+
+    loadUser();
   }, []);
 
   const prueba = async () => {
