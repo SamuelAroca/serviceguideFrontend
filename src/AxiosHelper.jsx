@@ -1,12 +1,12 @@
 import axios from "axios";
 
 const initAxiosInterceptor = () => {
-  let accessToken = document.cookie.replace("token=", "");
+  let accessToken = getToken();
 
-  if (accessToken === "") {
-    axios.interceptors.request.clear(
+  if (accessToken !== "") {
+    axios.interceptors.request.use(
       (config) => {
-        config.headers.Authorization = "";
+        config.headers.Authorization = `Bearer ${accessToken}`;
         return config;
       },
       (error) => {
@@ -14,9 +14,9 @@ const initAxiosInterceptor = () => {
       }
     );
   } else {
-    axios.interceptors.request.use(
+    axios.interceptors.request.clear(
       (config) => {
-        config.headers.Authorization = `Bearer ${accessToken}`;
+        config.headers.Authorization = "";
         return config;
       },
       (error) => {
@@ -27,8 +27,8 @@ const initAxiosInterceptor = () => {
 };
 
 const getToken = () => {
-  let accessToken = document.cookie.replace("token=", "")
-  return (accessToken);
+  let accessToken = document.cookie.replace("token=", "");
+  return accessToken;
 };
 
 export { initAxiosInterceptor, getToken };
