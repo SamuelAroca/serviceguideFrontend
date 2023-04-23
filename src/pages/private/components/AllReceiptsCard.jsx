@@ -1,7 +1,6 @@
 import ReceiptCard from "./ReceiptCard";
 
 const AllReceiptsCards = ({ data }) => {
-  console.log(data, "DATA ALL CARDS");
   return (
     <div
       style={{

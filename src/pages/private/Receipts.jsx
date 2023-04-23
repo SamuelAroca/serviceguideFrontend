@@ -15,13 +15,11 @@ const Receipts = () => {
 
   const myID = async () => {
     let accessToken = document.cookie.replace("token=", "");
-    console.log(accessToken, "ACCESS TOKEN");
     try {
       const result = await axios.get(
         `${apiUrl}/api/users/auth/whoismyid/${accessToken}`
       );
       setUser(result.data);
-      console.log(result.data, "result función MYID()");
     } catch (error) {
       alert(error);
     }
@@ -33,7 +31,6 @@ const Receipts = () => {
     );
     try {
       setAllReceipts(data.data);
-      console.log(data, "DATA");
     } catch (err) {
       console.log(err);
     }
@@ -43,23 +40,6 @@ const Receipts = () => {
     myID();
     getWaterReceipts();
   }, [user]);
-
-  const receipts = [
-    {
-      name: "Recibo 1",
-      date: "21/02/2023",
-      consumo: "9kWh",
-      tipo: "Energía",
-      price: "500.000",
-    },
-    {
-      name: "Recibo 2",
-      date: "21/02/2023",
-      consumo: "9kWh",
-      tipo: "Energía",
-      price: "500.000",
-    },
-  ];
 
   return (
     <div
@@ -73,10 +53,7 @@ const Receipts = () => {
     >
       <Routes>
         <Route path="/" element={<AllReceiptsCards data={allReceipts} />} />
-        <Route path="/water" element={<ReceiptsForm userId={user} />} />
-        <Route path="/energy" element={<ReceiptsForm />} />
-        <Route path="/gas" element={<ReceiptsForm />} />
-        <Route path="/sewerage" element={<ReceiptsForm />} />
+        <Route path="/addreceipt" element={<ReceiptsForm userId={user} />} />
       </Routes>
       <SideNav setOpen={setOpen} open={open} />
     </div>

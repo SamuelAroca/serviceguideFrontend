@@ -15,8 +15,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
 import styled from "./styles/SideNav.module.css";
-import { Menu, MenuItem } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import { AiFillHome } from "react-icons/ai";
 import { BsReception4 } from "react-icons/bs";
 import { IoReceipt } from "react-icons/io5";
@@ -34,29 +32,11 @@ function ResponsiveDrawer(props) {
   const location = useLocation();
   const { "*": path } = useParams();
 
-  const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [menuOpen, setMenuOpen] = useState(false);
-
-  const handleClose = () => {
-    setAnchorEl(null);
-    setMenuOpen(false);
-  };
-
-  const handleClick = (e) => {
-    setAnchorEl(e.currentTarget);
-    setMenuOpen(true);
-  };
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-
-  /* const handleLogOut = () => {
-    window.cookie.clear()
-    navigate("/");
-  }; */
 
   const drawer = (
     <div className={styled.div_main}>
@@ -132,30 +112,17 @@ function ResponsiveDrawer(props) {
             <MenuIcon />
           </IconButton>
           {location.pathname === "/major/receipts" || path ? (
-            <Button
+            <Link to={"/major/receipts/addreceipt"}>
+              <Button
               className={styled.add_button}
               variant="contained"
               color="secondary"
               size="large"
-              onClick={handleClick}
-            >
+              >
               ADD RECEIPT
-            </Button>
+              </Button>
+            </Link>
           ) : null}
-          <Menu anchorEl={anchorEl} open={menuOpen} onClose={handleClose}>
-            <Link to="/major/receipts/water">
-              <MenuItem onClick={handleClose}>Water</MenuItem>
-            </Link>
-            <Link to="/major/receipts/energy">
-              <MenuItem onClick={handleClose}>Energy</MenuItem>
-            </Link>
-            <Link to="/major/receipts/gas">
-              <MenuItem onClick={handleClose}>Gas</MenuItem>
-            </Link>
-            <Link to="/major/receipts/sewerage">
-              <MenuItem onClick={handleClose}>Sewerage</MenuItem>
-            </Link>
-          </Menu>
         </Toolbar>
       </AppBar>
       <Box
