@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import SideNav from "../SideNav";
 import HouseForm from "./receipts-forms/HouseForm";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
+
+
+
 
 const myID = async () => {
 
@@ -28,20 +32,13 @@ const AddHouse = () =>{
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
-      marginLeft: "5rem",
+      marginLeft: "20rem",
       marginTop: "5rem",
     }}
     >
       <h1>ADD HOUSE</h1>
       <SideNav />
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          marginLeft: "5rem",
-        }}
-      >
+      <div>
         <HouseForm myID={myID} />
       </div>
     </div>

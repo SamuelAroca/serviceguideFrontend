@@ -42,6 +42,7 @@ const HouseForm = (props) => {
     const regexLetters = /^[a-zA-Z\s]+$/; // Expresión regular para validar nombres
     const regexLettersNumbers = /^[\w\s]+(?:\s+[a-zA-Z]+\d{0,2})*$/; // Expresión regular para validar precios
     const regexNumbers = /^[0-9]+$/; // Expresión regular para validar cantidades
+    const regexStratum = /^[1-6]$/; // Validar estrato
 
     if (!house.name.trim()) {
       errors.name = "Debe existir un 'Nombre' de la casa.";
@@ -53,6 +54,8 @@ const HouseForm = (props) => {
       errors.stratum = "Debe existir un estrato de la casa.";
     } else if (!regexNumbers.test(house.stratum)) {
       errors.stratum = "El 'Estrato' solo debe contener números.";
+    } else if(!regexStratum.test(house.stratum)) {
+      errors.stratum = "El 'Estrato' es únicamente del 1 al 6."
     }
 
     if (!house.city.trim()) {
@@ -97,7 +100,7 @@ const HouseForm = (props) => {
 
     if (Object.keys(err).length === 0) {
 
-      /* try {
+      try {
         const response = await axios.post(
           `${apiUrl}/api/house/add`,
           updatedHouse
@@ -105,7 +108,7 @@ const HouseForm = (props) => {
       } catch (error) {
         console.log(error);
       }
- */
+
       console.log(updatedHouse, "ESTE ES EL FORMULARIO CON EL ID");
 
       setHouse({
