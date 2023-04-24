@@ -75,7 +75,7 @@ const ReceiptsForm = ({ userId }) => {
 
   useEffect(() => {
     getHouses();
-  }, []);
+  }, [userId]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
