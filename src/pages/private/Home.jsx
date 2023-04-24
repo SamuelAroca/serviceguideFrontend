@@ -7,79 +7,84 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-initAxiosInterceptor();
-
 const Home = () => {
   const apiUrl = "http://localhost:8080";
   const navigate = useNavigate();
-  const [loadUser, setLoadUser] = useState(true);
   const [user, setUser] = useState(null);
 
-  /* Aqui se llamaria a el endpoint whoiam */
   useEffect(() => {
-    const loadUser = async () => {
-      if (!getToken()) {
-        setLoadUser(false);
-        return;
-      }
-
-      try {
-        const { data: user } = await axios.get(
-          `${apiUrl}/api/users/auth/whoiam/${getToken()}`
-        );
-        setUser(user);
-        setLoadUser(false);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    loadUser();
+    initAxiosInterceptor();
+    tokenExist();
+    loadUserByToken();
   }, []);
 
-  const prueba = async () => {
+  const loadUserByToken = async () => {
     try {
-      const result = await axios.get(
-        `${apiUrl}/api/receipt/water/findAllByUser/2`
+      const { data: user } = await axios.get(
+        `${apiUrl}/api/users/auth/whoiam/${getToken()}`
       );
-      console.log(result.data);
-
-      /*  Ejemplos de uso del for con los elementos de la respuesta */
-
-      let response = result.data;
-
-      let count = 0;
-
-      response.forEach((element) => {
-        let id = element.id;
-        let amount = element.amount;
-        let date = element.date;
-        let price = element.price;
-        let receiptName = element.receiptName;
-
-        count += price;
-
-        console.log(id);
-        console.log(amount);
-        console.log(price);
-        console.log(receiptName);
-
-        console.log(FormatDate(date));
-      });
-
-      console.log(count);
+      setUser(user);
+      console.log(user);
     } catch (error) {
-      Swal.fire({
-        title: "Your session has expired!",
-        text: "You will have to log in again!",
-        icon: "error",
-        confirmButtonColor: "#3085d6",
-        confirmButtonText: "Ok, login again",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          navigate("/");
-        }
-      });
+      console.log(error);
+    }
+  };
+
+  const tokenExist = () => {
+    if (!getToken()) {
+      navigate("/");
+    }
+  };
+
+  const sessionExpired = () => {
+    Swal.fire({
+      title: "Your session has expired!",
+      text: "You will have to log in again!",
+      icon: "error",
+      confirmButtonColor: "#3085d6",
+      confirmButtonText: "Ok, login again",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigate("/");
+        return;
+      }
+    });
+  };
+
+  const prueba = async () => {
+    if (getToken()) {
+      try {
+        const result = await axios.get(
+          `${apiUrl}/api/receipt/water/findAllByUser/2`
+        );
+        console.log(result.data);
+
+        let response = result.data;
+
+        let count = 0;
+
+        response.forEach((element) => {
+          let id = element.id;
+          let amount = element.amount;
+          let date = element.date;
+          let price = element.price;
+          let receiptName = element.receiptName;
+
+          count += price;
+
+          console.log(id);
+          console.log(amount);
+          console.log(price);
+          console.log(receiptName);
+
+          console.log(FormatDate(date));
+        });
+        console.log(count);
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      sessionExpired();
     }
   };
 
@@ -113,6 +118,7 @@ const Home = () => {
         <h1>ESTE ES EL HOME</h1>
         <button onClick={prueba}>Click</button>
         <button onClick={handleLogOut}>Log Out</button>
+        <h3>{user}</h3>
       </div>
     </>
   );
