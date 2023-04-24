@@ -8,6 +8,7 @@ import { FaToilet } from "react-icons/fa";
 import { Tooltip } from "@mui/material";
 import { Alert } from "@mui/material";
 import axios from "axios";
+import SelectHouse from "../SelectHouse";
 
 const ReceiptsForm = ({ userId }) => {
   const apiUrl = "http://localhost:8080";
@@ -15,6 +16,13 @@ const ReceiptsForm = ({ userId }) => {
   const [receiptType, setReceiptType] = useState("water");
 
   const [errors, setErrors] = useState([]);
+
+  const [selectedHouse, setSelectedHouse] = useState(null);
+  const [allHouses, setAllHouses] = useState([]);
+
+  const handleHouseChange = (value) => {
+    setSelectedHouse(value);
+  };
 
   const [receipt, setReceipt] = useState({
     receiptName: "",
@@ -54,6 +62,21 @@ const ReceiptsForm = ({ userId }) => {
     return errors;
   };
 
+  const getHouses = async () => {
+    const data = await axios.get(
+      `${apiUrl}/api/house/findAllByUser/${userId}`
+    );
+    try {
+      setAllHouses(data.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getHouses();
+  }, [userId]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const err = onValidate(receipt);
@@ -63,8 +86,8 @@ const ReceiptsForm = ({ userId }) => {
     console.log(receipt);
 
     if (Object.keys(err).length === 0) {
-      console.log("Enviando formulario....");
-      /* try {
+
+      try {
         const response = await axios.post(
           `${apiUrl}/api/receipt/${receiptType}/add`,
           receipt
@@ -82,7 +105,7 @@ const ReceiptsForm = ({ userId }) => {
         user: {
           id: "",
         },
-      }); */
+      });
     } else {
       setErrors(err);
     }
@@ -186,7 +209,7 @@ const ReceiptsForm = ({ userId }) => {
               <Alert severity="warning"> {errors.amount} </Alert>
             )}
           </Grid>
-          <Grid item xs>
+          <Grid item xs style={{display: "flex", gap: "10px"}}>
             <Grid item xs={6}>
               <Tooltip
                 disableFocusListener
@@ -204,6 +227,12 @@ const ReceiptsForm = ({ userId }) => {
                 />
               </Tooltip>
               {errors.date && <Alert severity="warning"> {errors.date} </Alert>}
+            </Grid>
+            <Grid item xs={4}>
+              <SelectHouse
+                options={allHouses}
+                onChange={handleHouseChange}
+              />
             </Grid>
           </Grid>
 

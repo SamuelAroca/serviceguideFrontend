@@ -21,13 +21,13 @@ const Receipts = () => {
       );
       setUser(result.data);
     } catch (error) {
-      alert(error);
+      console.log(error);
     }
   };
 
   const getWaterReceipts = async () => {
     const data = await axios.get(
-      `${apiUrl}/api/receipt/water/findAllByUser/${user}`
+      `${apiUrl}/api/receipt/water/findAllByHouse/${user}`
     );
     try {
       setAllReceipts(data.data);

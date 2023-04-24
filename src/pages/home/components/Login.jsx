@@ -43,7 +43,7 @@ const Login = ({ open, setOpen }) => {
       } else {
         document.cookie = `token=${
           response.data.token
-        }; max-age=${3600}; path=/; samesite=strict`;
+        }; max-age=${3600 * 5}; path=/; samesite=strict`;
         navigate("/major");
       }
     } catch (error) {

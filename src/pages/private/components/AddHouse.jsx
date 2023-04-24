@@ -3,6 +3,9 @@ import SideNav from "../SideNav";
 import HouseForm from "./receipts-forms/HouseForm";
 import axios from "axios";
 
+
+
+
 const myID = async () => {
 
   const apiUrl = "http://localhost:8080";
@@ -28,20 +31,13 @@ const AddHouse = () =>{
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
-      marginLeft: "5rem",
+      marginLeft: "25rem",
       marginTop: "5rem",
     }}
     >
       <h1>ADD HOUSE</h1>
       <SideNav />
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          marginLeft: "5rem",
-        }}
-      >
+      <div>
         <HouseForm myID={myID} />
       </div>
     </div>
