@@ -3,7 +3,6 @@ import { ReceiptCardContainer } from "../styled-components/receipt-card-containe
 import { AnimatePresence } from "framer-motion";
 import moment from "moment/moment";
 
-
 const ReceiptCard = ({ data }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -25,9 +24,9 @@ const ReceiptCard = ({ data }) => {
       transition={{ duration: 0 }}
     >
       <h2>{data.receiptName}</h2>
-      <p>{FormatDate(data.date)}</p>
-      <p>{data.amount}</p>
-      <p>{data.price}</p>
+      <p>Date: {FormatDate(data.date)}</p>
+      <p>Amount: {data.amount}</p>
+      <p>Price: {data.price}</p>
     </ReceiptCardContainer>
   );
 };
