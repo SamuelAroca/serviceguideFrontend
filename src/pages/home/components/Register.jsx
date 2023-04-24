@@ -12,6 +12,9 @@ import img4 from "../../../assets/gas natural.jpeg";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { Link, useNavigate } from "react-router-dom";
+import Modal from "./Modal";
+import NavbarComp from "../../../components/NavbarComp";
 
 const Register = ({ open, setOpen }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -20,32 +23,70 @@ const Register = ({ open, setOpen }) => {
     setShowPassword(!showPassword);
   };
 
+  const navigate = useNavigate();
+
   const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [openLogin, setOpenLogin] = useState(false);
 
-  async function save(e) {
+  const registerAlert = () => {
+    Swal.fire("Successfully registered user", "", "success", {
+      showDenyButton: false,
+      showCancelButton: false,
+      confirmButtonText: "Ok",
+      denyButtonText: `Don't save`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigate("/major");
+      }
+    });
+  };
+
+  const save = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:8080/api/users/auth/register", {
-        name: name,
-        lastName: lastName,
-        email: email,
-        password: password,
-      });
-      alert("Successfully registered user");
-      setOpen(!open)
-      /* Swal.fire(
-        'Successfully registered user'
-      ) */
+      let response = await axios.post(
+        "http://localhost:8080/api/users/auth/register",
+        {
+          firstName: name,
+          lastName: lastName,
+          login: email,
+          password: password,
+        }
+      );
+
+      if (response.status != 201) {
+        setOpen(!open);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+        });
+      } else {
+        document.cookie = `token=${
+          response.data.token
+        }; max-age=${3600}; path=/; samesite=strict`;
+        setOpen(!open);
+        registerAlert();
+      }
     } catch (error) {
       alert(error);
     }
-  }
+  };
+
+  const toggleModal = () => {
+    setOpenLogin(!openLogin);
+    setTimeout(() => {
+      setOpen(!open);
+      console.log('holas');
+    }, 100);
+  };
 
   return (
     <div className={styles.components}>
+      <Modal open={openLogin} setOpen={setOpenLogin} />
       <AiOutlineClose
         onClick={() => setOpen(!open)}
         className={styles.close_button}
@@ -63,7 +104,6 @@ const Register = ({ open, setOpen }) => {
           <div className={styles.container_label}>
             <div className={styles.inputs_gap}>
               <TextField
-                id="outlined-basic"
                 label="Name"
                 variant="outlined"
                 placeholder="Type your email"
@@ -75,7 +115,6 @@ const Register = ({ open, setOpen }) => {
                 }}
               />
               <TextField
-                id="outlined-basic"
                 label="Last name"
                 variant="outlined"
                 placeholder="Type your email"
@@ -87,7 +126,6 @@ const Register = ({ open, setOpen }) => {
                 }}
               />
               <TextField
-                id="outlined-basic"
                 label="Email"
                 variant="outlined"
                 placeholder="Type your email"
@@ -100,7 +138,6 @@ const Register = ({ open, setOpen }) => {
               />
               <div className={styles.password_container}>
                 <TextField
-                  id="outlined-basic"
                   label="Password"
                   variant="outlined"
                   type={showPassword ? "text" : "password"}
@@ -121,9 +158,9 @@ const Register = ({ open, setOpen }) => {
 
             <div className={styles.links}>
               <p className={styles.subtitle}>already have an account?</p>
-              <a className={styles.sign_in} href="/login">
+              <Link className={styles.sign_in} onClick={() => toggleModal()}>
                 Sign in
-              </a>
+              </Link>
             </div>
 
             <button className={styles.btn_register} onClick={save}>

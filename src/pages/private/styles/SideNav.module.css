@@ -1,0 +1,30 @@
+.div_main {
+  position: relative;
+}
+
+.icon {
+  font-size: 18px;
+}
+
+.toolbar_title {
+  place-content: center;
+}
+
+.toolbar_button {
+  display: flex;
+  align-items: flex-end;
+}
+
+.toolbar_button {
+  display: flex;
+  align-items: flex-end;
+}
+
+.link {
+  text-decoration: none;
+  color: #454545;
+}
+
+.link:hover {
+  text-decoration: none;
+}

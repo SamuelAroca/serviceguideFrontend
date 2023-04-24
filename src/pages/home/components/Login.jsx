@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../styles/Login.module.css";
 import { RiArrowRightSLine } from "react-icons/ri";
 import { RiWaterFlashFill } from "react-icons/ri";
@@ -12,6 +12,8 @@ import img2 from "../../../assets/alcantarillado.jpg";
 import img3 from "../../../assets/Electricistas-scaled.jpg";
 import img4 from "../../../assets/gas natural.jpeg";
 import axios from "axios";
+import ModalRegister from "./ModalRegister";
+import Modal from "./Modal";
 
 const Login = ({ open, setOpen }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -22,40 +24,42 @@ const Login = ({ open, setOpen }) => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [openRegister, setOpenRegister] = useState(false);
+  const [openLogin, setOpenLogin] = useState(false);
   const navigate = useNavigate();
 
-  async function login(e) {
+  const url = "http://localhost:8080/api/users/auth/login";
+
+  const login = async (e) => {
     e.preventDefault();
     try {
-      await axios
-        .post("http://localhost:8080/api/users/auth/authenticate", {
-          email: email,
-          password: password,
-        })
-        .then(
-          (res) => {
-            console.log(res.data);
+      let response = await axios.post(url, {
+        login: email,
+        password: password,
+      });
 
-            if (res.data.message == "Email not exits") {
-              alert("Email not exist");
-            } else if (res.data.message == "Login Success") {
-              setOpen(!open)
-              navigate("/prueba");
-            } else {
-              alert("Incorrect Email or Password not match");
-            }
-          },
-          (fail) => {
-            console.log(fail);
-          }
-        );
+      if (response.status != 200) {
+        throw new alert("Login Error");
+      } else {
+        document.cookie = `token=${
+          response.data.token
+        }; max-age=${3600}; path=/; samesite=strict`;
+        navigate("/major");
+      }
     } catch (error) {
-      alert(error);
+      console.log(error);
     }
-  }
+  };
+
+  const createNewAccount = () => {
+    setOpen(!open);
+    setOpenRegister(!openRegister);
+  };
 
   return (
     <div className={styles.components}>
+      <ModalRegister open={openRegister} setOpen={setOpenRegister} />
+      <Modal open={openLogin} setOpen={setOpenLogin} />
       <AiOutlineClose
         onClick={() => setOpen(!open)}
         className={styles.close_button}
@@ -102,7 +106,7 @@ const Login = ({ open, setOpen }) => {
 
             <div className={styles.links}>
               <a href="forgot-password">Forgot password?</a>
-              <Link to="/register">Create new account</Link>
+              <a onClick={() => createNewAccount()}>Create new account</a>
             </div>
             <button className={styles.btn_login} onClick={login}>
               LOGIN

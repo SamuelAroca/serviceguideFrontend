@@ -1,0 +1,26 @@
+.div_main {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-image: url("../../../assets/backgroundMain.png");
+}
+
+.tittle {
+  color: white;
+  font-size: 10rem;
+  margin: 0;
+}
+
+.div_button {
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+}
