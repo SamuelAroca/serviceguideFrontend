@@ -2,6 +2,10 @@
   position: relative;
 }
 
+.icon {
+  font-size: 18px;
+}
+
 .toolbar_title {
   place-content: center;
 }

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const FormReceiptsLayout = styled.div`
+export const FormLayout = styled.div`
   display: flex;
   flex-direction: column;
 

@@ -1,7 +1,7 @@
 import SideNav from "./SideNav";
 import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
-import ReceiptsForm from "./components/ReceiptsForm";
+import ReceiptsForm from "./components/receipts-forms/ReceiptsForm";
 import AllReceiptsCards from "./components/AllReceiptsCard";
 import axios from "axios";
 

@@ -16,7 +16,9 @@ import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
 import styled from "./styles/SideNav.module.css";
 import { AiFillHome } from "react-icons/ai";
-import { BsReception4 } from "react-icons/bs";
+import { BsReception4, BsSave2Fill, BsHouseAddFill } from "react-icons/bs";
+import { MdOutlinePostAdd } from "react-icons/md";
+import { FaHouseUser } from "react-icons/fa";
 import { IoReceipt } from "react-icons/io5";
 import {
   BrowserRouter as Switch,
@@ -48,32 +50,73 @@ function ResponsiveDrawer(props) {
         <Link className={styled.link} to={"/major/home"}>
           <ListItem disablePadding>
             <ListItemButton>
-              <ListItemIcon>
+              <ListItemIcon className={styled.icon}>
                 <AiFillHome />
               </ListItemIcon>
               <ListItemText primary="Home" />
             </ListItemButton>
           </ListItem>
         </Link>
-
+        <Divider />
         <Link className={styled.link} to={"/major/receipts"}>
           <ListItem disablePadding>
             <ListItemButton>
-              <ListItemIcon>
+              <ListItemIcon className={styled.icon}>
                 <IoReceipt />
               </ListItemIcon>
               <ListItemText primary="Receipts" />
             </ListItemButton>
           </ListItem>
         </Link>
-
+        <Link className={styled.link} to={"/major/receipts/addreceipt"}>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon className={styled.icon}>
+                <MdOutlinePostAdd />
+              </ListItemIcon>
+              <ListItemText primary="Add receipt" />
+            </ListItemButton>
+          </ListItem>
+        </Link>
+        <Divider />
+        <Link className={styled.link} to={"/major/houses"}>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon className={styled.icon}>
+                <FaHouseUser />
+              </ListItemIcon>
+              <ListItemText primary="Houses" />
+            </ListItemButton>
+          </ListItem>
+        </Link>
+        <Link className={styled.link} to={"/major/houses/addhouse"}>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon className={styled.icon}>
+                <BsHouseAddFill />
+              </ListItemIcon>
+              <ListItemText primary="Add house" />
+            </ListItemButton>
+          </ListItem>
+        </Link>
+        <Divider />
         <Link className={styled.link} to={"/major/statistics"}>
           <ListItem disablePadding>
             <ListItemButton>
-              <ListItemIcon>
+              <ListItemIcon className={styled.icon}>
                 <BsReception4 />
               </ListItemIcon>
               <ListItemText primary="Statistics" />
+            </ListItemButton>
+          </ListItem>
+        </Link>
+        <Link className={styled.link} to={"/major/statistics/savedstatistics"}>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon className={styled.icon}>
+                <BsSave2Fill />
+              </ListItemIcon>
+              <ListItemText primary="Saved statistics" />
             </ListItemButton>
           </ListItem>
         </Link>
@@ -125,11 +168,7 @@ function ResponsiveDrawer(props) {
           ) : null}
         </Toolbar>
       </AppBar>
-      <Box
-        component="nav"
-        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-        aria-label="mailbox folders"
-      >
+      <Box>
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Drawer
           container={container}
@@ -162,16 +201,6 @@ function ResponsiveDrawer(props) {
         >
           {drawer}
         </Drawer>
-      </Box>
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          p: 3,
-          width: { sm: `calc(100% - ${drawerWidth}px)` },
-        }}
-      >
-        <Toolbar />
       </Box>
     </Box>
   );
