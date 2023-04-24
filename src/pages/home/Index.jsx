@@ -3,6 +3,7 @@ import AboutUs from "./components/AboutUs";
 import NavbarComp from "../../components/NavbarComp";
 import Footer from "./components/Footer";
 import Information from "./components/Information";
+import VideoPlayer from "./components/VideoPlayer";
 
 const Index = () => {
   return (
@@ -24,6 +25,9 @@ const Index = () => {
           <div className={styles.sta_2}></div>
           <div className={styles.sta_3}></div>
         </div>
+      </section>
+      <section className={styles.video_player}>
+        <VideoPlayer />
       </section>
       <div className={styles.container_AboutUs}>
         <section id="aboutUs">

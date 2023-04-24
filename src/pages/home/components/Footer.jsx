@@ -22,12 +22,6 @@ const Footer = () => {
           </div>
         </div>
         <div className={styles.linea} />
-        <div className={styles.redes_icon}>
-          <Fab style={{}} variant="extended" color="primary" size="medium">
-            <GrAdd />
-            Samuel Aroca
-          </Fab>
-        </div>
       </div>
     </>
   );
