@@ -24,7 +24,13 @@ const Information = () => {
                 allowing us to face challenges with confidence and reach our
                 full potential."
               </p>
-              <p className={styles.name_us}>Jim Díaz y Samuel Aroca</p>
+              <div className={styles.container_us}>
+                <p className={styles.name_us}>
+                  <a target="blank" href="https://www.linkedin.com/in/jim-diaz-del-castilllo-a91913165/" className={styles.name_us}>Jim Díaz </a>
+                   y
+                  <a target="blank" href="https://www.linkedin.com/in/samuel-aroca-266421249/" className={styles.name_us}> Samuel Aroca</a>
+                </p>
+              </div>
             </div>
           </div>
         </div>

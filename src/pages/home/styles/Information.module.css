@@ -46,7 +46,6 @@
 }
 
 .paragraph_us {
-  /* background-color: red; */
   height: 50vh;
   width: 35%;
   padding: 1rem;
@@ -77,6 +76,10 @@
   width: 100%;
   gap: 6rem;
   max-width: 1534px;
+}
+
+a:link, a:visited, a:active{
+  color: #718494;
 }
 
 .picture {

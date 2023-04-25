@@ -13,8 +13,6 @@ const Footer = () => {
             <h5>ServiceGuide</h5>
           </div>
           <div className={styles.links}>
-            <a href="">LinkedIn</a>
-            <a href="">GitHub</a>
             <a href="">Twitter</a>
             <a href="">Instagram</a>
             <a href="">Facebook</a>
