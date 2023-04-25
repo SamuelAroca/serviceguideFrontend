@@ -1,12 +1,12 @@
 .header_section {
-  height: 100vh;
+  height: 82.5vh;
   width: 100%;
   position: relative;
 }
 
 .header {
   position: relative;
-  background-image: url(../../../assets/backgroundMain.png);
+  background-image: url(../../../assets/image_index.webp);
   height: 80vh;
   min-height: 400px;
   background-size: cover;
@@ -22,6 +22,14 @@
   color: #ffff;
 }
 
+.container_title h1 {
+  font-size: 3.5rem;
+}
+
+.container_title h2 {
+  font-size: 2rem;
+}
+
 .subtitle_header {
   font-weight: 100;
   font-size: 1.5rem;
@@ -35,26 +43,6 @@
   height: 50vh;
   width: 100%;
   top: 53%;
-}
-
-.sta_1,
-.sta_2,
-.sta_3 {
-  height: 35vh;
-  width: 30vh;
-  background-color: #ececec;
-  align-items: flex-end;
-  border: 0.1rem black solid;
-  border-radius: 0.5rem;
-}
-.sta_1 {
-  background-color: #020024;
-}
-.sta_2 {
-  background-color: #090979;
-}
-.sta_3 {
-  background-color: #00d4ff;
 }
 
 .video_player{

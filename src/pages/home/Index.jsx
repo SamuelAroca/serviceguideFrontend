@@ -20,11 +20,6 @@ const Index = () => {
             </h2>
           </div>
         </header>
-        <div className={styles.statistics_cont}>
-          <div className={styles.sta_1}></div>
-          <div className={styles.sta_2}></div>
-          <div className={styles.sta_3}></div>
-        </div>
       </section>
       <section className={styles.video_player}>
         <VideoPlayer />

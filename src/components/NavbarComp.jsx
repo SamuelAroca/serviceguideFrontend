@@ -42,7 +42,7 @@ const NavbarComp = () => {
           <a className="link" href="#aboutUs">
             Nosotros
           </a>
-          <Link className="link" to="/news">
+          <Link className="link">
             Noticias
           </Link>
           <Link className="link" onClick={() => setOpenRegister(!openRegister)}>
