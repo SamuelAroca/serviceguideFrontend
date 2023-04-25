@@ -13,7 +13,7 @@ const NavbarComp = () => {
   const [openRegister, setOpenRegister] = useState(false);
 
   const setFixed = () => {
-    if (window.scrollY >= 392) {
+    if (window.scrollY >= 613) {
       setFix(true);
     } else {
       setFix(false);
@@ -42,9 +42,7 @@ const NavbarComp = () => {
           <a className="link" href="#aboutUs">
             Nosotros
           </a>
-          <Link className="link">
-            Noticias
-          </Link>
+          <Link className="link">Noticias</Link>
           <Link className="link" onClick={() => setOpenRegister(!openRegister)}>
             Registrar
           </Link>

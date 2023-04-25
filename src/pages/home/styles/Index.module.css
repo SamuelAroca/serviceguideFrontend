@@ -23,11 +23,11 @@
 }
 
 .container_title h1 {
-  font-size: 3.5rem;
+  font-size: 2.35rem;
 }
 
 .container_title h2 {
-  font-size: 2rem;
+  font-size: 1.8rem;
 }
 
 .subtitle_header {
@@ -45,10 +45,20 @@
   top: 53%;
 }
 
-.video_player{
+.video_player {
   display: flex;
   width: 100%;
   height: 100%;
   justify-content: center;
   align-items: center;
+}
+
+@media (min-width: 1920px) {
+  .container_title h1 {
+    font-size: 3.4rem;
+  }
+
+  .container_title h2 {
+    font-size: 2.4rem;
+  }
 }
