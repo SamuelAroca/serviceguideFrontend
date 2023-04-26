@@ -3,14 +3,9 @@ import { useRef, useState } from "react";
 import "../styled-sheets/NavbarComp.css";
 import { RiWaterFlashFill } from "react-icons/ri";
 import { FaBars, FaTimes } from "react-icons/fa";
-import Modal from "../pages/home/components/Modal";
-import ModalRegister from "../pages/home/components/ModalRegister";
 
 const NavbarComp = () => {
   const [fix, setFix] = useState(false);
-
-  const [open, setOpen] = useState(false);
-  const [openRegister, setOpenRegister] = useState(false);
 
   const setFixed = () => {
     if (window.scrollY >= 613) {
@@ -42,11 +37,10 @@ const NavbarComp = () => {
           <a className="link" href="#aboutUs">
             Nosotros
           </a>
-          <Link className="link">Noticias</Link>
-          <Link className="link" onClick={() => setOpenRegister(!openRegister)}>
+          <Link className="link" to={"/register"}>
             Registrar
           </Link>
-          <Link className="link" onClick={() => setOpen(!open)}>
+          <Link className="link" to={"/login"}>
             Ingresar
           </Link>
           <button className="nav-btn nav-close-btn" onClick={showNavbar}>
@@ -57,9 +51,6 @@ const NavbarComp = () => {
           <FaBars />
         </button>
       </header>
-      {/* Modales para registro y login */}
-      <Modal open={open} setOpen={setOpen} />
-      <ModalRegister open={openRegister} setOpen={setOpenRegister} />
     </>
   );
 };

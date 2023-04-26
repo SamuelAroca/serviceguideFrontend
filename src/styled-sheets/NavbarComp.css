@@ -38,7 +38,8 @@
 .nav-main {
   display: flex;
   width: auto;
-  gap: 1rem;
+  gap: 3rem;
+  margin-right: 1rem;
 }
 
 .logo-link {
