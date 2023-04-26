@@ -149,7 +149,7 @@ const Register = () => {
               </div>
               <div className={styles.links}>
                 <p className={styles.subtitle}>already have an account?</p>
-                <Link className={styles.sign_in} onClick={() => toggleModal()}>
+                <Link className={styles.sign_in} to={"/login"}>
                   Sign in
                 </Link>
               </div>
