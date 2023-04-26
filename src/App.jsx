@@ -14,13 +14,12 @@ import AddHouse from "./pages/private/components/AddHouse";
 import SavedStatistic from "./pages/private/components/SavedStatistic";
 
 const App = () => {
-
-  
-
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Index />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/major" element={<Home />} />
         <Route path="/major/home" element={<Home />} />
         <Route path="/major/receipts/*" element={<Receipts />} />
@@ -28,8 +27,10 @@ const App = () => {
         <Route path="/major/houses" element={<Houses />} />
         <Route path="/major/houses/addhouse" element={<AddHouse />} />
         <Route path="/major/statistics" element={<Statistics />} />
-        <Route path="/major/statistics/savedstatistics" element={<SavedStatistic />} />
-        
+        <Route
+          path="/major/statistics/savedstatistics"
+          element={<SavedStatistic />}
+        />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
