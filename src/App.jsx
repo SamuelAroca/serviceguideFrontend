@@ -11,6 +11,7 @@ import Houses from "./pages/private/Houses";
 import AddReceipts from "./pages/private/components/AddReceipt";
 import AddHouse from "./pages/private/components/AddHouse";
 import SavedStatistic from "./pages/private/components/SavedStatistic";
+import ForgotPassword from "./pages/home/components/ForgotPassword";
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
         <Route path="/" element={<Index />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/major" element={<Home />} />
         <Route path="/major/home" element={<Home />} />
         <Route path="/major/receipts/*" element={<Receipts />} />

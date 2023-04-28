@@ -28,6 +28,92 @@
   position: relative;
 }
 
+.div_home_button {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+}
+
+.home_button {
+  width: 150px;
+  height: 60px;
+  border: 3px solid #315cfd;
+  border-radius: 45px;
+  transition: all 0.3s;
+  cursor: pointer;
+  background: white;
+  font-size: 1.2em;
+  font-weight: 550;
+  font-family: "Montserrat", sans-serif;
+}
+
+.home_button:hover {
+  background: #315cfd;
+  color: white;
+  font-size: 1.5em;
+}
+
+.login_button {
+  box-sizing: border-box;
+  border: 0;
+  border-radius: 20px;
+  color: var(--secondary-color);
+  padding: 1em 1.8em;
+  background: var(--primary-color);
+  display: flex;
+  transition: 0.2s background;
+  align-items: center;
+  gap: 0.6em;
+  font-weight: bold;
+}
+
+.div_button_login {
+  position: absolute;
+  left: 8.2rem;
+  margin-top: 1rem;
+}
+
+.login_button .arrow_wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login_button .arrow {
+  margin-top: 1px;
+  width: var(--arrow-width);
+  background: var(--primary-color);
+  height: var(--arrow-stroke);
+  position: relative;
+  transition: 0.2s;
+}
+
+.login_button .arrow::before {
+  content: "";
+  box-sizing: border-box;
+  position: absolute;
+  border: solid var(--secondary-color);
+  border-width: 0 var(--arrow-stroke) var(--arrow-stroke) 0;
+  display: inline-block;
+  top: -3px;
+  right: 3px;
+  transition: 0.2s;
+  padding: 3px;
+  transform: rotate(-45deg);
+}
+
+.login_button:hover {
+  background-color: var(--hover-color);
+}
+
+.login_button:hover .arrow {
+  background: var(--secondary-color);
+}
+
+.login_button:hover .arrow:before {
+  right: 0;
+}
+
 .container {
   display: flex;
   align-items: center;
@@ -47,30 +133,6 @@
   width: 18rem;
   font-size: 1.2rem;
   user-select: none;
-}
-
-.btn_login {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  background-color: #0096c7;
-  color: #edede9;
-  border: none;
-  border-radius: 0.5rem;
-  font-size: 1.5rem;
-  font-family: "Roboto", cursive;
-  width: 50%;
-  margin-top: 2rem;
-  transition: 0.3s all;
-  user-select: none;
-  margin-left: 25%;
-  margin-bottom: 10%;
-}
-
-.btn_login:hover {
-  background-color: #096a8a;
-  scale: 0.9;
 }
 
 .container_label {
@@ -101,7 +163,6 @@
   width: 40%;
   font-family: "Labrada", serif;
   border-radius: 0.5rem 0 0 0.5rem;
-  z-index: 1;
   user-select: none;
   background-color: var(--bg-100);
   box-sizing: border-box;

@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styles from "../styles/Login.module.css";
-import { RiArrowRightSLine } from "react-icons/ri";
 import { RiWaterFlashFill } from "react-icons/ri";
 import { RiEyeLine } from "react-icons/ri";
-import { AiOutlineClose } from "react-icons/ai";
 import CarouselDemo from "../../../components/CarouselDemo";
 import { Link, useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
@@ -12,8 +10,9 @@ import img2 from "../../../assets/alcantarillado.jpg";
 import img3 from "../../../assets/Electricistas-scaled.jpg";
 import img4 from "../../../assets/gas natural.jpeg";
 import axios from "axios";
+import Swal from "sweetalert2";
 
-const Login = ({ open, setOpen }) => {
+const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleShow = () => {
@@ -26,11 +25,15 @@ const Login = ({ open, setOpen }) => {
 
   const url = "http://localhost:8080/api/users/auth/login";
 
+  const home = () => {
+    navigate("/")
+  }
+
   const login = async (e) => {
     e.preventDefault();
     try {
       let response = await axios.post(url, {
-        login: email,
+        email: email,
         password: password,
       });
 
@@ -43,12 +46,25 @@ const Login = ({ open, setOpen }) => {
         navigate("/major");
       }
     } catch (error) {
-      console.log(error);
+      let response = error
+      console.log(response.response.data.message);
+      let message = response.response.data.message
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: message,
+        footer: '<a href="">Why do I have this issue?</a>'
+      })
     }
   };
 
   return (
     <div className={styles.components}>
+      <div className={styles.div_home_button}>
+        <button className={styles.home_button} onClick={home}>
+          Home
+        </button>
+      </div>
       <div className={styles.container}>
         <div className={styles.container_login}>
           <form className={styles.container_form}>
@@ -89,15 +105,18 @@ const Login = ({ open, setOpen }) => {
                   />
                 </div>
               </div>
-
               <div className={styles.links}>
-                <a href="forgot-password">Forgot password?</a>
+                <Link to={"/forgot-password"}>Forgot password?</Link>
                 <Link to={"/register"}>Create new account</Link>
               </div>
-              <button className={styles.btn_login} onClick={login}>
-                LOGIN
-                <RiArrowRightSLine className={styles.icon} />
-              </button>
+              <div className={styles.div_button_login}>
+                <button className={styles.login_button} onClick={login}>
+                  Sign in
+                  <div class={styles.arrow_wrapper}>
+                    <div class={styles.arrow}></div>
+                  </div>
+                </button>
+              </div>
             </div>
           </form>
         </div>

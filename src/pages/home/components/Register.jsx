@@ -39,10 +39,6 @@ const Register = () => {
     });
   };
 
-  const home = () => {
-    navigate("/")
-  }
-
   const save = async (e) => {
     e.preventDefault();
     try {
@@ -51,7 +47,7 @@ const Register = () => {
         {
           firstName: name,
           lastName: lastName,
-          login: email,
+          email: email,
           password: password,
         }
       );
@@ -78,7 +74,7 @@ const Register = () => {
   return (
     <div className={styles.components}>
       <div className={styles.div_home_button}>
-        <button className={styles.home_button} onClick={home}>
+        <button className={styles.home_button} onClick={() => navigate("/")}>
           Home
         </button>
       </div>
