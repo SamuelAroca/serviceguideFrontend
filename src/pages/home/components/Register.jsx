@@ -6,7 +6,7 @@ import { useState } from "react";
 import img1 from "../../../assets/agua-potable.jpg";
 import img2 from "../../../assets/alcantarillado.jpg";
 import img3 from "../../../assets/Electricistas-scaled.jpg";
-import img4 from "../../../assets/gas natural.jpeg";
+import img4 from "../../../assets/gas-natural.jpeg";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -39,10 +39,6 @@ const Register = () => {
     });
   };
 
-  const home = () => {
-    navigate("/")
-  }
-
   const save = async (e) => {
     e.preventDefault();
     try {
@@ -51,7 +47,7 @@ const Register = () => {
         {
           firstName: name,
           lastName: lastName,
-          login: email,
+          email: email,
           password: password,
         }
       );
@@ -78,7 +74,7 @@ const Register = () => {
   return (
     <div className={styles.components}>
       <div className={styles.div_home_button}>
-        <button className={styles.home_button} onClick={home}>
+        <button className={styles.home_button} onClick={() => navigate("/")}>
           Home
         </button>
       </div>
