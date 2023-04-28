@@ -6,7 +6,7 @@ import { useState } from "react";
 import img1 from "../../../assets/agua-potable.jpg";
 import img2 from "../../../assets/alcantarillado.jpg";
 import img3 from "../../../assets/Electricistas-scaled.jpg";
-import img4 from "../../../assets/gas natural.jpeg";
+import img4 from "../../../assets/gas-natural.jpeg";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
 import Swal from "sweetalert2";

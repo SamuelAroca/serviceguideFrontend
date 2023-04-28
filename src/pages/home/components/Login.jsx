@@ -8,9 +8,8 @@ import TextField from "@mui/material/TextField";
 import img1 from "../../../assets/agua-potable.jpg";
 import img2 from "../../../assets/alcantarillado.jpg";
 import img3 from "../../../assets/Electricistas-scaled.jpg";
-import img4 from "../../../assets/gas natural.jpeg";
+import img4 from "../../../assets/gas-natural.jpeg";
 import axios from "axios";
-import Swal from "sweetalert2";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -26,8 +25,8 @@ const Login = () => {
   const url = "http://localhost:8080/api/users/auth/login";
 
   const home = () => {
-    navigate("/")
-  }
+    navigate("/");
+  };
 
   const login = async (e) => {
     e.preventDefault();
@@ -46,15 +45,15 @@ const Login = () => {
         navigate("/major");
       }
     } catch (error) {
-      let response = error
+      let response = error;
       console.log(response.response.data.message);
-      let message = response.response.data.message
+      let message = response.response.data.message;
       Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
+        icon: "error",
+        title: "Oops...",
         text: message,
-        footer: '<a href="">Why do I have this issue?</a>'
-      })
+        footer: '<a href="/forgot-password">Forgot password?</a>',
+      });
     }
   };
 
