@@ -11,40 +11,30 @@ const Houses = () => {
 
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
-  const [user, setUser] = useState(null);
   const [allHouses, setAllHouses] = useState(null);
 
   useEffect(() => {
     initAxiosInterceptor();
-    myID();
     getHouses();
-  }, [user]);
-
-  const myID = async () => {
-    let accessToken = document.cookie.replace("token=", "");
-    try {
-      const result = await axios.get(
-        `${apiUrl}/api/users/auth/whoismyid/${accessToken}`
-      );
-      setUser(result.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  }, []);
 
   const getHouses = async () => {
+    let accessToken = getToken();
+    console.log(accessToken);
     try {
       setLoading(true);
-      const data = await axios.get(`${apiUrl}/api/house/findAllByUserOrderById/1`);
+      const data = await axios.get(
+        `${apiUrl}/api/house/findAllByUserOrderById/${accessToken}`
+      );
       setAllHouses(data.data);
     } catch (err) {
       console.log(err);
-    }finally{
+    } finally {
       setLoading(false);
     }
   };
 
-  return(
+  return (
     <div
       style={{
         display: "flex",
@@ -60,7 +50,7 @@ const Houses = () => {
       <Loader visible={loading} />
       <SideNav setOpen={setOpen} open={open} />
     </div>
-  )
+  );
 };
 
-export default Houses
+export default Houses;

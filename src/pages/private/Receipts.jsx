@@ -32,8 +32,10 @@ const Receipts = () => {
   };
 
   const getReceipts = async () => {
-    const data = await axios.get(`${apiUrl}/api/receipt/findByHouse/2`);
+    let accessToken = getToken();
     try {
+      const data = await axios.get(`${apiUrl}/api/receipt/findAllByUserId/${accessToken}`);
+      console.log(data.data);
       setAllReceipts(data.data);
     } catch (err) {
       console.log(err);
