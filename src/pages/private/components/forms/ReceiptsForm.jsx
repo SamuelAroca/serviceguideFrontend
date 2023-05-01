@@ -8,7 +8,7 @@ import { FaToilet } from "react-icons/fa";
 import { Tooltip } from "@mui/material";
 import { Alert } from "@mui/material";
 import axios from "axios";
-import SelectHouse from "../SelectHouse";
+import SelectHouse from "../receipts/SelectHouse";
 
 const ReceiptsForm = ({ userId }) => {
   const apiUrl = "http://localhost:8080";

@@ -2,40 +2,98 @@ import { useEffect, useState } from "react";
 import { FormLayout } from "../../styled-components/form-layout.styled";
 import styled from "../../styles/ReceiptsForm.module.css";
 import { TextField, Button, Grid, Tooltip } from "@mui/material";
+import { getToken, initAxiosInterceptor } from "../../../../AxiosHelper";
+import { useNavigate } from "react-router-dom";
 import { Alert } from "@mui/material";
-import { myID } from "../AddHouse";
+import { myID } from "../house/AddHouse";
+import SelectCity from "../house/SelectCity";
 import axios from "axios";
 
 const HouseForm = (props) => {
-
   const apiUrl = "http://localhost:8080";
 
   const [userID, setUserID] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    const fetchUserID = async () => {
-      setIsLoading(true);
-      const id = await myID();
-      setUserID(id);
-      setIsLoading(false);
-    };
-    fetchUserID();
-  }, []);
+  const [errors, setErrors] = useState([]);
+  const [selectedCity, setSelectedCity] = useState(null);
+  const [allCities, setAllCities] = useState([]);
+  const navigate = useNavigate();
 
   const [house, setHouse] = useState({
     name: "",
     stratum: "",
-    city: "",
+    cities: selectedCity,
     neighborhood: "",
     address: "",
     contract: "",
+    cities: {
+      city: "",
+    },
     user: {
       id: userID,
     },
   });
 
-  const [errors, setErrors] = useState([]);
+  const handleSelect = (city) => {
+    setHouse({ ...house, cities: { city: city } });
+  };
+
+  console.log(house, "HOUSE");
+
+  useEffect(() => {
+    initAxiosInterceptor();
+    tokenExist();
+    fetchUserID();
+    getCities();
+  }, [myID]);
+
+  const fetchUserID = async () => {
+    setIsLoading(true);
+    const id = await myID();
+    setUserID(id);
+    setIsLoading(false);
+  };
+
+  const tokenExist = () => {
+    if (!getToken()) {
+      3;
+      navigate("/");
+    }
+  };
+
+  const sessionExpired = () => {
+    Swal.fire({
+      title: "Your session has expired!",
+      text: "You will have to log in again!",
+      icon: "error",
+      confirmButtonColor: "#3085d6",
+      confirmButtonText: "Ok, login again",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigate("/");
+        return;
+      }
+    });
+  };
+
+  const handleCityChange = (event, value) => {
+    setSelectedCity(value);
+    setHouse({ ...house, cities: value });
+    console.log(value, "ESTA DEBERÍA SER LA CIUDAD");
+  };
+
+  const getCities = async (e) => {
+    if (getToken()) {
+      const data = await axios.get(`${apiUrl}/api/cities/listAll`);
+      try {
+        setAllCities(data.data);
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      sessionExpired();
+    }
+  };
 
   const onValidate = (receipt) => {
     let errors = {};
@@ -47,27 +105,23 @@ const HouseForm = (props) => {
     if (!house.name.trim()) {
       errors.name = "Debe existir un 'Nombre' de la casa.";
     } else if (!regexLettersNumbers.test(house.name)) {
-      errors.name = "El 'Nombre' solo debe contener letras, espacios y números.";
+      errors.name =
+        "El 'Nombre' solo debe contener letras, espacios y números.";
     }
 
     if (!house.stratum.trim()) {
       errors.stratum = "Debe existir un estrato de la casa.";
     } else if (!regexNumbers.test(house.stratum)) {
       errors.stratum = "El 'Estrato' solo debe contener números.";
-    } else if(!regexStratum.test(house.stratum)) {
-      errors.stratum = "El 'Estrato' es únicamente del 1 al 6."
-    }
-
-    if (!house.city.trim()) {
-      errors.city = "La casa debe tener una 'Ciudad'.";
-    } else if (!regexLetters.test(house.city)) {
-      errors.city = "La 'Ciudad' solo debe contener letras.";
+    } else if (!regexStratum.test(house.stratum)) {
+      errors.stratum = "El 'Estrato' es únicamente del 1 al 6.";
     }
 
     if (!house.neighborhood.trim()) {
       errors.neighborhood = "La casa debe tener un 'Barrio'.";
     } else if (!regexLettersNumbers.test(house.neighborhood)) {
-      errors.neighborhood = "El nombre del 'Barrio' solo debe contener letras o máximo dos números.";
+      errors.neighborhood =
+        "El nombre del 'Barrio' solo debe contener letras o máximo dos números.";
     }
 
     if (!house.address.trim()) {
@@ -80,54 +134,62 @@ const HouseForm = (props) => {
       errors.contract = "El 'Contrato' solo debe contener números.";
     }
 
-
     return errors;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const err = onValidate(house);
-    setErrors(err);
 
-    setIsLoading(true); // Empieza la carga
-  
-    const updatedHouse = {
-      ...house,
-      user: {
-        id: userID,
-      },
-    };
+    if (getToken()) {
+      const err = onValidate(house);
+      setErrors(err);
 
-    if (Object.keys(err).length === 0) {
+      setIsLoading(true); // Empieza la carga
 
-      try {
-        const response = await axios.post(
-          `${apiUrl}/api/house/add`,
-          updatedHouse
-        );
-      } catch (error) {
-        console.log(error);
-      }
-
-      console.log(updatedHouse, "ESTE ES EL FORMULARIO CON EL ID");
-
-      setHouse({
-        name: "",
-        stratum: "",
-        city: "",
-        neighborhood: "",
-        address: "",
-        contract: "",
+      const updatedHouse = {
+        ...house,
         user: {
           id: userID,
         },
-      });
-      
-      setIsLoading(false);
-      // Se setea el form de la casa a vacio para que se limpie el formulario
+      };
+
+      if (Object.keys(err).length === 0) {
+        console.log(updatedHouse, "FORM DE CASA");
+        try {
+          const response = await axios.post(
+            `${apiUrl}/api/house/add`,
+            updatedHouse
+          );
+          console.log("CASA REGISTRADA");
+        } catch (error) {
+          console.log(error);
+        }
+
+        console.log(updatedHouse.cities, "ESTE ES EL FORMULARIO CON CITIES");
+
+        setHouse({
+          name: "",
+          stratum: "",
+          cities: selectedCity,
+          neighborhood: "",
+          address: "",
+          contract: "",
+          cities: {
+            city: "",
+          },
+          user: {
+            id: userID,
+          },
+        });
+
+        setIsLoading(false);
+        // Se setea el form de la casa a vacio para que se limpie el formulario
+      } else {
+        setErrors(err);
+        setIsLoading(false);
+      }
     } else {
-      setErrors(err);
-      setIsLoading(false);
+      console.log("Esa vaina que");
     }
   };
 
@@ -139,7 +201,7 @@ const HouseForm = (props) => {
     }));
   }
 
-  return(
+  return (
     <FormLayout className={styled.receipt_layout}>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
@@ -159,9 +221,7 @@ const HouseForm = (props) => {
                 onChange={handleInputChange}
               />
             </Tooltip>
-            {errors.name && (
-              <Alert severity="warning"> {errors.name} </Alert>
-            )}
+            {errors.name && <Alert severity="warning"> {errors.name} </Alert>}
           </Grid>
           <Grid item xs={10}>
             <Tooltip
@@ -179,27 +239,17 @@ const HouseForm = (props) => {
                 onChange={handleInputChange}
               />
             </Tooltip>
-            {errors.stratum && <Alert severity="warning"> {errors.stratum} </Alert>}
+            {errors.stratum && (
+              <Alert severity="warning"> {errors.stratum} </Alert>
+            )}
           </Grid>
           <Grid item xs={10}>
-            <Tooltip
-              disableFocusListener
-              disableTouchListener
-              title="Add city"
-              placement="bottom-start"
-            >
-              <TextField
-                fullWidth
-                label="City"
-                name="city"
-                type="text"
-                value={house.city}
-                onChange={handleInputChange}
-              />
-            </Tooltip>
-            {errors.city && (
-              <Alert severity="warning"> {errors.city} </Alert>
-            )}
+            <SelectCity
+              options={allCities}
+              onChange={handleCityChange}
+              handleSelect={handleSelect}
+              house={house}
+            />
           </Grid>
           <Grid item xs={10}>
             <Tooltip
@@ -217,7 +267,9 @@ const HouseForm = (props) => {
                 onChange={handleInputChange}
               />
             </Tooltip>
-            {errors.neighborhood && <Alert severity="warning"> {errors.neighborhood} </Alert>}
+            {errors.neighborhood && (
+              <Alert severity="warning"> {errors.neighborhood} </Alert>
+            )}
           </Grid>
 
           <Grid item xs={5}>
@@ -236,7 +288,9 @@ const HouseForm = (props) => {
                 onChange={handleInputChange}
               />
             </Tooltip>
-            {errors.address && <Alert severity="warning"> {errors.address} </Alert>}
+            {errors.address && (
+              <Alert severity="warning"> {errors.address} </Alert>
+            )}
           </Grid>
 
           <Grid item xs={5}>
@@ -255,7 +309,9 @@ const HouseForm = (props) => {
                 onChange={handleInputChange}
               />
             </Tooltip>
-            {errors.contract && <Alert severity="warning"> {errors.contract} </Alert>}
+            {errors.contract && (
+              <Alert severity="warning"> {errors.contract} </Alert>
+            )}
           </Grid>
 
           <Grid sx={{ display: "flex", justifyContent: "end" }} item xs={10}>
@@ -272,7 +328,7 @@ const HouseForm = (props) => {
         </Grid>
       </form>
     </FormLayout>
-  )
+  );
 };
 
 export default HouseForm;

@@ -1,13 +1,9 @@
 import { useEffect, useState } from "react";
-import SideNav from "../SideNav";
-import HouseForm from "./receipts-forms/HouseForm";
+import SideNav from "../../SideNav";
+import HouseForm from "../forms/HouseForm";
 import axios from "axios";
 
-
-
-
 const myID = async () => {
-
   const apiUrl = "http://localhost:8080";
 
   let accessToken = document.cookie.replace("token=", "");
@@ -17,23 +13,22 @@ const myID = async () => {
     );
     return result.data;
   } catch (error) {
-    alert(error);
+    console.log(error);
   }
 };
 
-export {myID};
+export { myID };
 
-const AddHouse = () =>{
-
-  return(
+const AddHouse = () => {
+  return (
     <div
       style={{
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      marginLeft: "25rem",
-      marginTop: "5rem",
-    }}
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        marginLeft: "25rem",
+        marginTop: "5rem",
+      }}
     >
       <h1>ADD HOUSE</h1>
       <SideNav />
@@ -41,7 +36,7 @@ const AddHouse = () =>{
         <HouseForm myID={myID} />
       </div>
     </div>
-  )
+  );
 };
 
 export default AddHouse;

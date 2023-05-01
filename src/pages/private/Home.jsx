@@ -31,7 +31,7 @@ const Home = () => {
   };
 
   const tokenExist = () => {
-    if (!getToken()) {
+    if (!getToken()) {3
       navigate("/");
     }
   };

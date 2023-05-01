@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { ReceiptCardContainer } from "../styled-components/receipt-card-container.styled";
-import { AnimatePresence } from "framer-motion";
+import { ReceiptCardContainer } from "../../styled-components/card-container.styled";
+import Delete from "../DeleteButton";
 import moment from "moment/moment";
 
 const ReceiptCard = ({ data }) => {
@@ -12,13 +12,17 @@ const ReceiptCard = ({ data }) => {
     return formatDate;
   };
 
+  const handleDelete = () => {
+    console.log("RECIBO BORRADO");
+  };
+
   return (
     <ReceiptCardContainer
       open={isOpen}
       onClick={() => setIsOpen(!isOpen)}
       initial={{ height: "8rem", backgroundColor: "white" }}
       animate={{
-        height: isOpen ? "13rem" : "8rem",
+        height: isOpen ? "20rem" : "8rem",
         backgroundColor: isOpen ? "lightgrey" : "white",
       }}
       transition={{ duration: 0 }}
@@ -27,6 +31,17 @@ const ReceiptCard = ({ data }) => {
       <p>Date: {FormatDate(data.date)}</p>
       <p>Amount: {data.amount}</p>
       <p>Price: {data.price}</p>
+      {/* <p>Type Service: {data.typeService.type}</p> */}
+      <p>House: {data.houseName}</p>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-end",
+          marginRight: "20px",
+        }}
+      >
+        <Delete id={data.id} onDelete={handleDelete} />
+      </div>
     </ReceiptCardContainer>
   );
 };

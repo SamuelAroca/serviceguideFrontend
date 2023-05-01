@@ -52,19 +52,11 @@ const Register = () => {
         }
       );
 
-      if (response.status != 201) {
-        setOpen(!open);
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Something went wrong!",
-        });
-      } else {
+      if (response.status == 201) {
         document.cookie = `token=${
           response.data.token
-        }; max-age=${3600}; path=/; samesite=strict`;
-        setOpen(!open);
-        registerAlert();
+        }; max-age=${3600*5}; path=/; samesite=strict`;
+        navigate("/major")
       }
     } catch (error) {
       alert(error);
