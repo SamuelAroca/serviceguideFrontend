@@ -3,7 +3,6 @@ import axios from "axios";
 import styled from "./styles/Hom.module.css";
 import { getToken, initAxiosInterceptor } from "../../AxiosHelper";
 import moment from "moment/moment";
-import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 

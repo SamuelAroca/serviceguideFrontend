@@ -9,7 +9,6 @@ import img3 from "../../../assets/Electricistas-scaled.jpg";
 import img4 from "../../../assets/gas-natural.jpeg";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
-import Swal from "sweetalert2";
 import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {
