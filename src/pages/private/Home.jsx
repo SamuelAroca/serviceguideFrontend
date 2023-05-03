@@ -3,8 +3,9 @@ import axios from "axios";
 import styled from "./styles/Hom.module.css";
 import { getToken, initAxiosInterceptor } from "../../AxiosHelper";
 import moment from "moment/moment";
-import { useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import PageLoader from "./PageLoader";
 
 const Home = () => {
   const apiUrl = "http://localhost:8080";
@@ -119,6 +120,9 @@ const Home = () => {
         <button onClick={handleLogOut}>Log Out</button>
         <h3>{user}</h3>
       </div>
+      <Routes>
+        <Route path="/loader" element={<PageLoader />}></Route>
+      </Routes>
     </>
   );
 };
