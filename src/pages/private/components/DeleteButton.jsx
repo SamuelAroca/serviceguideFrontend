@@ -1,27 +1,39 @@
-import React from 'react';
-import axios from 'axios';
-import Button from '@mui/material/Button';
-import DeleteIcon from '@mui/icons-material/Delete';
+import React, { useState } from "react";
+import axios from "axios";
+import Button from "@mui/material/Button";
+import DeleteIcon from "@mui/icons-material/Delete";
+import toast, { Toaster } from "react-hot-toast";
 
-export const DeleteButton = (props) => {
-
+export const DeleteButton = ({ path, id, getReceipts }) => {
   const apiUrl = "http://localhost:8080";
 
-  const handleDelete = async () =>{
+  const [loading, setLoading] = useState(false);
+
+  const notify = () => toast.success("Your receipt was deleted succesfully.");
+
+  const onDelete = async () => {
+    const data = await axios.delete(`${apiUrl}/api/${path}/delete/${id}`);
     try {
-      await axios.delete(`${apiUrl}/api/house/delete/${props.id}`);
-      props.onDelete();
+      getReceipts();
+      notify();
+      console.log("Los datos se eliminaron correctamente");
     } catch (error) {
-      console.error('Error al eliminar los datos:', error);
+      console.error("Error al eliminar los datos:", error);
     }
-  }
+  };
+
   return (
     <>
-      <Button variant="contained" startIcon={<DeleteIcon />} onClick={handleDelete}>
+      <Button
+        variant="contained"
+        startIcon={<DeleteIcon />}
+        onClick={() => onDelete()}
+      >
         Delete
       </Button>
+      <Toaster position="bottom-right" reverseOrder={false} />
     </>
   );
-}
+};
 
 export default DeleteButton;

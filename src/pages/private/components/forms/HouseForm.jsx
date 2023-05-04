@@ -19,6 +19,13 @@ const HouseForm = (props) => {
   const [allCities, setAllCities] = useState([]);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    initAxiosInterceptor();
+    tokenExist();
+    fetchUserID();
+    getCities();
+  }, [myID]);
+
   const [house, setHouse] = useState({
     name: "",
     stratum: "",
@@ -37,15 +44,6 @@ const HouseForm = (props) => {
   const handleSelect = (city) => {
     setHouse({ ...house, cities: { city: city } });
   };
-
-  console.log(house, "HOUSE");
-
-  useEffect(() => {
-    initAxiosInterceptor();
-    tokenExist();
-    fetchUserID();
-    getCities();
-  }, [myID]);
 
   const fetchUserID = async () => {
     setIsLoading(true);
@@ -79,7 +77,6 @@ const HouseForm = (props) => {
   const handleCityChange = (event, value) => {
     setSelectedCity(value);
     setHouse({ ...house, cities: value });
-    console.log(value, "ESTA DEBERÍA SER LA CIUDAD");
   };
 
   const getCities = async (e) => {
@@ -165,8 +162,6 @@ const HouseForm = (props) => {
           console.log(error);
         }
 
-        console.log(updatedHouse.cities, "ESTE ES EL FORMULARIO CON CITIES");
-
         setHouse({
           name: "",
           stratum: "",
@@ -189,7 +184,7 @@ const HouseForm = (props) => {
         setIsLoading(false);
       }
     } else {
-      console.log("Esa vaina que");
+      sessionExpired();
     }
   };
 

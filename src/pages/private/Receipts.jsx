@@ -2,43 +2,34 @@ import SideNav from "./SideNav";
 import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { getToken, initAxiosInterceptor } from "../../AxiosHelper";
-import ReceiptsForm from "./components/forms/ReceiptsForm";
 import AllReceiptsCards from "./components/receipts/AllReceiptsCard";
+import Loader from "./Loader";
 import axios from "axios";
 
 const Receipts = () => {
   const apiUrl = "http://localhost:8080";
 
+  const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
-  const [user, setUser] = useState(null);
   const [allReceipts, setAllReceipts] = useState(null);
 
   useEffect(() => {
     initAxiosInterceptor();
-    myID();
     getReceipts();
-  }, [user]);
-
-  const myID = async () => {
-    let accessToken = document.cookie.replace("token=", "");
-    try {
-      const result = await axios.get(
-        `${apiUrl}/api/users/auth/whoismyid/${accessToken}`
-      );
-      setUser(result.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  }, []);
 
   const getReceipts = async () => {
     let accessToken = getToken();
+    const data = await axios.get(
+      `${apiUrl}/api/receipt/allReceiptsByUserId/${accessToken}`
+    );
     try {
-      const data = await axios.get(`${apiUrl}/api/receipt/findAllByUserId/${accessToken}`);
-      console.log(data.data);
+      setLoading(true);
       setAllReceipts(data.data);
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -53,9 +44,14 @@ const Receipts = () => {
       }}
     >
       <Routes>
-        <Route path="/" element={<AllReceiptsCards data={allReceipts} />} />
-        <Route path="/addreceipt" element={<ReceiptsForm userId={user} />} />
+        <Route
+          path="/"
+          element={
+            <AllReceiptsCards data={allReceipts} getReceipts={getReceipts} />
+          }
+        />
       </Routes>
+      <Loader visible={loading} />
       <SideNav setOpen={setOpen} open={open} />
     </div>
   );

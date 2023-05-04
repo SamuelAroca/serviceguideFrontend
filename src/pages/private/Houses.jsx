@@ -20,7 +20,6 @@ const Houses = () => {
 
   const getHouses = async () => {
     let accessToken = getToken();
-    console.log(accessToken);
     try {
       setLoading(true);
       const data = await axios.get(

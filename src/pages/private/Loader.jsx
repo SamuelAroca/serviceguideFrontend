@@ -6,7 +6,6 @@ const Loader = ({visible}) => {
   if (!visible) {
     loaderClasses.push(styles.hidden);
   }
-  console.log(visible);
 
   return (
     <div className={styles.container}>
