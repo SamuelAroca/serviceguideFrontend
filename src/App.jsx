@@ -8,7 +8,7 @@ import Receipts from "./pages/private/Receipts";
 import Statistics from "./pages/private/Statistics";
 import Home from "./pages/private/Home";
 import Houses from "./pages/private/Houses";
-import AddReceipts from "./pages/private/components/receipts/AddReceipt";
+import AddReceipt from "./pages/private/components/receipts/AddReceipt";
 import AddHouse from "./pages/private/components/house/AddHouse";
 import SavedStatistic from "./pages/private/components/statistics/SavedStatistic";
 import ForgotPassword from "./pages/home/components/ForgotPassword";
@@ -24,7 +24,7 @@ const App = () => {
         <Route path="/major" element={<Home />} />
         <Route path="/major/home/*" element={<Home />} />
         <Route path="/major/receipts/*" element={<Receipts />} />
-        <Route path="/major/receipts/addreceipts" element={<AddReceipts />} />
+        <Route path="/major/receipts/addreceipt" element={<AddReceipt />} />
         <Route path="/major/houses/*" element={<Houses />} />
         <Route path="/major/houses/addhouse" element={<AddHouse />} />
         <Route path="/major/statistics" element={<Statistics />} />

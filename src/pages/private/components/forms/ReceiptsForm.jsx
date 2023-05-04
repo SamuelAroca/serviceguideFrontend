@@ -1,5 +1,6 @@
 import styled from "../../styles/ReceiptsForm.module.css";
 import { TextField, Button, Grid, Box } from "@mui/material";
+import { getToken, initAxiosInterceptor } from "../../../../AxiosHelper";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { FormLayout } from "../../styled-components/form-layout.styled";
@@ -14,25 +15,52 @@ const ReceiptsForm = ({ userId }) => {
   const apiUrl = "http://localhost:8080";
 
   const [receiptType, setReceiptType] = useState("water");
-
+  const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState([]);
-
   const [selectedHouse, setSelectedHouse] = useState(null);
   const [allHouses, setAllHouses] = useState([]);
 
-  const handleHouseChange = (value) => {
-    setSelectedHouse(value);
-  };
+  useEffect(() => {
+    initAxiosInterceptor();
+    tokenExist();
+    getHouses();
+  }, [userId]);
 
   const [receipt, setReceipt] = useState({
     receiptName: "",
     price: "",
     amount: "",
     date: "",
-    user: {
-      id: userId,
+    typeService: {
+      tyope: userId,
     },
   });
+
+  const tokenExist = () => {
+    if (!getToken()) {
+      3;
+      navigate("/");
+    }
+  };
+
+  const sessionExpired = () => {
+    Swal.fire({
+      title: "Your session has expired!",
+      text: "You will have to log in again!",
+      icon: "error",
+      confirmButtonColor: "#3085d6",
+      confirmButtonText: "Ok, login again",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigate("/");
+        return;
+      }
+    });
+  };
+
+  const handleHouseChange = (value) => {
+    setSelectedHouse(value);
+  };
 
   const onValidate = (receipt) => {
     let errors = {};
@@ -72,10 +100,6 @@ const ReceiptsForm = ({ userId }) => {
       console.log(err);
     }
   };
-
-  useEffect(() => {
-    getHouses();
-  }, [userId]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

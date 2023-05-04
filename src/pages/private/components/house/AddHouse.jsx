@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import SideNav from "../../SideNav";
 import HouseForm from "../forms/HouseForm";
 import axios from "axios";
@@ -33,7 +32,7 @@ const AddHouse = () => {
       <h1>ADD HOUSE</h1>
       <SideNav />
       <div>
-        <HouseForm myID={myID} />
+        <HouseForm />
       </div>
     </div>
   );

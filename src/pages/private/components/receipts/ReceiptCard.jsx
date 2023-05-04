@@ -3,7 +3,7 @@ import { ReceiptCardContainer } from "../../styled-components/card-container.sty
 import Delete from "../DeleteButton";
 import moment from "moment/moment";
 
-const ReceiptCard = ({ data }) => {
+const ReceiptCard = ({ name, data, getReceipts }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const FormatDate = (date) => {
@@ -12,37 +12,37 @@ const ReceiptCard = ({ data }) => {
     return formatDate;
   };
 
-  const handleDelete = () => {
-    console.log("RECIBO BORRADO");
-  };
+  const path = "receipt";
 
   return (
-    <ReceiptCardContainer
-      open={isOpen}
-      onClick={() => setIsOpen(!isOpen)}
-      initial={{ height: "8rem", backgroundColor: "white" }}
-      animate={{
-        height: isOpen ? "20rem" : "8rem",
-        backgroundColor: isOpen ? "lightgrey" : "white",
-      }}
-      transition={{ duration: 0 }}
-    >
-      <h2>{data.receiptName}</h2>
-      <p>Date: {FormatDate(data.date)}</p>
-      <p>Amount: {data.amount}</p>
-      <p>Price: {data.price}</p>
-      {/* <p>Type Service: {data.typeService.type}</p> */}
-      <p>House: {data.houseName}</p>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "flex-end",
-          marginRight: "20px",
+    <>
+      <ReceiptCardContainer
+        open={isOpen}
+        onClick={() => setIsOpen(!isOpen)}
+        initial={{ height: "9rem", backgroundColor: "white" }}
+        animate={{
+          height: isOpen ? "22rem" : "11rem",
+          backgroundColor: isOpen ? "lightgrey" : "white",
         }}
+        transition={{ duration: 0 }}
       >
-        <Delete id={data.id} onDelete={handleDelete} />
-      </div>
-    </ReceiptCardContainer>
+        <h2>{data.receiptName}</h2>
+        <p>{data.typeService.type}</p>
+        <p>Date: {FormatDate(data.date)}</p>
+        <p>Amount: {data.amount}</p>
+        <p>Price: {data.price}</p>
+        <p>House: {data.houseName}</p>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            marginRight: "20px",
+          }}
+        >
+          <Delete path={path} id={data.id} getReceipts={getReceipts} />
+        </div>
+      </ReceiptCardContainer>
+    </>
   );
 };
 

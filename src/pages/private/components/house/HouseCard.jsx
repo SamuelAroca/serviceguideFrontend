@@ -2,12 +2,15 @@ import { useState } from "react";
 import { ReceiptCardContainer } from "../../styled-components/card-container.styled";
 import Delete from "../DeleteButton";
 
-const HouseCard = ({ data }) => {
+const HouseCard = ({ data, onGetInformation }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleDelete = () => {
-    console.log("RECIBO BORRADO");
+    onGetInformation();
+    console.log("Elimiando correctamente");
   };
+
+  const path = "house";
 
   return(
     <ReceiptCardContainer
@@ -33,7 +36,7 @@ const HouseCard = ({ data }) => {
           marginRight: "20px",
         }}
       >
-        <Delete id={data.id} onDelete={handleDelete} />
+        <Delete path={path} id={data.id} onDelete={handleDelete} />
       </div>
     </ReceiptCardContainer>
   )
