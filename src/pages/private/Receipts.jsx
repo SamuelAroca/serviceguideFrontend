@@ -20,11 +20,11 @@ const Receipts = () => {
 
   const getReceipts = async () => {
     let accessToken = getToken();
+    setLoading(true);
     const data = await axios.get(
       `${apiUrl}/api/receipt/allReceiptsByUserId/${accessToken}`
     );
     try {
-      setLoading(true);
       setAllReceipts(data.data);
     } catch (err) {
       console.log(err);
@@ -32,6 +32,10 @@ const Receipts = () => {
       setLoading(false);
     }
   };
+
+  const getInformation = async () =>{
+    getReceipts();
+  }
 
   return (
     <div
@@ -47,7 +51,7 @@ const Receipts = () => {
         <Route
           path="/"
           element={
-            <AllReceiptsCards data={allReceipts} getReceipts={getReceipts} />
+            <AllReceiptsCards data={allReceipts} getInformation={getInformation} />
           }
         />
       </Routes>

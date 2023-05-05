@@ -20,11 +20,11 @@ const Houses = () => {
 
   const getHouses = async () => {
     let accessToken = getToken();
+    setLoading(true);
+    const data = await axios.get(
+      `${apiUrl}/api/house/findAllByUserOrderById/${accessToken}`
+    );
     try {
-      setLoading(true);
-      const data = await axios.get(
-        `${apiUrl}/api/house/findAllByUserOrderById/${accessToken}`
-      );
       setAllHouses(data.data);
     } catch (err) {
       console.log(err);
@@ -32,6 +32,10 @@ const Houses = () => {
       setLoading(false);
     }
   };
+
+  const getInformation = async() =>{
+    getHouses();
+  }
 
   return (
     <div
@@ -44,7 +48,7 @@ const Houses = () => {
       }}
     >
       <Routes>
-        <Route path="/" element={<AllHousesCard data={allHouses} />} />
+        <Route path="/" element={<AllHousesCard data={allHouses} getInformation={getInformation} />} />
       </Routes>
       <Loader visible={loading} />
       <SideNav setOpen={setOpen} open={open} />

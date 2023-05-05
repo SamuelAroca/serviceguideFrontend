@@ -76,7 +76,7 @@ const ReceiptsForm = ({ userId }) => {
   const getHouses = async () => {
     let accesToken = getToken();
     const data = await axios.get(
-      `${apiUrl}/api/house/findAllByUserOrderById/${accesToken}`
+      `${apiUrl}/api/house/getHouseName/${accesToken}`
     );
     try {
       setAllHouses(data.data);
@@ -118,6 +118,8 @@ const ReceiptsForm = ({ userId }) => {
     const err = onValidate(receipt);
     setErrors(err);
 
+    setIsLoading(true);
+
     const updatedReceipt ={
       ...receipt,
       typeService: {
@@ -152,6 +154,8 @@ const ReceiptsForm = ({ userId }) => {
           name: "",
         }
       });
+
+      setIsLoading(false);
     } else {
       setErrors(err);
     }
@@ -290,6 +294,7 @@ const ReceiptsForm = ({ userId }) => {
               type="submit"
               variant="contained"
               color="primary"
+              disabled={isLoading}
             >
               Save
             </Button>

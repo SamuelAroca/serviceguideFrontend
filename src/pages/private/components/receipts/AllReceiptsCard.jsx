@@ -1,12 +1,12 @@
 import ReceiptCard from "./ReceiptCard";
 import { Link } from "react-router-dom";
 
-const AllReceiptsCards = ({ data, getReceipts }) => {
+const AllReceiptsCards = ({ data, getInformation }) => {
   return (
     <div>
       <div>
         {data?.map((c, index) => (
-          <ReceiptCard key={index} data={c} getReceipts={getReceipts} />
+          <ReceiptCard key={index} data={c} getInformation={getInformation} />
         ))}
       </div>
     </div>

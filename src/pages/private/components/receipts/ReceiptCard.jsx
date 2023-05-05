@@ -3,7 +3,7 @@ import { ReceiptCardContainer } from "../../styled-components/card-container.sty
 import Delete from "../DeleteButton";
 import moment from "moment/moment";
 
-const ReceiptCard = ({ name, data, getReceipts }) => {
+const ReceiptCard = ({ name, data, getInformation }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const FormatDate = (date) => {
@@ -28,10 +28,10 @@ const ReceiptCard = ({ name, data, getReceipts }) => {
       >
         <h2>{data.receiptName}</h2>
         <p>{data.typeService.type}</p>
+        <p>House: {data.houseName}</p>
         <p>Date: {FormatDate(data.date)}</p>
         <p>Amount: {data.amount}</p>
         <p>Price: {data.price}</p>
-        <p>House: {data.houseName}</p>
         <div
           style={{
             display: "flex",
@@ -39,7 +39,7 @@ const ReceiptCard = ({ name, data, getReceipts }) => {
             marginRight: "20px",
           }}
         >
-          <Delete path={path} id={data.id} getReceipts={getReceipts} />
+          <Delete path={path} id={data.id} getInformation={getInformation} />
         </div>
       </ReceiptCardContainer>
     </>

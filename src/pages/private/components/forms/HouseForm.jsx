@@ -152,7 +152,7 @@ const HouseForm = () => {
       console.log(updatedHouse);
 
       if (Object.keys(err).length === 0) {
-        /* let accesToken = getToken();
+        let accesToken = getToken();
         try {
           const response = await axios.post(
             `${apiUrl}/api/house/add/${accesToken}`,
@@ -161,7 +161,7 @@ const HouseForm = () => {
           console.log("CASA REGISTRADA");
         } catch (error) {
           console.log(error);
-        } */
+        }
 
         setHouse({
           name: "",

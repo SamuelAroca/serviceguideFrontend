@@ -2,7 +2,7 @@ import { useState } from 'react';
 import {TextField, Autocomplete} from '@mui/material';
 
 const SelectHouse = ({options, handleSelect, receipt}) => {
-  const house = options?.map(({name}) => name);
+  const house = options?.map((name) => {return name});
 
   const [value, setValue] = useState(house[0]);
   const [inputValue, setInputValue] = useState("")
