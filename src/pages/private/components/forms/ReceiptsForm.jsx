@@ -46,7 +46,6 @@ const ReceiptsForm = ({ userId }) => {
     setReceipt({...receipt, house: {name: name} })
   }
 
-
   const tokenExist = () => {
     if (!getToken()) {
       3;
@@ -72,7 +71,6 @@ const ReceiptsForm = ({ userId }) => {
   const handleHouseChange = (event, value) => {
     setSelectedHouse(value);
     setReceipt({ ...receipt, house: value})
-    console.log(receipt, "ESTA DEBERÍA TENER LA CASA");
   };
 
   const getHouses = async () => {
@@ -120,15 +118,21 @@ const ReceiptsForm = ({ userId }) => {
     const err = onValidate(receipt);
     setErrors(err);
 
+    const updatedReceipt ={
+      ...receipt,
+      typeService: {
+        type: receiptType,
+      },
+    };
 
-    console.log(receipt);
+    console.log(updatedReceipt);
 
     if (Object.keys(err).length === 0) {
       let accesToken = getToken();
       try {
         const response = await axios.post(
           `${apiUrl}/api/receipt/add/${accesToken}`,
-          receipt
+          updatedReceipt
         );
         console.log("RECIBO REGISTRADO");
       } catch (error) {
