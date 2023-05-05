@@ -31,8 +31,6 @@ import {
 
 const drawerWidth = 240;
 function ResponsiveDrawer(props) {
-  const location = useLocation();
-  const { "*": path } = useParams();
 
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -154,18 +152,6 @@ function ResponsiveDrawer(props) {
           >
             <MenuIcon />
           </IconButton>
-          {location.pathname === "/major/receipts" || path ? (
-            <Link to={"/major/receipts/addreceipt"}>
-              <Button
-              className={styled.add_button}
-              variant="contained"
-              color="secondary"
-              size="large"
-              >
-              ADD RECEIPT
-              </Button>
-            </Link>
-          ) : null}
         </Toolbar>
       </AppBar>
       <Box>

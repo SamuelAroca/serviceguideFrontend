@@ -2,7 +2,6 @@ import styled from "../../styles/ReceiptsForm.module.css";
 import { TextField, Button, Grid, Box } from "@mui/material";
 import { getToken, initAxiosInterceptor } from "../../../../AxiosHelper";
 import { useNavigate } from "react-router-dom";
-import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { FormLayout } from "../../styled-components/form-layout.styled";
 import { BsWater, BsFillLightbulbFill, BsFillCloudFill } from "react-icons/bs";
@@ -74,14 +73,18 @@ const ReceiptsForm = ({ userId }) => {
   };
 
   const getHouses = async () => {
-    let accesToken = getToken();
-    const data = await axios.get(
-      `${apiUrl}/api/house/getHouseName/${accesToken}`
-    );
-    try {
-      setAllHouses(data.data);
-    } catch (err) {
-      console.log(err);
+    if (getToken()) {
+      let accesToken = getToken();
+      const data = await axios.get(
+        `${apiUrl}/api/house/getHouseName/${accesToken}`
+      );
+      try {
+        setAllHouses(data.data);
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      sessionExpired();
     }
   };
 
@@ -115,49 +118,52 @@ const ReceiptsForm = ({ userId }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const err = onValidate(receipt);
-    setErrors(err);
 
-    setIsLoading(true);
-
-    const updatedReceipt ={
-      ...receipt,
-      typeService: {
-        type: receiptType,
-      },
-    };
-
-    console.log(updatedReceipt);
-
-    if (Object.keys(err).length === 0) {
-      let accesToken = getToken();
-      try {
-        const response = await axios.post(
-          `${apiUrl}/api/receipt/add/${accesToken}`,
-          updatedReceipt
-        );
-        console.log("RECIBO REGISTRADO");
-      } catch (error) {
-        console.log(error);
-      }
+    if (getToken()) {
+      
+      const err = onValidate(receipt);
+      setErrors(err);
   
-      // Se setea el recibo a vacio para que se limpie el formulario
-      setReceipt({
-        receiptName: "",
-        price: "",
-        amount: "",
-        date: "",
+      setIsLoading(true);
+  
+      const updatedReceipt ={
+        ...receipt,
         typeService: {
           type: receiptType,
         },
-        house: {
-          name: "",
+      };
+  
+      if (Object.keys(err).length === 0) {
+        let accesToken = getToken();
+        try {
+          const response = await axios.post(
+            `${apiUrl}/api/receipt/add/${accesToken}`,
+            updatedReceipt
+          );
+        } catch (error) {
+          console.log(error);
         }
-      });
-
-      setIsLoading(false);
+    
+        // Se setea el recibo a vacio para que se limpie el formulario
+        setReceipt({
+          receiptName: "",
+          price: "",
+          amount: "",
+          date: "",
+          typeService: {
+            type: receiptType,
+          },
+          house: {
+            name: "",
+          }
+        });
+  
+        setIsLoading(false);
+      } else {
+        setErrors(err);
+      }
     } else {
-      setErrors(err);
+      sessionExpired();
     }
   };
 

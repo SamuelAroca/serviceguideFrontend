@@ -91,7 +91,7 @@ const HouseForm = () => {
     }
   };
 
-  const onValidate = (receipt) => {
+  const onValidate = (house) => {
     let errors = {};
     const regexLetters = /^[a-zA-Z\s]+$/; // Expresión regular para validar nombres
     const regexLettersNumbers = /^[\w\s]+(?:\s+[a-zA-Z]+\d{0,2})*$/; // Expresión regular para validar precios
@@ -149,8 +149,6 @@ const HouseForm = () => {
         },
       };
 
-      console.log(updatedHouse);
-
       if (Object.keys(err).length === 0) {
         let accesToken = getToken();
         try {
@@ -158,7 +156,6 @@ const HouseForm = () => {
             `${apiUrl}/api/house/add/${accesToken}`,
             updatedHouse
           );
-          console.log("CASA REGISTRADA");
         } catch (error) {
           console.log(error);
         }
