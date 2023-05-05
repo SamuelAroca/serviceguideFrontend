@@ -22,7 +22,7 @@ const ForgotPassword = () => {
 
   const onValidate = () => {
     let errors = {};
-    const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; // Expresión regular para validar precios
+    const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; // Expresión regular para validar email
 
     if (!email.mailTo.trim()) {
       errors.mailTo = "Debes poner un email";

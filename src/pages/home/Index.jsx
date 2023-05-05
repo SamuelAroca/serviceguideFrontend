@@ -32,10 +32,8 @@ const Index = () => {
           <Information />
         </section>
       </div>
-      <footer>
-        <section>
-          <Footer />
-        </section>
+      <footer className={styles.footer}>
+        <Footer />
       </footer>
     </div>
   );
