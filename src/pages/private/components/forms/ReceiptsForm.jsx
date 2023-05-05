@@ -76,7 +76,7 @@ const ReceiptsForm = ({ userId }) => {
   const getHouses = async () => {
     let accesToken = getToken();
     const data = await axios.get(
-      `${apiUrl}/api/house/findAllByUserOrderById/${accesToken}`
+      `${apiUrl}/api/house/getHouseName/${accesToken}`
     );
     try {
       setAllHouses(data.data);
