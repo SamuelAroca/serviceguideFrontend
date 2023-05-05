@@ -9,7 +9,7 @@ import { myID } from "../house/AddHouse";
 import SelectCity from "../house/SelectCity";
 import axios from "axios";
 
-const HouseForm = (props) => {
+const HouseForm = () => {
   const apiUrl = "http://localhost:8080";
 
   const [userID, setUserID] = useState("");
@@ -29,7 +29,6 @@ const HouseForm = (props) => {
   const [house, setHouse] = useState({
     name: "",
     stratum: "",
-    cities: selectedCity,
     neighborhood: "",
     address: "",
     contract: "",
@@ -150,17 +149,19 @@ const HouseForm = (props) => {
         },
       };
 
+      console.log(updatedHouse);
+
       if (Object.keys(err).length === 0) {
-        console.log(updatedHouse, "FORM DE CASA");
+        /* let accesToken = getToken();
         try {
           const response = await axios.post(
-            `${apiUrl}/api/house/add`,
+            `${apiUrl}/api/house/add/${accesToken}`,
             updatedHouse
           );
           console.log("CASA REGISTRADA");
         } catch (error) {
           console.log(error);
-        }
+        } */
 
         setHouse({
           name: "",

@@ -1,6 +1,7 @@
 import styled from "../../styles/ReceiptsForm.module.css";
 import { TextField, Button, Grid, Box } from "@mui/material";
 import { getToken, initAxiosInterceptor } from "../../../../AxiosHelper";
+import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { FormLayout } from "../../styled-components/form-layout.styled";
@@ -19,6 +20,7 @@ const ReceiptsForm = ({ userId }) => {
   const [errors, setErrors] = useState([]);
   const [selectedHouse, setSelectedHouse] = useState(null);
   const [allHouses, setAllHouses] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     initAxiosInterceptor();
@@ -29,12 +31,20 @@ const ReceiptsForm = ({ userId }) => {
   const [receipt, setReceipt] = useState({
     receiptName: "",
     price: "",
+    house: selectedHouse,
     amount: "",
     date: "",
     typeService: {
-      tyope: userId,
+      type: receiptType,
     },
+    house: {
+      name: "",
+    }
   });
+
+  const handleSelect = (name) =>{
+    setReceipt({...receipt, house: {name: name} })
+  }
 
   const tokenExist = () => {
     if (!getToken()) {
@@ -58,8 +68,21 @@ const ReceiptsForm = ({ userId }) => {
     });
   };
 
-  const handleHouseChange = (value) => {
+  const handleHouseChange = (event, value) => {
     setSelectedHouse(value);
+    setReceipt({ ...receipt, house: value})
+  };
+
+  const getHouses = async () => {
+    let accesToken = getToken();
+    const data = await axios.get(
+      `${apiUrl}/api/house/findAllByUserOrderById/${accesToken}`
+    );
+    try {
+      setAllHouses(data.data);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const onValidate = (receipt) => {
@@ -90,32 +113,28 @@ const ReceiptsForm = ({ userId }) => {
     return errors;
   };
 
-  const getHouses = async () => {
-    const data = await axios.get(
-      `${apiUrl}/api/house/findAllByUser/${userId}`
-    );
-    try {
-      setAllHouses(data.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const err = onValidate(receipt);
     setErrors(err);
 
-    console.log(Object.keys(err).length);
-    console.log(receipt);
+    const updatedReceipt ={
+      ...receipt,
+      typeService: {
+        type: receiptType,
+      },
+    };
+
+    console.log(updatedReceipt);
 
     if (Object.keys(err).length === 0) {
-
+      let accesToken = getToken();
       try {
         const response = await axios.post(
-          `${apiUrl}/api/receipt/${receiptType}/add`,
-          receipt
+          `${apiUrl}/api/receipt/add/${accesToken}`,
+          updatedReceipt
         );
+        console.log("RECIBO REGISTRADO");
       } catch (error) {
         console.log(error);
       }
@@ -126,9 +145,12 @@ const ReceiptsForm = ({ userId }) => {
         price: "",
         amount: "",
         date: "",
-        user: {
-          id: "",
+        typeService: {
+          type: receiptType,
         },
+        house: {
+          name: "",
+        }
       });
     } else {
       setErrors(err);
@@ -256,6 +278,8 @@ const ReceiptsForm = ({ userId }) => {
               <SelectHouse
                 options={allHouses}
                 onChange={handleHouseChange}
+                handleSelect={handleSelect}
+                receipt={receipt}
               />
             </Grid>
           </Grid>

@@ -1,25 +1,27 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useState } from 'react';
 import {TextField, Autocomplete} from '@mui/material';
 
-const SelectHouse = ({onChange, options}) => {
-  const [houseOptions, sethouseOptions] = useState([]);
+const SelectHouse = ({options, handleSelect, receipt}) => {
+  const house = options?.map(({name}) => name);
 
-  useEffect(() => {
-    sethouseOptions(options);
-  }, [options]);
+  const [value, setValue] = useState(house[0]);
+  const [inputValue, setInputValue] = useState("")
 
   return (
     <div>
       <Autocomplete
-        disablePortal
+        value={value}
+        onChange={(event, newValue) => {
+          handleSelect(newValue);
+        }}
+        inputValue={inputValue}
+        onInputChange={(event, newInputValue) => {
+          setInputValue(newInputValue);
+        }}
+        id="controllable-states-demo"
+        options={house}
         sx={{ width: 300 }}
-        options={houseOptions}
-        getOptionLabel = {(options) => options.name}
-        renderInput={(params) => (
-          <TextField {...params} label="Select House" variant="outlined" />
-        )}
-        onChange={(value) => onChange(value)}
+        renderInput={(params) => <TextField {...params} label="Select House" />}
       />
 
     </div>

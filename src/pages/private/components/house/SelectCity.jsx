@@ -22,7 +22,7 @@ export default function SelectCity({ options, handleSelect, house }) {
         id="controllable-states-demo"
         options={cities}
         sx={{ width: 300 }}
-        renderInput={(params) => <TextField {...params} label="Controllable" />}
+        renderInput={(params) => <TextField {...params} label="Select City" />}
       />
     </div>
   );
