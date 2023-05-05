@@ -1,6 +1,6 @@
 import HouseCard from "./HouseCard";
 
-const AllHousesCard = ({data}) => {
+const AllHousesCard = ({data, getInformation}) => {
 
   return(
     <div
@@ -13,7 +13,7 @@ const AllHousesCard = ({data}) => {
     >
       <div>
         {data?.map((c, index) => (
-          <HouseCard key={index} data={c} />
+          <HouseCard key={index} data={c} getInformation={getInformation} />
         ))}
       </div>
     </div>

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ReceiptCardContainer } from "../../styled-components/card-container.styled";
 import Delete from "../DeleteButton";
 
-const HouseCard = ({ data, onGetInformation }) => {
+const HouseCard = ({ data, onGetInformation, getInformation }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleDelete = () => {
@@ -36,7 +36,7 @@ const HouseCard = ({ data, onGetInformation }) => {
           marginRight: "20px",
         }}
       >
-        <Delete path={path} id={data.id} onDelete={handleDelete} />
+        <Delete path={path} id={data.id} onDelete={handleDelete} getInformation={getInformation} />
       </div>
     </ReceiptCardContainer>
   )
