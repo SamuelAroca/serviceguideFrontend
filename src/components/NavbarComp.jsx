@@ -37,11 +37,14 @@ const NavbarComp = () => {
           <a className="link" href="#aboutUs">
             Nosotros
           </a>
+          <a className="link" href="#team">
+            Team
+          </a>
           <Link className="link" to={"/register"}>
-            Registrar
+            Register
           </Link>
           <Link className="link" to={"/login"}>
-            Ingresar
+            Log In
           </Link>
           <button className="nav-btn nav-close-btn" onClick={showNavbar}>
             <FaTimes />

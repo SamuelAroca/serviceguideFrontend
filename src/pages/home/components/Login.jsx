@@ -111,8 +111,8 @@ const Login = () => {
               <div className={styles.div_button_login}>
                 <button className={styles.login_button} onClick={login}>
                   Sign in
-                  <div class={styles.arrow_wrapper}>
-                    <div class={styles.arrow}></div>
+                  <div className={styles.arrow_wrapper}>
+                    <div className={styles.arrow}></div>
                   </div>
                 </button>
               </div>

@@ -28,14 +28,12 @@ const Index = () => {
         <section id="aboutUs">
           <AboutUs />
         </section>
-        <section id="info">
+        <section id="team">
           <Information />
         </section>
       </div>
-      <footer>
-        <section>
-          <Footer />
-        </section>
+      <footer className={styles.footer}>
+        <Footer />
       </footer>
     </div>
   );
