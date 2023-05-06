@@ -12,6 +12,7 @@ import AddReceipt from "./pages/private/components/receipts/AddReceipt";
 import AddHouse from "./pages/private/components/house/AddHouse";
 import SavedStatistic from "./pages/private/components/statistics/SavedStatistic";
 import ForgotPassword from "./pages/home/components/ForgotPassword";
+import ChangePasword from "./pages/home/components/ChangePasword";
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/change-password/:passwordToken" element={<ChangePasword />} />
         <Route path="/major/*" element={<Home />} />
         <Route path="/major/home/*" element={<Home />} />
         <Route path="/major/receipts/*" element={<Receipts />} />

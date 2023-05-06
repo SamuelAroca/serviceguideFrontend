@@ -58,7 +58,6 @@ const ForgotPassword = () => {
           icon: "error",
           title: "Oops...",
           text: message,
-          footer: '<a href="/forgot-password">Forgot password?</a>',
         });
       }
 
@@ -117,8 +116,8 @@ const ForgotPassword = () => {
               <div className={styles.div_button_login}>
                 <button className={styles.login_button} onClick={sendEmail}>
                   Send Email
-                  <div class={styles.arrow_wrapper}>
-                    <div class={styles.arrow}></div>
+                  <div className={styles.arrow_wrapper}>
+                    <div className={styles.arrow}></div>
                   </div>
                 </button>
               </div>
