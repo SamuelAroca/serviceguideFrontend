@@ -1,5 +1,5 @@
 import SideNav from "./SideNav";
-import axios from "axios";
+import axios, { all } from "axios";
 import styled from "./styles/Hom.module.css";
 import { getToken, initAxiosInterceptor } from "../../AxiosHelper";
 import moment from "moment/moment";
@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import PageLoader from "./PageLoader";
 import AllReceiptsCards from "./components/receipts/AllReceiptsCard";
 import Loader from "./Loader";
+import GetLastReceipts from "./components/receipts/GetLastReceipts";
 
 const Home = () => {
   const apiUrl = "http://localhost:8080";
@@ -121,21 +122,16 @@ const Home = () => {
   const getReceipts = async () => {
     let accessToken = getToken();
     setLoading(true);
-    const data = await axios.get(
+    const receipt = await axios.get(
       `${apiUrl}/api/receipt/getLastReceipt/${accessToken}`
     );
     try {
-      setAllReceipts(data.data);
-      console.log(data.data);
+      setAllReceipts(receipt.data);
     } catch (err) {
       console.log(err);
     } finally {
       setLoading(false);
     }
-  };
-
-  const getInformation = async () => {
-    getReceipts();
   };
 
   return (
@@ -146,12 +142,31 @@ const Home = () => {
         <button onClick={prueba}>Click</button>
         <button onClick={handleLogOut}>Log Out</button>
         <h3>{user}</h3>
-        <AllReceiptsCards data={allReceipts} getInformation={getInformation} />
         <Loader visible={loading} />
       </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          marginLeft: "5rem",
+          marginTop: "5rem",
+        }}
+      >
       <Routes>
-        <Route path="/loader" element={<PageLoader />}></Route>
+        { allReceipts ? (
+          
+          <Route
+            path="/"
+            element={
+              <GetLastReceipts receipt={allReceipts} />
+            }
+          />
+        ) :
+          null
+        }
       </Routes>
+      </div>
     </>
   );
 };
