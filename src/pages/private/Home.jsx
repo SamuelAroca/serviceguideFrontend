@@ -6,16 +6,21 @@ import moment from "moment/moment";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import PageLoader from "./PageLoader";
+import AllReceiptsCards from "./components/receipts/AllReceiptsCard";
+import Loader from "./Loader";
 
 const Home = () => {
   const apiUrl = "http://localhost:8080";
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
+  const [allReceipts, setAllReceipts] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     initAxiosInterceptor();
     tokenExist();
     loadUserByToken();
+    getReceipts();
   }, []);
 
   const loadUserByToken = async () => {
@@ -25,13 +30,16 @@ const Home = () => {
       );
       setUser(user);
       console.log(user);
+      let token = document.cookie.split("=");
+      console.log(token[1]);
     } catch (error) {
       console.log(error);
     }
   };
 
   const tokenExist = () => {
-    if (!getToken()) {3
+    if (!getToken()) {
+      3;
       navigate("/");
     }
   };
@@ -107,8 +115,27 @@ const Home = () => {
 
   const FormatDate = (date) => {
     let formatDate = moment(`/Date(${date})`).format("DD-MM-YYYY");
-
     return formatDate;
+  };
+
+  const getReceipts = async () => {
+    let accessToken = getToken();
+    setLoading(true);
+    const data = await axios.get(
+      `${apiUrl}/api/receipt/getLastReceipt/${accessToken}`
+    );
+    try {
+      setAllReceipts(data.data);
+      console.log(data.data);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getInformation = async () => {
+    getReceipts();
   };
 
   return (
@@ -119,6 +146,8 @@ const Home = () => {
         <button onClick={prueba}>Click</button>
         <button onClick={handleLogOut}>Log Out</button>
         <h3>{user}</h3>
+        <AllReceiptsCards data={allReceipts} getInformation={getInformation} />
+        <Loader visible={loading} />
       </div>
       <Routes>
         <Route path="/loader" element={<PageLoader />}></Route>

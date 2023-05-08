@@ -162,7 +162,7 @@ const ChangePasword = () => {
                   className={styles.login_button}
                   onClick={changePassword}
                 >
-                  Send Email
+                  Change Password
                   <div className={styles.arrow_wrapper}>
                     <div className={styles.arrow}></div>
                   </div>
