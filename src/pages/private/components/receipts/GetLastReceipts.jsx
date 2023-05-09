@@ -1,3 +1,4 @@
+import moment from "moment-timezone";
 import { ReceiptCardContainer } from "../../styled-components/card-container.styled";
 import { useState } from "react";
 
@@ -6,8 +7,9 @@ const GetLastReceipts = ({ receipt }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const FormatDate = (date) => {
-    let formatDate = moment(`/Date(${date})`).format("DD-MM-YYYY");
-
+    const timedifference = -1440; // diferencia horaria en minutos
+    const dateColombia = moment(date).subtract(timedifference, 'minutes');
+    const formatDate = dateColombia.locale('es').format('DD-MM-YYYY');
     return formatDate;
   };
 
@@ -22,12 +24,11 @@ const GetLastReceipts = ({ receipt }) => {
       }}
       transition={{ duration: 0 }}
     >
-      <p>ID: {receipt.id}</p>
       <p>Nombre del recibo: {receipt.receiptName}</p>
       <p>Precio: {receipt.price}</p>
       <p>Cantidad: {receipt.amount}</p>
       <p>Nombre de la casa: {receipt.houseName}</p>
-      <p>Fecha: {new Date(receipt.date).toLocaleDateString()}</p>
+      <p>Fecha: {FormatDate(receipt.date)}</p>
       <p>Tipo de servicio: {receipt.typeService.type}</p>
 
     </ReceiptCardContainer>
