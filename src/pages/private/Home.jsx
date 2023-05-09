@@ -9,6 +9,8 @@ import PageLoader from "./PageLoader";
 import AllReceiptsCards from "./components/receipts/AllReceiptsCard";
 import Loader from "./Loader";
 import GetLastReceipts from "./components/receipts/GetLastReceipts";
+import LinesChart from "./components/statistics/LinesChart";
+import StatisticsHome from "./components/statistics/StatisticsHome";
 
 const Home = () => {
   const apiUrl = "http://localhost:8080";
@@ -143,29 +145,28 @@ const Home = () => {
         <button onClick={handleLogOut}>Log Out</button>
         <h3>{user}</h3>
         <Loader visible={loading} />
-      </div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          marginLeft: "5rem",
-          marginTop: "5rem",
-        }}
-      >
-      <Routes>
-        { allReceipts ? (
-          
-          <Route
-            path="/"
-            element={
-              <GetLastReceipts receipt={allReceipts} />
-            }
-          />
-        ) :
-          null
-        }
-      </Routes>
+
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            marginLeft: "5rem",
+            marginTop: "5rem",
+          }}
+        >
+          <Routes>
+            {allReceipts ? (
+              <Route
+                path="/"
+                element={<GetLastReceipts receipt={allReceipts} />}
+              />
+            ) : null}
+          </Routes>
+        </div>
+        <div style={{ marginLeft: "30rem", height: "50rem", width: "50rem" }}>
+          <StatisticsHome />
+        </div>
       </div>
     </>
   );
