@@ -1,14 +1,15 @@
 import { useState } from "react";
 import { ReceiptCardContainer } from "../../styled-components/card-container.styled";
 import Delete from "../DeleteButton";
-import moment from "moment/moment";
+import moment from "moment-timezone";
 
 const ReceiptCard = ({ name, data, getInformation }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const FormatDate = (date) => {
-    let formatDate = moment(`/Date(${date})`).format("DD-MM-YYYY");
-
+    const timedifference = -1440; // diferencia horaria en minutos
+    const dateColombia = moment(date).subtract(timedifference, 'minutes');
+    const formatDate = dateColombia.locale('es').format('DD-MM-YYYY');
     return formatDate;
   };
 
