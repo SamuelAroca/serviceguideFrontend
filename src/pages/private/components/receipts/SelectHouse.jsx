@@ -23,7 +23,6 @@ const SelectHouse = ({options, handleSelect, receipt}) => {
         sx={{ width: 300 }}
         renderInput={(params) => <TextField {...params} label="Select House" />}
       />
-
     </div>
   );
 }

@@ -7,8 +7,6 @@ import toast, { Toaster } from "react-hot-toast";
 export const DeleteButton = ({ path, id, getInformation }) => {
   const apiUrl = "http://localhost:8080";
 
-  const [loading, setLoading] = useState(false);
-
   const notify = () => toast.success("Deleted successfully.");
 
   const onDelete = async () => {

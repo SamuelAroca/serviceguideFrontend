@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { ReceiptCardContainer } from "../../styled-components/card-container.styled";
+import UpdateReceipt from "./update/UpdateReceipt";
+import Button from "@mui/material/Button";
 import Delete from "../DeleteButton";
 import moment from "moment/moment";
 
 const ReceiptCard = ({ name, data, getInformation }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [showUpdateReceipt, setShowUpdateReceipt] = useState(false);
 
   const FormatDate = (date) => {
     let formatDate = moment(`/Date(${date})`).format("DD-MM-YYYY");
@@ -14,33 +17,71 @@ const ReceiptCard = ({ name, data, getInformation }) => {
 
   const path = "receipt";
 
+  const handleUpdate = () => {
+    getInformation(); // Actualizar datos de ReceiptCard
+    setShowUpdateReceipt(false); // Cerrar UpdateReceipt
+    setIsOpen(true);
+  };
+
+  const handleUpdateClick = (event) => {
+    event.stopPropagation(); // Evitar que el evento se propague
+    setShowUpdateReceipt(true);
+    setIsOpen(true);
+  };
+
+  const height = showUpdateReceipt ? "50rem" : isOpen ? "24rem" : "11rem";
+
   return (
     <>
       <ReceiptCardContainer
         open={isOpen}
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => {
+          !showUpdateReceipt ? setIsOpen(!isOpen) : setIsOpen(true)
+        }}
         initial={{ height: "9rem", backgroundColor: "white" }}
         animate={{
-          height: isOpen ? "22rem" : "11rem",
+          height: height,
           backgroundColor: isOpen ? "lightgrey" : "white",
         }}
         transition={{ duration: 0 }}
+        style={{
+          
+        }}
       >
-        <h2>{data.receiptName}</h2>
-        <p>{data.typeService.type}</p>
-        <p>House: {data.houseName}</p>
-        <p>Date: {FormatDate(data.date)}</p>
-        <p>Amount: {data.amount}</p>
-        <p>Price: {data.price}</p>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "flex-end",
-            marginRight: "20px",
-          }}
-        >
-          <Delete path={path} id={data.id} getInformation={getInformation} />
-        </div>
+        {!showUpdateReceipt ? (
+          <>
+            <h2>{data.receiptName}</h2>
+            <p>{data.typeService.type}</p>
+            <p>House: {data.houseName}</p>
+            <p>Date: {FormatDate(data.date)}</p>
+            <p>Amount: {data.amount}</p>
+            <p>Price: {data.price}</p>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+                marginRight: "20px",
+              }}
+            >
+              <div style={{ display: "flex", gap: "10px" }}>
+                <Button
+                  onClick={handleUpdateClick}
+                  variant="outlined"
+                  component="label"
+                >
+                  Update
+                </Button>
+                <Delete
+                  path={path}
+                  id={data.id}
+                  getInformation={getInformation}
+                />
+              </div>
+            </div>
+          </>
+        ) : (
+          <UpdateReceipt onClose={handleUpdate} />
+        )}
       </ReceiptCardContainer>
     </>
   );
