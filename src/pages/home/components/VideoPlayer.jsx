@@ -1,11 +1,12 @@
 import ReactPlayer from "react-player";
+import video from "../../../assets/videoIndex.mp4"
 
 const VideoPlayer = () => {
   return (
     <div>
       <ReactPlayer
-        url="https://www.youtube.com/watch?v=Y2n7xFQWOjo&ab_channel=UNEtxea-AsociacióndelPaísVascoparalaUNESCO"
-        width="60vw"
+        url={video}
+        width="56vw"
         height="60vh"
         controls
         muted

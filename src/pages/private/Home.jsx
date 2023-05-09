@@ -1,21 +1,27 @@
 import SideNav from "./SideNav";
-import axios from "axios";
+import axios, { all } from "axios";
 import styled from "./styles/Hom.module.css";
 import { getToken, initAxiosInterceptor } from "../../AxiosHelper";
 import moment from "moment/moment";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import PageLoader from "./PageLoader";
+import AllReceiptsCards from "./components/receipts/AllReceiptsCard";
+import Loader from "./Loader";
+import GetLastReceipts from "./components/receipts/GetLastReceipts";
 
 const Home = () => {
   const apiUrl = "http://localhost:8080";
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
+  const [allReceipts, setAllReceipts] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     initAxiosInterceptor();
     tokenExist();
     loadUserByToken();
+    getReceipts();
   }, []);
 
   const loadUserByToken = async () => {
@@ -25,13 +31,16 @@ const Home = () => {
       );
       setUser(user);
       console.log(user);
+      let token = document.cookie.split("=");
+      console.log(token[1]);
     } catch (error) {
       console.log(error);
     }
   };
 
   const tokenExist = () => {
-    if (!getToken()) {3
+    if (!getToken()) {
+      3;
       navigate("/");
     }
   };
@@ -107,8 +116,22 @@ const Home = () => {
 
   const FormatDate = (date) => {
     let formatDate = moment(`/Date(${date})`).format("DD-MM-YYYY");
-
     return formatDate;
+  };
+
+  const getReceipts = async () => {
+    let accessToken = getToken();
+    setLoading(true);
+    const receipt = await axios.get(
+      `${apiUrl}/api/receipt/getLastReceipt/${accessToken}`
+    );
+    try {
+      setAllReceipts(receipt.data);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -119,10 +142,31 @@ const Home = () => {
         <button onClick={prueba}>Click</button>
         <button onClick={handleLogOut}>Log Out</button>
         <h3>{user}</h3>
+        <Loader visible={loading} />
       </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          marginLeft: "5rem",
+          marginTop: "5rem",
+        }}
+      >
       <Routes>
-        <Route path="/loader" element={<PageLoader />}></Route>
+        { allReceipts ? (
+          
+          <Route
+            path="/"
+            element={
+              <GetLastReceipts receipt={allReceipts} />
+            }
+          />
+        ) :
+          null
+        }
       </Routes>
+      </div>
     </>
   );
 };
