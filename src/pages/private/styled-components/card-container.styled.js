@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 
 export const ReceiptCardContainer = styled(motion.div)`
-  width: 40vw;
+  width: 70vw;
   overflow: hidden;
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
   padding: 1rem;
