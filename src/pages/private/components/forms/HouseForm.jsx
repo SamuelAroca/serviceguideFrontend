@@ -149,6 +149,8 @@ const HouseForm = () => {
         },
       };
 
+      console.log(updatedHouse, "ESTA ES LA CASA");
+
       if (Object.keys(err).length === 0) {
         let accesToken = getToken();
         try {
