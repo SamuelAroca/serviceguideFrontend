@@ -13,7 +13,6 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
-import Button from "@mui/material/Button";
 import styled from "./styles/SideNav.module.css";
 import { AiFillHome } from "react-icons/ai";
 import { BsReception4, BsSave2Fill, BsHouseAddFill } from "react-icons/bs";

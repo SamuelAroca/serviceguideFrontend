@@ -1,15 +1,15 @@
 :root {
-  --primary-100: #87cefa;
-  --primary-200: #68b0db;
-  --primary-300: #116f96;
-  --primary-400: #147eab;
-  --accent-100: #ffc0cb;
-  --accent-200: #99616c;
-  --text-100: #333333;
-  --text-200: #5c5c5c;
-  --bg-100: #f2f2f2;
-  --bg-200: #e8e8e8;
-  --bg-300: #bfbfbf;
+  --primary-100:#0077C2;
+  --primary-200:#59a5f5;
+  --primary-300:#c8ffff;
+  --accent-100:#4D4D4D;
+  --accent-200:#d9d9d9;
+  --text-100:#FFFFFF;
+  --text-200:#e0e0e0;
+  --bg-100:#1C1C1C;
+  --bg-200:#2b2b2b;
+  --bg-300:#434343;
+    
 
   --primary-color: #645bff;
   --secondary-color: #fff;
@@ -27,7 +27,7 @@
 .home_button {
   width: 150px;
   height: 60px;
-  border: 3px solid #315cfd;
+  border: 3px solid var(--primary-300);
   border-radius: 45px;
   transition: all 0.3s;
   cursor: pointer;
@@ -68,7 +68,7 @@
   border-radius: 20px;
   color: var(--secondary-color);
   padding: 1em 1.8em;
-  background: var(--primary-color);
+  background: var(--primary-100);
   display: flex;
   transition: 0.2s background;
   align-items: center;
@@ -112,7 +112,7 @@
 }
 
 .signup_button:hover {
-  background-color: var(--hover-color);
+  background-color: var(--primary-200);
 }
 
 .signup_button:hover .arrow {
@@ -152,7 +152,7 @@
   align-items: center;
   max-height: 100%;
   border-radius: 0.5rem 0 0 0.5rem;
-  background-color: var(--bg-200);
+  background-color: var(--text-100);
   width: 60%;
   overflow: hidden;
   user-select: none;
@@ -166,7 +166,7 @@
   border-radius: 0rem 0.5rem 0.5rem 0;
   z-index: 1;
   user-select: none;
-  background-color: var(--bg-100);
+  background-color: var(--text-100);
   box-sizing: border-box;
 }
 
@@ -180,7 +180,7 @@
 
 .logo {
   margin-top: .4rem;
-  color: #33a7ff;
+  color: var(--primary-200);
 }
 
 .password_container {

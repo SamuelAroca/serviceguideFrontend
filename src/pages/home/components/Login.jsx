@@ -61,7 +61,7 @@ const Login = () => {
     <div className={styles.components}>
       <div className={styles.div_home_button}>
         <button className={styles.home_button} onClick={home}>
-          Home
+          Back
         </button>
       </div>
       <div className={styles.container}>

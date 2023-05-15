@@ -1,10 +1,21 @@
+:root{
+  --primary-100:#0077C2;
+  --primary-200:#59a5f5;
+  --primary-300:#c8ffff;
+  --accent-100:#4D4D4D;
+  --accent-200:#d9d9d9;
+  --text-100:#FFFFFF;
+  --text-200:#e0e0e0;
+  --bg-100:#1C1C1C;
+  --bg-200:#2b2b2b;
+  --bg-300:#434343;
+}
+
 .container_info {
   display: flex;
   margin-top: 0;
   height: 100%;
   width: 100%;
-  background-color: #ececec;
-  background-color: green;
   justify-content: center;
 }
 
@@ -19,20 +30,20 @@
 }
 
 .us h2 {
-  color: #6d42c7;
+  color: var(--primary-200);
   font-size: 3rem;
   padding: 3rem;
   text-align: center;
 }
 .us span {
-  color: #ffff;
+  color: var(--text-100);
 }
 
 .container_picture {
   display: flex;
   height: 50vh;
   width: 30vw;
-  background-color: #e9d8fb;
+  background-color: var(--primary-200);
   justify-content: center;
   align-items: center;
   border-radius: 0.5rem;
@@ -41,7 +52,6 @@
   margin: 3 rem;
   width: 25vw;
   height: 90%;
-  background-color: red;
   border-radius: 50%;
 }
 
@@ -53,7 +63,7 @@
 
 .icon_paragraph {
   font-size: 5rem;
-  color: #83f084;
+  color: var(--primary-200);
 }
 
 .text_us {
