@@ -1,5 +1,4 @@
 import ReactPlayer from "react-player";
-import video from "../../../assets/videoIndex.mp4"
 
 const VideoPlayer = () => {
   return (
