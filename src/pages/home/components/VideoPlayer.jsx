@@ -5,7 +5,7 @@ const VideoPlayer = () => {
   return (
     <div>
       <ReactPlayer
-        url={video}
+        url={"https://youtu.be/uRQkmDjP_jM"}
         width="56vw"
         height="60vh"
         controls
