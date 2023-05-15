@@ -21,7 +21,7 @@ import { MdOutlinePostAdd } from "react-icons/md";
 import { FaHouseUser } from "react-icons/fa";
 import { IoReceipt } from "react-icons/io5";
 import {
-  Link,
+  Link, useNavigate,
 } from "react-router-dom";
 import { Button } from "@mui/material";
 import axios from "axios";
@@ -31,6 +31,7 @@ function ResponsiveDrawer(props) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [user, setUser] = useState(null);
   const apiUrl = "http://localhost:8080";
+  const navigate = useNavigate();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
