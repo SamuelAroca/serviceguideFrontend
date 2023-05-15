@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -14,28 +14,63 @@ import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import styled from "./styles/SideNav.module.css";
+import { getToken, initAxiosInterceptor } from "../../AxiosHelper";
 import { AiFillHome } from "react-icons/ai";
 import { BsReception4, BsSave2Fill, BsHouseAddFill } from "react-icons/bs";
 import { MdOutlinePostAdd } from "react-icons/md";
 import { FaHouseUser } from "react-icons/fa";
 import { IoReceipt } from "react-icons/io5";
 import {
-  BrowserRouter as Switch,
-  Router,
-  Route,
   Link,
-  useLocation,
-  useParams,
 } from "react-router-dom";
+import { Button } from "@mui/material";
+import axios from "axios";
 
 const drawerWidth = 240;
 function ResponsiveDrawer(props) {
-
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [user, setUser] = useState(null);
+  const apiUrl = "http://localhost:8080";
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
+  const handleLogOut = () => {
+    Swal.fire({
+      title: "Do you want to log out?",
+      text: "You will have to log in again!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, log out!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+        navigate("/");
+      }
+    });
+  };
+
+  const loadUserByToken = async () => {
+    try {
+      const { data: user } = await axios.get(
+        `${apiUrl}/api/users/auth/myName/${getToken()}`
+      );
+      setUser(user);
+      console.log(user);
+      let token = document.cookie.split("=");
+      console.log(token[1]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    loadUserByToken();
+    initAxiosInterceptor();
+  }, []);
 
   const drawer = (
     <div className={styled.div_main}>
@@ -117,6 +152,11 @@ function ResponsiveDrawer(props) {
             </ListItemButton>
           </ListItem>
         </Link>
+        <ListItem className={styled.listItem}>
+          <Button variant="contained" onClick={handleLogOut}>
+            Logout
+          </Button>
+        </ListItem>
       </List>
       <Divider />
     </div>
@@ -142,6 +182,7 @@ function ResponsiveDrawer(props) {
           }}
           className={styled.toolbar_button}
         >
+          {user}
           <IconButton
             color="inherit"
             aria-label="open drawer"

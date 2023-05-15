@@ -6,7 +6,6 @@
   gap: 5rem;
 }
 
-.prueba button {
-  height: 3rem;
-  width: 5rem;
+.graphic {
+  display: flex;
 }
