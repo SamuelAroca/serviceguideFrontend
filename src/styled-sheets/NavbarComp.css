@@ -9,6 +9,7 @@
   --primary-300: #116f96;
   --accent-100: #ffc0cb;
   --accent-200: #99616c;
+  --text-100:#FFFFFF;
   --text-100: #333333;
   --text-200: #5c5c5c;
   --bg-100: #f2f2f2;
@@ -113,6 +114,7 @@
   height: 100%;
   width: auto;
   font-size: 2rem;
+  color: var(--text-100);
 }
 .main-logo {
   color: #33a7ff;
