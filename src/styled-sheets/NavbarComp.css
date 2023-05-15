@@ -113,6 +113,7 @@
   height: 100%;
   width: auto;
   font-size: 2rem;
+  color: var();
 }
 .main-logo {
   color: #33a7ff;
