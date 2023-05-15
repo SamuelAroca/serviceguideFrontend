@@ -28,3 +28,7 @@
 .link:hover {
   text-decoration: none;
 }
+
+.listItem {
+  margin-left: 3.7rem;
+}
