@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import styles from './styles/StatisticHome.module.css'
+import { getToken, initAxiosInterceptor } from "../../../../AxiosHelper";
 import { Bar, Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -28,7 +30,7 @@ ChartJS.register(
   Filler
 );
 
-const StatisticsHome = () => {
+const StatisticsHome = ({ idReceipt, typeReceipt }) => {
   const apiUrl = "http://localhost:8080";
   const [label, setLabel] = useState([]);
   const [price, setPrice] = useState([]);
@@ -36,41 +38,23 @@ const StatisticsHome = () => {
 
   const getData = async () => {
     const data = await axios.get(
-      `${apiUrl}/api/statistic/individualReceipt/BAR/ENERGY/47`
+      `${apiUrl}/api/statistic/individualReceipt/BAR/${typeReceipt.typeService.type}/${idReceipt.id}`
     );
     setLabel(data.data.label);
     setPrice(data.data.price);
     setAmount(data.data.amount);
-    console.log(label);
   };
 
   useEffect(() => {
     getData();
-  }, []);
-
-  /* const agua = [16, 21, 25, 20, 21, 21, 20, 21, 11, 17, 18];
-  const energia = [183, 214, 195, 182, 187, 175, 173, 199, 144, 196, 201];
-  const alcantarillado = [16, 21, 25, 20, 21, 21, 20, 21, 11, 17, 18];
-  const gas = [29, 30, 31, 31, 32, 31, 29, 31, 9, 18, 20];
-  const meses = [
-    "Junio",
-    "Julio",
-    "Agosto",
-    "Septiembre",
-    "Octubre",
-    "Noviembre",
-    "Diciembre",
-    "Enero",
-    "Febrero",
-    "Marzo",
-    "Abril",
-  ]; */
+    initAxiosInterceptor();
+  }, [idReceipt]);
 
   const miData = {
     labels: label,
     datasets: [
       {
-        label: "Precio Consumido",
+        label: "Precio del Consumo",
         data: price,
         tension: 0.5,
         fill: false,
@@ -80,8 +64,14 @@ const StatisticsHome = () => {
         pointBorderColor: "rgba(255, 99, 132)",
         pointBackgroundColor: "rgba(255, 99, 132)",
       },
+    ],
+  };
+
+  const myAmount = {
+    labels: label,
+    datasets: [
       {
-        label: "Consumo",
+        label: `Consumo en `,
         data: amount,
         tension: 0.5,
         fill: false,
@@ -112,9 +102,9 @@ const StatisticsHome = () => {
 
   return (
     <>
-      <h2>GRAFICS</h2>
-      <div style={{ border: "1rem", borderBlockColor: "black" }}>
+      <div style={{ border: "1rem", borderBlockColor: "black" }} className={styles.div_main}>
         <Bar data={miData} options={misoptions} />
+        <Bar data={myAmount} options={misoptions} />
       </div>
     </>
   );
