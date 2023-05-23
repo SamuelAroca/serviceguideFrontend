@@ -7,7 +7,7 @@ import Loader from "./Loader";
 import axios from "axios";
 
 const Receipts = () => {
-  const apiUrl = "http://localhost:8080";
+  const apiUrl = import.meta.env.VITE_API_RECEIPT;
 
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
@@ -22,7 +22,7 @@ const Receipts = () => {
     let accessToken = getToken();
     setLoading(true);
     const data = await axios.get(
-      `${apiUrl}/api/receipt/allReceiptsByUserId/${accessToken}`
+      `${apiUrl}/allReceiptsByUserId/${accessToken}`
     );
     try {
       setAllReceipts(data.data);

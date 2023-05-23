@@ -1,7 +1,4 @@
-import styles from "../styles/Footer.module.css";
-import { Fab } from "@mui/material";
-import { RiWaterFlashFill } from "react-icons/ri";
-import { GrAdd } from "react-icons/gr";
+import styles from "../styles/Footer.module.css";;
 import { BsFacebook, BsLinkedin, BsInstagram, BsTwitter } from "react-icons/bs"
 import { Link } from "react-router-dom";
 
