@@ -12,6 +12,7 @@ import img4 from "../../../assets/gas-natural.jpeg";
 import axios from "axios";
 
 const Login = () => {
+
   const [showPassword, setShowPassword] = useState(false);
 
   const handleShow = () => {
@@ -22,7 +23,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const url = "http://localhost:8080/api/users/auth/login";
+  const url = import.meta.env.VITE_API_AUTH;
 
   const home = () => {
     navigate("/");
@@ -31,7 +32,7 @@ const Login = () => {
   const login = async (e) => {
     e.preventDefault();
     try {
-      let response = await axios.post(url, {
+      let response = await axios.post(`${url}/login`, {
         email: email,
         password: password,
       });

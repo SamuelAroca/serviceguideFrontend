@@ -10,7 +10,8 @@ import SelectCity from "../house/SelectCity";
 import axios from "axios";
 
 const HouseForm = () => {
-  const apiUrl = "http://localhost:8080";
+  const apiUrl = import.meta.env.VITE_API_HOUSE;
+  const apiCity = import.meta.env.VITE_API_CITY;
 
   const [userID, setUserID] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -80,7 +81,7 @@ const HouseForm = () => {
 
   const getCities = async (e) => {
     if (getToken()) {
-      const data = await axios.get(`${apiUrl}/api/cities/listAll`);
+      const data = await axios.get(`${apiCity}/listAll`);
       try {
         setAllCities(data.data);
       } catch (err) {
@@ -155,7 +156,7 @@ const HouseForm = () => {
         let accesToken = getToken();
         try {
           const response = await axios.post(
-            `${apiUrl}/api/house/add/${accesToken}`,
+            `${apiUrl}/add/${accesToken}`,
             updatedHouse
           );
         } catch (error) {

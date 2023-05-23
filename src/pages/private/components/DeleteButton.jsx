@@ -5,7 +5,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import toast, { Toaster } from "react-hot-toast";
 
 export const DeleteButton = ({ path, id, getInformation }) => {
-  const apiUrl = "http://localhost:8080";
+  const apiUrl = import.meta.env.VITE_API;
 
   const notify = () => toast.success("Deleted successfully.");
 

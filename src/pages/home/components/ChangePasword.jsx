@@ -21,7 +21,7 @@ const ChangePasword = () => {
     tokenPassword: params.passwordToken,
   });
 
-  const url = "http://localhost:8080/api/email/change-password";
+  const url = import.meta.env.VITE_API_EMAIL;
 
   const onValidate = () => {
     let errors = {};
@@ -54,7 +54,7 @@ const ChangePasword = () => {
     setErrors(err);
     if (Object.keys(err).length === 0) {
       try {
-        let response = await axios.post(url, password);
+        let response = await axios.post(`${url}/change-password`, password);
         let message = response.data.message;
         if (response.status == 200) {
           Swal.fire({

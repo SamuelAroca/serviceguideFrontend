@@ -31,14 +31,14 @@ ChartJS.register(
 );
 
 const StatisticsHome = ({ idReceipt, typeReceipt }) => {
-  const apiUrl = "http://localhost:8080";
+  const apiUrl = import.meta.env.VITE_API_STATISTIC;
   const [label, setLabel] = useState([]);
   const [price, setPrice] = useState([]);
   const [amount, setAmount] = useState([]);
 
   const getData = async () => {
     const data = await axios.get(
-      `${apiUrl}/api/statistic/individualReceipt/BAR/${typeReceipt.typeService.type}/${idReceipt.id}`
+      `${apiUrl}/individualReceipt/BAR/${typeReceipt.typeService.type}/${idReceipt.id}`
     );
     setLabel(data.data.label);
     setPrice(data.data.price);

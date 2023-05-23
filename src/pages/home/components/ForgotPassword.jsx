@@ -18,7 +18,7 @@ const ForgotPassword = () => {
     mailTo: "",
   });
 
-  const url = "http://localhost:8080/api/email/send-email";
+  const url = import.meta.env.VITE_API_EMAIL;
 
   const onValidate = () => {
     let errors = {};
@@ -38,7 +38,7 @@ const ForgotPassword = () => {
     setErrors(err);
     if (Object.keys(err).length === 0) {
       try {
-        let response = await axios.post(url, email);
+        let response = await axios.post(`${url}/send-email`, email);
 
         if (response.status != 200) {
           throw new alert("Login Error");

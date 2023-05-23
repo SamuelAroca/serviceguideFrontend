@@ -9,7 +9,7 @@ import GetLastReceipts from "./components/receipts/GetLastReceipts";
 import StatisticsHome from "./components/statistics/StatisticsHome";
 
 const Home = () => {
-  const apiUrl = "http://localhost:8080";
+  const apiUrl = import.meta.env.VITE_API_RECEIPT;
   const navigate = useNavigate();
   const [allReceipts, setAllReceipts] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -46,7 +46,7 @@ const Home = () => {
     let accessToken = getToken();
     setLoading(true);
     const receipt = await axios.get(
-      `${apiUrl}/api/receipt/getLastReceipt/${accessToken}`
+      `${apiUrl}/getLastReceipt/${accessToken}`
     );
     try {
       setAllReceipts(receipt.data);
