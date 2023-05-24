@@ -3,12 +3,12 @@ import ReceiptsForm from "../forms/ReceiptsForm";
 import axios from "axios";
 
 const myID = async () => {
-  const apiUrl = "http://localhost:8080";
+  const apiUrl = import.meta.env.VITE_API_AUTH;
 
   let accessToken = document.cookie.replace("token=", "");
   try {
     const result = await axios.get(
-      `${apiUrl}/api/users/auth/whoismyid/${accessToken}`
+      `${apiUrl}/whoismyid/${accessToken}`
     );
     return result.data;
   } catch (error) {

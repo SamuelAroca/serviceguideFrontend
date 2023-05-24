@@ -25,6 +25,8 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const url = import.meta.env.VITE_API_AUTH;
+
   const registerAlert = () => {
     Swal.fire("Successfully registered user", "", "success", {
       showDenyButton: false,
@@ -41,21 +43,18 @@ const Register = () => {
   const save = async (e) => {
     e.preventDefault();
     try {
-      let response = await axios.post(
-        "http://localhost:8080/api/users/auth/register",
-        {
-          firstName: name,
-          lastName: lastName,
-          email: email,
-          password: password,
-        }
-      );
+      let response = await axios.post(`${url}/register`, {
+        firstName: name,
+        lastName: lastName,
+        email: email,
+        password: password,
+      });
 
       if (response.status == 201) {
-        document.cookie = `token=${
-          response.data.token
-        }; max-age=${3600*5}; path=/; samesite=strict`;
-        navigate("/major")
+        document.cookie = `token=${response.data.token}; max-age=${
+          3600 * 5
+        }; path=/; samesite=strict`;
+        registerAlert();
       }
     } catch (error) {
       alert(error);

@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Button from "@mui/material/Button";
-import SystemUpdateAltIcon from '@mui/icons-material/SystemUpdateAlt';
+import SystemUpdateAltIcon from "@mui/icons-material/SystemUpdateAlt";
 import toast, { Toaster } from "react-hot-toast";
 
-
 const UpdateButton = ({ path, id, getInformation }) => {
-  const apiUrl = "http://localhost:8080";
-  
+  const apiUrl = import.meta.env.VITE_API;
+
   const notify = () => toast.succes("Updated successfully");
 
   const onUpdate = async () => {
@@ -19,9 +18,9 @@ const UpdateButton = ({ path, id, getInformation }) => {
     } catch (error) {
       console.log("Error al actulizar los datos", error);
     }
-  }
+  };
 
-  return(
+  return (
     <>
       <Button
         variant="contained"
@@ -32,6 +31,6 @@ const UpdateButton = ({ path, id, getInformation }) => {
       </Button>
     </>
   );
-}
+};
 
 export default UpdateButton;
