@@ -1,11 +1,12 @@
 import SideNav from "../../SideNav";
 import ReceiptsForm from "../forms/ReceiptsForm";
 import axios from "axios";
+import { getToken } from "../../../../AxiosHelper"
 
 const myID = async () => {
   const apiUrl = import.meta.env.VITE_API_AUTH;
 
-  let accessToken = document.cookie.replace("token=", "");
+  let accessToken = getToken;
   try {
     const result = await axios.get(
       `${apiUrl}/whoismyid/${accessToken}`
@@ -27,7 +28,8 @@ const AddReceipt = () =>{
         flexDirection: "column",
         alignItems: "center",
         marginLeft: "25rem",
-        marginTop: "5rem",
+        marginTop: "3rem",
+        marginRight: "10rem"
       }}
     
     >
