@@ -37,12 +37,13 @@ const UserUpdateForm = () => {
               disableFocusListener
               disableTouchListener
               title="Add First Name"
+              placement="bottom-start"
             >
               <TextField
                 fullWidth
-                label="First Name"
                 name="firstName"
                 type="text"
+                value={user.firstName}
               />
             </Tooltip>
           </Grid>
