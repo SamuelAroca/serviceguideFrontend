@@ -20,9 +20,7 @@ import { BsReception4, BsSave2Fill, BsHouseAddFill } from "react-icons/bs";
 import { MdOutlinePostAdd } from "react-icons/md";
 import { FaHouseUser } from "react-icons/fa";
 import { IoReceipt } from "react-icons/io5";
-import {
-  Link, useNavigate,
-} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import axios from "axios";
 
@@ -57,9 +55,7 @@ function ResponsiveDrawer(props) {
 
   const loadUserByToken = async () => {
     try {
-      const { data: user } = await axios.get(
-        `${url}/myName/${getToken()}`
-      );
+      const { data: user } = await axios.get(`${url}/myName/${getToken()}`);
       setUser(user);
       console.log(user, "Holis");
       let token = document.cookie.split("=");
@@ -155,7 +151,7 @@ function ResponsiveDrawer(props) {
           </ListItem>
         </Link>
         <ListItem className={styled.listItem}>
-          <Button variant="contained" onClick={handleLogOut}>
+          <Button variant="contained" onClick={handleLogOut} className={styled.button}>
             Logout
           </Button>
         </ListItem>
