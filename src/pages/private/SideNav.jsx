@@ -20,9 +20,7 @@ import { BsReception4, BsSave2Fill, BsHouseAddFill } from "react-icons/bs";
 import { MdOutlinePostAdd } from "react-icons/md";
 import { FaHouseUser } from "react-icons/fa";
 import { IoReceipt } from "react-icons/io5";
-import {
-  Link, useNavigate,
-} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import axios from "axios";
 
@@ -30,8 +28,9 @@ const drawerWidth = 240;
 function ResponsiveDrawer(props) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [user, setUser] = useState(null);
-  const apiUrl = "http://localhost:8080";
   const navigate = useNavigate();
+
+  const url = import.meta.env.VITE_API_AUTH;
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -56,11 +55,9 @@ function ResponsiveDrawer(props) {
 
   const loadUserByToken = async () => {
     try {
-      const { data: user } = await axios.get(
-        `${apiUrl}/api/users/auth/myName/${getToken()}`
-      );
+      const { data: user } = await axios.get(`${url}/myName/${getToken()}`);
       setUser(user);
-      console.log(user);
+      console.log(user, "Holis");
       let token = document.cookie.split("=");
       console.log(token[1]);
     } catch (error) {
@@ -154,7 +151,7 @@ function ResponsiveDrawer(props) {
           </ListItem>
         </Link>
         <ListItem className={styled.listItem}>
-          <Button variant="contained" onClick={handleLogOut}>
+          <Button variant="contained" onClick={handleLogOut} className={styled.button}>
             Logout
           </Button>
         </ListItem>

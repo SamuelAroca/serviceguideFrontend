@@ -12,7 +12,8 @@ import axios from "axios";
 import SelectHouse from "../receipts/SelectHouse";
 
 const ReceiptsForm = ({ userId }) => {
-  const apiUrl = "http://localhost:8080";
+  const apiUrl = import.meta.env.VITE_API_RECEIPT;
+  const apiHouse = import.meta.env.VITE_API_HOUSE;
 
   const [receiptType, setReceiptType] = useState("water");
   const [isLoading, setIsLoading] = useState(false);
@@ -76,7 +77,7 @@ const ReceiptsForm = ({ userId }) => {
     if (getToken()) {
       let accesToken = getToken();
       const data = await axios.get(
-        `${apiUrl}/api/house/getHouseName/${accesToken}`
+        `${apiHouse}/getHouseName/${accesToken}`
       );
       try {
         setAllHouses(data.data);
@@ -137,7 +138,7 @@ const ReceiptsForm = ({ userId }) => {
         let accesToken = getToken();
         try {
           const response = await axios.post(
-            `${apiUrl}/api/receipt/add/${accesToken}`,
+            `${apiUrl}/add/${accesToken}`,
             updatedReceipt
           );
         } catch (error) {

@@ -30,5 +30,13 @@
 }
 
 .listItem {
-  margin-left: 3.7rem;
+  padding: 0;
+  justify-content: center;
+  align-items: center;
+}
+
+.button {
+  margin-left: 10px;
+  align-items: center;
+  justify-content: center;
 }
