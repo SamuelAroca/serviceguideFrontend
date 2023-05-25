@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { React, useEffect, useState } from "react";
 import { FormLayout } from "../../styled-components/form-layout.styled";
 import { Grid, TextField, Tooltip } from "@mui/material";
 import { getToken, initAxiosInterceptor } from "../../../../AxiosHelper";
@@ -8,13 +8,10 @@ const UserUpdateForm = () => {
   const url = import.meta.env.VITE_API_USER;
   const [user, setUser] = useState([]);
 
-  const loadUser = async (e) => {
-    e.preventDefault();
+  const loadUser = async () => {
     try {
       let accessToken = getToken();
-      const userData = await axios.get(
-        `${url}/findById/${accessToken}`
-      );
+      const userData = await axios.get(`${url}/findById/${accessToken}`);
       setUser(userData.data);
       console.log(userData.data);
     } catch (error) {
@@ -24,7 +21,8 @@ const UserUpdateForm = () => {
 
   useEffect(() => {
     initAxiosInterceptor();
-  }, [user]);
+    loadUser();
+  }, []);
 
   const handleSubmit = () => {};
 
@@ -48,7 +46,6 @@ const UserUpdateForm = () => {
             </Tooltip>
           </Grid>
         </Grid>
-        <button onClick={loadUser}>BOTON</button>
       </form>
     </FormLayout>
   );
