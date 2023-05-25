@@ -7,7 +7,7 @@ import Loader from "./Loader";
 import axios from "axios";
 
 const Houses = () => {
-  const apiUrl = "http://localhost:8080";
+  const apiUrl = import.meta.env.VITE_API_HOUSE;
 
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
@@ -22,7 +22,7 @@ const Houses = () => {
     let accessToken = getToken();
     setLoading(true);
     const data = await axios.get(
-      `${apiUrl}/api/house/findAllByUserOrderById/${accessToken}`
+      `${apiUrl}/findAllByUserOrderById/${accessToken}`
     );
     try {
       setAllHouses(data.data);
