@@ -54,7 +54,7 @@ const StatisticsHome = ({ idReceipt, typeReceipt }) => {
     labels: label,
     datasets: [
       {
-        label: "Precio del Consumo",
+        label: "Precio del Consumo en Pesos Colombianos",
         data: price,
         tension: 0.5,
         fill: false,

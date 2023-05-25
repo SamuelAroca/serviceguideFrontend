@@ -1,10 +1,11 @@
 # Etapa de construcción
-FROM node:latest AS builder
+FROM node:18 as build
 
 WORKDIR /app
 
-COPY package*.json ./
-COPY vite.config.js ./
+COPY package.json ./
+
+COPY package-lock.json .
 
 RUN npm install
 
@@ -12,23 +13,14 @@ COPY . .
 
 RUN npm run build
 
-# Etapa de producción
-FROM node:latest
+FROM nginx:alpine
 
-WORKDIR /app
+RUN rm -rf /etc/nginx/conf.d/*
 
-COPY --from=builder /app/dist ./dist
-COPY package*.json ./
+COPY --from=build /app/dist /usr/share/nginx/html
 
-RUN npm ci --only=production
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Establece el entorno de producción
-ENV NODE_ENV=production
+EXPOSE 5002
 
-# Instala Vite de forma global
-RUN npm install -g vite@4.3.5
-
-EXPOSE 5173
-
-# Ejecuta la aplicación en modo de producción
-CMD ["./node_modules/.bin/vite", "build"]
+CMD ["nginx","-g","daemon off;"]
