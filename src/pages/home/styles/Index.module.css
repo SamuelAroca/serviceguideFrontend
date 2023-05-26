@@ -21,17 +21,13 @@
   color: #ffff;
 }
 
-.container_title h1 {
-  font-size: 2.35rem;
-}
-
-.container_title h2 {
+.container_title .h1 {
   font-size: 1.8rem;
 }
 
 .subtitle_header {
   font-weight: 100;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
 }
 
 .statistics_cont {
@@ -53,11 +49,11 @@
 }
 
 @media (min-width: 1920px) {
-  .container_title h1 {
+  .container_title .h1 {
     font-size: 3.4rem;
   }
 
-  .container_title h2 {
+  .subtitle_header {
     font-size: 2.4rem;
   }
 }

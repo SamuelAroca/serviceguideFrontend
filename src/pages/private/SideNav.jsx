@@ -27,7 +27,7 @@ import axios from "axios";
 const drawerWidth = 240;
 function ResponsiveDrawer(props) {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [user, setUser] = useState(null);
+  const [username, setUser] = useState(null);
   const navigate = useNavigate();
 
   const url = import.meta.env.VITE_API_AUTH;
@@ -55,11 +55,10 @@ function ResponsiveDrawer(props) {
 
   const loadUserByToken = async () => {
     try {
-      const { data: user } = await axios.get(`${url}/myName/${getToken()}`);
+      let accessToken = getToken();
+      const { data: user } = await axios.get(`${url}/myName/${accessToken}`);
       setUser(user);
-      console.log(user, "Holis");
-      let token = document.cookie.split("=");
-      console.log(token[1]);
+      console.log(username, "Holis");
     } catch (error) {
       console.log(error);
     }
@@ -68,7 +67,7 @@ function ResponsiveDrawer(props) {
   useEffect(() => {
     loadUserByToken();
     initAxiosInterceptor();
-  }, []);
+  }, [username]);
 
   const drawer = (
     <div className={styled.div_main}>
@@ -180,7 +179,7 @@ function ResponsiveDrawer(props) {
           }}
           className={styled.toolbar_button}
         >
-          {user}
+          {username}
           <IconButton
             color="inherit"
             aria-label="open drawer"

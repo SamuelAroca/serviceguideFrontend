@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styles from './styles/StatisticHome.module.css'
+import styles from "./styles/StatisticHome.module.css";
 import { getToken, initAxiosInterceptor } from "../../../../AxiosHelper";
 import { Bar, Line } from "react-chartjs-2";
 import {
@@ -43,6 +43,9 @@ const StatisticsHome = ({ idReceipt, typeReceipt }) => {
     setLabel(data.data.label);
     setPrice(data.data.price);
     setAmount(data.data.amount);
+    console.log(data.data.label);
+    console.log(data.data.price);
+    console.log(data.data.amount);
   };
 
   useEffect(() => {
@@ -102,7 +105,10 @@ const StatisticsHome = ({ idReceipt, typeReceipt }) => {
 
   return (
     <>
-      <div style={{ border: "1rem", borderBlockColor: "black" }} className={styles.div_main}>
+      <div
+        style={{ border: "1rem", borderBlockColor: "black" }}
+        className={styles.div_main}
+      >
         <Bar data={miData} options={misoptions} />
         <Bar data={myAmount} options={misoptions} />
       </div>

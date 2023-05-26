@@ -6,7 +6,7 @@
   justify-content: center;
 }
 
-.page_404 img{
+.page_404 .image{
   width: 100%;
 }
 
@@ -21,12 +21,12 @@
   background-image: url();
 }
 
-.four_zero_four_bg h1{
+.four_zero_four_bg .text_center{
   font-size: 80px;
   margin-top: 60px;
 }
 
-.four_zero_four_bg h3{
+.four_zero_four_bg{
   font-size: 80px;
 }
 
@@ -42,6 +42,6 @@
   margin-top: -50px;
 }
 
-.h3{
+.messagge{
   text-align: center;
 }
