@@ -1,21 +1,3 @@
-:root {
-  --mainColor: rgba(35, 70, 147, 0.3);
-  --mainColorLight: rgb(35, 70, 147);
-  --secondaryColor: rgba(219, 43, 57, 0.3);
-  --textColor: #eee;
-
-  --primary-100: #87cefa;
-  --primary-200: #68b0db;
-  --primary-300: #116f96;
-  --accent-100: #ffc0cb;
-  --accent-200: #99616c;
-  --text-100: #333333;
-  --text-200: #5c5c5c;
-  --bg-100: #f2f2f2;
-  --bg-200: #e8e8e8;
-  --bg-300: #bfbfbf;
-}
-
 .header-main {
   display: flex;
   align-items: center;
@@ -24,7 +6,7 @@
   padding: 0 2rem;
   box-sizing: border-box;
   background-color: transparent;
-  color: var(--bg-100);
+  color: #fff;
   position: fixed;
   width: 100vw;
   z-index: 10;
@@ -49,7 +31,7 @@
 }
 
 .header-main > .nav-main > .link {
-  color: var(--textColor);
+  color: #fff;
   text-decoration: none;
   font-size: 1.5rem;
   position: relative;
@@ -113,7 +95,6 @@
   height: 100%;
   width: auto;
   font-size: 2rem;
-  color: var();
 }
 .main-logo {
   color: #33a7ff;

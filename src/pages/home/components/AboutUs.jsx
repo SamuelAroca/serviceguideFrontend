@@ -9,7 +9,7 @@ const AboutUs = () => {
   return (
     <div className={styles.main}>
       <div className={styles.subtitle_abs}>
-        <h2>
+        <h2 className={styles.h2}>
           We help you manage your <br /> public services
         </h2>
       </div>
@@ -33,7 +33,7 @@ const AboutUs = () => {
             <SlEnergy className={styles.icon} />
           </div>
           <h2>Energy</h2>
-          <p>
+          <p className={styles.p}>
             Energy is essential for economic growth and the human development,
             but most energy sources are finite and contribute to climate change.
             a change is needed towards renewable and sustainable energy sources
@@ -46,7 +46,7 @@ const AboutUs = () => {
             <BsCloudy className={styles.icon} />
           </div>
           <h2>Gas</h2>
-          <p>
+          <p className={styles.p}>
             Natural gas is an important source of energy used in industry,
             transport and heating. However, the use of gas also has
             environmental impacts, such as the emission of gases greenhouse
@@ -60,7 +60,7 @@ const AboutUs = () => {
             <BiWater className={styles.icon} />
           </div>
           <h2>Sewerage</h2>
-          <p>
+          <p className={styles.p}>
             The sewer system is crucial to ensure the safe disposal and
             effective disposal of human waste and protect public health. Without
             However, many countries still lack sewage systems adequate, which

@@ -22,7 +22,6 @@ const Home = () => {
 
   const tokenExist = () => {
     if (!getToken()) {
-      3;
       navigate("/");
     }
   };
@@ -45,14 +44,11 @@ const Home = () => {
   const getReceipts = async () => {
     let accessToken = getToken();
     setLoading(true);
-    const receipt = await axios.get(
-      `${apiUrl}/getLastReceipt/${accessToken}`
-    );
+    const receipt = await axios.get(`${apiUrl}/getLastReceipt/${accessToken}`);
     try {
       setAllReceipts(receipt.data);
-      console.log(allReceipts);
     } catch (err) {
-      console.log(err);
+      console.log(err, "Error recibo ultimo");
     } finally {
       setLoading(false);
     }

@@ -14,7 +14,7 @@
 .div_main {
   position: relative;
   width: 100%;
-  background: var(--primary-200);
+  background: #59a5f5;
   min-height: 300px;
   display: flex;
   justify-content: center;
@@ -42,7 +42,7 @@
 
 .social_icon .li  .a {
   font-size: 3rem;
-  color: var(--text-100);
+  color: #fff;
   margin: 0 20px;
   display: inline-block;
   transition: 0.5s;
@@ -50,12 +50,12 @@
 
 .social_icon .li .a:hover {
   transform: translateY(-10px);
-  color: var(--primary-300);
+  color: #f2f2f2;
 }
 
 .menu .li .a {
   font-size: 1.2em;
-  color: var(--text-200);
+  color: #fff;
   margin: 0 20px;
   display: inline-block;
   text-decoration: none;
@@ -67,7 +67,7 @@
 }
 
 .p {
-  color: var(--text-100);
+  color: #000;
   text-align: center;
   margin-top: 15px;
   margin-bottom: 10px;
@@ -75,7 +75,7 @@
 }
 
 .line{
-  border-top: 1px solid var(--text-200);
+  border-top: 1px solid #000;
   height: 2px;
   width: 80%;
   padding: 0;
