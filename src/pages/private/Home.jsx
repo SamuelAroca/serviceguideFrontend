@@ -42,7 +42,8 @@ const Home = () => {
   };
 
   const getReceipts = async () => {
-    let accessToken = getToken();
+    const accessToken = getToken();
+    console.log(accessToken, "ACCESS TOKEN");
     setLoading(true);
     const receipt = await axios.get(`${apiUrl}/getLastReceipt/${accessToken}`);
     try {
