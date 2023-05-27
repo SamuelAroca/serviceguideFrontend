@@ -5,10 +5,10 @@ import { RiEyeLine } from "react-icons/ri";
 import CarouselDemo from "../../../components/CarouselDemo";
 import { Link, useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
-import img1 from "../../../assets/agua-potable.jpg";
-import img2 from "../../../assets/alcantarillado.jpg";
-import img3 from "../../../assets/Electricistas-scaled.jpg";
-import img4 from "../../../assets/gas-natural.jpeg";
+import img1 from "../../../assets/agua-potable.webp";
+import img2 from "../../../assets/alcantarillado.webp";
+import img3 from "../../../assets/Electricistas-scaled.webp";
+import img4 from "../../../assets/gas-natural.webp";
 import axios from "axios";
 
 const Login = () => {
