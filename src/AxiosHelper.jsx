@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const initAxiosInterceptor = () => {
-  let accessToken = getToken();
-
+  const accessToken = getToken();
+  console.log(accessToken, "Init Token");
   if (accessToken !== "") {
     axios.interceptors.request.use(
       (config) => {
