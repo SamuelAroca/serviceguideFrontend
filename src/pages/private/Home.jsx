@@ -8,8 +8,6 @@ import Loader from "./Loader";
 import GetLastReceipts from "./components/receipts/GetLastReceipts";
 import StatisticsHome from "./components/statistics/StatisticsHome";
 
-initAxiosInterceptor();
-
 const Home = () => {
   const apiUrl = import.meta.env.VITE_API_RECEIPT;
   const navigate = useNavigate();
@@ -45,7 +43,6 @@ const Home = () => {
 
   const getReceipts = async () => {
     const accessToken = getToken();
-    console.log(accessToken, "ACCESS TOKEN");
     setLoading(true);
     const receipt = await axios.get(`${apiUrl}/getLastReceipt/${accessToken}`);
     try {

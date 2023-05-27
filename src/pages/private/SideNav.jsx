@@ -58,7 +58,6 @@ function ResponsiveDrawer(props) {
       let accessToken = getToken();
       const { data: user } = await axios.get(`${url}/myName/${accessToken}`);
       setUser(user);
-      console.log(username, "Holis");
     } catch (error) {
       console.log(error);
     }

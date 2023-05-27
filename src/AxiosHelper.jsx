@@ -2,7 +2,6 @@ import axios from "axios";
 
 const initAxiosInterceptor = () => {
   const accessToken = getToken();
-  console.log(accessToken, "Init Token");
   if (accessToken !== "") {
     axios.interceptors.request.use(
       (config) => {
@@ -35,7 +34,6 @@ const getToken = () => {
     let cookie = cookies[i].trim();
     if (cookie.startsWith("token=")) {
       accessToken = cookie.replace("token=", "");
-      console.log(accessToken);
       break;
     }
   }
