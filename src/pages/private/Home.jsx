@@ -8,6 +8,8 @@ import Loader from "./Loader";
 import GetLastReceipts from "./components/receipts/GetLastReceipts";
 import StatisticsHome from "./components/statistics/StatisticsHome";
 
+initAxiosInterceptor();
+
 const Home = () => {
   const apiUrl = import.meta.env.VITE_API_RECEIPT;
   const navigate = useNavigate();
