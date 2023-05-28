@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import styles from "../styles/ForgotPassword.module.css";
 import { RiWaterFlashFill } from "react-icons/ri";
 import CarouselDemo from "../../../components/CarouselDemo";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
-import img1 from "../../../assets/agua-potable.jpg";
-import img2 from "../../../assets/alcantarillado.jpg";
-import img3 from "../../../assets/Electricistas-scaled.jpg";
-import img4 from "../../../assets/gas-natural.jpeg";
+import img1 from "../../../assets/agua-potable.webp";
+import img2 from "../../../assets/alcantarillado.webp";
+import img3 from "../../../assets/Electricistas-scaled.webp";
+import img4 from "../../../assets/gas-natural.webp";
 import axios from "axios";
 import { Alert } from "@mui/material";
 
@@ -40,15 +40,12 @@ const ForgotPassword = () => {
       try {
         let response = await axios.post(`${url}/send-email`, email);
 
-        if (response.status != 200) {
-          throw new alert("Login Error");
-        } else {
+        if (!response.status != 200) {
           Swal.fire(
             "E-mail sent!",
             "Go to your email and check the email we sent you!, Check spam",
             "success"
           );
-          /* navigate("/"); */
         }
       } catch (error) {
         let response = error;
@@ -84,17 +81,19 @@ const ForgotPassword = () => {
           className={styles.home_button}
           onClick={() => navigate("/login")}
         >
-          Login
+          Iniciar Sesión
         </button>
       </div>
       <div className={styles.container}>
         <div className={styles.container_login}>
           <form className={styles.container_form} onSubmit={sendEmail}>
-            <h2 className={styles.container_logo}>
-              <RiWaterFlashFill className={styles.logo} />
-              ServiceGuide
-            </h2>
-            <h2 className={styles.title_sign}>Forgot Password</h2>
+            <div className={styles.container_logo}>
+              <h2 className={styles.logo_title}>
+                <RiWaterFlashFill className={styles.logo} />
+                ServiceGuide
+              </h2>
+            </div>
+            <h2 className={styles.title_sign}>Recuperar Contraseña</h2>
             <div className={styles.container_label}>
               <div className={styles.inputs_gap}>
                 <div>
@@ -113,9 +112,13 @@ const ForgotPassword = () => {
                   )}
                 </div>
               </div>
+              <div className={styles.login}>
+                ¿Recordaste tu contraseña?{" "}
+                <Link to="/login">Iniciar Sesión</Link>
+              </div>
               <div className={styles.div_button_login}>
                 <button className={styles.login_button} onClick={sendEmail}>
-                  Send Email
+                  Enviar Correo
                   <div className={styles.arrow_wrapper}>
                     <div className={styles.arrow}></div>
                   </div>

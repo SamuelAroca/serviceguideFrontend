@@ -3,10 +3,10 @@ import { RiWaterFlashFill } from "react-icons/ri";
 import CarouselDemo from "../../../components/CarouselDemo.jsx";
 import { RiEyeLine } from "react-icons/ri";
 import { useState } from "react";
-import img1 from "../../../assets/agua-potable.jpg";
-import img2 from "../../../assets/alcantarillado.jpg";
-import img3 from "../../../assets/Electricistas-scaled.jpg";
-import img4 from "../../../assets/gas-natural.jpeg";
+import img1 from "../../../assets/agua-potable.webp";
+import img2 from "../../../assets/alcantarillado.webp";
+import img3 from "../../../assets/Electricistas-scaled.webp";
+import img4 from "../../../assets/gas-natural.webp";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
@@ -65,7 +65,7 @@ const Register = () => {
     <div className={styles.components}>
       <div className={styles.div_home_button}>
         <button className={styles.home_button} onClick={() => navigate("/")}>
-          Home
+          Atrás
         </button>
       </div>
       <div className={styles.container}>

@@ -1,9 +1,9 @@
 import React, { useRef, useEffect } from "react";
 import "../styled-sheets/Slideshow.css";
-import img1 from "../assets/agua-potable.jpg";
-import img2 from "../assets/alcantarillado.jpg";
-import img3 from "../assets/Electricistas-scaled.jpg";
-import img4 from "../assets/gas natural.jpeg";
+import img1 from "../assets/agua-potable.webp";
+import img2 from "../assets/alcantarillado.webp";
+import img3 from "../assets/Electricistas-scaled.webp";
+import img4 from "../assets/gas-natural.webp";
 import { IoChevronBackSharp } from "react-icons/io5";
 import { IoChevronForwardSharp } from "react-icons/io5";
 import styled from "styled-components";

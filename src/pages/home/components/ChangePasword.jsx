@@ -4,10 +4,10 @@ import { RiWaterFlashFill, RiEyeLine } from "react-icons/ri";
 import CarouselDemo from "../../../components/CarouselDemo";
 import { useNavigate, useParams } from "react-router-dom";
 import TextField from "@mui/material/TextField";
-import img1 from "../../../assets/agua-potable.jpg";
-import img2 from "../../../assets/alcantarillado.jpg";
-import img3 from "../../../assets/Electricistas-scaled.jpg";
-import img4 from "../../../assets/gas-natural.jpeg";
+import img1 from "../../../assets/agua-potable.webp";
+import img2 from "../../../assets/alcantarillado.webp";
+import img3 from "../../../assets/Electricistas-scaled.webp";
+import img4 from "../../../assets/gas-natural.webp";
 import axios from "axios";
 import { Alert } from "@mui/material";
 
@@ -109,11 +109,13 @@ const ChangePasword = () => {
       <div className={styles.container}>
         <div className={styles.container_login}>
           <form className={styles.container_form} onSubmit={changePassword}>
-            <h2 className={styles.container_logo}>
-              <RiWaterFlashFill className={styles.logo} />
-              ServiceGuide
-            </h2>
-            <h2 className={styles.title_sign}>Forgot Password</h2>
+          <div className={styles.container_logo}>
+              <h2 className={styles.logo_title}>
+                <RiWaterFlashFill className={styles.logo} />
+                ServiceGuide
+              </h2>
+            </div>
+            <h2 className={styles.title_sign}>Change Password</h2>
             <div className={styles.container_label}>
               <div className={styles.inputs_gap}>
                 <div>
