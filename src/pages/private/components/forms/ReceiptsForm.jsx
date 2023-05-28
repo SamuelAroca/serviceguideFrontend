@@ -93,7 +93,7 @@ const ReceiptsForm = ({ userId }) => {
     let errors = {};
     const regexTitle = /^[a-zA-Z0-9\s-]+$/; // Expresión regular para validar nombres
     const regexPrice = /^[0-9]+(\.[0-9]{1,2})?$/; // Expresión regular para validar precios
-    const regexQuantity = /^[0-9]+$/; // Expresión regular para validar cantidades
+    const regexQuantity = /^[0-9]+(\.[0-9]{1,3})?$/; // Expresión regular para validar cantidades
     const regexDate = /^(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])-(19|20)\d{2}$/; // Expresión regular para validar fechas en formato MM-DD-YYYY
 
     if (!receipt.receiptName.trim()) {
@@ -111,7 +111,7 @@ const ReceiptsForm = ({ userId }) => {
     if (!receipt.amount.trim()) {
       errors.amount = "Debe existir una cantidad del recibo.";
     } else if (!regexQuantity.test(receipt.amount)) {
-      errors.amount = "La 'Cantidad' solo debe contener números.";
+      errors.amount = "La 'Cantidad' solo debe contener números y la parte decimal maximo 3 números";
     }
 
     return errors;
@@ -162,6 +162,7 @@ const ReceiptsForm = ({ userId }) => {
         setIsLoading(false);
       } else {
         setErrors(err);
+        setIsLoading(false);
       }
     } else {
       sessionExpired();

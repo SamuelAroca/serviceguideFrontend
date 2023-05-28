@@ -30,6 +30,11 @@ const ReceiptCard = ({ name, data, getInformation }) => {
     setIsOpen(true);
   };
 
+  const formatPrice = (price) => {
+    let format_number = price.toLocaleString();
+    return format_number;
+  };
+
   const height = showUpdateReceipt ? "50rem" : isOpen ? "24rem" : "11rem";
 
   return (
@@ -55,8 +60,8 @@ const ReceiptCard = ({ name, data, getInformation }) => {
             <p>{data.typeService.type}</p>
             <p>House: {data.houseName}</p>
             <p>Date: {FormatDate(data.date)}</p>
-            <p>Amount: {data.amount}</p>
-            <p>Price: {data.price}</p>
+            <p>Amount: {formatPrice(data.amount)}</p>
+            <p>Price: ${formatPrice(data.price)}</p>
             <div
               style={{
                 display: "flex",
