@@ -65,7 +65,7 @@ const Register = () => {
     <div className={styles.components}>
       <div className={styles.div_home_button}>
         <button className={styles.home_button} onClick={() => navigate("/")}>
-          Home
+          Atrás
         </button>
       </div>
       <div className={styles.container}>

@@ -4,8 +4,18 @@
   align-items: center;
   height: 100vh;
   width: 100vw;
-  background-color: #0077C2;
   position: relative;
+  background: #1488cc; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #1488cc,
+    #2b32b2
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #1488cc,
+    #2b32b2
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 .div_home_button {
@@ -17,7 +27,7 @@
 .home_button {
   width: 150px;
   height: 60px;
-  border: 3px solid #315cfd;
+  border: 3px solid #5532a5;
   border-radius: 45px;
   transition: all 0.3s;
   cursor: pointer;
@@ -28,7 +38,7 @@
 }
 
 .home_button:hover {
-  background: #315cfd;
+  background: #5532a5;
   color: white;
   font-size: 1.5em;
 }
@@ -39,7 +49,7 @@
   border-radius: 20px;
   color: #fff;
   padding: 1em 1.8em;
-  background: #0077C2;
+  background: #0077c2;
   display: flex;
   transition: 0.2s background;
   align-items: center;
@@ -62,7 +72,7 @@
 .login_button .arrow {
   margin-top: 1px;
   width: 10px;
-  background: #0077C2;
+  background: #0077c2;
   height: 2px;
   position: relative;
   transition: 0.2s;
@@ -146,17 +156,29 @@
   user-select: none;
   background-color: #fff;
   box-sizing: border-box;
+  position: relative;
 }
 
 .container_logo {
+  display: flex;
   align-items: center;
-  top: 5rem;
-  font-size: 1.3rem;
-  margin-bottom: 1rem;
+}
+
+.container_form {
+  margin-top: 2rem;
+}
+
+.logo_title {
+  position: absolute;
+  top: -1rem;
+  left: 2rem;
 }
 
 .logo {
-  color: #59a5f5;
+  position: absolute;
+  color: #33a7ff;
+  right: 8.3rem;
+  top: 0.5rem;
 }
 
 .password_container {
@@ -168,8 +190,8 @@
   transform: translateX(11.3rem);
   font-size: 1.5rem;
   position: absolute;
-  top: 1rem;
-  right: 12.5rem;
+  top: 0.6rem;
+  right: 12rem;
 }
 
 .links {

@@ -40,15 +40,12 @@ const ForgotPassword = () => {
       try {
         let response = await axios.post(`${url}/send-email`, email);
 
-        if (response.status != 200) {
-          throw new alert("Login Error");
-        } else {
+        if (!response.status != 200) {
           Swal.fire(
             "E-mail sent!",
             "Go to your email and check the email we sent you!, Check spam",
             "success"
           );
-          /* navigate("/"); */
         }
       } catch (error) {
         let response = error;
@@ -84,7 +81,7 @@ const ForgotPassword = () => {
           className={styles.home_button}
           onClick={() => navigate("/login")}
         >
-          Login
+          Iniciar Sesión
         </button>
       </div>
       <div className={styles.container}>
@@ -121,7 +118,7 @@ const ForgotPassword = () => {
               </div>
               <div className={styles.div_button_login}>
                 <button className={styles.login_button} onClick={sendEmail}>
-                  Send Email
+                  Enviar Correo
                   <div className={styles.arrow_wrapper}>
                     <div className={styles.arrow}></div>
                   </div>
