@@ -31,7 +31,6 @@ const ReceiptsForm = ({ userId }) => {
   const [receipt, setReceipt] = useState({
     receiptName: "",
     price: "",
-    house: selectedHouse,
     amount: "",
     date: "",
     typeService: {
