@@ -54,7 +54,7 @@ function ResponsiveDrawer(props) {
   };
 
   const navigateSettings = () => {
-    navigate("/user/settings")
+    navigate("/user/settings/update")
   }
 
   const loadUserByToken = async () => {

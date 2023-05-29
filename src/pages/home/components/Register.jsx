@@ -1,14 +1,14 @@
 import styles from "../styles/Register.module.css";
-import { RiWaterFlashFill } from "react-icons/ri";
 import CarouselDemo from "../../../components/CarouselDemo.jsx";
-import { RiEyeLine } from "react-icons/ri";
-import { useState } from "react";
+import TextField from "@mui/material/TextField";
+import axios from "axios";
 import img1 from "../../../assets/agua-potable.webp";
 import img2 from "../../../assets/alcantarillado.webp";
 import img3 from "../../../assets/Electricistas-scaled.webp";
 import img4 from "../../../assets/gas-natural.webp";
-import TextField from "@mui/material/TextField";
-import axios from "axios";
+import { RiEyeLine } from "react-icons/ri";
+import { useState } from "react";
+import { RiWaterFlashFill } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {
