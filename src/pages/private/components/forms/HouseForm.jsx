@@ -166,7 +166,6 @@ const HouseForm = () => {
         setHouse({
           name: "",
           stratum: "",
-          cities: selectedCity,
           neighborhood: "",
           address: "",
           contract: "",
