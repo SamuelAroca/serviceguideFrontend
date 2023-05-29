@@ -1,18 +1,38 @@
 import { React, useEffect, useState } from "react";
 import { FormLayout } from "../../styled-components/form-layout.styled";
-import { Grid, TextField, Tooltip } from "@mui/material";
+import { Button, Grid, TextField, Tooltip } from "@mui/material";
 import { getToken, initAxiosInterceptor } from "../../../../AxiosHelper";
 import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
 
 const UserUpdateForm = () => {
   const url = import.meta.env.VITE_API_USER;
-  const [user, setUser] = useState([]);
+  const [message, setMessagge] = useState("");
+  const notify = () => toast.success(message.message);
+  const [user, setUser] = useState({
+    email: "",
+    firstName: "",
+    id: "",
+    lastName: "",
+    password: "",
+  });
+  console.log(user, "USER");
+
+  const handleChange = (e) => {
+    const { value, name } = e.target;
+    setUser({ ...user, [name]: value });
+  };
 
   const loadUser = async () => {
     try {
-      let accessToken = getToken();
+      const accessToken = getToken();
       const userData = await axios.get(`${url}/findById/${accessToken}`);
-      setUser(userData.data);
+      setUser({
+        email: userData.data.email,
+        firstName: userData.data.firstName,
+        id: userData.data.id,
+        lastName: userData.data.lastName,
+      });
       console.log(userData.data);
     } catch (error) {
       console.log(error);
@@ -24,17 +44,36 @@ const UserUpdateForm = () => {
     loadUser();
   }, []);
 
-  const handleSubmit = () => {};
+  const handleSubmit = async () => {
+    try {
+      const accessToken = getToken();
+      const updatedUser = await axios.put(
+        `${url}/update/${accessToken}`,
+        user
+      );
+      setMessagge(updatedUser.data);
+      if (!updatedUser.status != 200) {
+        document.cookie = `token=${updatedUser.data.token}; max-age=${
+          3600 * 5
+        }; path=/; samesite=strict`;
+        notify();
+      }
+      console.log(message.message);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <FormLayout>
+      <h1>Actualizar Datos del Usuario</h1>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Tooltip
               disableFocusListener
               disableTouchListener
-              title="Add First Name"
+              title="Nombre"
               placement="bottom-start"
             >
               <TextField
@@ -42,10 +81,71 @@ const UserUpdateForm = () => {
                 name="firstName"
                 type="text"
                 value={user.firstName}
+                onChange={(e) => {
+                  handleChange(e);
+                }}
+              />
+            </Tooltip>
+          </Grid>
+          <Grid item xs={12}>
+            <Tooltip
+              disableFocusListener
+              disableTouchListener
+              title="Apellido"
+              placement="bottom-start"
+            >
+              <TextField
+                fullWidth
+                name="lastName"
+                type="text"
+                value={user.lastName}
+                onChange={(e) => {
+                  handleChange(e);
+                }}
+              />
+            </Tooltip>
+          </Grid>
+          <Grid item xs={12}>
+            <Tooltip
+              disableFocusListener
+              disableTouchListener
+              title="Email"
+              placement="bottom-start"
+            >
+              <TextField
+                fullWidth
+                name="email"
+                type="text"
+                value={user.email}
+                onChange={(e) => {
+                  handleChange(e);
+                }}
+              />
+            </Tooltip>
+          </Grid>
+          <Grid item xs={12}>
+            <Tooltip
+              disableFocusListener
+              disableTouchListener
+              title="Contraseña"
+              placement="bottom-start"
+            >
+              <TextField
+                fullWidth
+                label="Contraseña"
+                name="password"
+                type="password"
+                value={user.password}
+                onChange={(e) => {
+                  handleChange(e);
+                }}
               />
             </Tooltip>
           </Grid>
         </Grid>
+        <Button variant="contained" onClick={() => handleSubmit()}>
+          Actualizar
+        </Button>
       </form>
     </FormLayout>
   );

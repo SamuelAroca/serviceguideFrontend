@@ -13,7 +13,7 @@ import AddHouse from "./pages/private/components/house/AddHouse";
 import SavedStatistic from "./pages/private/components/statistics/SavedStatistic";
 import ForgotPassword from "./pages/home/components/ForgotPassword";
 import ChangePasword from "./pages/home/components/ChangePasword";
-import UserUpdate from "./pages/private/components/UserSettings/UserUpdate";
+import UserSettings from "./pages/private/components/UserSettings/UserSettings";
 
 const App = () => {
   return (
@@ -35,7 +35,7 @@ const App = () => {
           path="/major/statistics/savedstatistics"
           element={<SavedStatistic />}
         />
-        <Route path="/user/update" element={<UserUpdate />} />
+        <Route path="/user/settings/update" element={<UserSettings />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
