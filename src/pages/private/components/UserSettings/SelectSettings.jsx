@@ -10,8 +10,9 @@ import {
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { MdSettings } from "react-icons/md";
-import { getToken, initAxiosInterceptor } from "../../../AxiosHelper";
+import { getToken, initAxiosInterceptor } from "../../../../AxiosHelper";
 import axios from "axios";
+import styles from "./styles/SelectSettings.module.css";
 
 const SelectSettings = () => {
   const [setting, setSetting] = useState("");
@@ -34,8 +35,10 @@ const SelectSettings = () => {
     handleClose();
     if (option === "Ajustes") {
       console.log("Ajustes de usuario");
+      navigate("/user/settings/update");
     } else if (option === "Cerrar sesión") {
       console.log("Cerrar Sesión");
+      handleLogOut();
     }
   };
 
@@ -49,6 +52,23 @@ const SelectSettings = () => {
     }
   };
 
+  const handleLogOut = () => {
+    Swal.fire({
+      title: "Do you want to log out?",
+      text: "You will have to log in again!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, log out!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+        navigate("/");
+      }
+    });
+  };
+
   useEffect(() => {
     loadUserByToken();
   }, []);
@@ -57,9 +77,9 @@ const SelectSettings = () => {
   return (
     <div>
       <Button variant="contained" onClick={handleClick}>
-        <div>
+        <div className={styles.div_name}>
           {username}
-          <MdSettings />
+          <MdSettings className={styles.logo_setting} />
         </div>
       </Button>
       <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>

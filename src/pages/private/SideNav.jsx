@@ -23,8 +23,8 @@ import { IoReceipt } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import axios from "axios";
-import Select from "./components/SelectSettings";
-import SelectSettings from "./components/SelectSettings";
+import Select from "./components/UserSettings/SelectSettings";
+import SelectSettings from "./components/UserSettings/SelectSettings";
 
 const drawerWidth = 240;
 function ResponsiveDrawer(props) {
@@ -57,7 +57,7 @@ function ResponsiveDrawer(props) {
 
   const navigateSettings = () => {
     /* navigate("/user/settings/update") */
-  }
+  };
 
   useEffect(() => {
     initAxiosInterceptor();
