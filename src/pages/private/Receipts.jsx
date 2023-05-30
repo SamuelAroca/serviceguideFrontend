@@ -43,8 +43,9 @@ const Receipts = () => {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        marginLeft: "5rem",
         marginTop: "5rem",
+        width: "90%",
+        marginLeft: "12rem"
       }}
     >
       <Routes>

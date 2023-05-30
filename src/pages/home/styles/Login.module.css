@@ -192,6 +192,7 @@
   position: absolute;
   top: 0.6rem;
   right: 12rem;
+  cursor: pointer;
 }
 
 .links {
