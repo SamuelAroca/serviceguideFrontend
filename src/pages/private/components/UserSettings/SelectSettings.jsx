@@ -71,6 +71,7 @@ const SelectSettings = () => {
 
   useEffect(() => {
     loadUserByToken();
+    initAxiosInterceptor();
   }, [username]);
   /* loadUserByToken(); */
   /* {username} <MdSettings className={styled.logo_settings} onClick={() => {<Select />}} /> */
