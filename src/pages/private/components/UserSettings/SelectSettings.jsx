@@ -71,7 +71,7 @@ const SelectSettings = () => {
 
   useEffect(() => {
     loadUserByToken();
-  }, []);
+  }, [username]);
   /* loadUserByToken(); */
   /* {username} <MdSettings className={styled.logo_settings} onClick={() => {<Select />}} /> */
   return (
