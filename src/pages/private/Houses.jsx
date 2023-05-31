@@ -33,9 +33,9 @@ const Houses = () => {
     }
   };
 
-  const getInformation = async() =>{
+  const getInformation = async () => {
     getHouses();
-  }
+  };
 
   return (
     <div
@@ -43,14 +43,22 @@ const Houses = () => {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        marginLeft: "5rem",
-        marginTop: "5rem",
+        marginTop: "1rem",
+        width: "90%",
+        marginLeft: "12rem",
       }}
     >
       <Routes>
-        <Route path="/" element={<AllHousesCard data={allHouses} getInformation={getInformation} />} />
+        <Route
+          path="/"
+          element={
+            <AllHousesCard data={allHouses} getInformation={getInformation} />
+          }
+        />
       </Routes>
-      <Loader visible={loading} />
+      <div>
+        <Loader visible={loading} />
+      </div>
       <SideNav setOpen={setOpen} open={open} />
     </div>
   );
