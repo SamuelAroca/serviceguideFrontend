@@ -1,18 +1,12 @@
-import {
-  Box,
-  Button,
-  FormControl,
-  InputLabel,
-  Menu,
-  MenuItem,
-  Select,
-} from "@mui/material";
+import { Button, Menu, MenuItem } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { MdSettings } from "react-icons/md";
 import { getToken, initAxiosInterceptor } from "../../../../AxiosHelper";
 import axios from "axios";
 import styles from "./styles/SelectSettings.module.css";
+
+initAxiosInterceptor();
 
 const SelectSettings = () => {
   const [setting, setSetting] = useState("");
