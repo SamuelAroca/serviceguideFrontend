@@ -21,7 +21,7 @@ const UpdateReceipt = ({ onClose }) => {
           }}
         >
           <UpdateForm />
-          <div style={{display: "flex", gap: "10px", justifyContent: "flex-end"}}>
+          <div style={{display: "flex", gap: "10px", justifyContent: "flex-end", margin: "20px"}}>
             <UpdateButton />
             <Button variant='outlined' onClick={onClose}>Close</Button>
           </div>

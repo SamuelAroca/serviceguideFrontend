@@ -1,3 +1,10 @@
+.container {
+  position: relative;
+}
+
 .div_main {
-    
+  width: 70vw;
+  position: absolute;
+  top: 5rem;
+  left: 20rem;
 }

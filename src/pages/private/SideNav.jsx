@@ -23,6 +23,8 @@ import { IoReceipt } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import axios from "axios";
+import Select from "./components/UserSettings/SelectSettings";
+import SelectSettings from "./components/UserSettings/SelectSettings";
 
 const drawerWidth = 240;
 function ResponsiveDrawer(props) {
@@ -54,21 +56,10 @@ function ResponsiveDrawer(props) {
   };
 
   const navigateSettings = () => {
-    navigate("/user/settings")
-  }
-
-  const loadUserByToken = async () => {
-    try {
-      let accessToken = getToken();
-      const { data: user } = await axios.get(`${url}/myName/${accessToken}`);
-      setUser(user);
-    } catch (error) {
-      console.log(error);
-    }
+    /* navigate("/user/settings/update") */
   };
 
   useEffect(() => {
-    loadUserByToken();
     initAxiosInterceptor();
   }, [username]);
 
@@ -187,7 +178,7 @@ function ResponsiveDrawer(props) {
           className={styled.toolbar_button}
         >
           <div className={styled.div_name}>
-            {username} <MdSettings className={styled.logo_settings} onClick={navigateSettings} />
+            <SelectSettings />
           </div>
           <IconButton
             color="inherit"
