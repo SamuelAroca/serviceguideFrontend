@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import PropTypes from "prop-types";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -23,14 +23,14 @@ import { IoReceipt } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import axios from "axios";
+import { MyContext } from "../../../../context/UserContext";
 
 const drawerWidth = 240;
 function SideNavUser(props) {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [username, setUser] = useState(null);
   const navigate = useNavigate();
 
-  const url = import.meta.env.VITE_API_AUTH;
+  const { user } = useContext(MyContext);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -54,23 +54,12 @@ function SideNavUser(props) {
   };
 
   const navigateSettings = () => {
-    navigate("/user/update")
-  }
-
-  const loadUserByToken = async () => {
-    try {
-      let accessToken = getToken();
-      const { data: user } = await axios.get(`${url}/myName/${accessToken}`);
-      setUser(user);
-    } catch (error) {
-      console.log(error);
-    }
+    navigate("/user/update");
   };
 
   useEffect(() => {
-    loadUserByToken();
     initAxiosInterceptor();
-  }, [username]);
+  }, []);
 
   const drawer = (
     <div className={styled.div_main}>
@@ -125,7 +114,11 @@ function SideNavUser(props) {
           className={styled.toolbar_button}
         >
           <div className={styled.div_name}>
-            {username} <MdSettings className={styled.logo_settings} onClick={navigateSettings} />
+            {user}
+            <MdSettings
+              className={styled.logo_settings}
+              onClick={navigateSettings}
+            />
           </div>
           <IconButton
             color="inherit"

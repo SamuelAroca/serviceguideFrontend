@@ -40,7 +40,7 @@ const NavbarComp = () => {
           <a className="link" href="#team">
             Team
           </a>
-          <Link className="link" to={"/register"}>
+          <Link className="link" to={"/login/signUp"}>
             Register
           </Link>
           <Link className="link" to={"/login"}>

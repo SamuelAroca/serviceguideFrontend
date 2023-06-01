@@ -29,10 +29,7 @@ import SelectSettings from "./components/UserSettings/SelectSettings";
 const drawerWidth = 240;
 function ResponsiveDrawer(props) {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [username, setUser] = useState(null);
   const navigate = useNavigate();
-
-  const url = import.meta.env.VITE_API_AUTH;
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -61,16 +58,16 @@ function ResponsiveDrawer(props) {
 
   useEffect(() => {
     initAxiosInterceptor();
-  }, [username]);
+  }, []);
 
   const drawer = (
     <div className={styled.div_main}>
       <Toolbar className={styled.toolbar_title}>
-        <h3>ServiceGuide</h3>
+        <h3>Service Guide</h3>
       </Toolbar>
       <Divider />
       <List>
-        <Link className={styled.link} to={"/major/home"}>
+        <Link className={styled.link} to={"/private/major/home"}>
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon className={styled.icon}>
@@ -81,7 +78,7 @@ function ResponsiveDrawer(props) {
           </ListItem>
         </Link>
         <Divider />
-        <Link className={styled.link} to={"/major/receipts"}>
+        <Link className={styled.link} to={"/private/major/receipts"}>
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon className={styled.icon}>
@@ -91,7 +88,7 @@ function ResponsiveDrawer(props) {
             </ListItemButton>
           </ListItem>
         </Link>
-        <Link className={styled.link} to={"/major/receipts/addreceipt"}>
+        <Link className={styled.link} to={"/private/major/receipts/addreceipt"}>
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon className={styled.icon}>
@@ -102,7 +99,7 @@ function ResponsiveDrawer(props) {
           </ListItem>
         </Link>
         <Divider />
-        <Link className={styled.link} to={"/major/houses"}>
+        <Link className={styled.link} to={"/private/major/houses"}>
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon className={styled.icon}>
@@ -112,7 +109,7 @@ function ResponsiveDrawer(props) {
             </ListItemButton>
           </ListItem>
         </Link>
-        <Link className={styled.link} to={"/major/houses/addhouse"}>
+        <Link className={styled.link} to={"/private/major/houses/addhouse"}>
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon className={styled.icon}>
@@ -123,7 +120,7 @@ function ResponsiveDrawer(props) {
           </ListItem>
         </Link>
         <Divider />
-        <Link className={styled.link} to={"/major/statistics"}>
+        <Link className={styled.link} to={"/private/major/statistics"}>
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon className={styled.icon}>
@@ -133,7 +130,7 @@ function ResponsiveDrawer(props) {
             </ListItemButton>
           </ListItem>
         </Link>
-        <Link className={styled.link} to={"/major/statistics/savedstatistics"}>
+        <Link className={styled.link} to={"/private/major/statistics/savedstatistics"}>
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon className={styled.icon}>

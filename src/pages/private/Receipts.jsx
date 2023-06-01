@@ -1,4 +1,3 @@
-import SideNav from "./SideNav";
 import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { getToken, initAxiosInterceptor } from "../../AxiosHelper";
@@ -57,7 +56,6 @@ const Receipts = () => {
         />
       </Routes>
       <Loader visible={loading} />
-      <SideNav setOpen={setOpen} open={open} />
     </div>
   );
 };
