@@ -1,4 +1,5 @@
 import axios from "axios";
+import moment from "moment-timezone";
 
 const initAxiosInterceptor = () => {
   const accessToken = getToken();
@@ -40,4 +41,16 @@ const getToken = () => {
   return accessToken;
 };
 
-export { initAxiosInterceptor, getToken };
+const FormatDate = (date) => {
+  const timedifference = -1440; // diferencia horaria en minutos
+  const dateColombia = moment(date).subtract(timedifference, "minutes");
+  const formatDate = dateColombia.locale("es").format("DD-MM-YYYY");
+  return formatDate;
+};
+
+const formatPrice = (price) => {
+  let format_number = price.toLocaleString();
+  return format_number;
+};
+
+export { initAxiosInterceptor, getToken, FormatDate, formatPrice };

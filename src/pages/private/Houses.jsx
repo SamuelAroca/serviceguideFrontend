@@ -1,4 +1,3 @@
-import SideNav from "./SideNav";
 import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { getToken, initAxiosInterceptor } from "../../AxiosHelper";
@@ -12,11 +11,6 @@ const Houses = () => {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [allHouses, setAllHouses] = useState(null);
-
-  useEffect(() => {
-    initAxiosInterceptor();
-    getHouses();
-  }, []);
 
   const getHouses = async () => {
     let accessToken = getToken();
@@ -32,6 +26,11 @@ const Houses = () => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    initAxiosInterceptor();
+    getHouses();
+  }, []);
 
   const getInformation = async () => {
     getHouses();
@@ -59,7 +58,6 @@ const Houses = () => {
       <div>
         <Loader visible={loading} />
       </div>
-      <SideNav setOpen={setOpen} open={open} />
     </div>
   );
 };

@@ -27,6 +27,7 @@ import React, { useState, useEffect } from "react";
 import { Bar, Line, Pie, Scatter } from "react-chartjs-2";
 import { getToken, initAxiosInterceptor } from "../../AxiosHelper";
 import axios from "axios";
+import SideNav from "../private/SideNav";
 import moment from "moment-timezone";
 
 const Statistics = () => {
@@ -282,6 +283,7 @@ const Statistics = () => {
           <Scatter data={consumptionCostData} />
         </div>
       </div>
+      <SideNav />
     </div>
   );
 };

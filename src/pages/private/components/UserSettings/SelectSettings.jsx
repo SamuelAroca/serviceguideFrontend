@@ -1,20 +1,27 @@
-import { Button, Menu, MenuItem } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import {
+  Box,
+  Button,
+  FormControl,
+  InputLabel,
+  Menu,
+  MenuItem,
+  Select,
+} from "@mui/material";
+import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { MdSettings } from "react-icons/md";
 import { getToken, initAxiosInterceptor } from "../../../../AxiosHelper";
 import axios from "axios";
 import styles from "./styles/SelectSettings.module.css";
-
-initAxiosInterceptor();
+import { MyContext } from "../../../../context/UserContext";
 
 const SelectSettings = () => {
   const [setting, setSetting] = useState("");
   const [anchorEl, setAnchorEl] = useState("");
 
+  const { user } = useContext(MyContext);
+
   const navigate = useNavigate();
-  const [username, setUser] = useState("");
-  const url = import.meta.env.VITE_API_AUTH;
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -36,16 +43,6 @@ const SelectSettings = () => {
     }
   };
 
-  const loadUserByToken = async () => {
-    try {
-      let accessToken = getToken();
-      const { data: user } = await axios.get(`${url}/myName/${accessToken}`);
-      setUser(user);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const handleLogOut = () => {
     Swal.fire({
       title: "Do you want to log out?",
@@ -63,17 +60,13 @@ const SelectSettings = () => {
     });
   };
 
-  useEffect(() => {
-    loadUserByToken();
-    initAxiosInterceptor();
-  }, [username]);
   /* loadUserByToken(); */
   /* {username} <MdSettings className={styled.logo_settings} onClick={() => {<Select />}} /> */
   return (
     <div>
       <Button variant="contained" onClick={handleClick}>
         <div className={styles.div_name}>
-          {username}
+          {user}
           <MdSettings className={styles.logo_setting} />
         </div>
       </Button>

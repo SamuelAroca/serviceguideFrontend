@@ -1,11 +1,11 @@
 import axios from "axios";
 import styled from "./styles/Home.module.css";
-import { getToken, initAxiosInterceptor } from "../../AxiosHelper";
-import { Routes, Route, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
 import Loader from "./Loader";
 import GetLastReceipts from "./components/receipts/GetLastReceipts";
 import StatisticsHome from "./components/statistics/StatisticsHome";
+import { getToken, initAxiosInterceptor } from "../../AxiosHelper";
+import { Routes, Route, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const Home = () => {
   const apiUrl = import.meta.env.VITE_API_RECEIPT;
