@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { GrayPaleteColors } from "../palete-colors/gray-colors.palete";
 
 export const DashboardGrid = styled.div`
   width: 100%;
@@ -14,18 +15,13 @@ export const DashboardGrid = styled.div`
     height: 100%;
     width: 100%;
     grid-area: 1 / 1 / 13 / 3;
-    background-color: gray;
   }
-  .nav {
-    height: 100%;
-    width: 100%;
-    grid-area: 1 / 3 / 2 / 13;
-    background-color: gray;
-  }
+
   .content {
     height: 100%;
     width: 100%;
-    grid-area: 2 / 3 / 13 / 13;
+    grid-area: 1 / 3 / 13 / 13;
+    background-color: ${GrayPaleteColors.C50};
   }
 
   a {

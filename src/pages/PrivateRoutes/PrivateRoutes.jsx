@@ -8,13 +8,11 @@ import Statistics from "../private/Statistics";
 import SavedStatistic from "../private/components/statistics/SavedStatistic";
 import { DashboardGrid } from "../../styled-components/dashboard-grid.styled";
 import Sidebar from "../../components/Sidebar";
+import UserHomeDetail from "../UserHomeDetail/UserHomeDetail";
 
 const PrivateRoutes = () => {
   return (
     <DashboardGrid>
-      <div className="nav">
-        <h1>Nav</h1>
-      </div>
       <div className="sidenav">
         <Sidebar />
       </div>
@@ -24,6 +22,7 @@ const PrivateRoutes = () => {
           <Route path="/major/home/*" element={<Home />} />
           <Route path="/major/receipts/*" element={<Receipts />} />
           <Route path="/major/receipts/addreceipt" element={<AddReceipt />} />
+          <Route path="/house-detail/:id" element={<UserHomeDetail />} />
           <Route path="/major/houses/*" element={<Houses />} />
           <Route path="/major/houses/addhouse" element={<AddHouse />} />
           <Route path="/major/statistics" element={<Statistics />} />

@@ -11,34 +11,49 @@ import {
   BiDownArrow,
 } from "react-icons/bi";
 import { TbTicket } from "react-icons/tb";
-import { RiCustomerService2Line } from "react-icons/ri";
+import { RiCustomerService2Line, RiUserSettingsLine } from "react-icons/ri";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { useContext } from "react";
 import { MyContext } from "../context/UserContext";
 import { BluePaleteColors } from "../palete-colors/blue-colors.palete";
+import { GrayPaleteColors } from "../palete-colors/gray-colors.palete";
+import Logo from "../assets/logo.png";
 
 const StyledLink = styled(Link)`
   background-color: ${(props) =>
     props.rute === true ? `${BluePaleteColors.C50}` : ""};
-  color: ${(props) => (props.rute === true ? `black` : `black`)};
+  .icon {
+    color: ${(props) =>
+      props.rute === true
+        ? `${BluePaleteColors.C500}`
+        : `${GrayPaleteColors.C300}`};
+  }
   p {
-    color: ${(props) => (props.rute === true ? `black` : `black`)};
+    color: ${(props) =>
+      props.rute === true
+        ? `${BluePaleteColors.C500}`
+        : `${GrayPaleteColors.C300}`};
   }
   border: ${(props) =>
     props.rute === true ? `1px solid ${BluePaleteColors.C100}` : ""};
 `;
 
-const StyledSession = styled(Link)`
-  color: ${(props) => (props.rute === true ? `black` : `black`)};
+const StyledHouseLink = styled(Link)`
   display: flex;
   align-items: center;
   padding: 0 1.1rem;
-  a {
-    padding: 0;
-    font-size: 0.8rem;
-    height: 2rem;
+  padding: 0;
+  font-size: 0.8rem;
+  height: 2rem;
+  margin-left: 1.8rem;
+  transition: 0.2s all;
+  p {
+    color: ${(props) =>
+      props.rute === true
+        ? `${BluePaleteColors.C600}`
+        : `${GrayPaleteColors.C300}`};
   }
   &::before {
     content: "";
@@ -46,9 +61,15 @@ const StyledSession = styled(Link)`
     height: 10px;
     border-radius: 4px;
     margin-right: 10px;
-    background-color: ${(props) => (props.rute === true ? `white` : `black`)};
-    background-color: ${(props) => props.color};
+    background-color: ${(props) =>
+      props.rute === true
+        ? `${BluePaleteColors.C600}`
+        : `${GrayPaleteColors.C300}`};
     opacity: ${(props) => (props.rute === true ? `100%` : `50%`)};
+  }
+
+  &:hover {
+    color: ${GrayPaleteColors.C800};
   }
 `;
 
@@ -56,7 +77,6 @@ const Sidebar = () => {
   const [isSessionOpen, setIsSessionOpen] = useState(true);
 
   const { user, houses } = useContext(MyContext);
-  console.log(houses, "OHSADHSJKD");
 
   const navigate = useNavigate();
 
@@ -65,7 +85,8 @@ const Sidebar = () => {
   return (
     <SidebarLayout>
       <div className="top_sidebar">
-        <h3>Service Guide</h3>
+        <img src={Logo} alt="logo" loading="lazy" />
+        <p>{user}</p>
       </div>
       <div className="middle_sidebar">
         <StyledLink
@@ -84,7 +105,7 @@ const Sidebar = () => {
         </StyledLink>
         <StyledLink
           onClick={() => setIsSessionOpen(!isSessionOpen)}
-          rute={pathname.includes(``)}
+          rute={pathname.includes(`house-detail`)}
         >
           <BiDownArrow
             className="arrow_icon"
@@ -106,19 +127,22 @@ const Sidebar = () => {
         >
           {houses?.map((c) => (
             <li key={c.id}>
-              <StyledSession
-                color={c.sessionColor}
-                to={``}
-                rute={pathname === ``}
+              <StyledHouseLink
+                to={`/private/house-detail/${c.id}`}
+                rute={pathname === `/private/house-detail/${c.id}`}
               >
-                {c.name}
-              </StyledSession>
+                <p>{c.name}</p>
+              </StyledHouseLink>
             </li>
           ))}
         </motion.ul>
         <StyledLink to={``} rute={pathname === ``}>
           <BiUser className="icon" />
           <p>Profile</p>
+        </StyledLink>
+        <StyledLink to={``} rute={pathname === ``}>
+          <RiUserSettingsLine className="icon" />
+          <p>Profile Settings</p>
         </StyledLink>
       </div>
       <div className="bottom_sidebar">
