@@ -13,7 +13,7 @@ const initAxiosInterceptor = () => {
         return Promise.reject(error);
       }
     );
-  } /* else {
+  } else {
     axios.interceptors.request.clear(
       (config) => {
         config.headers.Authorization = "";
@@ -23,7 +23,7 @@ const initAxiosInterceptor = () => {
         return Promise.reject(error);
       }
     );
-  } */
+  }
 };
 
 const getToken = () => {
