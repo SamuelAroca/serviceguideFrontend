@@ -19,7 +19,7 @@ import { useContext } from "react";
 import { MyContext } from "../context/UserContext";
 import { BluePaleteColors } from "../palete-colors/blue-colors.palete";
 import { GrayPaleteColors } from "../palete-colors/gray-colors.palete";
-import Logo from "../assets/logo.png";
+import Logo from "../assets/Logo.png";
 
 const StyledLink = styled(Link)`
   background-color: ${(props) =>
