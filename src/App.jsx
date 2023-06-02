@@ -21,9 +21,12 @@ import { MyContext } from "./context/UserContext";
 import { useContext, useEffect } from "react";
 import { getUserDataService } from "./services/get-user-data.service";
 import { getUserHousesService } from "./services/get-user-houses.service";
+import { initAxiosInterceptor } from "./AxiosHelper";
+
+initAxiosInterceptor();
 
 const App = () => {
-  const { updateUserData, setHouses, houses } = useContext(MyContext);
+  const { updateUserData, setHouses, houses, user } = useContext(MyContext);
 
   const getUserData = async () => {
     try {
@@ -45,8 +48,11 @@ const App = () => {
 
   useEffect(() => {
     getUserData();
-    getUserHouses();
   }, []);
+
+  useEffect(() => {
+    getUserHouses();
+  }, [user]);
 
   return (
     <Routes>

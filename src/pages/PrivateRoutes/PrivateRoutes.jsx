@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "../private/Home";
 import Receipts from "../private/Receipts";
-import AddReceipt from "../private/components/receipts/AddReceipt";
+import AddReceipt from "../addReceipt/AddReceipt";
 import Houses from "../private/Houses";
 import AddHouse from "../private/components/house/AddHouse";
 import Statistics from "../private/Statistics";

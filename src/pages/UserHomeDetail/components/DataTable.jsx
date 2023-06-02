@@ -133,6 +133,7 @@ import {
   Paper,
   TextField,
 } from "@mui/material";
+import { FormatDate, formatPrice } from "../../../AxiosHelper";
 
 const DataTable = ({ data }) => {
   const [filters, setFilters] = useState({
@@ -229,10 +230,10 @@ const DataTable = ({ data }) => {
             {filteredData?.map((item) => (
               <TableRow key={item.id}>
                 <TableCell>
-                  {new Date(item.date).toLocaleDateString()}
+                  {FormatDate(item.date)}
                 </TableCell>
                 <TableCell>{item.amount}</TableCell>
-                <TableCell>{item.price}</TableCell>
+                <TableCell>{formatPrice(item.price)}</TableCell>
                 <TableCell>{item.receiptName}</TableCell>
                 <TableCell>{item.typeService.type}</TableCell>
               </TableRow>

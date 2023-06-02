@@ -13,7 +13,7 @@ const initAxiosInterceptor = () => {
         return Promise.reject(error);
       }
     );
-  } else {
+  } /* else {
     axios.interceptors.request.clear(
       (config) => {
         config.headers.Authorization = "";
@@ -23,7 +23,7 @@ const initAxiosInterceptor = () => {
         return Promise.reject(error);
       }
     );
-  }
+  } */
 };
 
 const getToken = () => {
@@ -44,7 +44,7 @@ const getToken = () => {
 const FormatDate = (date) => {
   const timedifference = -1440; // diferencia horaria en minutos
   const dateColombia = moment(date).subtract(timedifference, "minutes");
-  const formatDate = dateColombia.locale("es").format("DD-MM-YYYY");
+  const formatDate = dateColombia.locale("es").format("DD/MM/YYYY");
   return formatDate;
 };
 

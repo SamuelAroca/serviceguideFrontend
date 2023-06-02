@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { Line } from "react-chartjs-2";
 import moment from "moment";
 
 const LineChart = ({ data }) => {
+  const chartRef = useRef(null);
+
   // Obtener los tipos de factura únicos
   const types = Array.from(new Set(data?.map((item) => item.typeService.type)));
 
@@ -24,7 +26,9 @@ const LineChart = ({ data }) => {
 
   // Crear un objeto de datasets para cada tipo de factura
   const datasets = types?.map((type, index) => {
-    const prices = Object.values(monthlyData).map((monthData) => monthData[type] || 0);
+    const prices = Object.values(monthlyData).map(
+      (monthData) => monthData[type] || 0
+    );
     return {
       label: type,
       data: prices,
@@ -46,8 +50,25 @@ const LineChart = ({ data }) => {
     datasets: datasets,
   };
 
+  useEffect(() => {
+    const resizeObserver = new ResizeObserver(() => {
+      if (chartRef.current && chartRef.current.chartInstance) {
+        chartRef.current.chartInstance.resize();
+      }
+    });
+  
+    if (chartRef.current && chartRef.current.container) {
+      resizeObserver.observe(chartRef.current.container);
+    }
+  
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, []);
+
   //Estilos del gráfico
   const chartOptions = {
+    maintainAspectRatio: false,
     scales: {
       x: {
         grid: {
@@ -69,7 +90,7 @@ const LineChart = ({ data }) => {
     },
   };
 
-  return <Line data={chartData} options={chartOptions} />;
+  return <Line ref={chartRef} data={chartData} options={chartOptions} />;
 };
 
 export default LineChart;

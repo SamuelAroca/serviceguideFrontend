@@ -31,34 +31,29 @@ const UserHomeDetail = () => {
 
   return (
     <UserHomeLayout>
-      <div>
+
+      <div className="house_title">
         <h1>Información de la casa</h1>
         <div>
           <h3>{house?.name}</h3>
           <p>Cantidad Facturas: {house?.receipts?.length}</p>
         </div>
       </div>
-      <div className="content">
-        <div className="left_section">
-          <div className="container_charts">
-            <Totals />
-          </div>
 
-          <div className="line_chart_container section">
-            <LineChart data={receipts} />
-          </div>
-        </div>
+      <div className="line_chart_container section">
+        <LineChart data={receipts} />
+      </div>
 
-        <div>
-          <div className="chart_div section">
-            <div className="chart_div">
-              <ChartDoughnut />
-            </div>
-          </div>
-          <div className="table section">
-            <DataTable data={receipts} />
-          </div>
-        </div>
+      <div className="totals container_charts">
+        <Totals />
+      </div>
+
+      <div className="donut section">
+        <ChartDoughnut />
+      </div>
+
+      <div className="data_table section">
+        <DataTable data={receipts} />
       </div>
     </UserHomeLayout>
   );

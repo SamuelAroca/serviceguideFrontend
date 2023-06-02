@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import styles from "../styles/Login.module.css";
 import CarouselDemo from "../../../components/CarouselDemo";
 import TextField from "@mui/material/TextField";
@@ -11,8 +11,23 @@ import { Link, useNavigate } from "react-router-dom";
 import { RiWaterFlashFill } from "react-icons/ri";
 import { RiEyeLine } from "react-icons/ri";
 import { Alert } from "@mui/material";
+import { getUserDataService } from "../../../services/get-user-data.service";
+import { MyContext } from "../../../context/UserContext";
+import Cookies from "js-cookie";
 
 const SignIn = () => {
+  // Logica para obtener los datos del usuario
+  const { updateUserData } = useContext(MyContext);
+
+  const getUserData = async () => {
+    try {
+      const data = await getUserDataService();
+      updateUserData(data);
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
   const [showPassword, setShowPassword] = useState(false);
 
   const handleShow = () => {
@@ -57,10 +72,12 @@ const SignIn = () => {
       try {
         let response = await axios.post(`${url}/login`, email);
 
-        if (!response.status != 200) {
-          document.cookie = `token=${response.data.token}; max-age=${
+        if (response.status === 200) {
+          Cookies.set("token", response.data.token);
+          /*  document.cookie = `token=${response.data.token}; max-age=${
             3600 * 5
-          }; path=/; samesite=strict`;
+          }; path=/; samesite=strict`; */
+          getUserData();
           navigate("/private/major/home/");
         }
       } catch (error) {

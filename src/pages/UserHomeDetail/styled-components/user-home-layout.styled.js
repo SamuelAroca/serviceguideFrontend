@@ -3,8 +3,11 @@ import { GrayPaleteColors } from "../../../palete-colors/gray-colors.palete";
 import { BluePaleteColors } from "../../../palete-colors/blue-colors.palete";
 
 export const UserHomeLayout = styled.div`
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: repeat(12, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
   gap: 2rem;
   width: 100%;
   height: 100%;
@@ -13,21 +16,62 @@ export const UserHomeLayout = styled.div`
   max-height: 100vh;
   overflow: auto;
 
-  .content {
-    display: grid;
-    grid-template-columns: 60% 40%;
-    gap: 1rem;
+  .house_title {
+    border: 1px solid ${GrayPaleteColors.C100};
+    box-shadow: 0px 0px 10px 0px ${GrayPaleteColors.C100};
+    border-radius: 2rem;
     box-sizing: border-box;
-  }
+    padding: 1rem;
 
-  .left_section {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+    color: ${GrayPaleteColors.C100};
+    width: 100%;
+    height: 100%;
+    grid-area: 1 / 1 / 3 / 8;
+    background: rgb(190, 18, 60);
+    background: linear-gradient(
+      to left,
+      #0284c7 0%,
+      #0ea5e9 33%,
+      #38bdf8 100%,
+      #7dd3fc 100%
+    );
   }
-
+  .donut {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    grid-area: 1 / 8 / 7 / 13;
+  }
   .line_chart_container {
     width: 100%;
+    height: 100%;
+    grid-area: 7 / 8 / 13 / 13;
+  }
+  .totals {
+    width: 100%;
+    height: 100%;
+    grid-area: 3 / 1 / 5 / 8;
+  }
+  .data_table {
+    width: 100%;
+    height: 100%;
+    grid-area: 5 / 1 / 13 / 8;
+    overflow: auto;
+    &::-webkit-scrollbar {
+      width: 6px;
+      background-color: none;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: none;
+      background-color: white;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      background-color: #ddd;
+    }
   }
 
   .container_charts {
@@ -38,7 +82,7 @@ export const UserHomeLayout = styled.div`
     gap: 1.5rem;
     box-sizing: border-box;
     .chart_div {
-      height: 8rem;
+      height: 100%;
       width: 100%;
       justify-content: center;
       align-items: center;
@@ -54,25 +98,6 @@ export const UserHomeLayout = styled.div`
     .chart_div:nth-child(3) {
       background-color: ${BluePaleteColors.C50};
     }
-  }
-
-  .donut_chart_container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-  }
-
-  .donut_chart {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .table {
-    border-radius: 2rem;
-    overflow: hidden;
   }
 
   .section {

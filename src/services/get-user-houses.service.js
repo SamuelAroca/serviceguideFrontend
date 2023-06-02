@@ -1,15 +1,19 @@
 import axios from "axios";
-import { getToken, initAxiosInterceptor } from "../AxiosHelper";
-
-initAxiosInterceptor();
+import Cookies from "js-cookie";
 
 export const getUserHousesService = async () => {
   const url = import.meta.env.VITE_API_HOUSE;
 
+  const accessToken = Cookies.get("token");
+
   try {
-    let accessToken = getToken();
     const { data } = await axios.get(
-      `${url}/findAllByUserOrderById/${accessToken}`
+      `${url}/findAllByUserOrderById/${accessToken}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
     );
     return data;
   } catch (error) {

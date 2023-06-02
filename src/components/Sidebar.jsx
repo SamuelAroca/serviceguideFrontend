@@ -9,6 +9,7 @@ import {
   BiLogOut,
   BiUser,
   BiDownArrow,
+  BiReceipt,
 } from "react-icons/bi";
 import { TbTicket } from "react-icons/tb";
 import { RiCustomerService2Line, RiUserSettingsLine } from "react-icons/ri";
@@ -20,6 +21,7 @@ import { MyContext } from "../context/UserContext";
 import { BluePaleteColors } from "../palete-colors/blue-colors.palete";
 import { GrayPaleteColors } from "../palete-colors/gray-colors.palete";
 import Logo from "../assets/Logo.png";
+import Cookies from "js-cookie";
 
 const StyledLink = styled(Link)`
   background-color: ${(props) =>
@@ -76,17 +78,36 @@ const StyledHouseLink = styled(Link)`
 const Sidebar = () => {
   const [isSessionOpen, setIsSessionOpen] = useState(true);
 
-  const { user, houses } = useContext(MyContext);
+  const { user, houses, updateUserData } = useContext(MyContext);
 
   const navigate = useNavigate();
 
   const { pathname } = useLocation();
 
+  const handleLogout = () => {
+    Swal.fire({
+      title: "¿Deseas cerrar sesión?",
+      text: "¡Tendrás que iniciar sesión nuevamente!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, cerrar sesión",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        /* document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:01 GMT;"; */
+        Cookies.remove("token");
+        updateUserData(null);
+        navigate("/");
+      }
+    });
+  };
+
   return (
     <SidebarLayout>
       <div className="top_sidebar">
         <img src={Logo} alt="logo" loading="lazy" />
-        <p>{user}</p>
+        <p>{user !== null ? user : ""}</p>
       </div>
       <div className="middle_sidebar">
         <StyledLink
@@ -102,6 +123,13 @@ const Sidebar = () => {
         >
           <BiAddToQueue className="icon" />
           <p>Add home</p>
+        </StyledLink>
+        <StyledLink
+          to={`/private/major/receipts/addreceipt`}
+          rute={pathname === `/private/major/home`}
+        >
+          <BiReceipt className="icon" />
+          <p>Add receipt</p>
         </StyledLink>
         <StyledLink
           onClick={() => setIsSessionOpen(!isSessionOpen)}
@@ -146,7 +174,7 @@ const Sidebar = () => {
         </StyledLink>
       </div>
       <div className="bottom_sidebar">
-        <div className="logout_button">
+        <div className="logout_button" onClick={handleLogout}>
           <BiLogOut className="icon" />
           Logout
         </div>
