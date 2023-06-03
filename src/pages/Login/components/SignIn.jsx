@@ -74,9 +74,9 @@ const SignIn = () => {
 
         if (response.status === 200) {
           Cookies.set("token", response.data.token);
-          /*  document.cookie = `token=${response.data.token}; max-age=${
+           document.cookie = `token=${response.data.token}; max-age=${
             3600 * 5
-          }; path=/; samesite=strict`; */
+          }; path=/; samesite=strict`;
           getUserData();
           navigate("/private/major/home/");
         }
