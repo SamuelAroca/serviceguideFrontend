@@ -8,11 +8,11 @@ import { FaToilet } from "react-icons/fa";
 import { Tooltip } from "@mui/material";
 import { Alert } from "@mui/material";
 import axios from "axios";
-import SelectHouse from "./SelectHouse";
+import Selec
 import Loader from "../../../components/Loader"
 
 
-const ReceiptForm = ({ userId }) => {
+const EditForm = ({ userId }) => {
   const apiUrl = import.meta.env.VITE_API_RECEIPT;
   const apiHouse = import.meta.env.VITE_API_HOUSE;
 
@@ -315,4 +315,4 @@ const ReceiptForm = ({ userId }) => {
   );
 };
 
-export default ReceiptForm;
+export default EditForm;

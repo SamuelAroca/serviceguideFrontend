@@ -9,7 +9,7 @@ const LineChart = ({ data }) => {
   const types = Array.from(new Set(data?.map((item) => item.typeService.type)));
 
   // Colores de las líneas
-  const colors = ["#F79F39", "#0ea5e9", "#F7C52D", "#0369a1"];
+  const colors = ["#606470", "#764f51", "#F7C52D", "#0369a1"];
 
   // Agrupar los datos por mes
   const monthlyData = {};
@@ -68,7 +68,7 @@ const LineChart = ({ data }) => {
     };
   }, []);
 
-  //Estilos del gráfico
+  // Estilos del gráfico
   const chartOptions = {
     maintainAspectRatio: false,
     scales: {
@@ -76,12 +76,15 @@ const LineChart = ({ data }) => {
         grid: {
           display: false,
         },
+        drawBorder: false,
+        drawOnChartArea: false, // Oculta las líneas del eje X
       },
       y: {
         grid: {
-          display: true,
-          drawBorder: false,
+          display: false,
         },
+        drawBorder: false,
+        drawOnChartArea: false, // Oculta las líneas del eje Y
       },
     },
     plugins: {
@@ -91,6 +94,8 @@ const LineChart = ({ data }) => {
       },
     },
   };
+
+
 
   return <Line ref={chartRef} data={chartData} options={chartOptions} />;
 };

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import styles from "./styles/StatisticHome.module.css";
-import { getToken, initAxiosInterceptor } from "../../../../AxiosHelper";
-import { Bar, Line } from "react-chartjs-2";
+import styles from "../Styles/StatisticHome.module.css";
+import { initAxiosInterceptor } from "../../../AxiosHelper";
+import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   BarElement,
@@ -35,6 +35,7 @@ const StatisticsHome = ({ idReceipt, typeReceipt }) => {
   const [label, setLabel] = useState([]);
   const [price, setPrice] = useState([]);
   const [amount, setAmount] = useState([]);
+  const [type, setType] = useState("");
 
   const getData = async () => {
     const data = await axios.get(
@@ -43,6 +44,7 @@ const StatisticsHome = ({ idReceipt, typeReceipt }) => {
     setLabel(data.data.label);
     setPrice(data.data.price);
     setAmount(data.data.amount);
+    setType(typeReceipt.typeService.type)
   };
 
   useEffect(() => {
@@ -71,7 +73,7 @@ const StatisticsHome = ({ idReceipt, typeReceipt }) => {
     labels: label,
     datasets: [
       {
-        label: `Consumo en `,
+        label: `${type} Consumption`,
         data: amount,
         tension: 0.5,
         fill: false,
@@ -103,7 +105,6 @@ const StatisticsHome = ({ idReceipt, typeReceipt }) => {
   return (
     <>
       <div
-        style={{ border: "1rem", borderBlockColor: "black" }}
         className={styles.div_main}
       >
         <Bar data={miData} options={misoptions} />

@@ -1,22 +1,25 @@
 import axios from "axios";
 import styled from "./styles/Home.module.css";
-import Loader from "./Loader";
-import GetLastReceipts from "./components/receipts/GetLastReceipts";
-import StatisticsHome from "./components/statistics/StatisticsHome";
+import Loader from "../../components/Loader";
+import GetLastReceipts from "./components/GetLastReceipts";
+import StatisticsHome from "./components/StatisticsHome";
 import { getToken, initAxiosInterceptor } from "../../AxiosHelper";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import LineChart from "./components/LineChart";
 
 const Home = () => {
   const apiUrl = import.meta.env.VITE_API_RECEIPT;
   const navigate = useNavigate();
   const [allReceipts, setAllReceipts] = useState(null);
+  const [receipts, setReceipts] = useState(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     initAxiosInterceptor();
     tokenExist();
     getReceipts();
+    getAllReceipts();
   }, []);
 
   const tokenExist = () => {
@@ -53,30 +56,45 @@ const Home = () => {
     }
   };
 
+  const getAllReceipts = async () => {
+    const accessToken = getToken();
+    try {
+      const receipts = await axios.get(
+        `${apiUrl}/allReceiptsByUserId/${accessToken}`
+      );
+      setReceipts(receipts.data);
+      /* console.log(receipts, "PROMISE"); */
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
   return (
     <>
-      <div className={styled.prueba}>
+      <div className={styled.main}>
         <Loader visible={loading} />
-
-        <div
-          style={{
-            display: "flex",
-            width: "70%",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Routes>
-            {allReceipts ? (
-              <Route
-                path="/"
-                element={<GetLastReceipts receipt={allReceipts} />}
-              />
-            ) : null}
-          </Routes>
+        <h3>COMPORTAMIENTO DE TUS RECIBOS</h3>
+        <div className={styled.container_graphics}>
+          <div className={styled.line_chart_container}>
+            <LineChart data={receipts} />
+          </div>
         </div>
-        <div className={styled.graphic}>
-          <StatisticsHome idReceipt={allReceipts} typeReceipt={allReceipts} />
+        <h3>Ultimo Recibo y Comparacion el anterior</h3>
+        <div className={styled.card}>
+          <div>
+            <Routes>
+              {allReceipts ? (
+                <Route
+                  path="/"
+                  element={<GetLastReceipts receipt={allReceipts} />}
+                />
+              ) : null}
+            </Routes>
+          </div>
+
+          <div className={styled.graphic}>
+            <StatisticsHome idReceipt={allReceipts} typeReceipt={allReceipts} />
+          </div>
         </div>
       </div>
     </>

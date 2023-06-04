@@ -1,128 +1,4 @@
-/* import { useState } from "react";
-import styled from "styled-components";
-import moment from "moment";
-import { formatPrice } from "../../../AxiosHelper";
-import { GrayPaleteColors } from "../../../palete-colors/gray-colors.palete";
-
-const Table = styled.table`
-  width: 100%;
-  border-collapse: collapse;
-`;
-
-const TableHeader = styled.th`
-  padding: 20px 5px;
-  background-color: white;
-  border-bottom: 1px solid ${GrayPaleteColors.C50};
-  text-align: left;
-`;
-
-const TableRow = styled.tr`
-  background-color: white;
-  border-bottom: 1px solid ${GrayPaleteColors.C50};
-  transition: 0.3s all;
-  &:hover {
-    background-color: ${GrayPaleteColors.C100};
-  }
-`;
-
-const TableCell = styled.td`
-  padding: 20px 5px;
-`;
-
-const DataTable = ({ data }) => {
-  const [yearFilter, setYearFilter] = useState("all");
-  const [monthFilter, setMonthFilter] = useState("all");
-
-  const filterByYear = (data, year) => {
-    if (year === "all") {
-      return data;
-    } else {
-      return data.filter((item) => moment(item.date).year() === Number(year));
-    }
-  };
-
-  const filterByMonth = (data, month) => {
-    if (month === "all") {
-      return data;
-    } else {
-      return data.filter(
-        (item) => moment(item.date).month() === Number(month) - 1
-      );
-    }
-  };
-
-  const filteredData = filterByMonth(
-    filterByYear(data, yearFilter),
-    monthFilter
-  );
-
-  const handleYearFilterChange = (e) => {
-    setYearFilter(e.target.value);
-  };
-
-  const handleMonthFilterChange = (e) => {
-    setMonthFilter(e.target.value);
-  };
-
-  return (
-    <>
-      <h1>Facturas</h1>
-      <div>
-        <label htmlFor="yearFilter">Filtrar por año:</label>
-        <select
-          id="yearFilter"
-          value={yearFilter}
-          onChange={handleYearFilterChange}
-        >
-          <option value="all">Todos</option>
-          <option value="2022">2022</option>
-          <option value="2023">2023</option>
-        </select>
-      </div>
-      <div>
-        <label htmlFor="monthFilter">Filtrar por mes:</label>
-        <select
-          id="monthFilter"
-          value={monthFilter}
-          onChange={handleMonthFilterChange}
-        >
-          <option value="all">Todos</option>
-          <option value="1">Enero</option>
-          <option value="2">Febrero</option>
-        </select>
-      </div>
-
-      <Table>
-        <thead>
-          <TableRow>
-            <TableHeader>Amount</TableHeader>
-            <TableHeader>Date</TableHeader>
-            <TableHeader>House Name</TableHeader>
-            <TableHeader>Receipt Name</TableHeader>
-            <TableHeader>Type of Service</TableHeader>
-            <TableHeader>Price</TableHeader>
-          </TableRow>
-        </thead>
-        <tbody>
-          {data?.map((item) => (
-            <TableRow key={item.id}>
-              <TableCell>{item.amount}</TableCell>
-              <TableCell>{moment(item.date).format("DD/MM/YYYY")}</TableCell>
-              <TableCell>{item.houseName}</TableCell>
-              <TableCell>{item.receiptName}</TableCell>
-              <TableCell>{item.typeService.type}</TableCell>
-              <TableCell>{formatPrice(item.price)}</TableCell>
-            </TableRow>
-          ))}
-        </tbody>
-      </Table>
-    </>
-  );
-};
-
-export default DataTable; */
-
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   Table,
   TableBody,
@@ -134,6 +10,14 @@ import {
   TextField,
 } from "@mui/material";
 import { FormatDate, formatPrice } from "../../../AxiosHelper";
+import { BsTrash, BsPencil } from "react-icons/bs";
+import axios from "axios";
+import { MyContext } from "../../../context/UserContext";
+import { getUserDataService } from "../../../services/get-user-data.service";
+import { toast, Toaster } from "react-hot-toast";
+import { getUserHousesService } from "../../../services/get-user-houses.service";
+import Modal from "./Modal";
+import FormEdit from "./FormEdit";
 
 const DataTable = ({ data }) => {
   const [filters, setFilters] = useState({
@@ -144,6 +28,25 @@ const DataTable = ({ data }) => {
     typeService: "",
   });
 
+  const apiUrl = import.meta.env.VITE_API_RECEIPT;
+
+  const { setHouses } = useContext(MyContext);
+
+  const [openModal, setOpenModal] = useState(false);
+
+  const onCloseShare = () => {
+    setOpenModal(false);
+  };
+
+  const getUserHouses = async () => {
+    try {
+      const data = await getUserHousesService();
+      setHouses(data);
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
     setFilters((prevFilters) => ({
@@ -152,6 +55,8 @@ const DataTable = ({ data }) => {
     }));
   };
 
+  const notify = () => toast.success("Deleted successfully.");
+
   const filteredData = data?.filter((item) => {
     return Object.keys(filters).every((key) => {
       if (filters[key] === "") return true;
@@ -159,11 +64,30 @@ const DataTable = ({ data }) => {
         const formattedDate = new Date(item[key]).toLocaleDateString();
         return formattedDate.includes(filters[key]);
       }
+      if (key === "typeService") {
+        return item[key].type
+          .toLowerCase()
+          .includes(filters[key].toLowerCase());
+      }
       return String(item[key])
         .toLowerCase()
         .includes(filters[key].toLowerCase());
     });
   });
+
+  const handleDeleteRow = async (id) => {
+    try {
+      const data = await axios.delete(`${apiUrl}/delete/${id}`);
+      getUserHouses();
+      notify();
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const handleEditRow = (id) => {
+    setOpenModal(true);
+  };
 
   return (
     <div>
@@ -177,6 +101,7 @@ const DataTable = ({ data }) => {
               <TableCell>Price</TableCell>
               <TableCell>Receipt Name</TableCell>
               <TableCell>Type Service</TableCell>
+              <TableCell>Actions</TableCell>
             </TableRow>
             <TableRow>
               <TableCell>
@@ -224,23 +149,36 @@ const DataTable = ({ data }) => {
                   size="small"
                 />
               </TableCell>
+              <TableCell></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {filteredData?.map((item) => (
               <TableRow key={item.id}>
-                <TableCell>
-                  {FormatDate(item.date)}
-                </TableCell>
+                <TableCell>{FormatDate(item.date)}</TableCell>
                 <TableCell>{item.amount}</TableCell>
                 <TableCell>{formatPrice(item.price)}</TableCell>
                 <TableCell>{item.receiptName}</TableCell>
                 <TableCell>{item.typeService.type}</TableCell>
+                <TableCell>
+                  <BsTrash
+                    onClick={() => handleDeleteRow(item.id)}
+                    style={{ cursor: "pointer" }}
+                  />
+                  <BsPencil
+                    onClick={() => handleEditRow(item.id)}
+                    style={{ cursor: "pointer", marginLeft: "10px" }}
+                  />
+                </TableCell>
+                <Modal isOpen={openModal} onClose={onCloseShare} receipt={item}>
+                  <FormEdit receipt={item} />
+                </Modal>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
+      <Toaster position="bottom-right" />
     </div>
   );
 };

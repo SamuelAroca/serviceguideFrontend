@@ -1,4 +1,4 @@
-import styles from "../private/styles/Loader.module.css";
+import styles from "../styled-sheets/Loader.module.css";
 
 const Loader = ({visible}) => {
   const loaderClasses = [styles.pl];

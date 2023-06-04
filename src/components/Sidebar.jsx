@@ -20,8 +20,12 @@ import { useContext } from "react";
 import { MyContext } from "../context/UserContext";
 import { BluePaleteColors } from "../palete-colors/blue-colors.palete";
 import { GrayPaleteColors } from "../palete-colors/gray-colors.palete";
+import { initAxiosInterceptor } from "../AxiosHelper";
+import axios from "axios";
 import Logo from "../assets/Logo.png";
 import Cookies from "js-cookie";
+
+initAxiosInterceptor();
 
 const StyledLink = styled(Link)`
   background-color: ${(props) =>
@@ -84,7 +88,7 @@ const Sidebar = () => {
 
   const { pathname } = useLocation();
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     Swal.fire({
       title: "¿Deseas cerrar sesión?",
       text: "¡Tendrás que iniciar sesión nuevamente!",
@@ -97,6 +101,7 @@ const Sidebar = () => {
       if (result.isConfirmed) {
         /* document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:01 GMT;"; */
         Cookies.remove("token");
+        console.log(Cookies.get("token", "TOKEN LOHOUT"));
         updateUserData(null);
         navigate("/");
       }
@@ -168,7 +173,7 @@ const Sidebar = () => {
           <BiUser className="icon" />
           <p>Profile</p>
         </StyledLink>
-        <StyledLink to={``} rute={pathname === ``}>
+        <StyledLink to={`/private/major/user/settings`} rute={pathname === ``}>
           <RiUserSettingsLine className="icon" />
           <p>Profile Settings</p>
         </StyledLink>

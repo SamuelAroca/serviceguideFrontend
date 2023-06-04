@@ -1,10 +1,10 @@
 import { React, useEffect, useState, useContext } from "react";
-import { FormLayout } from "../../styled-components/form-layout.styled";
+import { FormLayout } from "../../addReceipt/Components/styled-components/form-layout.styled";
 import { Button, Grid, TextField, Tooltip } from "@mui/material";
-import { getToken, initAxiosInterceptor } from "../../../../AxiosHelper";
+import { getToken, initAxiosInterceptor } from "../../../AxiosHelper";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
-import { MyContext } from "../../../../context/UserContext";
+import { MyContext } from "../../../context/UserContext";
 
 const UserUpdateForm = () => {
   const url = import.meta.env.VITE_API_USER;

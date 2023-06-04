@@ -1,5 +1,6 @@
 import moment from "moment-timezone";
-import { ReceiptCardContainer } from "../../styled-components/card-container.styled";
+import styles from "../Styles/GetLastReceipt.module.css"
+import { ReceiptCardContainer } from "../Styles/card-container.styled";
 import { useState } from "react";
 
 const GetLastReceipts = ({ receipt }) => {
@@ -20,20 +21,16 @@ const GetLastReceipts = ({ receipt }) => {
   return (
     <ReceiptCardContainer
       open={isOpen}
-      onClick={() => setIsOpen(!isOpen)}
-      initial={{ height: "9rem", backgroundColor: "white" }}
+      initial={{ height: "12rem", backgroundColor: "white" }}
       animate={{
-        height: isOpen ? "22rem" : "11rem",
-        backgroundColor: isOpen ? "lightgrey" : "white",
+        height: isOpen,
+        backgroundColor: isOpen,
       }}
       transition={{ duration: 0 }}
     >
-      <p>Nombre del recibo: {receipt.receiptName}</p>
-      <p>Precio: {formatPrice(receipt.price)}</p>
-      <p>Cantidad: {formatPrice(receipt.amount)}</p>
-      <p>Nombre de la casa: {receipt.houseName}</p>
-      <p>Fecha: {FormatDate(receipt.date)}</p>
-      <p>Tipo de servicio: {receipt.typeService.type}</p>
+      <p className={styles.receipt_name}>{receipt.receiptName}</p>
+      <p className={styles.receipt_data}>Precio: {formatPrice(receipt.price)}</p>
+      <p className={styles.receipt_data}>Cantidad: {formatPrice(receipt.amount)}</p>
     </ReceiptCardContainer>
   );
 };
