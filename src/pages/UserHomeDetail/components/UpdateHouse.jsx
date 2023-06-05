@@ -9,7 +9,8 @@ import axios from "axios";
 import { getUserHouses } from "../../../services/get-user-houses.service";
 import { MyContext } from "../../../context/UserContext";
 import { Toaster, toast } from "react-hot-toast";
-import styles from "../../addHouse/styles/AddHouse.module.css";
+import styles from "../Styles/UpdateHouse.module.css";
+import Swal from "sweetalert2";
 
 const UpdateHouse = ({ data, onClose }) => {
   const apiUrl = import.meta.env.VITE_API_HOUSE;
@@ -22,6 +23,7 @@ const UpdateHouse = ({ data, onClose }) => {
   const navigate = useNavigate();
 
   const { setHouses } = useContext(MyContext);
+  const notify = () => toast.success("House update successfully");
 
   useEffect(() => {
     initAxiosInterceptor();
@@ -132,6 +134,7 @@ const UpdateHouse = ({ data, onClose }) => {
             `${apiUrl}/update/${data.id}`,
             house
           );
+          notify();
           getUserHouses(setHouses);
           onClose();
         } catch (error) {
@@ -148,7 +151,6 @@ const UpdateHouse = ({ data, onClose }) => {
             city: "",
           },
         });
-
         setIsLoading(false);
         // Se setea el form de la casa a vacio para que se limpie el formulario
       } else {
@@ -169,8 +171,9 @@ const UpdateHouse = ({ data, onClose }) => {
   }
 
   return (
-    <>
+    <div className={styles.div_main}>
       <form onSubmit={handleSubmit}>
+        <h1 className={styles.h1}>Update House</h1>
         <div className={styles.inputs_gap}>
           <div className={styles.textfield}>
             <Tooltip
@@ -293,7 +296,7 @@ const UpdateHouse = ({ data, onClose }) => {
           </div>
         </div>
       </form>
-    </>
+    </div>
   );
 };
 

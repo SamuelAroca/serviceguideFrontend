@@ -12,7 +12,7 @@ import Modal from "./components/Modal";
 import UpdateHouse from "./components/UpdateHouse";
 import { getUserHouses } from "../../services/get-user-houses.service";
 import { Button } from "@mui/material";
-
+import Swal from "sweetalert2";
 
 const UserHomeDetail = () => {
   const apiUrl = import.meta.env.VITE_API_STATISTIC;
@@ -22,15 +22,13 @@ const UserHomeDetail = () => {
   const [openModal, setOpenModal] = useState(false);
   const navigate = useNavigate();
 
+  const { setHouses } = useContext(MyContext);
+
   const onCloseShare = () => {
     setOpenModal(false);
   };
 
-  const { setHouses } = useContext(MyContext);
-
   const { id } = useParams();
-  console.log(id, "ID");
-  const { houses } = useContext(MyContext);
 
   const [house, setHouse] = useState(null);
   const [receipts, setReceipts] = useState(null);
@@ -40,6 +38,8 @@ const UserHomeDetail = () => {
     const month = date.getMonth() + 1;
     return month === 10;
   });
+
+  const { houses } = useContext(MyContext);
 
   useEffect(() => {
     setHouse(houses?.find((house) => Number(house.id) === Number(id)));
@@ -75,24 +75,30 @@ const UserHomeDetail = () => {
     }
   };
 
-  const deleteHome = async() => {
+  const handleDelete = async () => {
+    try {
+      await axios.delete(`${apiHouse}/delete/${house.id}`);
+      getUserHouses(setHouses);
+      navigate("/private/major/home");
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const deleteHome = () => {
     Swal.fire({
       title: "¿Seguro que quieres eliminar la casa?",
       icon: "error",
+      showCancelButton: true,
       confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
       confirmButtonText: "Eliminar casa",
     }).then((result) => {
       if (result.isConfirmed) {
-        try {
-          axios.delete(`${apiHouse}/delete/${house.id}`);
-          getUserHouses(setHouses);
-          navigate("/private/major/home");
-        } catch (error) {
-          console.log(error.message);
-        }
+        handleDelete();
       }
     });
-  }
+  };
 
   useEffect(() => {
     getStatistic();

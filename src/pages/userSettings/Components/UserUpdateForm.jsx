@@ -1,15 +1,20 @@
-import { React, useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { FormLayout } from "../../addReceipt/Components/styled-components/form-layout.styled";
 import { Button, Grid, TextField, Tooltip } from "@mui/material";
 import { getToken, initAxiosInterceptor } from "../../../AxiosHelper";
 import axios from "axios";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { MyContext } from "../../../context/UserContext";
+import { useNavigate } from "react-router-dom";
+import styles from "../Styles/UserSettings.module.css";
+import Cookies from "js-cookie";
+import Swal from "sweetalert2";
 
 const UserUpdateForm = () => {
   const url = import.meta.env.VITE_API_USER;
-  const [message, setMessagge] = useState("");
-  const notify = () => toast.success(message.message);
+  const [message, setMessage] = useState("");
+  const notify = () => toast.success("Usuario actualizado correctamente");
+  const navigate = useNavigate();
   const [user, setUser] = useState({
     email: "",
     firstName: "",
@@ -22,7 +27,7 @@ const UserUpdateForm = () => {
 
   const handleChange = (e) => {
     const { value, name } = e.target;
-    setUser({ ...user, [name]: value });
+    setUser({ ...user, [name]: value || "" });
   };
 
   const loadUser = async () => {
@@ -49,7 +54,7 @@ const UserUpdateForm = () => {
     try {
       const accessToken = getToken();
       const updatedUser = await axios.put(`${url}/update/${accessToken}`, user);
-      setMessagge(updatedUser.data);
+      setMessage(updatedUser.data);
       if (updatedUser.status === 200) {
         document.cookie = `token=${updatedUser.data.token}; max-age=${
           3600 * 5
@@ -63,9 +68,36 @@ const UserUpdateForm = () => {
     }
   };
 
+  const handleDelete = async () => {
+    Swal.fire({
+      title: `¿Deseas eliminar tu usuario?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, eliminar usuario",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const accessToken = getToken();
+          await axios.delete(`${url}/delete/${accessToken}`);
+          notify();
+          Cookies.remove("token")
+          navigate("/")
+        } catch (error) {
+          console.log(error.message);
+        }
+      }
+    });
+  };
+
+  if (!user.email || !user.firstName || !user.lastName) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <FormLayout>
-      <h1>Actualizar Datos del Usuario</h1>
+      <h1 className={styles.h1}>Actualizar Datos del Usuario</h1>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
@@ -80,9 +112,7 @@ const UserUpdateForm = () => {
                 name="firstName"
                 type="text"
                 value={user.firstName}
-                onChange={(e) => {
-                  handleChange(e);
-                }}
+                onChange={handleChange}
               />
             </Tooltip>
           </Grid>
@@ -98,9 +128,7 @@ const UserUpdateForm = () => {
                 name="lastName"
                 type="text"
                 value={user.lastName}
-                onChange={(e) => {
-                  handleChange(e);
-                }}
+                onChange={handleChange}
               />
             </Tooltip>
           </Grid>
@@ -114,11 +142,9 @@ const UserUpdateForm = () => {
               <TextField
                 fullWidth
                 name="email"
-                type="text"
+                type="email"
                 value={user.email}
-                onChange={(e) => {
-                  handleChange(e);
-                }}
+                onChange={handleChange}
               />
             </Tooltip>
           </Grid>
@@ -131,28 +157,22 @@ const UserUpdateForm = () => {
             >
               <TextField
                 fullWidth
-                label="Contraseña"
                 name="password"
                 type="password"
                 value={user.password}
-                onChange={(e) => {
-                  handleChange(e);
-                }}
+                onChange={handleChange}
               />
             </Tooltip>
           </Grid>
         </Grid>
-        <Grid sx={{ display: "flex", justifyContent: "end", marginTop: "1rem" }} item xs={12}>
-            <Button
-              onClick={handleSubmit}
-              type="submit"
-              variant="contained"
-              color="primary"
-              style={{width: "20%"}}
-            >
-              Save Receipt
-            </Button>
-          </Grid>
+        <Grid sx={{ display: "flex", justifyContent: "space-between", marginTop: "1rem" }} item xs={12}>
+          <Button variant="contained" color="primary" onClick={handleSubmit}>
+            Actualizar
+          </Button>
+          <Button variant="contained" color="error" onClick={handleDelete}>
+            Eliminar
+          </Button>
+        </Grid>
       </form>
     </FormLayout>
   );

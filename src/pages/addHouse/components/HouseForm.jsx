@@ -22,6 +22,8 @@ const HouseForm = () => {
   const [allCities, setAllCities] = useState([]);
   const navigate = useNavigate();
 
+  const notify = () => toast.success("House update successfully");
+
   useEffect(() => {
     initAxiosInterceptor();
     tokenExist();
@@ -172,6 +174,7 @@ const HouseForm = () => {
             updatedHouse
           );
           getUserHouses();
+          notify();
         } catch (error) {
           console.log(error);
         }

@@ -18,7 +18,6 @@ initAxiosInterceptor();
 const App = () => {
   const { updateUserData, setHouses, user } = useContext(MyContext);
   const accesTocken = Cookies.get("token");
-  console.log(accesTocken, "APP ACCES TOKEN APP COMPONENT");
 
   const getUserData = async () => {
     try {

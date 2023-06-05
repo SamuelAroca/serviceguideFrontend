@@ -18,6 +18,7 @@ import { toast, Toaster } from "react-hot-toast";
 import { getUserHousesService } from "../../../services/get-user-houses.service";
 import Modal from "./Modal";
 import FormEdit from "./FormEdit";
+import Swal from "sweetalert2";
 
 const DataTable = ({ data }) => {
   const [filters, setFilters] = useState({
@@ -174,7 +175,7 @@ const DataTable = ({ data }) => {
                 <TableCell>{FormatDate(item.date)}</TableCell>
                 <TableCell>
                   {item.amount}{" "}
-                  {item.typeService.type === "WATER" ? " m³" : "KWh"}
+                  {item.typeService.type === "ENERGY" ? "KWh" : " m³"}
                 </TableCell>
                 <TableCell>{formatPrice(item.price)}</TableCell>
                 <TableCell>{item.receiptName}</TableCell>

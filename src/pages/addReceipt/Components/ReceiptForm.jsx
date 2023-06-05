@@ -11,6 +11,7 @@ import axios from "axios";
 import SelectHouse from "./SelectHouse";
 import { MyContext } from "../../../context/UserContext";
 import { getUserHousesService } from "../../../services/get-user-houses.service";
+import { Toaster, toast } from "react-hot-toast";
 
 const ReceiptForm = ({ userId }) => {
   const apiUrl = import.meta.env.VITE_API_RECEIPT;
@@ -22,6 +23,8 @@ const ReceiptForm = ({ userId }) => {
   const [selectedHouse, setSelectedHouse] = useState(null);
   const [allHouses, setAllHouses] = useState([]);
   const navigate = useNavigate();
+
+  const notify = () => toast.success("House update successfully");
 
   useEffect(() => {
     initAxiosInterceptor();
@@ -152,6 +155,7 @@ const ReceiptForm = ({ userId }) => {
             `${apiUrl}/add/${accesToken}`,
             updatedReceipt
           );
+          notify();
           getUserHouses();
         } catch (error) {
           console.log(error.message);
@@ -315,7 +319,7 @@ const ReceiptForm = ({ userId }) => {
               disabled={isLoading}
               style={{width: "20%"}}
             >
-              Receipt
+              ADD Receipt
             </Button>
           </Grid>
         </Grid>

@@ -32,6 +32,7 @@ const ChartDoughnut = ({ datos, percentages, value }) => {
     <>
       {changeChart === false ? (
         <div>
+          <h3>Cantidad consumida por servicio</h3>
           <Doughnut data={data} options={options} />
         </div>
       ) : (
@@ -56,6 +57,14 @@ const ChartDoughnut = ({ datos, percentages, value }) => {
               textColor: "green",
             })}
           />
+          <h3>
+            Has gastado un{" "}
+            {percentage < 0 ? (
+              <span style={{ color: "red" }}>{value}% más</span>
+            ) : (
+              <span style={{ color: "green" }}>{value}% menos</span>
+            )}
+          </h3>
         </div>
       )}
       <div style={{ display: "flex", gap: "1rem" }}>

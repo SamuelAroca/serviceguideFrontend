@@ -10,6 +10,7 @@ import img3 from "../../../assets/Electricistas-scaled.webp";
 import img4 from "../../../assets/gas-natural.webp";
 import axios from "axios";
 import { Alert } from "@mui/material";
+import Swal from "sweetalert2";
 
 const ChangePasword = () => {
   let params = useParams();

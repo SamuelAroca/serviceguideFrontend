@@ -10,6 +10,7 @@ import { RiEyeLine } from "react-icons/ri";
 import { useState } from "react";
 import { RiWaterFlashFill } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);

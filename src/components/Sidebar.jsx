@@ -24,6 +24,7 @@ import { initAxiosInterceptor } from "../AxiosHelper";
 import axios from "axios";
 import Logo from "../assets/Logo.png";
 import Cookies from "js-cookie";
+import Swal from "sweetalert2";
 
 initAxiosInterceptor();
 

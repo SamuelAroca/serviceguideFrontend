@@ -17,6 +17,7 @@ import SelectHouse from "../../addReceipt/Components/SelectHouse";
 import { getUserHouses } from "../../../services/get-user-houses.service";
 import { MyContext } from "../../../context/UserContext";
 import { Toaster, toast } from "react-hot-toast";
+import Swal from "sweetalert2";
 
 const FormEdit = ({ userId, data }) => {
   const apiUrl = import.meta.env.VITE_API_RECEIPT;
@@ -201,7 +202,7 @@ const FormEdit = ({ userId, data }) => {
   };
 
   return (
-    <FormLayout>
+    <FormLayout style={{ height: "90vh" }}>
       <h1>{receiptType.toUpperCase()}</h1>
       <div className="buttons-container">
         <button onClick={() => setReceiptType("water")} className="type-button">
@@ -230,7 +231,7 @@ const FormEdit = ({ userId, data }) => {
 
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
-          <Grid item xs={10}>
+          <Grid item xs={12}>
             <Tooltip
               disableFocusListener
               disableTouchListener
@@ -250,7 +251,7 @@ const FormEdit = ({ userId, data }) => {
               <Alert severity="warning"> {errors.receiptName} </Alert>
             )}
           </Grid>
-          <Grid item xs={10}>
+          <Grid item xs={12}>
             <Tooltip
               disableFocusListener
               disableTouchListener
@@ -269,7 +270,7 @@ const FormEdit = ({ userId, data }) => {
             </Tooltip>
             {errors.price && <Alert severity="warning"> {errors.price} </Alert>}
           </Grid>
-          <Grid item xs={10}>
+          <Grid item xs={12}>
             <Tooltip
               disableFocusListener
               disableTouchListener
@@ -290,8 +291,8 @@ const FormEdit = ({ userId, data }) => {
               <Alert severity="warning"> {errors.amount} </Alert>
             )}
           </Grid>
-          <Grid item xs style={{ display: "flex", gap: "10px" }}>
-            <Grid item xs={4.9}>
+          <Grid item xs style={{ display: "flex", justifyContent: "space-between" }}>
+            <Grid item xs={6}>
               <Tooltip
                 disableFocusListener
                 disableTouchListener
@@ -309,7 +310,7 @@ const FormEdit = ({ userId, data }) => {
               </Tooltip>
               {errors.date && <Alert severity="warning"> {errors.date} </Alert>}
             </Grid>
-            <Grid item xs={5}>
+            <Grid item xs={5.7}>
               <SelectHouse
                 options={allHouses}
                 onChange={handleHouseChange}
