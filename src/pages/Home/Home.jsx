@@ -1,5 +1,5 @@
 import axios from "axios";
-import styled from "./styles/Home.module.css";
+import styles from "./Styles/Home.module.css";
 import Loader from "../../components/Loader";
 import GetLastReceipts from "./components/GetLastReceipts";
 import StatisticsHome from "./components/StatisticsHome";
@@ -71,16 +71,16 @@ const Home = () => {
 
   return (
     <>
-      <div className={styled.main}>
+      <div className={styles.main}>
         <Loader visible={loading} />
         <h3>COMPORTAMIENTO DE TUS RECIBOS</h3>
-        <div className={styled.container_graphics}>
-          <div className={styled.line_chart_container}>
+        <div className={styles.container_graphics}>
+          <div className={styles.line_chart_container}>
             <LineChart data={receipts} />
           </div>
         </div>
         <h3>Ultimo Recibo y Comparacion el anterior</h3>
-        <div className={styled.card}>
+        <div className={styles.card}>
           <div>
             <Routes>
               {allReceipts ? (
@@ -92,7 +92,7 @@ const Home = () => {
             </Routes>
           </div>
 
-          <div className={styled.graphic}>
+          <div className={styles.graphic}>
             <StatisticsHome idReceipt={allReceipts} typeReceipt={allReceipts} />
           </div>
         </div>
