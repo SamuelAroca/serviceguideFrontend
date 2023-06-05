@@ -84,7 +84,13 @@ const UserHomeDetail = () => {
       </div>
 
       <div className="donut section">
-        <ChartDoughnut value={Math.abs(percentages?.percentage)?.toFixed(1)} percentages={percentages?.percentage.toFixed(1)} datos={sum} />
+        {percentages?.percentage && sum && (
+          <ChartDoughnut
+            value={Math.abs(percentages.percentage).toFixed(1)}
+            percentages={percentages.percentage.toFixed(1)}
+            datos={sum}
+          />
+        )}
       </div>
 
       <div className="data_table section">
