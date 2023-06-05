@@ -205,7 +205,7 @@ const FormEdit = ({ userId }) => {
 
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
-          <Grid item xs={12}>
+          <Grid item xs={10}>
             <Tooltip
               disableFocusListener
               disableTouchListener
@@ -225,7 +225,7 @@ const FormEdit = ({ userId }) => {
               <Alert severity="warning"> {errors.receiptName} </Alert>
             )}
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={10}>
             <Tooltip
               disableFocusListener
               disableTouchListener
@@ -244,7 +244,7 @@ const FormEdit = ({ userId }) => {
             </Tooltip>
             {errors.price && <Alert severity="warning"> {errors.price} </Alert>}
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={10}>
             <Tooltip
               disableFocusListener
               disableTouchListener
@@ -266,7 +266,7 @@ const FormEdit = ({ userId }) => {
             )}
           </Grid>
           <Grid item xs style={{ display: "flex", gap: "10px" }}>
-            <Grid item xs={6}>
+            <Grid item xs={4.9}>
               <Tooltip
                 disableFocusListener
                 disableTouchListener
@@ -284,7 +284,7 @@ const FormEdit = ({ userId }) => {
               </Tooltip>
               {errors.date && <Alert severity="warning"> {errors.date} </Alert>}
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={5}>
               <SelectHouse
                 options={allHouses}
                 onChange={handleHouseChange}
@@ -302,7 +302,7 @@ const FormEdit = ({ userId }) => {
               color="primary"
               disabled={isLoading}
             >
-              Save
+              Update Receipt
             </Button>
           </Grid>
         </Grid>
@@ -312,3 +312,4 @@ const FormEdit = ({ userId }) => {
 };
 
 export default FormEdit;
+

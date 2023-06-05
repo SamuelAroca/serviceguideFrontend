@@ -142,9 +142,17 @@ const UserUpdateForm = () => {
             </Tooltip>
           </Grid>
         </Grid>
-        <Button variant="contained" onClick={() => handleSubmit()}>
-          Actualizar
-        </Button>
+        <Grid sx={{ display: "flex", justifyContent: "end", marginTop: "1rem" }} item xs={12}>
+            <Button
+              onClick={handleSubmit}
+              type="submit"
+              variant="contained"
+              color="primary"
+              style={{width: "20%"}}
+            >
+              Save Receipt
+            </Button>
+          </Grid>
       </form>
     </FormLayout>
   );

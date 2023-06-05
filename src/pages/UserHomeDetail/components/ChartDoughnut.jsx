@@ -8,14 +8,14 @@ import {
 import "react-circular-progressbar/dist/styles.css";
 import { Button } from "@mui/material";
 
-const ChartDoughnut = () => {
+const ChartDoughnut = ({ datos, percentages, value }) => {
   const [changeChart, setChangeChart] = useState(false);
 
   const data = {
     labels: ["Agua", "Energía", "Gas", "Alcantarillado"],
     datasets: [
       {
-        data: [10, 20, 15, 5],
+        data: datos,
         backgroundColor: ["#36A2EB", "#FFCE56", "#FF6384", "#4BC0C0"],
         borderColor: ["#36A2EB", "#FFCE56", "#FF6384", "#4BC0C0"],
       },
@@ -26,7 +26,8 @@ const ChartDoughnut = () => {
     cutoutPercentage: 60,
   };
 
-  const percentage = 66;
+  const percentage = percentages;
+  const circle = value;
 
   return (
     <>
@@ -36,7 +37,7 @@ const ChartDoughnut = () => {
         </div>
       ) : (
         <div>
-          <CircularProgressbar value={75} text={`${75}%`} strokeWidth={12} />
+          <CircularProgressbar value={value} text={`${percentage}%`} strokeWidth={12} />
         </div>
       )}
       <div style={{ display: "flex", gap: "1rem" }}>

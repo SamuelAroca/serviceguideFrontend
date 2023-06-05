@@ -169,10 +169,6 @@ const Sidebar = () => {
             </li>
           ))}
         </motion.ul>
-        <StyledLink to={``} rute={pathname === ``}>
-          <BiUser className="icon" />
-          <p>Profile</p>
-        </StyledLink>
         <StyledLink to={`/private/major/user/settings`} rute={pathname === ``}>
           <RiUserSettingsLine className="icon" />
           <p>Profile Settings</p>

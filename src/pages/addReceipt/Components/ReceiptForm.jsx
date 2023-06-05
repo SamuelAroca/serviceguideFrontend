@@ -1,7 +1,7 @@
 import { TextField, Button, Grid, Box } from "@mui/material";
 import { getToken, initAxiosInterceptor } from "../../../AxiosHelper";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { FormLayout } from "./styled-components/form-layout.styled";
 import { BsWater, BsFillLightbulbFill, BsFillCloudFill } from "react-icons/bs";
 import { FaToilet } from "react-icons/fa";
@@ -9,8 +9,8 @@ import { Tooltip } from "@mui/material";
 import { Alert } from "@mui/material";
 import axios from "axios";
 import SelectHouse from "./SelectHouse";
-import Loader from "../../../components/Loader"
-
+import { MyContext } from "../../../context/UserContext";
+import { getUserHousesService } from "../../../services/get-user-houses.service";
 
 const ReceiptForm = ({ userId }) => {
   const apiUrl = import.meta.env.VITE_API_RECEIPT;
@@ -89,6 +89,17 @@ const ReceiptForm = ({ userId }) => {
     }
   };
 
+  const { setHouses } = useContext(MyContext);
+
+  const getUserHouses = async () => {
+    try {
+      const data = await getUserHousesService();
+      setHouses(data);
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
   const onValidate = (receipt) => {
     let errors = {};
     const regexTitle = /^[a-zA-Z0-9\s-]+$/; // Expresión regular para validar nombres
@@ -134,7 +145,6 @@ const ReceiptForm = ({ userId }) => {
         },
       };
       
-      console.log(updatedReceipt, "RECIBO PARA ENVIAR");
       if (Object.keys(err).length === 0) {
         let accesToken = getToken();
         try {
@@ -142,12 +152,11 @@ const ReceiptForm = ({ userId }) => {
             `${apiUrl}/add/${accesToken}`,
             updatedReceipt
           );
-          console.log(updatedReceipt, "RECIBO ENVIADO");
+          getUserHouses();
         } catch (error) {
           console.log(error.message);
         }
     
-        // Se setea el recibo a vacio para que se limpie el formulario
         setReceipt({
           receiptName: "",
           price: "",
@@ -160,7 +169,6 @@ const ReceiptForm = ({ userId }) => {
             name: "",
           }
         });
-  
         setIsLoading(false);
       } else {
         setErrors(err);
@@ -288,7 +296,7 @@ const ReceiptForm = ({ userId }) => {
               </Tooltip>
               {errors.date && <Alert severity="warning"> {errors.date} </Alert>}
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={6}>
               <SelectHouse
                 options={allHouses}
                 onChange={handleHouseChange}
@@ -305,8 +313,9 @@ const ReceiptForm = ({ userId }) => {
               variant="contained"
               color="primary"
               disabled={isLoading}
+              style={{width: "20%"}}
             >
-              Save
+              Receipt
             </Button>
           </Grid>
         </Grid>

@@ -9,6 +9,7 @@ import SelectCity from "../components/SelectCity";
 import axios from "axios";
 import { getUserHousesService } from "../../../services/get-user-houses.service";
 import { MyContext } from "../../../context/UserContext";
+import styles from "../styles/AddHouse.module.css"
 
 const HouseForm = () => {
   const apiUrl = import.meta.env.VITE_API_HOUSE;
@@ -209,10 +210,10 @@ const HouseForm = () => {
   }
 
   return (
-    <FormLayout>
+    <>
       <form onSubmit={handleSubmit}>
-        <Grid container spacing={2}>
-          <Grid>
+        <div className={styles.inputs_gap}>
+          <div className={styles.textfield}>
             <Tooltip
               disableFocusListener
               disableTouchListener
@@ -229,8 +230,8 @@ const HouseForm = () => {
               />
             </Tooltip>
             {errors.name && <Alert severity="warning"> {errors.name} </Alert>}
-          </Grid>
-          <Grid>
+          </div>
+          <div>
             <Tooltip
               disableFocusListener
               disableTouchListener
@@ -249,17 +250,8 @@ const HouseForm = () => {
             {errors.stratum && (
               <Alert severity="warning"> {errors.stratum} </Alert>
             )}
-          </Grid>
-          <Grid>
-            <SelectCity
-              fullWidth
-              options={allCities}
-              onChange={handleCityChange}
-              handleSelect={handleSelect}
-              house={house}
-            />
-          </Grid>
-          <Grid>
+          </div>
+          <div>
             <Tooltip
               disableFocusListener
               disableTouchListener
@@ -278,9 +270,8 @@ const HouseForm = () => {
             {errors.neighborhood && (
               <Alert severity="warning"> {errors.neighborhood} </Alert>
             )}
-          </Grid>
-
-          <Grid>
+          </div>
+          <div>
             <Tooltip
               disableFocusListener
               disableTouchListener
@@ -299,9 +290,8 @@ const HouseForm = () => {
             {errors.address && (
               <Alert severity="warning"> {errors.address} </Alert>
             )}
-          </Grid>
-
-          <Grid>
+          </div>
+          <div>
             <Tooltip
               disableFocusListener
               disableTouchListener
@@ -320,22 +310,31 @@ const HouseForm = () => {
             {errors.contract && (
               <Alert severity="warning"> {errors.contract} </Alert>
             )}
-          </Grid>
-
-          <Grid sx={{ display: "flex", justifyContent: "end" }} item xs={10}>
+          </div>
+          <div>
+            <SelectCity
+              fullWidth
+              options={allCities}
+              onChange={handleCityChange}
+              handleSelect={handleSelect}
+              house={house}
+            />
+          </div>
+          <div className={styles.div_button}>
             <Button
               onClick={handleSubmit}
               type="submit"
               variant="contained"
               color="primary"
               disabled={isLoading}
+              style={{width: "20%"}}
             >
-              Save
+              Save House
             </Button>
-          </Grid>
-        </Grid>
+          </div>
+        </div>
       </form>
-    </FormLayout>
+    </>
   );
 };
 
