@@ -27,7 +27,6 @@ const ChartDoughnut = ({ datos, percentages, value }) => {
   };
 
   const percentage = percentages;
-  const circle = value;
 
   return (
     <>
@@ -36,8 +35,27 @@ const ChartDoughnut = ({ datos, percentages, value }) => {
           <Doughnut data={data} options={options} />
         </div>
       ) : (
-        <div>
-          <CircularProgressbar value={value} text={`${percentage}%`} strokeWidth={12} />
+        <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", gap: "20px"}}>
+          <h3>
+            Tu progreso ha sido{" "}
+            {percentage < 0 ? (
+              <span style={{ color: "red" }}>negativo</span>
+            ) : (
+              <span style={{ color: "green" }}>positivo</span>
+            )}
+          </h3>
+          <CircularProgressbar 
+            value={value} 
+            text={`${percentage}%`} 
+            strokeWidth={10} 
+            styles={percentage < 0 ? buildStyles({
+              pathColor: "red",
+              textColor: "red"
+            }): buildStyles({
+              pathColor: "green",
+              textColor: "green",
+            })}
+          />
         </div>
       )}
       <div style={{ display: "flex", gap: "1rem" }}>
