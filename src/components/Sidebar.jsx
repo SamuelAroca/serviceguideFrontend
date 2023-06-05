@@ -131,7 +131,7 @@ const Sidebar = () => {
         </StyledLink>
         <StyledLink
           to={`/private/major/receipts/addreceipt`}
-          rute={pathname === `/private/major/home`}
+          rute={pathname === `/private/house-detail`}
         >
           <BiReceipt className="icon" />
           <p>Add receipt</p>

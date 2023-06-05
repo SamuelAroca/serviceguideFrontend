@@ -17,6 +17,9 @@ export const UserHomeLayout = styled.div`
   overflow: auto;
 
   .house_title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     border: 1px solid ${GrayPaleteColors.C100};
     box-shadow: 0px 0px 10px 0px ${GrayPaleteColors.C100};
     border-radius: 2rem;
@@ -35,6 +38,15 @@ export const UserHomeLayout = styled.div`
       #38bdf8 100%,
       #7dd3fc 100%
     );
+
+    .house_information {
+      display: flex;
+      flex-direction: column;
+    }
+    .actions {
+      display: flex;
+      gap: 1rem;
+    }
   }
   .donut {
     display: grid;
@@ -88,6 +100,8 @@ export const UserHomeLayout = styled.div`
       align-items: center;
       border-radius: 2rem;
       overflow: auto;
+      box-sizing: border-box;
+      overflow: hidden;
     }
     .chart_div:nth-child(1) {
       background-color: ${BluePaleteColors.C200};
@@ -110,7 +124,9 @@ export const UserHomeLayout = styled.div`
   }
 
   h1,
-  h3 {
+  h3,
+  h2,
+  p {
     margin: 0;
   }
 `;

@@ -32,6 +32,7 @@ const DataTable = ({ data }) => {
 
   const { setHouses } = useContext(MyContext);
 
+  const [selectedItem, setSelectedItem] = useState(null);
   const [openModal, setOpenModal] = useState(false);
 
   const onCloseShare = () => {
@@ -56,7 +57,6 @@ const DataTable = ({ data }) => {
   };
 
   const notify = () => toast.success("Deleted successfully.");
-  const notifyUpdate = () => toast.success("Update successfully.");
 
   const filteredData = data?.filter((item) => {
     return Object.keys(filters).every((key) => {
@@ -92,20 +92,14 @@ const DataTable = ({ data }) => {
           notify();
         } catch (error) {
           console.log(error.message);
-        };
+        }
       }
     });
   };
 
-  const handleEditRow = async (id) => {
+  const handleEditRow = (item) => {
+    setSelectedItem(item);
     setOpenModal(true);
-    try {
-      const data = await axios.put(`${apiUrl}/update/${id}`);
-      getUserHouses();
-      notifyUpdate();
-    } catch (error) {
-      console.log(error.message);
-    }
   };
 
   return (
@@ -170,9 +164,7 @@ const DataTable = ({ data }) => {
               </TableCell>
               <TableCell>
                 <BsTrash />
-                <BsPencil
-                  style={{ cursor: "pointer", marginLeft: "10px" }}
-                />
+                <BsPencil style={{ cursor: "pointer", marginLeft: "10px" }} />
               </TableCell>
             </TableRow>
           </TableHead>
@@ -180,7 +172,10 @@ const DataTable = ({ data }) => {
             {filteredData?.map((item) => (
               <TableRow key={item.id}>
                 <TableCell>{FormatDate(item.date)}</TableCell>
-                <TableCell>{item.amount}</TableCell>
+                <TableCell>
+                  {item.amount}{" "}
+                  {item.typeService.type === "WATER" ? " m³" : "KWh"}
+                </TableCell>
                 <TableCell>{formatPrice(item.price)}</TableCell>
                 <TableCell>{item.receiptName}</TableCell>
                 <TableCell>{item.typeService.type}</TableCell>
@@ -190,18 +185,18 @@ const DataTable = ({ data }) => {
                     style={{ cursor: "pointer" }}
                   />
                   <BsPencil
-                    onClick={() => handleEditRow(item.id)}
+                    onClick={() => handleEditRow(item)}
                     style={{ cursor: "pointer", marginLeft: "10px" }}
                   />
                 </TableCell>
-                <Modal isOpen={openModal} onClose={onCloseShare} receipt={item}>
-                  <FormEdit receipt={item} />
-                </Modal>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
+      <Modal isOpen={openModal} onClose={onCloseShare}>
+        {selectedItem && <FormEdit data={selectedItem} />}
+      </Modal>
       <Toaster position="bottom-right" />
     </div>
   );

@@ -20,3 +20,12 @@ export const getUserHousesService = async () => {
     console.log(error);
   }
 };
+
+export const getUserHouses = async (setHouses) => {
+  try {
+    const data = await getUserHousesService();
+    setHouses(data);
+  } catch (err) {
+    console.log(err.message);
+  }
+};

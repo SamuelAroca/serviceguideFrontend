@@ -44,7 +44,7 @@ const getToken = () => {
 const FormatDate = (date) => {
   const timedifference = 0; // diferencia horaria en minutos
   const dateColombia = moment(date).subtract(timedifference, "minutes");
-  const formatDate = dateColombia.locale("es").format("DD/MM/YYYY");
+  const formatDate = dateColombia.locale("es").format("MM/DD/YYYY");
   return formatDate;
 };
 

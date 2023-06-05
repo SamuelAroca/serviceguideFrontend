@@ -1,18 +1,28 @@
 import { TextField, Button, Grid, Box } from "@mui/material";
-import { getToken, initAxiosInterceptor } from "../../../AxiosHelper";
+import {
+  getToken,
+  initAxiosInterceptor,
+  FormatDate,
+} from "../../../AxiosHelper";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { FormLayout } from "../../addReceipt/Components/styled-components/form-layout.styled";
 import { BsWater, BsFillLightbulbFill, BsFillCloudFill } from "react-icons/bs";
 import { FaToilet } from "react-icons/fa";
 import { Tooltip } from "@mui/material";
 import { Alert } from "@mui/material";
 import axios from "axios";
+import moment from "moment";
 import SelectHouse from "../../addReceipt/Components/SelectHouse";
+import { getUserHouses } from "../../../services/get-user-houses.service";
+import { MyContext } from "../../../context/UserContext";
+import { Toaster, toast } from "react-hot-toast";
 
-const FormEdit = ({ userId }) => {
+const FormEdit = ({ userId, data }) => {
   const apiUrl = import.meta.env.VITE_API_RECEIPT;
   const apiHouse = import.meta.env.VITE_API_HOUSE;
+
+  const { setHouses } = useContext(MyContext);
 
   const [receiptType, setReceiptType] = useState("water");
   const [isLoading, setIsLoading] = useState(false);
@@ -21,24 +31,39 @@ const FormEdit = ({ userId }) => {
   const [allHouses, setAllHouses] = useState([]);
   const navigate = useNavigate();
 
+  const notifyUpdate = () => toast.success("Update successfully.");
+
   useEffect(() => {
     initAxiosInterceptor();
     tokenExist();
     getHouses();
   }, [userId]);
 
+  const formatDate = (timestamp) => {
+    const date = new Date(timestamp);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
+  const date = formatDate(data?.date);
+
   const [receipt, setReceipt] = useState({
-    receiptName: "",
-    price: "",
-    amount: "",
-    date: "",
+    receiptName: data?.receiptName,
+    price: data?.price,
+    amount: data?.amount,
+    date: date,
     typeService: {
-      type: receiptType,
+      type: data?.typeService.type,
     },
     house: {
-      name: "",
+      name: data?.houseName,
     },
   });
+
+  console.log(receipt, "RECEIPTTTTTTTT");
+  console.log(data, "DATAAAAAAA");
 
   const handleSelect = (name) => {
     setReceipt({ ...receipt, house: { name: name } });
@@ -90,7 +115,6 @@ const FormEdit = ({ userId }) => {
     const regexTitle = /^[a-zA-Z0-9\s-]+$/; // Expresión regular para validar nombres
     const regexPrice = /^[0-9]+(\.[0-9]{1,2})?$/; // Expresión regular para validar precios
     const regexQuantity = /^[0-9]+(\.[0-9]{1,3})?$/; // Expresión regular para validar cantidades
-    const regexDate = /^(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])-(19|20)\d{2}$/; // Expresión regular para validar fechas en formato MM-DD-YYYY
 
     if (!receipt.receiptName.trim()) {
       errors.receiptName = "Debe existir un nombre del recibo.";
@@ -98,18 +122,18 @@ const FormEdit = ({ userId }) => {
       errors.receiptName = "El 'Título' solo debe contener letras y espacios.";
     }
 
-    if (!receipt.price.trim()) {
+    if (!receipt.price /* || !receipt.price.trim() */) {
       errors.price = "Debe existir un precio del recibo.";
     } else if (!regexPrice.test(receipt.price)) {
       errors.price = "El 'Precio' solo debe contener números.";
     }
 
-    if (!receipt.amount.trim()) {
+    /*     if (!receipt.amount.trim()) {
       errors.amount = "Debe existir una cantidad del recibo.";
     } else if (!regexQuantity.test(receipt.amount)) {
       errors.amount =
-        "La 'Cantidad' solo debe contener números y la parte decimal maximo 3 números";
-    }
+        "La 'Cantidad' solo debe contener números y la parte decimal máximo 3 números";
+    } */
 
     return errors;
   };
@@ -130,15 +154,16 @@ const FormEdit = ({ userId }) => {
         },
       };
 
-      console.log(updatedReceipt, "RECIBO PARA ENVIAR");
+      console.log(updatedReceipt, "RECIBO PARA ACTUALIZAR");
       if (Object.keys(err).length === 0) {
-        let accesToken = getToken();
         try {
-          const response = await axios.post(
-            `${apiUrl}/add/${accesToken}`,
+          const response = await axios.put(
+            `${apiUrl}/update/${data.id}`,
             updatedReceipt
           );
-          console.log(updatedReceipt, "RECIBO ENVIADO");
+          notifyUpdate();
+          getUserHouses(setHouses);
+          console.log(updatedReceipt, "RECIBO ACTUALIZADO");
         } catch (error) {
           console.log(error.message);
         }
@@ -312,4 +337,3 @@ const FormEdit = ({ userId }) => {
 };
 
 export default FormEdit;
-

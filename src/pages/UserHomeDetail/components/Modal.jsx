@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { MdOutlineClose } from "react-icons/md";
 import { GrayPaleteColors } from "../../../palete-colors/gray-colors.palete";
+import FormEdit from "./FormEdit";
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -38,12 +39,10 @@ const ModalContainer = styled.div`
   }
 `;
 
-const Modal = ({ isOpen, onClose, children, receipt }) => {
+const Modal = ({ isOpen, onClose, children }) => {
   if (!isOpen) {
     return null;
   }
-
-  console.log(receipt, "RECEIPT MDOAL");
 
   return (
     <ModalOverlay>
