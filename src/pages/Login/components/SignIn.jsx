@@ -18,7 +18,7 @@ import Swal from "sweetalert2";
 
 const SignIn = () => {
   // Logica para obtener los datos del usuario
-  const { updateUserData } = useContext(MyContext);
+  const { updateUserData, updateUserId } = useContext(MyContext);
 
   const getUserData = async () => {
     try {
@@ -78,7 +78,10 @@ const SignIn = () => {
            document.cookie = `token=${response.data.token}; max-age=${
             3600 * 5
           }; path=/; samesite=strict`;
-          getUserData();
+          console.log(response.data);
+          updateUserId(response.data.id)
+          updateUserData("Holas")
+          /* getUserData(); */
           navigate("/private/major/home/");
         }
       } catch (error) {
