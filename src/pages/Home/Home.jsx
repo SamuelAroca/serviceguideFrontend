@@ -5,8 +5,9 @@ import GetLastReceipts from "./components/GetLastReceipts";
 import StatisticsHome from "./components/StatisticsHome";
 import { getToken, initAxiosInterceptor } from "../../AxiosHelper";
 import { Routes, Route, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import LineChart from "./components/LineChart";
+import { MyContext } from "../../context/UserContext";
 
 const Home = () => {
   const apiUrl = import.meta.env.VITE_API_RECEIPT;
@@ -14,6 +15,9 @@ const Home = () => {
   const [allReceipts, setAllReceipts] = useState(null);
   const [receipts, setReceipts] = useState(null);
   const [loading, setLoading] = useState(false);
+  const {userId} = useContext(MyContext);
+
+  console.log(userId, "userID");
 
   useEffect(() => {
     initAxiosInterceptor();
