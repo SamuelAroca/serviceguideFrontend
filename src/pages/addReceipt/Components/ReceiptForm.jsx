@@ -24,6 +24,7 @@ const ReceiptForm = ({ userId }) => {
   const [allHouses, setAllHouses] = useState([]);
   const navigate = useNavigate();
 
+  const { setHouses, userData } = useContext(MyContext);
   const notify = () => toast.success("House update successfully");
 
   useEffect(() => {
@@ -80,7 +81,7 @@ const ReceiptForm = ({ userId }) => {
     if (getToken()) {
       let accesToken = getToken();
       const data = await axios.get(
-        `${apiHouse}/getHouseName/${accesToken}`
+        `${apiHouse}/getHouseName/${userData.id}`
       );
       try {
         setAllHouses(data.data);
@@ -91,8 +92,6 @@ const ReceiptForm = ({ userId }) => {
       sessionExpired();
     }
   };
-
-  const { setHouses } = useContext(MyContext);
 
   const getUserHouses = async () => {
     try {
@@ -152,7 +151,7 @@ const ReceiptForm = ({ userId }) => {
         let accesToken = getToken();
         try {
           const response = await axios.post(
-            `${apiUrl}/add/${accesToken}`,
+            `${apiUrl}/add/${userData.id}`,
             updatedReceipt
           );
           notify();

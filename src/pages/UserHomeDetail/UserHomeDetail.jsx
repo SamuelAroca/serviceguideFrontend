@@ -22,7 +22,7 @@ const UserHomeDetail = () => {
   const [openModal, setOpenModal] = useState(false);
   const navigate = useNavigate();
 
-  const { setHouses } = useContext(MyContext);
+  const { setHouses, userData } = useContext(MyContext);
 
   const onCloseShare = () => {
     setOpenModal(false);
@@ -61,7 +61,7 @@ const UserHomeDetail = () => {
         try {
           let accessToken = getToken();
           const response = await axios.get(
-            `${apiUrl}/sumStatisticByType/${house.name}/${accessToken}`
+            `${apiUrl}/sumStatisticByType/${house.name}/${userData.id}`
           );
           const data = response.data;
           setSum([]);

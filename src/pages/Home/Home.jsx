@@ -3,9 +3,10 @@ import styles from "./Styles/Home.module.css";
 import Loader from "../../components/Loader";
 import GetLastReceipts from "./components/GetLastReceipts";
 import StatisticsHome from "./components/StatisticsHome";
+import { MyContext } from "../../context/UserContext";
 import { getToken, initAxiosInterceptor } from "../../AxiosHelper";
 import { Routes, Route, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import LineChart from "./components/LineChart";
 
 const Home = () => {
@@ -15,12 +16,15 @@ const Home = () => {
   const [receipts, setReceipts] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  const { userData } = useContext(MyContext);
+
   useEffect(() => {
+    if (userData === null) return;
     initAxiosInterceptor();
     tokenExist();
     getReceipts();
     getAllReceipts();
-  }, []);
+  }, [userData]);
 
   const tokenExist = () => {
     if (!getToken()) {
@@ -46,7 +50,7 @@ const Home = () => {
   const getReceipts = async () => {
     const accessToken = getToken();
     setLoading(true);
-    const receipt = await axios.get(`${apiUrl}/getLastReceipt/${accessToken}`);
+    const receipt = await axios.get(`${apiUrl}/getLastReceipt/${userData.id}`);
     try {
       setAllReceipts(receipt.data);
     } catch (err) {
@@ -60,7 +64,7 @@ const Home = () => {
     const accessToken = getToken();
     try {
       const receipts = await axios.get(
-        `${apiUrl}/allReceiptsByUserId/${accessToken}`
+        `${apiUrl}/allReceiptsByUserId/${userData.id}`
       );
       setReceipts(receipts.data);
       /* console.log(receipts, "PROMISE"); */

@@ -1,207 +1,207 @@
 .components {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    width: 100vw;
-    position: relative;
-    background: #1488cc; /* fallback for old browsers */
-    background: -webkit-linear-gradient(
-      to right,
-      #1488cc,
-      #2b32b2
-    ); /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(
-      to right,
-      #1488cc,
-      #2b32b2
-    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  }
-  
-  .div_home_button {
-    position: absolute;
-    top: 1rem;
-    left: 1rem;
-  }
-  
-  .home_button {
-    width: 150px;
-    height: 60px;
-    border: 3px solid #5532a5;
-    border-radius: 45px;
-    transition: all 0.3s;
-    cursor: pointer;
-    background: white;
-    font-size: 1.2em;
-    font-weight: 550;
-    font-family: "Montserrat", sans-serif;
-  }
-  
-  .home_button:hover {
-    background: #5532a5;
-    color: white;
-    font-size: 1.5em;
-  }
-  
-  .login_button {
-    box-sizing: border-box;
-    border: 0;
-    border-radius: 20px;
-    color: #fff;
-    padding: 1em 1.8em;
-    background: #0077c2;
-    display: flex;
-    transition: 0.2s background;
-    align-items: center;
-    gap: 0.6em;
-    font-weight: bold;
-  }
-  
-  .div_button_login {
-    position: absolute;
-    left: 6.8rem;
-    margin-top: 1rem;
-  }
-  
-  .login_button .arrow_wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .login_button .arrow {
-    margin-top: 1px;
-    width: 10px;
-    background: #0077c2;
-    height: 2px;
-    position: relative;
-    transition: 0.2s;
-  }
-  
-  .login_button .arrow::before {
-    content: "";
-    box-sizing: border-box;
-    position: absolute;
-    border: solid #fff;
-    border-width: 0 2px 2px 0;
-    display: inline-block;
-    top: -3px;
-    right: 3px;
-    transition: 0.2s;
-    padding: 3px;
-    transform: rotate(-45deg);
-  }
-  
-  .login_button:hover {
-    background-color: #084a91;
-  }
-  
-  .login_button:hover .arrow {
-    background: #fff;
-  }
-  
-  .login_button:hover .arrow:before {
-    right: 0;
-  }
-  
-  .container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 490px;
-    width: 900px;
-  }
-  
-  .title_sign {
-    font-size: 2.7rem;
-    user-select: none;
-    margin: 1rem 0;
-  }
-  
-  .label_title {
-    margin-top: 1rem;
-    width: 18rem;
-    font-size: 1.2rem;
-    user-select: none;
-  }
-  
-  .container_label {
-    width: 100%;
-    position: relative;
-  }
-  .inputs_gap {
-    display: flex;
-    gap: 1.5rem;
-    flex-direction: column;
-  }
-  
-  .container_image {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    max-height: 90%;
-    border-radius: 0rem 0.5rem 0.5rem 0;
-    background-color: #fff;
-    width: 60%;
-    overflow: hidden;
-    user-select: none;
-  }
-  
-  .container_login {
-    padding: 1rem;
-    height: 90%;
-    width: 40%;
-    font-family: "Labrada", serif;
-    border-radius: 0.5rem 0 0 0.5rem;
-    user-select: none;
-    background-color: #fff;
-    box-sizing: border-box;
-    position: relative;
-  }
-  
-  .container_logo {
-    display: flex;
-    align-items: center;
-  }
-  
-  .container_form {
-    margin-top: 2rem;
-  }
-  
-  .logo_title {
-    position: absolute;
-    top: -1rem;
-    left: 2rem;
-  }
-  
-  .logo {
-    position: absolute;
-    color: #33a7ff;
-    right: 8.3rem;
-    top: 0.5rem;
-  }
-  
-  .password_container {
-    position: relative;
-    max-width: 100%;
-  }
-  
-  .icon_password {
-    transform: translateX(11.3rem);
-    font-size: 1.5rem;
-    position: absolute;
-    top: 0.6rem;
-    right: 12rem;
-    cursor: pointer;
-  }
-  
-  .links {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 0.5rem;
-  }
-  
-  /* @media (max-width: 1090px) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+  background: #1488cc; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #1488cc,
+    #2b32b2
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #1488cc,
+    #2b32b2
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.div_home_button {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+}
+
+.home_button {
+  width: 150px;
+  height: 60px;
+  border: 3px solid #5532a5;
+  border-radius: 45px;
+  transition: all 0.3s;
+  cursor: pointer;
+  background: white;
+  font-size: 1.2em;
+  font-weight: 550;
+  font-family: "Montserrat", sans-serif;
+}
+
+.home_button:hover {
+  background: #5532a5;
+  color: white;
+  font-size: 1.5em;
+}
+
+.login_button {
+  box-sizing: border-box;
+  border: 0;
+  border-radius: 20px;
+  color: #fff;
+  padding: 1em 1.8em;
+  background: #0077c2;
+  display: flex;
+  transition: 0.2s background;
+  align-items: center;
+  gap: 0.6em;
+  font-weight: bold;
+}
+
+.div_button_login {
+  position: absolute;
+  left: 6.8rem;
+  margin-top: 1rem;
+}
+
+.login_button .arrow_wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login_button .arrow {
+  margin-top: 1px;
+  width: 10px;
+  background: #0077c2;
+  height: 2px;
+  position: relative;
+  transition: 0.2s;
+}
+
+.login_button .arrow::before {
+  content: "";
+  box-sizing: border-box;
+  position: absolute;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  display: inline-block;
+  top: -3px;
+  right: 3px;
+  transition: 0.2s;
+  padding: 3px;
+  transform: rotate(-45deg);
+}
+
+.login_button:hover {
+  background-color: #084a91;
+}
+
+.login_button:hover .arrow {
+  background: #fff;
+}
+
+.login_button:hover .arrow:before {
+  right: 0;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 490px;
+  width: 900px;
+}
+
+.title_sign {
+  font-size: 2.7rem;
+  user-select: none;
+  margin: 1rem 0;
+}
+
+.label_title {
+  margin-top: 1rem;
+  width: 18rem;
+  font-size: 1.2rem;
+  user-select: none;
+}
+
+.container_label {
+  width: 100%;
+  position: relative;
+}
+.inputs_gap {
+  display: flex;
+  gap: 1.5rem;
+  flex-direction: column;
+}
+
+.container_image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-height: 90%;
+  border-radius: 0rem 0.5rem 0.5rem 0;
+  background-color: #fff;
+  width: 60%;
+  overflow: hidden;
+  user-select: none;
+}
+
+.container_login {
+  padding: 1rem;
+  height: 90%;
+  width: 40%;
+  font-family: "Labrada", serif;
+  border-radius: 0.5rem 0 0 0.5rem;
+  user-select: none;
+  background-color: #fff;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.container_logo {
+  display: flex;
+  align-items: center;
+}
+
+.container_form {
+  margin-top: 2rem;
+}
+
+.logo_title {
+  position: absolute;
+  top: -1rem;
+  left: 2rem;
+}
+
+.logo {
+  position: absolute;
+  color: #33a7ff;
+  right: 8.3rem;
+  top: 0.5rem;
+}
+
+.password_container {
+  position: relative;
+  max-width: 100%;
+}
+
+.icon_password {
+  transform: translateX(11.3rem);
+  font-size: 1.5rem;
+  position: absolute;
+  top: 0.6rem;
+  right: 12rem;
+  cursor: pointer;
+}
+
+.links {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+}
+
+/* @media (max-width: 1090px) {
     .main {
       width: 100%;
       flex-wrap: wrap;
@@ -234,4 +234,3 @@
       min-width: 0;
     }
   } */
-  

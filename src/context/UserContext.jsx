@@ -10,6 +10,7 @@ const UserContextProvider = ({ children }) => {
 
   const [user, setUser] = useState(null);
   const [houses, setHouses] = useState([]);
+  const [userData, setUserData] = useState(null);
 
   // Función para actualizar los datos del usuario
 
@@ -24,6 +25,8 @@ const UserContextProvider = ({ children }) => {
     updateUserData,
     houses,
     setHouses,
+    userData,
+    setUserData,
   };
 
   //Aquí se renderiza el componente que provee el contexto o datos a los demas
