@@ -10,17 +10,13 @@ const UserContextProvider = ({ children }) => {
 
   const [user, setUser] = useState(null);
   const [houses, setHouses] = useState([]);
-  const [userId, setUserId] = useState(null);
+  const [userData, setUserData] = useState(null);
 
   // Función para actualizar los datos del usuario
 
   const updateUserData = (user) => {
     setUser(user);
   };
-
-  const updateUserId = (userId) => {
-    setUserId(userId);
-  }
 
   // En esta constante vamos a guardar los valores o funciones que quieran compartir con los demas componentes
 
@@ -29,9 +25,8 @@ const UserContextProvider = ({ children }) => {
     updateUserData,
     houses,
     setHouses,
-    userId,
-    setUserId,
-    updateUserId,
+    userData,
+    setUserData,
   };
 
   //Aquí se renderiza el componente que provee el contexto o datos a los demas

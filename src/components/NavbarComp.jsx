@@ -32,19 +32,19 @@ const NavbarComp = () => {
         </div>
         <nav className="nav-main" ref={navRef}>
           <a className="link" href="#home">
-            Home
+            Inicio
           </a>
           <a className="link" href="#aboutUs">
             Nosotros
           </a>
           <a className="link" href="#team">
-            Team
+            Equipo
           </a>
           <Link className="link" to={"/login/signUp"}>
-            Register
+            Registro
           </Link>
           <Link className="link" to={"/login"}>
-            Log In
+            Iniciar Sesión
           </Link>
           <button className="nav-btn nav-close-btn" onClick={showNavbar}>
             <FaTimes />

@@ -83,7 +83,7 @@ const StyledHouseLink = styled(Link)`
 const Sidebar = () => {
   const [isSessionOpen, setIsSessionOpen] = useState(true);
 
-  const { user, houses, updateUserData } = useContext(MyContext);
+  const { user, houses, updateUserData, setUserData } = useContext(MyContext);
 
   const navigate = useNavigate();
 
@@ -102,8 +102,8 @@ const Sidebar = () => {
       if (result.isConfirmed) {
         /* document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:01 GMT;"; */
         Cookies.remove("token");
-        console.log(Cookies.get("token", "TOKEN LOHOUT"));
-        updateUserData(null);
+        console.log(Cookies.get("token", "TOKEN LOGOUT"));
+        setUserData([]);
         navigate("/");
       }
     });
@@ -128,7 +128,7 @@ const Sidebar = () => {
           rute={pathname === ``}
         >
           <BiAddToQueue className="icon" />
-          <p>Add home</p>
+          <p>Add house</p>
         </StyledLink>
         <StyledLink
           to={`/private/major/receipts/addreceipt`}

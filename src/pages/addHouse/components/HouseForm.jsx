@@ -7,9 +7,10 @@ import { Alert } from "@mui/material";
 import { myID } from "../AddHouse";
 import SelectCity from "../components/SelectCity";
 import axios from "axios";
-import { getUserHousesService } from "../../../services/get-user-houses.service";
 import { MyContext } from "../../../context/UserContext";
-import styles from "../styles/AddHouse.module.css"
+import styles from "../styles/AddHouse.module.css";
+import { getUserHouses } from "../../../services/get-user-houses.service";
+import { Toaster, toast } from "react-hot-toast";
 
 const HouseForm = () => {
   const apiUrl = import.meta.env.VITE_API_HOUSE;
@@ -21,6 +22,8 @@ const HouseForm = () => {
   const [selectedCity, setSelectedCity] = useState(null);
   const [allCities, setAllCities] = useState([]);
   const navigate = useNavigate();
+
+  const { userData, setHouses } = useContext(MyContext);
 
   const notify = () => toast.success("House update successfully");
 
@@ -137,17 +140,6 @@ const HouseForm = () => {
     return errors;
   };
 
-  const { setHouses } = useContext(MyContext);
-
-  const getUserHouses = async () => {
-    try {
-      const data = await getUserHousesService();
-      setHouses(data);
-    } catch (err) {
-      console.log(err.message);
-    }
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -170,10 +162,10 @@ const HouseForm = () => {
         let accesToken = getToken();
         try {
           const response = await axios.post(
-            `${apiUrl}/add/${accesToken}`,
+            `${apiUrl}/add/${userData.id}`,
             updatedHouse
           );
-          getUserHouses();
+          getUserHouses(setHouses, userData?.id);
           notify();
         } catch (error) {
           console.log(error);
@@ -330,7 +322,7 @@ const HouseForm = () => {
               variant="contained"
               color="primary"
               disabled={isLoading}
-              style={{width: "20%"}}
+              style={{ width: "20%" }}
             >
               Save House
             </Button>

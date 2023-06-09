@@ -7,7 +7,10 @@ import PrivateRoutes from "./pages/PrivateRoutes/PrivateRoutes";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { MyContext } from "./context/UserContext";
 import { useContext, useEffect } from "react";
-import { getUserDataService } from "./services/get-user-data.service";
+import {
+  getUserDataService,
+  getUserInformation,
+} from "./services/get-user-data.service";
 import { getUserHousesService } from "./services/get-user-houses.service";
 import { initAxiosInterceptor } from "./AxiosHelper";
 import NotFound from "./components/NotFound";
@@ -16,8 +19,20 @@ import Cookies from "js-cookie";
 initAxiosInterceptor();
 
 const App = () => {
-  const { updateUserData, setHouses, user } = useContext(MyContext);
+  const { updateUserData, setHouses, setUserData, userData } =
+    useContext(MyContext);
+  console.log(userData, "INFROMACIÓN USUARIO APP");
+
   const accesTocken = Cookies.get("token");
+
+  const getUser = async () => {
+    try {
+      const data = await getUserInformation();
+      setUserData(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const getUserData = async () => {
     try {
@@ -30,7 +45,7 @@ const App = () => {
 
   const getUserHouses = async () => {
     try {
-      const data = await getUserHousesService();
+      const data = await getUserHousesService(userData.id);
       setHouses(data);
     } catch (err) {
       console.log(err.message);
@@ -38,11 +53,15 @@ const App = () => {
   };
 
   useEffect(() => {
-    if (accesTocken) {
-      getUserData();
+    getUserData();
+    getUser();
+  }, [accesTocken]);
+
+  useEffect(() => {
+    if (userData !== null) {
       getUserHouses();
     }
-  }, [accesTocken]);
+  }, [userData]);
 
   return (
     <Routes>
