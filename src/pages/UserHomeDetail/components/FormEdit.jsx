@@ -2,7 +2,6 @@ import { TextField, Button, Grid, Box } from "@mui/material";
 import {
   getToken,
   initAxiosInterceptor,
-  FormatDate,
 } from "../../../AxiosHelper";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
@@ -12,7 +11,6 @@ import { FaToilet } from "react-icons/fa";
 import { Tooltip } from "@mui/material";
 import { Alert } from "@mui/material";
 import axios from "axios";
-import moment from "moment";
 import SelectHouse from "../../addReceipt/Components/SelectHouse";
 import { getUserHouses } from "../../../services/get-user-houses.service";
 import { MyContext } from "../../../context/UserContext";
@@ -23,7 +21,7 @@ const FormEdit = ({ userId, data }) => {
   const apiUrl = import.meta.env.VITE_API_RECEIPT;
   const apiHouse = import.meta.env.VITE_API_HOUSE;
 
-  const { setHouses } = useContext(MyContext);
+  const { setHouses, userData } = useContext(MyContext);
 
   const [receiptType, setReceiptType] = useState("water");
   const [isLoading, setIsLoading] = useState(false);
@@ -63,9 +61,6 @@ const FormEdit = ({ userId, data }) => {
     },
   });
 
-  console.log(receipt, "RECEIPTTTTTTTT");
-  console.log(data, "DATAAAAAAA");
-
   const handleSelect = (name) => {
     setReceipt({ ...receipt, house: { name: name } });
   };
@@ -100,7 +95,7 @@ const FormEdit = ({ userId, data }) => {
   const getHouses = async () => {
     if (getToken()) {
       let accesToken = getToken();
-      const data = await axios.get(`${apiHouse}/getHouseName/${accesToken}`);
+      const data = await axios.get(`${apiHouse}/getHouseName/${userData.id}`);
       try {
         setAllHouses(data.data);
       } catch (err) {
@@ -155,7 +150,6 @@ const FormEdit = ({ userId, data }) => {
         },
       };
 
-      console.log(updatedReceipt, "RECIBO PARA ACTUALIZAR");
       if (Object.keys(err).length === 0) {
         try {
           const response = await axios.put(
@@ -163,8 +157,7 @@ const FormEdit = ({ userId, data }) => {
             updatedReceipt
           );
           notifyUpdate();
-          getUserHouses(setHouses);
-          console.log(updatedReceipt, "RECIBO ACTUALIZADO");
+          getUserHouses(setHouses, userData?.id);
         } catch (error) {
           console.log(error.message);
         }

@@ -2,7 +2,6 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 export const getUserHousesService = async (id) => {
-  console.log(id, "ID GET USER HOUSES");
   const url = import.meta.env.VITE_API_HOUSE;
 
   const accessToken = Cookies.get("token");

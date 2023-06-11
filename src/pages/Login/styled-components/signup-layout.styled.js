@@ -2,10 +2,10 @@ import styled from "styled-components";
 import { BluePaleteColors } from "../../../palete-colors/blue-colors.palete";
 import { GrayPaleteColors } from "../../../palete-colors/gray-colors.palete";
 
-export const SignInLayout = styled.div`
+export const SignUpLayout = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 2rem;
+  gap: 1rem;
   height: 72vh;
   width: 80vw;
   background-color: #fff;
@@ -53,12 +53,6 @@ export const SignInLayout = styled.div`
     color: ${GrayPaleteColors.C400};
   }
 
-  .forgot_password {
-    display: flex;
-    justify-content: flex-end;
-    width: 100%;
-  }
-
   .signup {
     color: ${GrayPaleteColors.C400};
     gap: 5px;
@@ -78,7 +72,6 @@ export const SignInLayout = styled.div`
     align-items: center;
     background-color: ${GrayPaleteColors.C100};
   }
-
 
   a {
     color: ${BluePaleteColors.C500};

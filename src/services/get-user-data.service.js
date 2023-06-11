@@ -27,7 +27,6 @@ export const getUserInformation = async () => {
 
   try {
     const { data: user } = await axios.get(`${url}/findById/${accessToken}`)
-    console.log(user)
     return user;
   } catch (error) {
     console.log(error)

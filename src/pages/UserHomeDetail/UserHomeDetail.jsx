@@ -59,7 +59,6 @@ const UserHomeDetail = () => {
 
       const getSum = async () => {
         try {
-          let accessToken = getToken();
           const response = await axios.get(
             `${apiUrl}/sumStatisticByType/${house.name}/${userData.id}`
           );
@@ -78,7 +77,7 @@ const UserHomeDetail = () => {
   const handleDelete = async () => {
     try {
       await axios.delete(`${apiHouse}/delete/${house.id}`);
-      getUserHouses(setHouses);
+      getUserHouses(setHouses, userData?.id);
       navigate("/private/major/home");
     } catch (error) {
       console.log(error.message);

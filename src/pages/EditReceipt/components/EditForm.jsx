@@ -134,7 +134,6 @@ const EditForm = ({ userId }) => {
         },
       };
       
-      console.log(updatedReceipt, "RECIBO PARA ENVIAR");
       if (Object.keys(err).length === 0) {
         let accesToken = getToken();
         try {
@@ -142,7 +141,6 @@ const EditForm = ({ userId }) => {
             `${apiUrl}/add/${accesToken}`,
             updatedReceipt
           );
-          console.log(updatedReceipt, "RECIBO ENVIADO");
         } catch (error) {
           console.log(error.message);
         }
