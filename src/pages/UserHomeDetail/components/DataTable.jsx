@@ -31,7 +31,7 @@ const DataTable = ({ data }) => {
 
   const apiUrl = import.meta.env.VITE_API_RECEIPT;
 
-  const { setHouses } = useContext(MyContext);
+  const { setHouses, userData } = useContext(MyContext);
 
   const [selectedItem, setSelectedItem] = useState(null);
   const [openModal, setOpenModal] = useState(false);
@@ -42,7 +42,7 @@ const DataTable = ({ data }) => {
 
   const getUserHouses = async () => {
     try {
-      const data = await getUserHousesService();
+      const data = await getUserHousesService(userData.id);
       setHouses(data);
     } catch (err) {
       console.log(err.message);
@@ -89,7 +89,7 @@ const DataTable = ({ data }) => {
       if (result.isConfirmed) {
         try {
           const data = axios.delete(`${apiUrl}/delete/${id}`);
-          getUserHouses();
+          getUserHouses(setHouses, userData?.id);
           notify();
         } catch (error) {
           console.log(error.message);

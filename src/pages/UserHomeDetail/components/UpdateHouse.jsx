@@ -22,7 +22,7 @@ const UpdateHouse = ({ data, onClose }) => {
   const [allCities, setAllCities] = useState([]);
   const navigate = useNavigate();
 
-  const { setHouses } = useContext(MyContext);
+  const { setHouses, userData } = useContext(MyContext);
   const notify = () => toast.success("House update successfully");
 
   useEffect(() => {
@@ -135,7 +135,7 @@ const UpdateHouse = ({ data, onClose }) => {
             house
           );
           notify();
-          getUserHouses(setHouses);
+          getUserHouses(setHouses, userData?.id);
           onClose();
         } catch (error) {
           console.log(error);

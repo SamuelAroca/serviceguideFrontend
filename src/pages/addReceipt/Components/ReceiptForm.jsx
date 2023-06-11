@@ -81,7 +81,7 @@ const ReceiptForm = ({ userId }) => {
     if (getToken()) {
       let accesToken = getToken();
       const data = await axios.get(
-        `${apiHouse}/getHouseName/${userData.id}`
+        `${apiHouse}/getHouseName/${userData?.id}`
       );
       try {
         setAllHouses(data.data);
@@ -95,7 +95,7 @@ const ReceiptForm = ({ userId }) => {
 
   const getUserHouses = async () => {
     try {
-      const data = await getUserHousesService();
+      const data = await getUserHousesService(userData.id);
       setHouses(data);
     } catch (err) {
       console.log(err.message);
@@ -148,14 +148,13 @@ const ReceiptForm = ({ userId }) => {
       };
       
       if (Object.keys(err).length === 0) {
-        let accesToken = getToken();
         try {
           const response = await axios.post(
             `${apiUrl}/add/${userData.id}`,
             updatedReceipt
           );
+          getUserHouses(setHouses, userData?.id);
           notify();
-          getUserHouses();
         } catch (error) {
           console.log(error.message);
         }

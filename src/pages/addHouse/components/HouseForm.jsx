@@ -24,7 +24,6 @@ const HouseForm = () => {
   const navigate = useNavigate();
 
   const { userData, setHouses } = useContext(MyContext);
-
   const notify = () => toast.success("House update successfully");
 
   useEffect(() => {
@@ -156,10 +155,7 @@ const HouseForm = () => {
         },
       };
 
-      console.log(updatedHouse, "ESTA ES LA CASA");
-
       if (Object.keys(err).length === 0) {
-        let accesToken = getToken();
         try {
           const response = await axios.post(
             `${apiUrl}/add/${userData.id}`,

@@ -11,6 +11,7 @@ import img4 from "../../../assets/gas-natural.webp";
 import axios from "axios";
 import { Alert } from "@mui/material";
 import Swal from "sweetalert2";
+import { ForgotPasswordLayout } from "../styled-components/forgotpassword-layout";
 
 const ForgotPassword = () => {
   const [errors, setErrors] = useState([]);
@@ -77,61 +78,54 @@ const ForgotPassword = () => {
 
   return (
     <div className={styles.components}>
-      <div className={styles.div_home_button}>
-        <button
-          className={styles.home_button}
-          onClick={() => navigate("/login")}
-        >
-          Iniciar Sesión
-        </button>
-      </div>
-      <div className={styles.container}>
-        <div className={styles.container_login}>
-          <form className={styles.container_form} onSubmit={sendEmail}>
-            <div className={styles.container_logo}>
+      <ForgotPasswordLayout>
+        <div className="form_container">
+          <form onSubmit={sendEmail}>
+            <h1>Recuperar Contraseña</h1>
+            <p className="subtitle">
+              No worries, we'll send you reset instructions
+            </p>
+            {/* <div className={styles.container_logo}>
               <h2 className={styles.logo_title}>
                 <RiWaterFlashFill className={styles.logo} />
                 ServiceGuide
               </h2>
+            </div> */}
+
+            <div>
+              <TextField
+                label="Email"
+                variant="outlined"
+                placeholder="Type your email"
+                className="inputsMaterial"
+                fullWidth
+                name="mailTo"
+                value={email.mailTo}
+                onChange={handleInputChange}
+              />
+              {errors.mailTo && (
+                <Alert severity="warning"> {errors.mailTo} </Alert>
+              )}
             </div>
-            <h2 className={styles.title_sign}>Recuperar Contraseña</h2>
-            <div className={styles.container_label}>
-              <div className={styles.inputs_gap}>
-                <div>
-                  <TextField
-                    label="Email"
-                    variant="outlined"
-                    placeholder="Type your email"
-                    className={styles.inputsMaterial}
-                    fullWidth
-                    name="mailTo"
-                    value={email.mailTo}
-                    onChange={handleInputChange}
-                  />
-                  {errors.mailTo && (
-                    <Alert severity="warning"> {errors.mailTo} </Alert>
-                  )}
-                </div>
-              </div>
-              <div className={styles.login}>
-                ¿Recordaste tu contraseña?{" "}
-                <Link to="/login">Iniciar Sesión</Link>
-              </div>
-              <div className={styles.div_button_login}>
-                <button className={styles.login_button} onClick={sendEmail}>
-                  Enviar Correo
-                  <div className={styles.arrow_wrapper}>
-                    <div className={styles.arrow}></div>
-                  </div>
-                </button>
-              </div>
+            <div>
+              <button onClick={sendEmail}>
+                Enviar Correo
+              </button>
             </div>
+
+            <span className="signup">
+              <p>¿Recordaste tu contraseña?</p>
+              <Link to="/login">
+                Iniciar Sesión
+              </Link>
+            </span>
+
           </form>
         </div>
-        <div className={styles.container_image}>
+        <div className={styles.carouselDemo}>
           <CarouselDemo img1={img1} img2={img2} img3={img3} img4={img4} />
         </div>
-      </div>
+      </ForgotPasswordLayout>
     </div>
   );
 };

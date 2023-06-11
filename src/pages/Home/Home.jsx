@@ -50,7 +50,7 @@ const Home = () => {
   const getReceipts = async () => {
     const accessToken = getToken();
     setLoading(true);
-    const receipt = await axios.get(`${apiUrl}/getLastReceipt/${userData.id}`);
+    const receipt = await axios.get(`${apiUrl}/getLastReceipt/${userData?.id}`);
     try {
       setAllReceipts(receipt.data);
     } catch (err) {
@@ -61,10 +61,9 @@ const Home = () => {
   };
 
   const getAllReceipts = async () => {
-    const accessToken = getToken();
     try {
       const receipts = await axios.get(
-        `${apiUrl}/allReceiptsByUserId/${userData.id}`
+        `${apiUrl}/allReceiptsByUserId/${userData?.id}`
       );
       setReceipts(receipts.data);
       /* console.log(receipts, "PROMISE"); */
