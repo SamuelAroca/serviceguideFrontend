@@ -39,7 +39,7 @@ const StatisticsHome = ({ idReceipt, typeReceipt }) => {
 
   const getData = async () => {
     const data = await axios.get(
-      `${apiUrl}/individualReceipt/BAR/${typeReceipt.typeService.type}/${idReceipt.id}`
+      `${apiUrl}/individualReceipt/BAR/${typeReceipt?.typeService.type}/${idReceipt?.id}`
     );
     setLabel(data.data.label);
     setPrice(data.data.price);

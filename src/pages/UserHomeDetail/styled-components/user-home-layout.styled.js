@@ -55,6 +55,7 @@ export const UserHomeLayout = styled.div`
     height: 100%;
     grid-area: 1 / 8 / 7 / 13;
   }
+  
   .line_chart_container {
     width: 100%;
     height: 100%;

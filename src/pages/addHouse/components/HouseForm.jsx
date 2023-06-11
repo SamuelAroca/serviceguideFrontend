@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import { FormLayout } from "../../addReceipt/Components/styled-components/form-layout.styled";
+import { HouseFormLayout } from "../styled-components/houseform-layout.styled.js";
 import { TextField, Button, Grid, Tooltip } from "@mui/material";
 import { getToken, initAxiosInterceptor } from "../../../AxiosHelper";
 import { useNavigate } from "react-router-dom";
@@ -201,10 +201,13 @@ const HouseForm = () => {
   }
 
   return (
-    <>
+    <HouseFormLayout>
+      <div className="title">
+        <h1>ADD HOUSE</h1>
+      </div>
       <form onSubmit={handleSubmit}>
-        <div className={styles.inputs_gap}>
-          <div className={styles.textfield}>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
             <Tooltip
               disableFocusListener
               disableTouchListener
@@ -221,8 +224,8 @@ const HouseForm = () => {
               />
             </Tooltip>
             {errors.name && <Alert severity="warning"> {errors.name} </Alert>}
-          </div>
-          <div>
+          </Grid>
+          <Grid item xs={12}>
             <Tooltip
               disableFocusListener
               disableTouchListener
@@ -241,8 +244,8 @@ const HouseForm = () => {
             {errors.stratum && (
               <Alert severity="warning"> {errors.stratum} </Alert>
             )}
-          </div>
-          <div>
+          </Grid>
+          <Grid item xs={12}>
             <Tooltip
               disableFocusListener
               disableTouchListener
@@ -261,8 +264,8 @@ const HouseForm = () => {
             {errors.neighborhood && (
               <Alert severity="warning"> {errors.neighborhood} </Alert>
             )}
-          </div>
-          <div>
+          </Grid>
+          <Grid item xs={12}>
             <Tooltip
               disableFocusListener
               disableTouchListener
@@ -281,8 +284,8 @@ const HouseForm = () => {
             {errors.address && (
               <Alert severity="warning"> {errors.address} </Alert>
             )}
-          </div>
-          <div>
+          </Grid>
+          <Grid item xs={12}>
             <Tooltip
               disableFocusListener
               disableTouchListener
@@ -301,8 +304,8 @@ const HouseForm = () => {
             {errors.contract && (
               <Alert severity="warning"> {errors.contract} </Alert>
             )}
-          </div>
-          <div>
+          </Grid>
+          <Grid item xs={12}>
             <SelectCity
               fullWidth
               options={allCities}
@@ -310,8 +313,8 @@ const HouseForm = () => {
               handleSelect={handleSelect}
               house={house}
             />
-          </div>
-          <div className={styles.div_button}>
+          </Grid>
+          <Grid sx={{ display: "flex", justifyContent: "end" }} item xs={12}>
             <Button
               onClick={handleSubmit}
               type="submit"
@@ -322,10 +325,10 @@ const HouseForm = () => {
             >
               Save House
             </Button>
-          </div>
-        </div>
+          </Grid>
+        </Grid>
       </form>
-    </>
+    </HouseFormLayout>
   );
 };
 

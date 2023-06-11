@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Doughnut } from "react-chartjs-2";
 import {
   CircularProgressbar,
-  CircularProgressbarWithChildren,
   buildStyles,
 } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
@@ -22,10 +21,6 @@ const ChartDoughnut = ({ datos, percentages, value }) => {
     ],
   };
 
-  const options = {
-    cutoutPercentage: 60,
-  };
-
   const percentage = percentages;
 
   return (
@@ -33,7 +28,9 @@ const ChartDoughnut = ({ datos, percentages, value }) => {
       {changeChart === false ? (
         <div>
           <h3>Cantidad consumida por servicio</h3>
-          <Doughnut data={data} options={options} />
+          <div /* style={{ width: "250px", height: "250px" }} */>
+            <Doughnut data={data} />
+          </div>
         </div>
       ) : (
         <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", gap: "20px"}}>
@@ -49,7 +46,8 @@ const ChartDoughnut = ({ datos, percentages, value }) => {
             value={value} 
             text={`${percentage}%`} 
             strokeWidth={10} 
-            styles={percentage < 0 ? buildStyles({
+            styles={
+              percentage < 0 ? buildStyles({
               pathColor: "red",
               textColor: "red"
             }): buildStyles({
@@ -67,7 +65,7 @@ const ChartDoughnut = ({ datos, percentages, value }) => {
           </h3>
         </div>
       )}
-      <div style={{ display: "flex", gap: "1rem" }}>
+      <div style={{ display: "flex", gap: "1rem"}}>
         <Button variant="outlined" onClick={() => setChangeChart(!changeChart)}>
           Prev
         </Button>

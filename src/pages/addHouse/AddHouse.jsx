@@ -19,8 +19,7 @@ export { myID };
 const AddHouse = () => {
   return (
     <div className={styles.div_main}>
-      <h1 className={styles.h1}>ADD HOUSE</h1>
-      <div className={styles.container_main}>
+      <div>
         <HouseForm />
       </div>
     </div>
