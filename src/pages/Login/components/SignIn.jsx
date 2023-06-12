@@ -58,7 +58,7 @@ const SignIn = () => {
     if (!email.email.trim()) {
       errors.email = "No puede estar vacio";
     } else if (!regexEmail.test(email.email)) {
-      errors.email = "You must have a valid email format";
+      errors.email = "Debe tener un formato de correo electrónico válido";
     }
 
     if (!email.password.trim()) {
@@ -91,10 +91,9 @@ const SignIn = () => {
           icon: "error",
           title: "Oops...",
           text: message,
-          footer: '<a href="/forgot-password">Forgot password?</a>',
+          footer: '<a href="/forgot-password">¿Has olvidado tu contraseña?</a>',
         });
       }
-
       setEmail({
         email: "",
         password: "",
@@ -123,23 +122,15 @@ const SignIn = () => {
       <SignInLayout>
         <div className="form_container">
           <form onSubmit={login}>
-            <h1>Welcome back!</h1>
+            <h1>¡Bienvenido de nuevo!</h1>
             <p className="subtitle">
-              Start management your finance faster and better
+              Empieza a gestionar tus finanzas más rápido y mejor
             </p>
-
-            {/* <div>
-              <h2>
-                <RiWaterFlashFill className={styles.logo} />
-                ServiceGuide
-              </h2>
-            </div> */}
-
             <div>
               <TextField
-                label="Email"
+                label="Correo electrónico"
                 variant="outlined"
-                placeholder="Type your email"
+                placeholder="Digíta tu correo"
                 className="inputsMaterial"
                 fullWidth
                 size="small"

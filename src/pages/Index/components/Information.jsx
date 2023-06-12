@@ -17,12 +17,12 @@ const Information = () => {
             <div className={styles.paragraph_us}>
               <VscQuote className={styles.icon_paragraph} />
               <p className={styles.text_us}>
-                "Personal and team growth is essential to achieve goals and
-                objectives in life. By working together, we can continually
-                learn and improve. By investing in our growth, we can increase
-                our capacity for leadership, collaboration and problem solving,
-                allowing us to face challenges with confidence and reach our
-                full potential."
+              "El crecimiento personal y del equipo es fundamental para alcanzar los objetivos
+                 en la vida. Al trabajar juntos, podemos continuamente
+                 aprender y mejorar. Al invertir en nuestro crecimiento, podemos aumentar
+                 nuestra capacidad de liderazgo, colaboración y resolución de problemas,
+                 permitiéndonos enfrentar los desafíos con confianza y alcanzar nuestro
+                 potencial completo."
               </p>
               <div className={styles.container_us}>
                 <p className={styles.name_us}>
