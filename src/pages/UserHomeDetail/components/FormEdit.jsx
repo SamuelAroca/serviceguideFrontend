@@ -2,7 +2,6 @@ import { TextField, Button, Grid, Box } from "@mui/material";
 import {
   getToken,
   initAxiosInterceptor,
-  FormatDate,
 } from "../../../AxiosHelper";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
@@ -12,7 +11,6 @@ import { FaToilet } from "react-icons/fa";
 import { Tooltip } from "@mui/material";
 import { Alert } from "@mui/material";
 import axios from "axios";
-import moment from "moment";
 import SelectHouse from "../../addReceipt/Components/SelectHouse";
 import { getUserHouses } from "../../../services/get-user-houses.service";
 import { MyContext } from "../../../context/UserContext";
@@ -23,7 +21,7 @@ const FormEdit = ({ userId, data }) => {
   const apiUrl = import.meta.env.VITE_API_RECEIPT;
   const apiHouse = import.meta.env.VITE_API_HOUSE;
 
-  const { setHouses } = useContext(MyContext);
+  const { setHouses, userData } = useContext(MyContext);
 
   const [receiptType, setReceiptType] = useState("water");
   const [isLoading, setIsLoading] = useState(false);
@@ -63,9 +61,6 @@ const FormEdit = ({ userId, data }) => {
     },
   });
 
-  console.log(receipt, "RECEIPTTTTTTTT");
-  console.log(data, "DATAAAAAAA");
-
   const handleSelect = (name) => {
     setReceipt({ ...receipt, house: { name: name } });
   };
@@ -100,7 +95,7 @@ const FormEdit = ({ userId, data }) => {
   const getHouses = async () => {
     if (getToken()) {
       let accesToken = getToken();
-      const data = await axios.get(`${apiHouse}/getHouseName/${accesToken}`);
+      const data = await axios.get(`${apiHouse}/getHouseName/${userData.id}`);
       try {
         setAllHouses(data.data);
       } catch (err) {
@@ -155,7 +150,6 @@ const FormEdit = ({ userId, data }) => {
         },
       };
 
-      console.log(updatedReceipt, "RECIBO PARA ACTUALIZAR");
       if (Object.keys(err).length === 0) {
         try {
           const response = await axios.put(
@@ -163,8 +157,7 @@ const FormEdit = ({ userId, data }) => {
             updatedReceipt
           );
           notifyUpdate();
-          getUserHouses(setHouses);
-          console.log(updatedReceipt, "RECIBO ACTUALIZADO");
+          getUserHouses(setHouses, userData?.id);
         } catch (error) {
           console.log(error.message);
         }
@@ -207,14 +200,14 @@ const FormEdit = ({ userId, data }) => {
       <div className="buttons-container">
         <button onClick={() => setReceiptType("water")} className="type-button">
           <BsWater />
-          Water
+          Agua
         </button>
         <button
           onClick={() => setReceiptType("energy")}
           className="type-button"
         >
           <BsFillLightbulbFill />
-          Energy
+          Energía
         </button>
         <button onClick={() => setReceiptType("gas")} className="type-button">
           <BsFillCloudFill />
@@ -225,7 +218,7 @@ const FormEdit = ({ userId, data }) => {
           className="type-button"
         >
           <FaToilet />
-          Sewerage
+          Alcantarillado
         </button>
       </div>
 
@@ -235,12 +228,12 @@ const FormEdit = ({ userId, data }) => {
             <Tooltip
               disableFocusListener
               disableTouchListener
-              title="Add title"
+              title="Agregar nombre"
               placement="bottom-start"
             >
               <TextField
                 fullWidth
-                label="Title"
+                label="Nombre"
                 name="receiptName"
                 type="text"
                 value={receipt.receiptName}
@@ -255,12 +248,12 @@ const FormEdit = ({ userId, data }) => {
             <Tooltip
               disableFocusListener
               disableTouchListener
-              title="Add Price"
+              title="Agregar precio"
               placement="bottom-start"
             >
               <TextField
                 fullWidth
-                label="Price"
+                label="Precio"
                 name="price"
                 type="number"
                 step="0.01"
@@ -274,12 +267,12 @@ const FormEdit = ({ userId, data }) => {
             <Tooltip
               disableFocusListener
               disableTouchListener
-              title="Add Quantity"
+              title="Agregar cantidad"
               placement="bottom-start"
             >
               <TextField
                 fullWidth
-                label="Quantity"
+                label="Cantidad"
                 name="amount"
                 type="number"
                 step="0.01"
@@ -296,7 +289,7 @@ const FormEdit = ({ userId, data }) => {
               <Tooltip
                 disableFocusListener
                 disableTouchListener
-                title="Add Date"
+                title="Agregar fecha"
                 placement="bottom-start"
               >
                 <TextField
@@ -328,7 +321,7 @@ const FormEdit = ({ userId, data }) => {
               color="primary"
               disabled={isLoading}
             >
-              Update Receipt
+              Actualizar Recibo
             </Button>
           </Grid>
         </Grid>

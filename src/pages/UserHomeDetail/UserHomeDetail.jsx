@@ -22,7 +22,7 @@ const UserHomeDetail = () => {
   const [openModal, setOpenModal] = useState(false);
   const navigate = useNavigate();
 
-  const { setHouses } = useContext(MyContext);
+  const { setHouses, userData } = useContext(MyContext);
 
   const onCloseShare = () => {
     setOpenModal(false);
@@ -54,31 +54,35 @@ const UserHomeDetail = () => {
           `${apiUrl}/informationReceipt/${idHouse}`
         );
         const data = response.data;
-        setPercentages(data);
+        return data;
       };
 
       const getSum = async () => {
         try {
-          let accessToken = getToken();
           const response = await axios.get(
-            `${apiUrl}/sumStatisticByType/${house.name}/${accessToken}`
+            `${apiUrl}/sumStatisticByType/${house.name}/${userData.id}`
           );
           const data = response.data;
-          setSum([]);
-          setSum(data);
+          return data;
         } catch (error) {
           console.log(error.message);
         }
       };
-      getTotals();
-      getSum();
+
+      const fetchData = async () => {
+        const totals = await getTotals();
+        const sumData = await getSum();
+        setPercentages(totals);
+        setSum(sumData);
+      };
+      fetchData();
     }
   };
 
   const handleDelete = async () => {
     try {
       await axios.delete(`${apiHouse}/delete/${house.id}`);
-      getUserHouses(setHouses);
+      getUserHouses(setHouses, userData?.id);
       navigate("/private/major/home");
     } catch (error) {
       console.log(error.message);
@@ -140,14 +144,22 @@ const UserHomeDetail = () => {
 
       <div className="donut section">
         {percentages?.percentage &&
-          typeof percentages.percentage === "number" &&
-          sum && (
-            <ChartDoughnut
-              value={Math.abs(percentages.percentage).toFixed(1)}
-              percentages={percentages.percentage.toFixed(1)}
-              datos={sum}
-            />
-          )}
+        typeof percentages.percentage === "number" &&
+        sum ? (
+          <>
+            {percentages.percentage === 0 ? (
+              <p>No tienes suficientes recibos</p>
+            ) : (
+              <ChartDoughnut
+                value={Math.abs(percentages.percentage).toFixed(1)}
+                percentages={percentages.percentage.toFixed(1)}
+                datos={sum}
+              />
+            )}
+          </>
+        ) : (
+          <p>No tienes suficientes recibos</p>
+        )}
       </div>
 
       <div className="data_table section">

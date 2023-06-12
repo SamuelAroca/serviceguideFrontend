@@ -22,11 +22,6 @@ const GetLastReceipts = ({ receipt }) => {
     <ReceiptCardContainer
       open={isOpen}
       initial={{ height: "12rem", backgroundColor: "white" }}
-      animate={{
-        height: isOpen,
-        backgroundColor: isOpen,
-      }}
-      transition={{ duration: 0 }}
     >
       <p className={styles.receipt_name}>{receipt.receiptName}</p>
       <p className={styles.receipt_data}>Precio: {formatPrice(receipt.price)}</p>

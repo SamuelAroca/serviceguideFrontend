@@ -1,11 +1,11 @@
 import axios from "axios";
 import styles from "./Styles/Home.module.css";
-import Loader from "../../components/Loader";
 import GetLastReceipts from "./components/GetLastReceipts";
 import StatisticsHome from "./components/StatisticsHome";
+import { MyContext } from "../../context/UserContext";
 import { getToken, initAxiosInterceptor } from "../../AxiosHelper";
 import { Routes, Route, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import LineChart from "./components/LineChart";
 
 const Home = () => {
@@ -13,14 +13,16 @@ const Home = () => {
   const navigate = useNavigate();
   const [allReceipts, setAllReceipts] = useState(null);
   const [receipts, setReceipts] = useState(null);
-  const [loading, setLoading] = useState(false);
+
+  const { userData } = useContext(MyContext);
 
   useEffect(() => {
+    if (userData === null) return;
     initAxiosInterceptor();
     tokenExist();
     getReceipts();
     getAllReceipts();
-  }, []);
+  }, [userData]);
 
   const tokenExist = () => {
     if (!getToken()) {
@@ -45,59 +47,51 @@ const Home = () => {
 
   const getReceipts = async () => {
     const accessToken = getToken();
-    setLoading(true);
-    const receipt = await axios.get(`${apiUrl}/getLastReceipt/${accessToken}`);
+    const receipt = await axios.get(`${apiUrl}/getLastReceipt/${userData?.id}`);
     try {
       setAllReceipts(receipt.data);
     } catch (err) {
       console.log(err, "Error recibo ultimo");
-    } finally {
-      setLoading(false);
     }
   };
 
   const getAllReceipts = async () => {
-    const accessToken = getToken();
     try {
       const receipts = await axios.get(
-        `${apiUrl}/allReceiptsByUserId/${accessToken}`
+        `${apiUrl}/allReceiptsByUserId/${userData?.id}`
       );
       setReceipts(receipts.data);
-      /* console.log(receipts, "PROMISE"); */
     } catch (err) {
       console.log(err.message);
     }
   };
 
   return (
-    <>
-      <div className={styles.main}>
-        <Loader visible={loading} />
-        <h3>COMPORTAMIENTO DE TUS RECIBOS</h3>
-        <div className={styles.container_graphics}>
-          <div className={styles.line_chart_container}>
-            <LineChart data={receipts} />
-          </div>
-        </div>
-        <h3>Ultimo Recibo y Comparacion el anterior</h3>
-        <div className={styles.card}>
-          <div>
-            <Routes>
-              {allReceipts ? (
-                <Route
-                  path="/"
-                  element={<GetLastReceipts receipt={allReceipts} />}
-                />
-              ) : null}
-            </Routes>
-          </div>
-
-          <div className={styles.graphic}>
-            <StatisticsHome idReceipt={allReceipts} typeReceipt={allReceipts} />
-          </div>
+    <div className={styles.main}>
+      <h3>COMPORTAMIENTO DEL PRECIO DE TUS RECIBOS</h3>
+      <div className={styles.container_graphics}>
+        <div className={styles.line_chart_container}>
+          <LineChart data={receipts} />
         </div>
       </div>
-    </>
+      <h3>Ultimo Recibo y Comparacion con el anterior</h3>
+      <div className={styles.card}>
+        <div>
+          <Routes>
+            {allReceipts ? (
+              <Route
+                path="/"
+                element={<GetLastReceipts receipt={allReceipts} />}
+              />
+            ) : null}
+          </Routes>
+        </div>
+
+        <div className={styles.last_graphic}>
+          <StatisticsHome idReceipt={allReceipts} typeReceipt={allReceipts} />
+        </div>
+      </div>
+    </div>
   );
 };
 

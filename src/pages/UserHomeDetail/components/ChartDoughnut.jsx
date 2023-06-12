@@ -1,15 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Doughnut } from "react-chartjs-2";
-import {
-  CircularProgressbar,
-  CircularProgressbarWithChildren,
-  buildStyles,
-} from "react-circular-progressbar";
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { Button } from "@mui/material";
 
 const ChartDoughnut = ({ datos, percentages, value }) => {
   const [changeChart, setChangeChart] = useState(false);
+  const chartRef = useRef(null);
 
   const data = {
     labels: ["Agua", "Energía", "Gas", "Alcantarillado"],
@@ -22,21 +19,35 @@ const ChartDoughnut = ({ datos, percentages, value }) => {
     ],
   };
 
-  const options = {
-    cutoutPercentage: 60,
-  };
-
   const percentage = percentages;
 
+  useEffect(() => {
+    const resizeObserver = new ResizeObserver(() => {
+      if (chartRef.current && chartRef.current.chartInstance) {
+        chartRef.current.chartInstance.resize();
+      }
+    });
+
+    if (chartRef.current && chartRef.current.container) {
+      resizeObserver.observe(chartRef.current.container);
+    }
+
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, []);
+
   return (
-    <>
+    <div className="donut_component_container">
       {changeChart === false ? (
-        <div>
+        <>
           <h3>Cantidad consumida por servicio</h3>
-          <Doughnut data={data} options={options} />
-        </div>
+          <div className="charts_donut_container">
+            <Doughnut data={data} ref={chartRef} />
+          </div>
+        </>
       ) : (
-        <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", gap: "20px"}}>
+        <>
           <h3>
             Tu progreso ha sido{" "}
             {percentage < 0 ? (
@@ -45,17 +56,21 @@ const ChartDoughnut = ({ datos, percentages, value }) => {
               <span style={{ color: "green" }}>positivo</span>
             )}
           </h3>
-          <CircularProgressbar 
-            value={value} 
-            text={`${percentage}%`} 
-            strokeWidth={10} 
-            styles={percentage < 0 ? buildStyles({
-              pathColor: "red",
-              textColor: "red"
-            }): buildStyles({
-              pathColor: "green",
-              textColor: "green",
-            })}
+          <CircularProgressbar
+            value={value}
+            text={`${percentage}%`}
+            strokeWidth={10}
+            styles={
+              percentage < 0
+                ? buildStyles({
+                    pathColor: "red",
+                    textColor: "red",
+                  })
+                : buildStyles({
+                    pathColor: "green",
+                    textColor: "green",
+                  })
+            }
           />
           <h3>
             Has gastado un{" "}
@@ -65,17 +80,17 @@ const ChartDoughnut = ({ datos, percentages, value }) => {
               <span style={{ color: "green" }}>{value}% menos</span>
             )}
           </h3>
-        </div>
+        </>
       )}
-      <div style={{ display: "flex", gap: "1rem" }}>
+      <div style={{ display: "flex", gap: "1rem", justifyContent: "center" }}>
         <Button variant="outlined" onClick={() => setChangeChart(!changeChart)}>
-          Prev
+          ANTERIOR
         </Button>
         <Button variant="outlined" onClick={() => setChangeChart(!changeChart)}>
-          Next
+          SIGUIENTE
         </Button>
       </div>
-    </>
+    </div>
   );
 };
 

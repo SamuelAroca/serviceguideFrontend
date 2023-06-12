@@ -83,7 +83,7 @@ const StyledHouseLink = styled(Link)`
 const Sidebar = () => {
   const [isSessionOpen, setIsSessionOpen] = useState(true);
 
-  const { user, houses, updateUserData } = useContext(MyContext);
+  const { user, houses, updateUserData, setUserData } = useContext(MyContext);
 
   const navigate = useNavigate();
 
@@ -102,8 +102,8 @@ const Sidebar = () => {
       if (result.isConfirmed) {
         /* document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:01 GMT;"; */
         Cookies.remove("token");
-        console.log(Cookies.get("token", "TOKEN LOHOUT"));
-        updateUserData(null);
+        console.log(Cookies.get("token", "TOKEN LOGOUT"));
+        setUserData([]);
         navigate("/");
       }
     });
@@ -121,21 +121,21 @@ const Sidebar = () => {
           rute={pathname === `/private/major/home`}
         >
           <BiHomeAlt className="icon" />
-          <p>Home</p>
+          <p>Inicio</p>
         </StyledLink>
         <StyledLink
           to={`/private/major/houses/addhouse`}
           rute={pathname === ``}
         >
           <BiAddToQueue className="icon" />
-          <p>Add home</p>
+          <p>Agregar casa</p>
         </StyledLink>
         <StyledLink
           to={`/private/major/receipts/addreceipt`}
           rute={pathname === `/private/house-detail`}
         >
           <BiReceipt className="icon" />
-          <p>Add receipt</p>
+          <p>Agregar recibo</p>
         </StyledLink>
         <StyledLink
           onClick={() => setIsSessionOpen(!isSessionOpen)}
@@ -148,7 +148,7 @@ const Sidebar = () => {
               transition: "0.3s all",
             }}
           />
-          <p>Houses</p>
+          <p>Casas</p>
         </StyledLink>
         <motion.ul
           animate={{
@@ -172,13 +172,13 @@ const Sidebar = () => {
         </motion.ul>
         <StyledLink to={`/private/major/user/settings`} rute={pathname === ``}>
           <RiUserSettingsLine className="icon" />
-          <p>Profile Settings</p>
+          <p>Ajustes de usuario</p>
         </StyledLink>
       </div>
       <div className="bottom_sidebar">
         <div className="logout_button" onClick={handleLogout}>
           <BiLogOut className="icon" />
-          Logout
+          Cerrar sesión
         </div>
       </div>
     </SidebarLayout>

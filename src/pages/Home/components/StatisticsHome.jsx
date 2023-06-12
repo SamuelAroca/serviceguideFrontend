@@ -39,12 +39,12 @@ const StatisticsHome = ({ idReceipt, typeReceipt }) => {
 
   const getData = async () => {
     const data = await axios.get(
-      `${apiUrl}/individualReceipt/BAR/${typeReceipt.typeService.type}/${idReceipt.id}`
+      `${apiUrl}/individualReceipt/BAR/${typeReceipt?.typeService.type}/${idReceipt?.id}`
     );
     setLabel(data.data.label);
     setPrice(data.data.price);
     setAmount(data.data.amount);
-    setType(typeReceipt.typeService.type)
+    setType(typeReceipt.typeService.type);
   };
 
   useEffect(() => {
@@ -65,6 +65,7 @@ const StatisticsHome = ({ idReceipt, typeReceipt }) => {
         pointRadius: 5,
         pointBorderColor: "rgba(255, 99, 132)",
         pointBackgroundColor: "rgba(255, 99, 132)",
+        barThickness: 30,
       },
     ],
   };
@@ -73,7 +74,7 @@ const StatisticsHome = ({ idReceipt, typeReceipt }) => {
     labels: label,
     datasets: [
       {
-        label: `${type} Consumption`,
+        label: `Consumo de ${type}`,
         data: amount,
         tension: 0.5,
         fill: false,
@@ -82,6 +83,8 @@ const StatisticsHome = ({ idReceipt, typeReceipt }) => {
         pointRadius: 5,
         pointBorderColor: "rgba(255, 99, 132)",
         pointBackgroundColor: "rgba(255, 99, 132)",
+        barThickness: 30,
+
       },
     ],
   };
@@ -103,14 +106,14 @@ const StatisticsHome = ({ idReceipt, typeReceipt }) => {
   };
 
   return (
-    <>
-      <div
-        className={styles.div_main}
-      >
+    <div className={styles.charts_container}>
+      <div className={styles.div_main}>
         <Bar data={miData} options={misoptions} />
+      </div>
+      <div className={styles.div_main}>
         <Bar data={myAmount} options={misoptions} />
       </div>
-    </>
+    </div>
   );
 };
 

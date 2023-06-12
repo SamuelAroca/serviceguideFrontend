@@ -26,13 +26,13 @@ const Footer = () => {
         </li>
       </ul>
       <ul className={styles.menu}>
-        <li className={styles.li}><a className={styles.a} href="#home">Home</a></li>
-        <li className={styles.li}><a className={styles.a} href="#aboutUs">About</a></li>
-        <li className={styles.li}><a className={styles.a} href="#team">Team</a></li>
-        <li className={styles.li}><Link className={styles.a} to={"/register"}>Register</Link></li>
-        <li className={styles.li}><Link className={styles.a} to={"/login"}>Login</Link></li>
+        <li className={styles.li}><a className={styles.a} href="#home">Inicio</a></li>
+        <li className={styles.li}><a className={styles.a} href="#aboutUs">Nosotros</a></li>
+        <li className={styles.li}><a className={styles.a} href="#team">Equipo</a></li>
+        <li className={styles.li}><Link className={styles.a} to={"/register"}>Registro</Link></li>
+        <li className={styles.li}><Link className={styles.a} to={"/login"}>Iniciar Sesión</Link></li>
       </ul>
-      <p className={styles.p}>©2023 ServiceGuide | All Rights Reserved</p>
+      <p className={styles.p}>©2023 ServiceGuide | Todos los derechos reservados</p>
       <div className={styles.line} />
     </div>
   );

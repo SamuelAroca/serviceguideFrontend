@@ -23,7 +23,7 @@ const UserUpdateForm = () => {
     password: "",
   });
 
-  const { updateUserData } = useContext(MyContext);
+  const { updateUserData, userData } = useContext(MyContext);
 
   const handleChange = (e) => {
     const { value, name } = e.target;
@@ -32,13 +32,12 @@ const UserUpdateForm = () => {
 
   const loadUser = async () => {
     try {
-      const accessToken = getToken();
-      const userData = await axios.get(`${url}/findById/${accessToken}`);
+      const dataUser = await axios.get(`${url}/loadUser/${userData.id}`);
       setUser({
-        email: userData.data.email,
-        firstName: userData.data.firstName,
-        id: userData.data.id,
-        lastName: userData.data.lastName,
+        email: dataUser.data.email,
+        firstName: dataUser.data.firstName,
+        id: dataUser.data.id,
+        lastName: dataUser.data.lastName,
       });
     } catch (error) {
       console.log(error);
@@ -52,8 +51,7 @@ const UserUpdateForm = () => {
 
   const handleSubmit = async () => {
     try {
-      const accessToken = getToken();
-      const updatedUser = await axios.put(`${url}/update/${accessToken}`, user);
+      const updatedUser = await axios.put(`${url}/update/${userData.id}`, user);
       setMessage(updatedUser.data);
       if (updatedUser.status === 200) {
         document.cookie = `token=${updatedUser.data.token}; max-age=${
@@ -79,8 +77,7 @@ const UserUpdateForm = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          const accessToken = getToken();
-          await axios.delete(`${url}/delete/${accessToken}`);
+          await axios.delete(`${url}/delete/${userData.id}`);
           notify();
           Cookies.remove("token")
           navigate("/")

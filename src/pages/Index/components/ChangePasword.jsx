@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styles from "../styles/ChangePasword.module.css";
 import { RiWaterFlashFill, RiEyeLine } from "react-icons/ri";
 import CarouselDemo from "../../../components/CarouselDemo";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import img1 from "../../../assets/agua-potable.webp";
 import img2 from "../../../assets/alcantarillado.webp";
@@ -11,6 +11,8 @@ import img4 from "../../../assets/gas-natural.webp";
 import axios from "axios";
 import { Alert } from "@mui/material";
 import Swal from "sweetalert2";
+import { ChangePasswordLayout } from "../styled-components/changepassword-layout";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const ChangePasword = () => {
   let params = useParams();
@@ -60,7 +62,7 @@ const ChangePasword = () => {
         if (response.status == 200) {
           Swal.fire({
             title: message,
-            text: "The password has been successfully updated",
+            text: "La contraseña ha sido actualizada con éxito",
             icon: "success",
             confirmButtonText: "OK",
           }).then((result) => {
@@ -99,85 +101,72 @@ const ChangePasword = () => {
 
   return (
     <div className={styles.components}>
-      <div className={styles.div_home_button}>
-        <button
-          className={styles.home_button}
-          onClick={() => navigate("/login")}
-        >
-          Login
-        </button>
-      </div>
-      <div className={styles.container}>
-        <div className={styles.container_login}>
-          <form className={styles.container_form} onSubmit={changePassword}>
-          <div className={styles.container_logo}>
-              <h2 className={styles.logo_title}>
-                <RiWaterFlashFill className={styles.logo} />
-                ServiceGuide
-              </h2>
-            </div>
-            <h2 className={styles.title_sign}>Change Password</h2>
-            <div className={styles.container_label}>
-              <div className={styles.inputs_gap}>
-                <div>
-                  <TextField
-                    label="New Password"
-                    variant="outlined"
-                    type={showPassword ? "text" : "password"}
-                    placeholder="Type your new password"
-                    className={styles.inputsMaterial}
-                    fullWidth
-                    name="password"
-                    value={password.password}
-                    onChange={handleInputChange}
-                  />
-                  <RiEyeLine
-                    className={styles.icon_password}
-                    onClick={handleShow}
-                  />
-                  {errors.password && (
-                    <Alert severity="warning"> {errors.password} </Alert>
-                  )}
-                </div>
-                <div className={styles.confirmPassword}>
-                  <TextField
-                    label="Confirm Password"
-                    variant="outlined"
-                    type={showConfirmPassword ? "text" : "password"}
-                    placeholder="Confirm your new password"
-                    className={styles.inputsMaterial}
-                    fullWidth
-                    name="confirmPassword"
-                    value={password.confirmPassword}
-                    onChange={handleInputChange}
-                  />
-                  <RiEyeLine
-                    className={styles.icon_password2}
-                    onClick={handleShowConfirm}
-                  />
-                  {errors.confirmPassword && (
-                    <Alert severity="warning"> {errors.confirmPassword} </Alert>
-                  )}
-                </div>
+      <ChangePasswordLayout>
+        <div className="form_container">
+          <form onSubmit={changePassword}>
+            <h1>Cambiar contraseña</h1>
+            <p className="subtitle">
+              Introduce una nueva contraseña
+            </p>
+              <div className={styles.confirmPassword}>
+                <TextField
+                  label="Nueva cotraseña"
+                  variant="outlined"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Ingresa una nueva contraseña"
+                  className="inputsMaterial"
+                  fullWidth
+                  name="password"
+                  value={password.password}
+                  onChange={handleInputChange}
+                />
+                <RiEyeLine
+                  className={styles.icon_password}
+                  onClick={handleShow}
+                />
+                {errors.password && (
+                  <Alert severity="warning"> {errors.password} </Alert>
+                )}
               </div>
-              <div className={styles.div_button_login}>
-                <button
-                  className={styles.login_button}
-                  onClick={changePassword}
-                >
-                  Change Password
-                  <div className={styles.arrow_wrapper}>
-                    <div className={styles.arrow}></div>
-                  </div>
+              <div className={styles.confirmPassword}>
+                <TextField
+                  label="Confirmar Contraseña"
+                  variant="outlined"
+                  type={showConfirmPassword ? "text" : "password"}
+                  placeholder="Confirma tu contraseña"
+                  className="inputsMaterial"
+                  fullWidth
+                  name="confirmPassword"
+                  value={password.confirmPassword}
+                  onChange={handleInputChange}
+                />
+                <RiEyeLine
+                  className={styles.icon_password2}
+                  onClick={handleShowConfirm}
+                />
+                {errors.confirmPassword && (
+                  <Alert severity="warning"> {errors.confirmPassword} </Alert>
+                )}
+              </div>
+              <div>
+                <button onClick={changePassword}>
+                  Cambiar contraseña
                 </button>
               </div>
-            </div>
+              
+              <Link to={"/login/signIn"}>
+                <span className="back">
+                  <ArrowBackIcon />
+                  <p>Volver para iniciar sesión</p>
+                </span>
+              </Link>
+
           </form>
         </div>
-        <div className={styles.container_image}>
+        <div className={styles.carouselDemo}>
           <CarouselDemo img1={img1} img2={img2} img3={img3} img4={img4} />
         </div>
-      </div>
+      </ChangePasswordLayout>
     </div>
   );
 };

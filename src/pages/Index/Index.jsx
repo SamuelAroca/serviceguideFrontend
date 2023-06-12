@@ -13,10 +13,10 @@ const Index = () => {
         <header className={styles.header}>
           <div className={styles.container_title}>
             <h1 className={styles.h1}>
-              Management of consumption of <br /> public services.
+              Gestión del consumo de <br /> servicios públicos.
             </h1>
             <h2 className={styles.subtitle_header}>
-              Responsible production and consumption
+              Producción y consumo responsable
             </h2>
           </div>
         </header>

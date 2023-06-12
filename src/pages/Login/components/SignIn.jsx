@@ -15,6 +15,8 @@ import { getUserDataService } from "../../../services/get-user-data.service";
 import { MyContext } from "../../../context/UserContext";
 import Cookies from "js-cookie";
 import Swal from "sweetalert2";
+import { SignInLayout } from "../styled-components/singin-layout.styled";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const SignIn = () => {
   // Logica para obtener los datos del usuario
@@ -56,7 +58,7 @@ const SignIn = () => {
     if (!email.email.trim()) {
       errors.email = "No puede estar vacio";
     } else if (!regexEmail.test(email.email)) {
-      errors.email = "You must have a valid email format";
+      errors.email = "Debe tener un formato de correo electrónico válido";
     }
 
     if (!email.password.trim()) {
@@ -75,7 +77,7 @@ const SignIn = () => {
 
         if (response.status === 200) {
           Cookies.set("token", response.data.token);
-           document.cookie = `token=${response.data.token}; max-age=${
+          document.cookie = `token=${response.data.token}; max-age=${
             3600 * 5
           }; path=/; samesite=strict`;
           getUserData();
@@ -89,10 +91,9 @@ const SignIn = () => {
           icon: "error",
           title: "Oops...",
           text: message,
-          footer: '<a href="/forgot-password">Forgot password?</a>',
+          footer: '<a href="/forgot-password">¿Has olvidado tu contraseña?</a>',
         });
       }
-
       setEmail({
         email: "",
         password: "",
@@ -110,82 +111,91 @@ const SignIn = () => {
     }));
   }
 
+  const inputProps = {
+    style: {
+      borderRadius: "4px", // Cambia el valor según el border radius deseado
+    },
+  };
+
   return (
     <div className={styles.components}>
-      <div className={styles.div_home_button}>
-        <button className={styles.home_button} onClick={home}>
-          Atrás
-        </button>
-      </div>
-      <div className={styles.container}>
-        <div className={styles.container_login}>
-          <form className={styles.container_form} onSubmit={login}>
-            <div className={styles.container_logo}>
-              <h2 className={styles.logo_title}>
-                <RiWaterFlashFill className={styles.logo} />
-                ServiceGuide
-              </h2>
+      <SignInLayout>
+        <div className="form_container">
+          <form onSubmit={login}>
+            <h1>¡Bienvenido de nuevo!</h1>
+            <p className="subtitle">
+              Empieza a gestionar tus finanzas más rápido y mejor
+            </p>
+            <div>
+              <TextField
+                label="Correo electrónico"
+                variant="outlined"
+                placeholder="Digíta tu correo"
+                className="inputsMaterial"
+                fullWidth
+                size="small"
+                name="email"
+                value={email.email}
+                onChange={handleInputChange}
+                InputProps={inputProps}
+                /* style={{ borderRadius: "2rem" }} */
+              />
+              {errors.email && <Alert severity="warning"> {errors.email} </Alert>}
             </div>
-            <h2 className={styles.title_sign}>Sign in</h2>
-            <div className={styles.container_label}>
-              <div className={styles.inputs_gap}>
-                <div>
-                  <TextField
-                    label="Email"
-                    variant="outlined"
-                    placeholder="Type your email"
-                    className={styles.inputsMaterial}
-                    fullWidth
-                    size="small"
-                    name="email"
-                    value={email.email}
-                    onChange={handleInputChange}
-                  />
-                  {errors.email && (
-                    <Alert severity="warning"> {errors.email} </Alert>
-                  )}
-                </div>
-                <div className={styles.password_container}>
-                  <TextField
-                    label="Password"
-                    variant="outlined"
-                    type={showPassword ? "text" : "password"}
-                    placeholder="Type your password"
-                    fullWidth
-                    size="small"
-                    className={styles.inputsMaterial}
-                    name="password"
-                    value={email.password}
-                    onChange={handleInputChange}
-                  />
-                  {errors.password && (
-                    <Alert severity="warning"> {errors.password} </Alert>
-                  )}
-                  <RiEyeLine
-                    className={styles.icon_password}
-                    onClick={handleShow}
-                  />
-                </div>
-              </div>
-              <div className={styles.links}>
-                <Link to={"/login/forgot-password"}>Forgot password?</Link>
-                <Link to={"/login/signUp"}>Create new account</Link>
-              </div>
-              <div className={styles.div_button_login}>
-                <button className={styles.login_button} onClick={login}>
-                  Sign in
-                  <div className={styles.arrow_wrapper}>
-                    <div className={styles.arrow}></div>
-                  </div>
-                </button>
-              </div>
+
+            <div className={styles.password_container}>
+              <TextField
+                label="Contraseña"
+                variant="outlined"
+                type={showPassword ? "text" : "password"}
+                placeholder="Digíta tu contraseña"
+                fullWidth
+                size="small"
+                className="inputsMaterial"
+                name="password"
+                value={email.password}
+                InputProps={inputProps}
+                onChange={handleInputChange}
+              />
+              {errors.password && (
+                <Alert severity="warning"> {errors.password} </Alert>
+              )}
+              <RiEyeLine className={styles.icon_password} onClick={handleShow} />
             </div>
+
+            <Link className="forgot_password" to={"/login/forgot-password"}>
+              ¿Olvidaste tu contraseña?
+            </Link>
+
+            <div>
+              <button onClick={login}>
+                Iniciar sesión
+                <div className={styles.arrow_wrapper}>
+                  <div className={styles.arrow}></div>
+                </div>
+              </button>
+            </div>
+
+            <span className="signup" to={"/login/signUp"}>
+              <p>¿Aún no tienes una cuenta?</p>
+              <Link className="signup" to={"/login/signUp"}>
+                Registrate
+              </Link>
+            </span>
+
+            <Link to={"/"}>
+              <span className="back">
+                <ArrowBackIcon />
+                <p>Volver al inicio</p>
+              </span>
+            </Link>
           </form>
         </div>
-        <div className={styles.container_image}>
+
+        <div className={styles.carouselDemo}>
           <CarouselDemo img1={img1} img2={img2} img3={img3} img4={img4} />
         </div>
-      </div>
+      </SignInLayout>
     </div>
   );
 };

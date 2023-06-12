@@ -12,19 +12,20 @@ import SelectHouse from "./SelectHouse";
 import { MyContext } from "../../../context/UserContext";
 import { getUserHousesService } from "../../../services/get-user-houses.service";
 import { Toaster, toast } from "react-hot-toast";
+import Swal from "sweetalert2";
 
 const ReceiptForm = ({ userId }) => {
   const apiUrl = import.meta.env.VITE_API_RECEIPT;
   const apiHouse = import.meta.env.VITE_API_HOUSE;
 
   const [receiptType, setReceiptType] = useState("water");
-  const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState([]);
   const [selectedHouse, setSelectedHouse] = useState(null);
   const [allHouses, setAllHouses] = useState([]);
   const navigate = useNavigate();
 
-  const notify = () => toast.success("House update successfully");
+  const { setHouses, userData } = useContext(MyContext);
+  const notify = () => toast.success("Recibo agregado correctamente");
 
   useEffect(() => {
     initAxiosInterceptor();
@@ -80,7 +81,7 @@ const ReceiptForm = ({ userId }) => {
     if (getToken()) {
       let accesToken = getToken();
       const data = await axios.get(
-        `${apiHouse}/getHouseName/${accesToken}`
+        `${apiHouse}/getHouseName/${userData?.id}`
       );
       try {
         setAllHouses(data.data);
@@ -92,11 +93,9 @@ const ReceiptForm = ({ userId }) => {
     }
   };
 
-  const { setHouses } = useContext(MyContext);
-
   const getUserHouses = async () => {
     try {
-      const data = await getUserHousesService();
+      const data = await getUserHousesService(userData.id);
       setHouses(data);
     } catch (err) {
       console.log(err.message);
@@ -139,8 +138,6 @@ const ReceiptForm = ({ userId }) => {
       const err = onValidate(receipt);
       setErrors(err);
   
-      setIsLoading(true);
-  
       const updatedReceipt ={
         ...receipt,
         typeService: {
@@ -149,16 +146,22 @@ const ReceiptForm = ({ userId }) => {
       };
       
       if (Object.keys(err).length === 0) {
-        let accesToken = getToken();
         try {
           const response = await axios.post(
-            `${apiUrl}/add/${accesToken}`,
+            `${apiUrl}/add/${userData.id}`,
             updatedReceipt
           );
+          getUserHouses(setHouses, userData?.id);
           notify();
-          getUserHouses();
         } catch (error) {
-          console.log(error.message);
+          let response = error;
+          console.log(response.response.data.message);
+          let message = response.response.data.message;
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: message
+          });
         }
     
         setReceipt({
@@ -173,10 +176,8 @@ const ReceiptForm = ({ userId }) => {
             name: "",
           }
         });
-        setIsLoading(false);
       } else {
         setErrors(err);
-        setIsLoading(false);
       }
     } else {
       sessionExpired();
@@ -197,14 +198,14 @@ const ReceiptForm = ({ userId }) => {
       <div className="buttons-container">
         <button onClick={() => setReceiptType("water")} className="type-button">
           <BsWater />
-          Water
+          Agua
         </button>
         <button
           onClick={() => setReceiptType("energy")}
           className="type-button"
         >
           <BsFillLightbulbFill />
-          Energy
+          Energia
         </button>
         <button onClick={() => setReceiptType("gas")} className="type-button">
           <BsFillCloudFill />
@@ -215,7 +216,7 @@ const ReceiptForm = ({ userId }) => {
           className="type-button"
         >
           <FaToilet />
-          Sewerage
+          Alcantarillado
         </button>
       </div>
 
@@ -225,12 +226,12 @@ const ReceiptForm = ({ userId }) => {
             <Tooltip
               disableFocusListener
               disableTouchListener
-              title="Add title"
+              title="Agregar nombre"
               placement="bottom-start"
             >
               <TextField
                 fullWidth
-                label="Title"
+                label="Nombre"
                 name="receiptName"
                 type="text"
                 value={receipt.receiptName}
@@ -245,12 +246,12 @@ const ReceiptForm = ({ userId }) => {
             <Tooltip
               disableFocusListener
               disableTouchListener
-              title="Add Price"
+              title="Agregar precio"
               placement="bottom-start"
             >
               <TextField
                 fullWidth
-                label="Price"
+                label="Precio"
                 name="price"
                 type="number"
                 step="0.01"
@@ -264,12 +265,12 @@ const ReceiptForm = ({ userId }) => {
             <Tooltip
               disableFocusListener
               disableTouchListener
-              title="Add Quantity"
+              title="Agregar cantidad"
               placement="bottom-start"
             >
               <TextField
                 fullWidth
-                label="Quantity"
+                label="Cantidad"
                 name="amount"
                 type="number"
                 step="0.01"
@@ -286,12 +287,11 @@ const ReceiptForm = ({ userId }) => {
               <Tooltip
                 disableFocusListener
                 disableTouchListener
-                title="Add Date"
+                title="Agregar fecha"
                 placement="bottom-start"
               >
                 <TextField
                   fullWidth
-                  label=""
                   name="date"
                   type="date"
                   value={receipt.date}
@@ -316,10 +316,9 @@ const ReceiptForm = ({ userId }) => {
               type="submit"
               variant="contained"
               color="primary"
-              disabled={isLoading}
               style={{width: "20%"}}
             >
-              ADD Receipt
+              Guardar Recibo
             </Button>
           </Grid>
         </Grid>

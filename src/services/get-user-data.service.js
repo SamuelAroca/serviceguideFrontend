@@ -8,7 +8,6 @@ export const getUserDataService = async () => {
   const url = import.meta.env.VITE_API_AUTH;
 
   const accessToken = getToken();
-  console.log(accessToken, "TOKENNNN GETUSERDATA");
 
   try {
     const { data: user } = await axios.get(`${url}/myName/${accessToken}`, {
@@ -21,3 +20,15 @@ export const getUserDataService = async () => {
     console.log(error);
   }
 };
+
+export const getUserInformation = async () => {
+  const url = import.meta.env.VITE_API_USER;
+  const accessToken = getToken();
+
+  try {
+    const { data: user } = await axios.get(`${url}/findById/${accessToken}`)
+    return user;
+  } catch (error) {
+    console.log(error)
+  }
+}
