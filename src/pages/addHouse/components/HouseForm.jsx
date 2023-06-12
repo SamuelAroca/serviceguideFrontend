@@ -10,6 +10,7 @@ import axios from "axios";
 import { MyContext } from "../../../context/UserContext";
 import styles from "../styles/AddHouse.module.css";
 import { getUserHouses } from "../../../services/get-user-houses.service";
+import Swal from "sweetalert2";
 import { Toaster, toast } from "react-hot-toast";
 
 const HouseForm = () => {
