@@ -79,7 +79,6 @@ export const SignInLayout = styled.div`
     background-color: ${GrayPaleteColors.C100};
   }
 
-
   a {
     color: ${BluePaleteColors.C500};
     text-decoration: none;

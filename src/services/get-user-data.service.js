@@ -1,13 +1,10 @@
 import axios from "axios";
 import Cookies from "js-cookie";
-import { getToken, initAxiosInterceptor } from "../AxiosHelper";
-
-initAxiosInterceptor();
 
 export const getUserDataService = async () => {
   const url = import.meta.env.VITE_API_AUTH;
 
-  const accessToken = getToken();
+  const accessToken = Cookies.get("token");
 
   try {
     const { data: user } = await axios.get(`${url}/myName/${accessToken}`, {
@@ -23,12 +20,16 @@ export const getUserDataService = async () => {
 
 export const getUserInformation = async () => {
   const url = import.meta.env.VITE_API_USER;
-  const accessToken = getToken();
+  const accessToken = Cookies.get("token");
 
   try {
-    const { data: user } = await axios.get(`${url}/findById/${accessToken}`)
+    const { data: user } = await axios.get(`${url}/findById/${accessToken}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
     return user;
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};

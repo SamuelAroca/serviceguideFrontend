@@ -12,7 +12,7 @@ import axios from "axios";
 import { Alert } from "@mui/material";
 import Swal from "sweetalert2";
 import { ChangePasswordLayout } from "../styled-components/changepassword-layout";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const ChangePasword = () => {
   let params = useParams();
@@ -105,62 +105,57 @@ const ChangePasword = () => {
         <div className="form_container">
           <form onSubmit={changePassword}>
             <h1>Cambiar contraseña</h1>
-            <p className="subtitle">
-              Introduce una nueva contraseña
-            </p>
-              <div className={styles.confirmPassword}>
-                <TextField
-                  label="Nueva cotraseña"
-                  variant="outlined"
-                  type={showPassword ? "text" : "password"}
-                  placeholder="Ingresa una nueva contraseña"
-                  className="inputsMaterial"
-                  fullWidth
-                  name="password"
-                  value={password.password}
-                  onChange={handleInputChange}
-                />
-                <RiEyeLine
-                  className={styles.icon_password}
-                  onClick={handleShow}
-                />
-                {errors.password && (
-                  <Alert severity="warning"> {errors.password} </Alert>
-                )}
-              </div>
-              <div className={styles.confirmPassword}>
-                <TextField
-                  label="Confirmar Contraseña"
-                  variant="outlined"
-                  type={showConfirmPassword ? "text" : "password"}
-                  placeholder="Confirma tu contraseña"
-                  className="inputsMaterial"
-                  fullWidth
-                  name="confirmPassword"
-                  value={password.confirmPassword}
-                  onChange={handleInputChange}
-                />
-                <RiEyeLine
-                  className={styles.icon_password2}
-                  onClick={handleShowConfirm}
-                />
-                {errors.confirmPassword && (
-                  <Alert severity="warning"> {errors.confirmPassword} </Alert>
-                )}
-              </div>
-              <div>
-                <button onClick={changePassword}>
-                  Cambiar contraseña
-                </button>
-              </div>
-              
-              <Link to={"/login/signIn"}>
-                <span className="back">
-                  <ArrowBackIcon />
-                  <p>Volver para iniciar sesión</p>
-                </span>
-              </Link>
+            <p className="subtitle">Introduce una nueva contraseña</p>
+            <div className={styles.confirmPassword}>
+              <TextField
+                label="Nueva cotraseña"
+                variant="outlined"
+                type={showPassword ? "text" : "password"}
+                placeholder="Ingresa una nueva contraseña"
+                className="inputsMaterial"
+                fullWidth
+                name="password"
+                value={password.password}
+                onChange={handleInputChange}
+              />
+              <RiEyeLine
+                className={styles.icon_password}
+                onClick={handleShow}
+              />
+              {errors.password && (
+                <Alert severity="warning"> {errors.password} </Alert>
+              )}
+            </div>
+            <div className={styles.confirmPassword}>
+              <TextField
+                label="Confirmar Contraseña"
+                variant="outlined"
+                type={showConfirmPassword ? "text" : "password"}
+                placeholder="Confirma tu contraseña"
+                className="inputsMaterial"
+                fullWidth
+                name="confirmPassword"
+                value={password.confirmPassword}
+                onChange={handleInputChange}
+              />
+              <RiEyeLine
+                className={styles.icon_password2}
+                onClick={handleShowConfirm}
+              />
+              {errors.confirmPassword && (
+                <Alert severity="warning"> {errors.confirmPassword} </Alert>
+              )}
+            </div>
+            <div>
+              <button onClick={changePassword}>Cambiar contraseña</button>
+            </div>
 
+            <Link to={"/login/signIn"}>
+              <span className="back">
+                <ArrowBackIcon />
+                <p>Volver para iniciar sesión</p>
+              </span>
+            </Link>
           </form>
         </div>
         <div className={styles.carouselDemo}>

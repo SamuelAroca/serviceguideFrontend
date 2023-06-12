@@ -1,47 +1,47 @@
-.page_404{
+.page_404 {
   padding: 40px 0;
   background: #fff;
-  font-family: 'Arvo', serif;
+  font-family: "Arvo", serif;
   display: flex;
   justify-content: center;
 }
 
-.page_404 .image{
+.page_404 .image {
   width: 100%;
 }
 
-.four_zero_four_bg{
+.four_zero_four_bg {
   background-position: center;
   text-align: center;
 }
-.image{
+.image {
   height: 300px;
   background-position: center;
   height: 100;
   background-image: url();
 }
 
-.four_zero_four_bg .text_center{
+.four_zero_four_bg .text_center {
   font-size: 80px;
   margin-top: 60px;
 }
 
-.four_zero_four_bg{
+.four_zero_four_bg {
   font-size: 80px;
 }
 
-.link_404{
-  color: #fff!important;
+.link_404 {
+  color: #fff !important;
   padding: 10px 20px;
   background: #39ac31;
   margin: 20px 0;
   display: inline-block;
 }
 
-.contant_box_404{
+.contant_box_404 {
   margin-top: -50px;
 }
 
-.messagge{
+.messagge {
   text-align: center;
 }

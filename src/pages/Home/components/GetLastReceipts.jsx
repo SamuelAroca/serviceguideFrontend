@@ -1,5 +1,5 @@
 import moment from "moment-timezone";
-import styles from "../Styles/GetLastReceipt.module.css"
+import styles from "../Styles/GetLastReceipt.module.css";
 import { ReceiptCardContainer } from "../Styles/card-container.styled";
 import { useState } from "react";
 
@@ -24,8 +24,12 @@ const GetLastReceipts = ({ receipt }) => {
       initial={{ height: "12rem", backgroundColor: "white" }}
     >
       <p className={styles.receipt_name}>{receipt.receiptName}</p>
-      <p className={styles.receipt_data}>Precio: {formatPrice(receipt.price)}</p>
-      <p className={styles.receipt_data}>Cantidad: {formatPrice(receipt.amount)}</p>
+      <p className={styles.receipt_data}>
+        Precio: {formatPrice(receipt.price)}
+      </p>
+      <p className={styles.receipt_data}>
+        Cantidad: {formatPrice(receipt.amount)}
+      </p>
     </ReceiptCardContainer>
   );
 };

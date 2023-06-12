@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styles from "../Styles/StatisticHome.module.css";
-import { initAxiosInterceptor } from "../../../AxiosHelper";
 import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -16,6 +15,7 @@ import {
   Filler,
 } from "chart.js";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 ChartJS.register(
   ArcElement,
@@ -36,10 +36,16 @@ const StatisticsHome = ({ idReceipt, typeReceipt }) => {
   const [price, setPrice] = useState([]);
   const [amount, setAmount] = useState([]);
   const [type, setType] = useState("");
+  const accessToken = Cookies.get("token");
 
   const getData = async () => {
     const data = await axios.get(
-      `${apiUrl}/individualReceipt/BAR/${typeReceipt?.typeService.type}/${idReceipt?.id}`
+      `${apiUrl}/individualReceipt/BAR/${typeReceipt?.typeService.type}/${idReceipt?.id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
     );
     setLabel(data.data.label);
     setPrice(data.data.price);
@@ -49,7 +55,6 @@ const StatisticsHome = ({ idReceipt, typeReceipt }) => {
 
   useEffect(() => {
     getData();
-    initAxiosInterceptor();
   }, [idReceipt]);
 
   const miData = {
@@ -84,7 +89,6 @@ const StatisticsHome = ({ idReceipt, typeReceipt }) => {
         pointBorderColor: "rgba(255, 99, 132)",
         pointBackgroundColor: "rgba(255, 99, 132)",
         barThickness: 30,
-
       },
     ],
   };

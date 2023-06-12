@@ -1,29 +1,29 @@
-.div_main{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    height: 80vh;
-    margin: 2rem;
-    text-align: center;;
-  }
-  
-  .container_main {
-    display: grid;
-    justify-content: center;
-    text-align: center;
-  }
-  
-  .inputs_gap {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    text-align: center;
-  }
-  
-  .div_button {
-    display: flex;
-    justify-content: flex-end;
-    text-align: center;
-  }
+.div_main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 80vh;
+  margin: 2rem;
+  text-align: center;
+}
+
+.container_main {
+  display: grid;
+  justify-content: center;
+  text-align: center;
+}
+
+.inputs_gap {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  text-align: center;
+}
+
+.div_button {
+  display: flex;
+  justify-content: flex-end;
+  text-align: center;
+}

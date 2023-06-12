@@ -58,11 +58,11 @@ const LineChart = ({ data }) => {
         chartRef.current.chartInstance.resize();
       }
     });
-  
+
     if (chartRef.current && chartRef.current.container) {
       resizeObserver.observe(chartRef.current.container);
     }
-  
+
     return () => {
       resizeObserver.disconnect();
     };

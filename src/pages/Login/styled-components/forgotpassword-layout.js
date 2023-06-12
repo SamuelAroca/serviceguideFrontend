@@ -10,7 +10,7 @@ export const ForgotPasswordLayout = styled.div`
   width: 80vw;
   background-color: #fff;
   box-sizing: border-box;
-  
+
   .form_container {
     display: flex;
     flex-direction: column;
