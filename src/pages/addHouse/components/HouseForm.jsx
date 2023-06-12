@@ -11,7 +11,6 @@ import { getUserHouses } from "../../../services/get-user-houses.service";
 import Swal from "sweetalert2";
 import { Toaster, toast } from "react-hot-toast";
 import Cookies from "js-cookie";
-import Swal from "sweetalert2";
 
 const HouseForm = () => {
   const apiUrl = import.meta.env.VITE_API_HOUSE;
