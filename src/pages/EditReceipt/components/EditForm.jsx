@@ -7,10 +7,9 @@ import { BsWater, BsFillLightbulbFill, BsFillCloudFill } from "react-icons/bs";
 import { FaToilet } from "react-icons/fa";
 import { Tooltip } from "@mui/material";
 import { Alert } from "@mui/material";
-import axios from "axios"
+import axios from "axios";
 import SelectHouse from "../../addReceipt/Components/SelectHouse";
-import Loader from "../../../components/Loader"
-
+import Loader from "../../../components/Loader";
 
 const EditForm = ({ userId }) => {
   const apiUrl = import.meta.env.VITE_API_RECEIPT;
@@ -39,12 +38,12 @@ const EditForm = ({ userId }) => {
     },
     house: {
       name: "",
-    }
+    },
   });
 
-  const handleSelect = (name) =>{
-    setReceipt({...receipt, house: {name: name} })
-  }
+  const handleSelect = (name) => {
+    setReceipt({ ...receipt, house: { name: name } });
+  };
 
   const tokenExist = () => {
     if (!getToken()) {
@@ -70,15 +69,13 @@ const EditForm = ({ userId }) => {
 
   const handleHouseChange = (event, value) => {
     setSelectedHouse(value);
-    setReceipt({ ...receipt, house: value})
+    setReceipt({ ...receipt, house: value });
   };
 
   const getHouses = async () => {
     if (getToken()) {
       let accesToken = getToken();
-      const data = await axios.get(
-        `${apiHouse}/getHouseName/${accesToken}`
-      );
+      const data = await axios.get(`${apiHouse}/getHouseName/${accesToken}`);
       try {
         setAllHouses(data.data);
       } catch (err) {
@@ -111,7 +108,8 @@ const EditForm = ({ userId }) => {
     if (!receipt.amount.trim()) {
       errors.amount = "Debe existir una cantidad del recibo.";
     } else if (!regexQuantity.test(receipt.amount)) {
-      errors.amount = "La 'Cantidad' solo debe contener números y la parte decimal maximo 3 números";
+      errors.amount =
+        "La 'Cantidad' solo debe contener números y la parte decimal maximo 3 números";
     }
 
     return errors;
@@ -121,19 +119,18 @@ const EditForm = ({ userId }) => {
     e.preventDefault();
 
     if (getToken()) {
-      
       const err = onValidate(receipt);
       setErrors(err);
-  
+
       setIsLoading(true);
-  
-      const updatedReceipt ={
+
+      const updatedReceipt = {
         ...receipt,
         typeService: {
           type: receiptType,
         },
       };
-      
+
       if (Object.keys(err).length === 0) {
         let accesToken = getToken();
         try {
@@ -144,7 +141,7 @@ const EditForm = ({ userId }) => {
         } catch (error) {
           console.log(error.message);
         }
-    
+
         // Se setea el recibo a vacio para que se limpie el formulario
         setReceipt({
           receiptName: "",
@@ -156,9 +153,9 @@ const EditForm = ({ userId }) => {
           },
           house: {
             name: "",
-          }
+          },
         });
-  
+
         setIsLoading(false);
       } else {
         setErrors(err);
@@ -267,7 +264,7 @@ const EditForm = ({ userId }) => {
               <Alert severity="warning"> {errors.amount} </Alert>
             )}
           </Grid>
-          <Grid item xs style={{display: "flex", gap: "10px"}}>
+          <Grid item xs style={{ display: "flex", gap: "10px" }}>
             <Grid item xs={6}>
               <Tooltip
                 disableFocusListener

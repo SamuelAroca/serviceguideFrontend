@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { FormLayout } from "../../addReceipt/Components/styled-components/form-layout.styled";
 import { Button, Grid, TextField, Tooltip } from "@mui/material";
-import { getToken, initAxiosInterceptor } from "../../../AxiosHelper";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { MyContext } from "../../../context/UserContext";
@@ -15,6 +14,7 @@ const UserUpdateForm = () => {
   const [message, setMessage] = useState("");
   const notify = () => toast.success("Usuario actualizado correctamente");
   const navigate = useNavigate();
+  const accessToken = Cookies.get("token");
   const [user, setUser] = useState({
     email: "",
     firstName: "",
@@ -32,7 +32,11 @@ const UserUpdateForm = () => {
 
   const loadUser = async () => {
     try {
-      const dataUser = await axios.get(`${url}/loadUser/${userData.id}`);
+      const dataUser = await axios.get(`${url}/loadUser/${userData.id}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
       setUser({
         email: dataUser.data.email,
         firstName: dataUser.data.firstName,
@@ -45,22 +49,27 @@ const UserUpdateForm = () => {
   };
 
   useEffect(() => {
-    initAxiosInterceptor();
     loadUser();
   }, []);
 
   const handleSubmit = async () => {
     try {
-      const updatedUser = await axios.put(`${url}/update/${userData.id}`, user);
+      const updatedUser = await axios.put(
+        `${url}/update/${userData.id}`,
+        user,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      Swal.fire("¡Usuario actualizzado correctamente!", "", "success");
       setMessage(updatedUser.data);
       if (updatedUser.status === 200) {
-        document.cookie = `token=${updatedUser.data.token}; max-age=${
-          3600 * 5
-        }; path=/; samesite=strict`;
+        Cookies.set("token", updatedUser.data.token);
         notify();
         updateUserData(`${user.firstName} ${user.lastName}`);
       }
-      console.log(message.message);
     } catch (error) {
       console.log(error);
     }
@@ -77,10 +86,14 @@ const UserUpdateForm = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`${url}/delete/${userData.id}`);
+          await axios.delete(`${url}/delete/${userData.id}`, {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          });
           notify();
-          Cookies.remove("token")
-          navigate("/")
+          Cookies.remove("token");
+          navigate("/");
         } catch (error) {
           console.log(error.message);
         }
@@ -162,7 +175,15 @@ const UserUpdateForm = () => {
             </Tooltip>
           </Grid>
         </Grid>
-        <Grid sx={{ display: "flex", justifyContent: "space-between", marginTop: "1rem" }} item xs={12}>
+        <Grid
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            marginTop: "1rem",
+          }}
+          item
+          xs={12}
+        >
           <Button variant="contained" color="primary" onClick={handleSubmit}>
             Actualizar
           </Button>

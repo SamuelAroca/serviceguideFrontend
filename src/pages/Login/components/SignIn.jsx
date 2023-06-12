@@ -16,7 +16,7 @@ import { MyContext } from "../../../context/UserContext";
 import Cookies from "js-cookie";
 import Swal from "sweetalert2";
 import { SignInLayout } from "../styled-components/singin-layout.styled";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const SignIn = () => {
   // Logica para obtener los datos del usuario
@@ -27,7 +27,7 @@ const SignIn = () => {
       const data = await getUserDataService();
       updateUserData(data);
     } catch (err) {
-      console.log(err.message);
+      console.log(err);
     }
   };
 
@@ -46,10 +46,6 @@ const SignIn = () => {
   const navigate = useNavigate();
 
   const url = import.meta.env.VITE_API_AUTH;
-
-  const home = () => {
-    navigate("/");
-  };
 
   const onValidate = () => {
     let errors = {};
@@ -77,15 +73,12 @@ const SignIn = () => {
 
         if (response.status === 200) {
           Cookies.set("token", response.data.token);
-          document.cookie = `token=${response.data.token}; max-age=${
-            3600 * 5
-          }; path=/; samesite=strict`;
           getUserData();
           navigate("/private/major/home/");
         }
       } catch (error) {
         let response = error;
-        console.log(response.response.data.message);
+        console.log(error);
         let message = response.response.data.message;
         Swal.fire({
           icon: "error",
@@ -140,7 +133,9 @@ const SignIn = () => {
                 InputProps={inputProps}
                 /* style={{ borderRadius: "2rem" }} */
               />
-              {errors.email && <Alert severity="warning"> {errors.email} </Alert>}
+              {errors.email && (
+                <Alert severity="warning"> {errors.email} </Alert>
+              )}
             </div>
 
             <div className={styles.password_container}>
@@ -160,7 +155,10 @@ const SignIn = () => {
               {errors.password && (
                 <Alert severity="warning"> {errors.password} </Alert>
               )}
-              <RiEyeLine className={styles.icon_password} onClick={handleShow} />
+              <RiEyeLine
+                className={styles.icon_password}
+                onClick={handleShow}
+              />
             </div>
 
             <Link className="forgot_password" to={"/login/forgot-password"}>

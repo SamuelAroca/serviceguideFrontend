@@ -21,9 +21,10 @@ const AboutUs = () => {
           </div>
           <h2>Agua</h2>
           <p>
-              El uso global del agua es esencial para la supervivencia humana y la economía en
-             desarrollo, pero muchas regiones enfrentan escasez de agua debido a
-             el crecimiento demográfico, el cambio climático y la mala gestión del agua.
+            El uso global del agua es esencial para la supervivencia humana y la
+            economía en desarrollo, pero muchas regiones enfrentan escasez de
+            agua debido a el crecimiento demográfico, el cambio climático y la
+            mala gestión del agua.
           </p>
         </div>
 
@@ -33,10 +34,11 @@ const AboutUs = () => {
           </div>
           <h2>Energia</h2>
           <p className={styles.p}>
-          La energía es esencial para el crecimiento económico y el desarrollo humano,
-             pero la mayoría de las fuentes de energía son finitas y contribuyen al cambio climático.
-             se necesita un cambio hacia fuentes de energía renovables y sostenibles
-             para garantizar un suministro de energía a largo plazo.
+            La energía es esencial para el crecimiento económico y el desarrollo
+            humano, pero la mayoría de las fuentes de energía son finitas y
+            contribuyen al cambio climático. se necesita un cambio hacia fuentes
+            de energía renovables y sostenibles para garantizar un suministro de
+            energía a largo plazo.
           </p>
         </div>
 
@@ -46,10 +48,11 @@ const AboutUs = () => {
           </div>
           <h2>Gas</h2>
           <p className={styles.p}>
-          El gas natural es una importante fuente de energía utilizada en la industria,
-             transporte y calefacción. Sin embargo, el uso de gas también tiene
-             impactos ambientales, como la emisión de gases de efecto invernadero. Es necesario un equilibrio entre el uso de gas y
-             la protección del medio ambiente.
+            El gas natural es una importante fuente de energía utilizada en la
+            industria, transporte y calefacción. Sin embargo, el uso de gas
+            también tiene impactos ambientales, como la emisión de gases de
+            efecto invernadero. Es necesario un equilibrio entre el uso de gas y
+            la protección del medio ambiente.
           </p>
         </div>
 
@@ -59,9 +62,11 @@ const AboutUs = () => {
           </div>
           <h2>Alcantarillado</h2>
           <p className={styles.p}>
-              El sistema de alcantarillado es fundamental para garantizar la eliminación segura y
-             eficaz de los desechos humanos y proteger la salud pública. Sin embargo, muchos países aún carecen de sistemas de alcantarillado adecuados, lo que
-             puede provocar la contaminación del agua y la propagación de enfermedades.
+            El sistema de alcantarillado es fundamental para garantizar la
+            eliminación segura y eficaz de los desechos humanos y proteger la
+            salud pública. Sin embargo, muchos países aún carecen de sistemas de
+            alcantarillado adecuados, lo que puede provocar la contaminación del
+            agua y la propagación de enfermedades.
           </p>
         </div>
       </div>

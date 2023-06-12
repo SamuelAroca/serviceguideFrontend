@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import { useRef, useState } from "react";
-import "../styled-sheets/NavbarComp.css";
 import { RiWaterFlashFill } from "react-icons/ri";
 import { FaBars, FaTimes } from "react-icons/fa";
+import "../styled-sheets/NavbarComp.css";
 
 const NavbarComp = () => {
   const [fix, setFix] = useState(false);

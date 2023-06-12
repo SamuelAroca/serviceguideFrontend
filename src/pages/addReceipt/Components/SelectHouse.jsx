@@ -1,11 +1,13 @@
-import { useState } from 'react';
-import {TextField, Autocomplete} from '@mui/material';
+import { useState } from "react";
+import { TextField, Autocomplete } from "@mui/material";
 
-const SelectHouse = ({options, handleSelect, receipt}) => {
-  const house = options?.map((name) => {return name});
+const SelectHouse = ({ options, handleSelect, receipt }) => {
+  const house = options?.map((name) => {
+    return name;
+  });
 
   const [value, setValue] = useState(house[0]);
-  const [inputValue, setInputValue] = useState("")
+  const [inputValue, setInputValue] = useState("");
 
   return (
     <Autocomplete
@@ -19,10 +21,11 @@ const SelectHouse = ({options, handleSelect, receipt}) => {
       }}
       id="controllable-states-demo"
       options={house}
-      /* sx={{ width: 300 }} */
-      renderInput={(params) => <TextField {...params} label="Seleccionar Casa" />}
+      renderInput={(params) => (
+        <TextField {...params} label="Seleccionar Casa" />
+      )}
     />
   );
-}
+};
 
 export default SelectHouse;

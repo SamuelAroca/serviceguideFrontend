@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import { MdOutlineClose } from "react-icons/md";
 import { GrayPaleteColors } from "../../../palete-colors/gray-colors.palete";
-import FormEdit from "./FormEdit";
 
 const ModalOverlay = styled.div`
   position: fixed;

@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { GrayPaleteColors } from "../../../palete-colors/gray-colors.palete";
 
 export const NavLayout = styled.div`
-
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -10,5 +9,4 @@ export const NavLayout = styled.div`
   height: 100%;
   padding: 1.5rem;
   box-sizing: border-box;
-
 `;

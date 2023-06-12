@@ -3,13 +3,14 @@ import styles from "./Styles/Home.module.css";
 import GetLastReceipts from "./components/GetLastReceipts";
 import StatisticsHome from "./components/StatisticsHome";
 import { MyContext } from "../../context/UserContext";
-import { getToken, initAxiosInterceptor } from "../../AxiosHelper";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
 import LineChart from "./components/LineChart";
+import Cookies from "js-cookie";
 
 const Home = () => {
   const apiUrl = import.meta.env.VITE_API_RECEIPT;
+  const accessToken = Cookies.get("token");
   const navigate = useNavigate();
   const [allReceipts, setAllReceipts] = useState(null);
   const [receipts, setReceipts] = useState(null);
@@ -18,36 +19,19 @@ const Home = () => {
 
   useEffect(() => {
     if (userData === null) return;
-    initAxiosInterceptor();
-    tokenExist();
     getReceipts();
     getAllReceipts();
   }, [userData]);
 
-  const tokenExist = () => {
-    if (!getToken()) {
-      navigate("/");
-    }
-  };
-
-  const sessionExpired = () => {
-    Swal.fire({
-      title: "Your session has expired!",
-      text: "You will have to log in again!",
-      icon: "error",
-      confirmButtonColor: "#3085d6",
-      confirmButtonText: "Ok, login again",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        navigate("/");
-        return;
-      }
-    });
-  };
-
   const getReceipts = async () => {
-    const accessToken = getToken();
-    const receipt = await axios.get(`${apiUrl}/getLastReceipt/${userData?.id}`);
+    const receipt = await axios.get(
+      `${apiUrl}/getLastReceipt/${userData?.id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
     try {
       setAllReceipts(receipt.data);
     } catch (err) {
@@ -58,7 +42,12 @@ const Home = () => {
   const getAllReceipts = async () => {
     try {
       const receipts = await axios.get(
-        `${apiUrl}/allReceiptsByUserId/${userData?.id}`
+        `${apiUrl}/allReceiptsByUserId/${userData?.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
       );
       setReceipts(receipts.data);
     } catch (err) {

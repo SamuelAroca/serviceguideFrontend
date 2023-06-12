@@ -1,5 +1,5 @@
-import React from 'react'
-import ReceiptForm from './Components/ReceiptForm';
+import React from "react";
+import ReceiptForm from "./Components/ReceiptForm";
 import styles from "./styles/ReceiptForm.module.css";
 
 const AddReceipt = () => {
@@ -8,6 +8,6 @@ const AddReceipt = () => {
       <ReceiptForm />
     </div>
   );
-}
+};
 
 export default AddReceipt;
