@@ -67,33 +67,31 @@ const Home = () => {
   };
 
   return (
-    <>
-      <div className={styles.main}>
-        <h3>COMPORTAMIENTO DE TUS RECIBOS</h3>
-        <div className={styles.container_graphics}>
-          <div className={styles.line_chart_container}>
-            <LineChart data={receipts} />
-          </div>
-        </div>
-        <h3>Ultimo Recibo y Comparacion el anterior</h3>
-        <div className={styles.card}>
-          <div>
-            <Routes>
-              {allReceipts ? (
-                <Route
-                  path="/"
-                  element={<GetLastReceipts receipt={allReceipts} />}
-                />
-              ) : null}
-            </Routes>
-          </div>
-
-          <div className={styles.last_graphic}>
-            <StatisticsHome idReceipt={allReceipts} typeReceipt={allReceipts} />
-          </div>
+    <div className={styles.main}>
+      <h3>COMPORTAMIENTO DEL PRECIO DE TUS RECIBOS</h3>
+      <div className={styles.container_graphics}>
+        <div className={styles.line_chart_container}>
+          <LineChart data={receipts} />
         </div>
       </div>
-    </>
+      <h3>Ultimo Recibo y Comparacion con el anterior</h3>
+      <div className={styles.card}>
+        <div>
+          <Routes>
+            {allReceipts ? (
+              <Route
+                path="/"
+                element={<GetLastReceipts receipt={allReceipts} />}
+              />
+            ) : null}
+          </Routes>
+        </div>
+
+        <div className={styles.last_graphic}>
+          <StatisticsHome idReceipt={allReceipts} typeReceipt={allReceipts} />
+        </div>
+      </div>
+    </div>
   );
 };
 

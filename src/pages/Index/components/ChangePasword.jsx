@@ -62,7 +62,7 @@ const ChangePasword = () => {
         if (response.status == 200) {
           Swal.fire({
             title: message,
-            text: "The password has been successfully updated",
+            text: "La contraseña ha sido actualizada con éxito",
             icon: "success",
             confirmButtonText: "OK",
           }).then((result) => {
@@ -104,22 +104,16 @@ const ChangePasword = () => {
       <ChangePasswordLayout>
         <div className="form_container">
           <form onSubmit={changePassword}>
-            <h1>Change Password</h1>
+            <h1>Cambiar contraseña</h1>
             <p className="subtitle">
-              Enter an email addres you use to sign in to
+              Introduce una nueva contraseña
             </p>
-            {/* <div className={styles.container_logo}>
-              <h2 className={styles.logo_title}>
-                <RiWaterFlashFill className={styles.logo} />
-                ServiceGuide
-              </h2>
-            </div> */}
               <div className={styles.confirmPassword}>
                 <TextField
-                  label="New Password"
+                  label="Nueva cotraseña"
                   variant="outlined"
                   type={showPassword ? "text" : "password"}
-                  placeholder="Type your new password"
+                  placeholder="Ingresa una nueva contraseña"
                   className="inputsMaterial"
                   fullWidth
                   name="password"
@@ -136,10 +130,10 @@ const ChangePasword = () => {
               </div>
               <div className={styles.confirmPassword}>
                 <TextField
-                  label="Confirm Password"
+                  label="Confirmar Contraseña"
                   variant="outlined"
                   type={showConfirmPassword ? "text" : "password"}
-                  placeholder="Confirm your new password"
+                  placeholder="Confirma tu contraseña"
                   className="inputsMaterial"
                   fullWidth
                   name="confirmPassword"
@@ -156,14 +150,14 @@ const ChangePasword = () => {
               </div>
               <div>
                 <button onClick={changePassword}>
-                  Change Password
+                  Cambiar contraseña
                 </button>
               </div>
               
               <Link to={"/login/signIn"}>
                 <span className="back">
                   <ArrowBackIcon />
-                  <p>Back to sign in</p>
+                  <p>Volver para iniciar sesión</p>
                 </span>
               </Link>
 

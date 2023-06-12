@@ -110,12 +110,12 @@ const DataTable = ({ data }) => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Date</TableCell>
-              <TableCell>Amount</TableCell>
-              <TableCell>Price</TableCell>
-              <TableCell>Receipt Name</TableCell>
-              <TableCell>Type Service</TableCell>
-              <TableCell>Actions</TableCell>
+              <TableCell>Fecha</TableCell>
+              <TableCell>Cantidad</TableCell>
+              <TableCell>Precio</TableCell>
+              <TableCell>Nombre</TableCell>
+              <TableCell>Tipo de Servicio</TableCell>
+              <TableCell>Acciones</TableCell>
             </TableRow>
             <TableRow>
               <TableCell>

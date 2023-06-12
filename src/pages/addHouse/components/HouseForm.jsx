@@ -203,7 +203,7 @@ const HouseForm = () => {
   return (
     <HouseFormLayout>
       <div className="title">
-        <h1>ADD HOUSE</h1>
+        <h1>AGREGAR CASA</h1>
       </div>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
@@ -211,12 +211,12 @@ const HouseForm = () => {
             <Tooltip
               disableFocusListener
               disableTouchListener
-              title="Add title"
+              title="Agregar nombre"
               placement="bottom-start"
             >
               <TextField
                 fullWidth
-                label="Title"
+                label="Nombre"
                 name="name"
                 type="text"
                 value={house.name}
@@ -229,12 +229,12 @@ const HouseForm = () => {
             <Tooltip
               disableFocusListener
               disableTouchListener
-              title="Add stratum"
+              title="Agregar estrato"
               placement="bottom-start"
             >
               <TextField
                 fullWidth
-                label="Stratum"
+                label="Estrato"
                 name="stratum"
                 type="number"
                 value={house.stratum}
@@ -249,12 +249,12 @@ const HouseForm = () => {
             <Tooltip
               disableFocusListener
               disableTouchListener
-              title="Add neighborhood"
+              title="Agregar barrio"
               placement="bottom-start"
             >
               <TextField
                 fullWidth
-                label="Neighborhood"
+                label="Barrio"
                 name="neighborhood"
                 type="text"
                 value={house.neighborhood}
@@ -269,12 +269,12 @@ const HouseForm = () => {
             <Tooltip
               disableFocusListener
               disableTouchListener
-              title="Add address"
+              title="Agregar dirección"
               placement="bottom-start"
             >
               <TextField
                 fullWidth
-                label="Address"
+                label="Dirección"
                 name="address"
                 type="text"
                 value={house.address}
@@ -289,12 +289,12 @@ const HouseForm = () => {
             <Tooltip
               disableFocusListener
               disableTouchListener
-              title="Add contract"
+              title="Agregar contrato"
               placement="bottom-start"
             >
               <TextField
                 fullWidth
-                label="Contract"
+                label="Contrato"
                 name="contract"
                 type="number"
                 value={house.contract}
@@ -323,7 +323,7 @@ const HouseForm = () => {
               disabled={isLoading}
               style={{ width: "20%" }}
             >
-              Save House
+              Guardar Casa
             </Button>
           </Grid>
         </Grid>

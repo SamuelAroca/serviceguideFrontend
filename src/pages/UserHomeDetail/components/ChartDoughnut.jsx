@@ -38,24 +38,16 @@ const ChartDoughnut = ({ datos, percentages, value }) => {
   }, []);
 
   return (
-    <div style={{ backgroundColor: "green" }}>
+    <div className="donut_component_container">
       {changeChart === false ? (
-        <div>
+        <>
           <h3>Cantidad consumida por servicio</h3>
-          <div style={{ width: "100%", height: "100%" }}>
+          <div className="charts_donut_container">
             <Doughnut data={data} ref={chartRef} />
           </div>
-        </div>
+        </>
       ) : (
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: "20px",
-          }}
-        >
+        <>
           <h3>
             Tu progreso ha sido{" "}
             {percentage < 0 ? (
@@ -88,14 +80,14 @@ const ChartDoughnut = ({ datos, percentages, value }) => {
               <span style={{ color: "green" }}>{value}% menos</span>
             )}
           </h3>
-        </div>
+        </>
       )}
-      <div style={{ display: "flex", gap: "1rem" }}>
+      <div style={{ display: "flex", gap: "1rem", justifyContent: "center" }}>
         <Button variant="outlined" onClick={() => setChangeChart(!changeChart)}>
-          Prev
+          ANTERIOR
         </Button>
         <Button variant="outlined" onClick={() => setChangeChart(!changeChart)}>
-          Next
+          SIGUIENTE
         </Button>
       </div>
     </div>

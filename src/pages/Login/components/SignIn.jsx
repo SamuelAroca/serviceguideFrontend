@@ -145,10 +145,10 @@ const SignIn = () => {
 
             <div className={styles.password_container}>
               <TextField
-                label="Password"
+                label="Contraseña"
                 variant="outlined"
                 type={showPassword ? "text" : "password"}
-                placeholder="Type your password"
+                placeholder="Digíta tu contraseña"
                 fullWidth
                 size="small"
                 className="inputsMaterial"
@@ -164,12 +164,12 @@ const SignIn = () => {
             </div>
 
             <Link className="forgot_password" to={"/login/forgot-password"}>
-              Forgot password?
+              ¿Olvidaste tu contraseña?
             </Link>
 
             <div>
               <button onClick={login}>
-                Sign in
+                Iniciar sesión
                 <div className={styles.arrow_wrapper}>
                   <div className={styles.arrow}></div>
                 </div>
@@ -177,16 +177,16 @@ const SignIn = () => {
             </div>
 
             <span className="signup" to={"/login/signUp"}>
-              <p>Don´t you have an account?</p>
+              <p>¿Aún no tienes una cuenta?</p>
               <Link className="signup" to={"/login/signUp"}>
-                Sign Up
+                Registrate
               </Link>
             </span>
 
             <Link to={"/"}>
               <span className="back">
                 <ArrowBackIcon />
-                <p>Back to home</p>
+                <p>Volver al inicio</p>
               </span>
             </Link>
           </form>

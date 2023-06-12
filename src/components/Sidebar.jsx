@@ -121,21 +121,21 @@ const Sidebar = () => {
           rute={pathname === `/private/major/home`}
         >
           <BiHomeAlt className="icon" />
-          <p>Home</p>
+          <p>Inicio</p>
         </StyledLink>
         <StyledLink
           to={`/private/major/houses/addhouse`}
           rute={pathname === ``}
         >
           <BiAddToQueue className="icon" />
-          <p>Add house</p>
+          <p>Agregar casa</p>
         </StyledLink>
         <StyledLink
           to={`/private/major/receipts/addreceipt`}
           rute={pathname === `/private/house-detail`}
         >
           <BiReceipt className="icon" />
-          <p>Add receipt</p>
+          <p>Agregar recibo</p>
         </StyledLink>
         <StyledLink
           onClick={() => setIsSessionOpen(!isSessionOpen)}
@@ -148,7 +148,7 @@ const Sidebar = () => {
               transition: "0.3s all",
             }}
           />
-          <p>Houses</p>
+          <p>Casas</p>
         </StyledLink>
         <motion.ul
           animate={{
@@ -172,13 +172,13 @@ const Sidebar = () => {
         </motion.ul>
         <StyledLink to={`/private/major/user/settings`} rute={pathname === ``}>
           <RiUserSettingsLine className="icon" />
-          <p>Profile Settings</p>
+          <p>Ajustes de usuario</p>
         </StyledLink>
       </div>
       <div className="bottom_sidebar">
         <div className="logout_button" onClick={handleLogout}>
           <BiLogOut className="icon" />
-          Logout
+          Cerrar sesión
         </div>
       </div>
     </SidebarLayout>
