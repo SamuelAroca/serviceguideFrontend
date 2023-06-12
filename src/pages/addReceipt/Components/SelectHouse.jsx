@@ -20,7 +20,7 @@ const SelectHouse = ({options, handleSelect, receipt}) => {
       id="controllable-states-demo"
       options={house}
       /* sx={{ width: 300 }} */
-      renderInput={(params) => <TextField {...params} label="Select House" />}
+      renderInput={(params) => <TextField {...params} label="Seleccionar Casa" />}
     />
   );
 }

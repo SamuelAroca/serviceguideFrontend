@@ -31,14 +31,14 @@ const SignUp = () => {
   const url = import.meta.env.VITE_API_AUTH;
 
   const registerAlert = () => {
-    Swal.fire("Successfully registered user", "", "success", {
+    Swal.fire("Usuario registrado satisfactoriamente", "", "success", {
       showDenyButton: false,
       showCancelButton: false,
       confirmButtonText: "Ok",
       denyButtonText: `Don't save`,
     }).then((result) => {
       if (result.isConfirmed) {
-        navigate("/private/major/home/");
+        navigate("/login/signin");
       }
     });
   };
@@ -60,7 +60,7 @@ const SignUp = () => {
         registerAlert();
       }
     } catch (error) {
-      alert(error);
+      console.log(error)
     }
   };
 
@@ -78,22 +78,15 @@ const SignUp = () => {
         </div>
         <div className="form_container">
           <form>
-            <h1>Sign Up</h1>
+            <h1>Registro</h1>
             <p className="subtitle">
-              Start management your finance faster and better
+              Empieza a gestionar tus finanzas más rápido y mejor
             </p>
-
-            {/* <h2 className={styles.container_logo}>
-              <RiWaterFlashFill className={styles.logo} />
-              ServiceGuide
-            </h2> */}
-
-
             <TextField
               className="inputsMaterial"
-              label="Name"
+              label="Nombre"
               variant="outlined"
-              placeholder="Type your email"
+              placeholder="Digíta tu nombre"
               fullWidth
               size="small"
               value={name}
@@ -104,9 +97,9 @@ const SignUp = () => {
             />
             <TextField
               className="inputsMaterial"
-              label="Last name"
+              label="Apellido"
               variant="outlined"
-              placeholder="Type your email"
+              placeholder="Digíta tu apellido"
               fullWidth
               size="small"
               value={lastName}
@@ -117,9 +110,9 @@ const SignUp = () => {
             />
             <TextField
               className="inputsMaterial"
-              label="Email"
+              label="Correo electrónico"
               variant="outlined"
-              placeholder="Type your email"
+              placeholder="Digíta tu correo"
               fullWidth
               size="small"
               value={email}
@@ -131,10 +124,10 @@ const SignUp = () => {
             <div className={styles.password_container}>
               <TextField
                 className="inputsMaterial"
-                label="Password"
+                label="Contraseña"
                 variant="outlined"
                 type={showPassword ? "text" : "password"}
-                placeholder="Type your password"
+                placeholder="Digíta tu contraseña"
                 fullWidth
                 size="small"
                 value={password}
@@ -148,11 +141,9 @@ const SignUp = () => {
                 onClick={handleShow}
               />
             </div>
-
-
             <div>
               <button onClick={save}>
-                Sign up
+                Registrarse
                 <div class={styles.arrow_wrapper}>
                   <div class={styles.arrow}></div>
                 </div>
@@ -160,16 +151,16 @@ const SignUp = () => {
             </div>
 
             <span className="signup">
-              <p>Already have an account?</p>
+              <p>¿Ya tienes una cuenta?</p>
               <Link className="forgot_password" to={"/login"}>
-                Sign in
+                Iniciar sesión
               </Link>
             </span>
             
             <Link to={"/"}>
               <span className="back">
                 <ArrowBackIcon />
-                <p>Back to home</p>
+                <p>Volver al inicio</p>
               </span>
             </Link>
 

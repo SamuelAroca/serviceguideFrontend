@@ -1,24 +1,6 @@
-.div_main{
+/* .main{
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
-  text-align: center;
-  height: 80vh;
-}
-
-.container_main {
-  display: grid;
   justify-content: center;
-}
-
-.inputs_gap {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.div_button {
-  display: flex;
-  justify-content: flex-end;
-}
+  height: 100vh;
+} */

@@ -200,14 +200,14 @@ const FormEdit = ({ userId, data }) => {
       <div className="buttons-container">
         <button onClick={() => setReceiptType("water")} className="type-button">
           <BsWater />
-          Water
+          Agua
         </button>
         <button
           onClick={() => setReceiptType("energy")}
           className="type-button"
         >
           <BsFillLightbulbFill />
-          Energy
+          Energía
         </button>
         <button onClick={() => setReceiptType("gas")} className="type-button">
           <BsFillCloudFill />
@@ -218,7 +218,7 @@ const FormEdit = ({ userId, data }) => {
           className="type-button"
         >
           <FaToilet />
-          Sewerage
+          Alcantarillado
         </button>
       </div>
 
@@ -228,12 +228,12 @@ const FormEdit = ({ userId, data }) => {
             <Tooltip
               disableFocusListener
               disableTouchListener
-              title="Add title"
+              title="Agregar nombre"
               placement="bottom-start"
             >
               <TextField
                 fullWidth
-                label="Title"
+                label="Nombre"
                 name="receiptName"
                 type="text"
                 value={receipt.receiptName}
@@ -248,12 +248,12 @@ const FormEdit = ({ userId, data }) => {
             <Tooltip
               disableFocusListener
               disableTouchListener
-              title="Add Price"
+              title="Agregar precio"
               placement="bottom-start"
             >
               <TextField
                 fullWidth
-                label="Price"
+                label="Precio"
                 name="price"
                 type="number"
                 step="0.01"
@@ -267,12 +267,12 @@ const FormEdit = ({ userId, data }) => {
             <Tooltip
               disableFocusListener
               disableTouchListener
-              title="Add Quantity"
+              title="Agregar cantidad"
               placement="bottom-start"
             >
               <TextField
                 fullWidth
-                label="Quantity"
+                label="Cantidad"
                 name="amount"
                 type="number"
                 step="0.01"
@@ -289,7 +289,7 @@ const FormEdit = ({ userId, data }) => {
               <Tooltip
                 disableFocusListener
                 disableTouchListener
-                title="Add Date"
+                title="Agregar fecha"
                 placement="bottom-start"
               >
                 <TextField
@@ -321,7 +321,7 @@ const FormEdit = ({ userId, data }) => {
               color="primary"
               disabled={isLoading}
             >
-              Update Receipt
+              Actualizar Recibo
             </Button>
           </Grid>
         </Grid>

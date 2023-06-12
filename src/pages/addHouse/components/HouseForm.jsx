@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import { FormLayout } from "../../addReceipt/Components/styled-components/form-layout.styled";
+import { HouseFormLayout } from "../styled-components/houseform-layout.styled.js";
 import { TextField, Button, Grid, Tooltip } from "@mui/material";
 import { getToken, initAxiosInterceptor } from "../../../AxiosHelper";
 import { useNavigate } from "react-router-dom";
@@ -201,19 +201,22 @@ const HouseForm = () => {
   }
 
   return (
-    <>
+    <HouseFormLayout>
+      <div className="title">
+        <h1>AGREGAR CASA</h1>
+      </div>
       <form onSubmit={handleSubmit}>
-        <div className={styles.inputs_gap}>
-          <div className={styles.textfield}>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
             <Tooltip
               disableFocusListener
               disableTouchListener
-              title="Add title"
+              title="Agregar nombre"
               placement="bottom-start"
             >
               <TextField
                 fullWidth
-                label="Title"
+                label="Nombre"
                 name="name"
                 type="text"
                 value={house.name}
@@ -221,17 +224,17 @@ const HouseForm = () => {
               />
             </Tooltip>
             {errors.name && <Alert severity="warning"> {errors.name} </Alert>}
-          </div>
-          <div>
+          </Grid>
+          <Grid item xs={12}>
             <Tooltip
               disableFocusListener
               disableTouchListener
-              title="Add stratum"
+              title="Agregar estrato"
               placement="bottom-start"
             >
               <TextField
                 fullWidth
-                label="Stratum"
+                label="Estrato"
                 name="stratum"
                 type="number"
                 value={house.stratum}
@@ -241,17 +244,17 @@ const HouseForm = () => {
             {errors.stratum && (
               <Alert severity="warning"> {errors.stratum} </Alert>
             )}
-          </div>
-          <div>
+          </Grid>
+          <Grid item xs={12}>
             <Tooltip
               disableFocusListener
               disableTouchListener
-              title="Add neighborhood"
+              title="Agregar barrio"
               placement="bottom-start"
             >
               <TextField
                 fullWidth
-                label="Neighborhood"
+                label="Barrio"
                 name="neighborhood"
                 type="text"
                 value={house.neighborhood}
@@ -261,17 +264,17 @@ const HouseForm = () => {
             {errors.neighborhood && (
               <Alert severity="warning"> {errors.neighborhood} </Alert>
             )}
-          </div>
-          <div>
+          </Grid>
+          <Grid item xs={12}>
             <Tooltip
               disableFocusListener
               disableTouchListener
-              title="Add address"
+              title="Agregar dirección"
               placement="bottom-start"
             >
               <TextField
                 fullWidth
-                label="Address"
+                label="Dirección"
                 name="address"
                 type="text"
                 value={house.address}
@@ -281,17 +284,17 @@ const HouseForm = () => {
             {errors.address && (
               <Alert severity="warning"> {errors.address} </Alert>
             )}
-          </div>
-          <div>
+          </Grid>
+          <Grid item xs={12}>
             <Tooltip
               disableFocusListener
               disableTouchListener
-              title="Add contract"
+              title="Agregar contrato"
               placement="bottom-start"
             >
               <TextField
                 fullWidth
-                label="Contract"
+                label="Contrato"
                 name="contract"
                 type="number"
                 value={house.contract}
@@ -301,8 +304,8 @@ const HouseForm = () => {
             {errors.contract && (
               <Alert severity="warning"> {errors.contract} </Alert>
             )}
-          </div>
-          <div>
+          </Grid>
+          <Grid item xs={12}>
             <SelectCity
               fullWidth
               options={allCities}
@@ -310,8 +313,8 @@ const HouseForm = () => {
               handleSelect={handleSelect}
               house={house}
             />
-          </div>
-          <div className={styles.div_button}>
+          </Grid>
+          <Grid sx={{ display: "flex", justifyContent: "end" }} item xs={12}>
             <Button
               onClick={handleSubmit}
               type="submit"
@@ -320,12 +323,12 @@ const HouseForm = () => {
               disabled={isLoading}
               style={{ width: "20%" }}
             >
-              Save House
+              Guardar Casa
             </Button>
-          </div>
-        </div>
+          </Grid>
+        </Grid>
       </form>
-    </>
+    </HouseFormLayout>
   );
 };
 

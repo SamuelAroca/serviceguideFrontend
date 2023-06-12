@@ -51,10 +51,28 @@ export const UserHomeLayout = styled.div`
   .donut {
     display: grid;
     place-items: center;
-    width: 100%;
-    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    box-sizing: border-box;
     grid-area: 1 / 8 / 7 / 13;
+
+    .donut_component_container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      flex-direction: column;
+      max-width: 100%;
+      min-height: 100%;
+      max-height: 100%;
+      .charts_donut_container {
+        display: grid;
+        place-items: center;
+        max-height: 75%;
+      }
+    }
   }
+
   .line_chart_container {
     width: 100%;
     height: 100%;
