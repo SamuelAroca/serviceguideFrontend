@@ -17,7 +17,7 @@ const PrivateRoutes = () => {
       <div className="content">
         <Routes>
           <Route path="/" element={<Navigate to="/major/home/*" replace />} />
-          <Route path="/major/home" element={<Home />} />
+          <Route path="/major/home/*" element={<Home />} />
           <Route path="/major/receipts/addreceipt" element={<AddReceipt />} />
           <Route path="/house-detail/:id" element={<UserHomeDetail />} />
           <Route path="/major/houses/addhouse" element={<AddHouse />} />

@@ -40,8 +40,7 @@ const ForgotPassword = () => {
     setErrors(err);
     if (Object.keys(err).length === 0) {
       try {
-        let response = await axios.post(`${url}/send-email`, email);
-
+        const response = await axios.post(`${url}/send-email`, email);
         if (!response.status != 200) {
           Swal.fire(
             "¡Email enviado!",
@@ -51,7 +50,7 @@ const ForgotPassword = () => {
         }
       } catch (error) {
         let response = error;
-        console.log(response.response.data.message);
+        console.log(error);
         let message = response.response.data.message;
         Swal.fire({
           icon: "error",
@@ -83,7 +82,8 @@ const ForgotPassword = () => {
           <form onSubmit={sendEmail}>
             <h1>Recuperar Contraseña</h1>
             <p className="subtitle">
-              No te preocupes, te enviaremos instrucciones para cambiar tu contraseña
+              No te preocupes, te enviaremos instrucciones para cambiar tu
+              contraseña
             </p>
             <div>
               <TextField
@@ -101,18 +101,13 @@ const ForgotPassword = () => {
               )}
             </div>
             <div>
-              <button onClick={sendEmail}>
-                Enviar Correo
-              </button>
+              <button onClick={sendEmail}>Enviar Correo</button>
             </div>
 
             <span className="signup">
               <p>¿Recordaste tu contraseña?</p>
-              <Link to="/login">
-                Iniciar Sesión
-              </Link>
+              <Link to="/login">Iniciar Sesión</Link>
             </span>
-
           </form>
         </div>
         <div className={styles.carouselDemo}>

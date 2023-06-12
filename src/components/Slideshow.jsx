@@ -1,11 +1,11 @@
 import React, { useRef, useEffect } from "react";
+import { IoChevronBackSharp } from "react-icons/io5";
+import { IoChevronForwardSharp } from "react-icons/io5";
 import "../styled-sheets/Slideshow.css";
 import img1 from "../assets/agua-potable.webp";
 import img2 from "../assets/alcantarillado.webp";
 import img3 from "../assets/Electricistas-scaled.webp";
 import img4 from "../assets/gas-natural.webp";
-import { IoChevronBackSharp } from "react-icons/io5";
-import { IoChevronForwardSharp } from "react-icons/io5";
 import styled from "styled-components";
 
 const Slideshow = () => {
@@ -39,7 +39,6 @@ const Slideshow = () => {
   };
 
   const former = () => {
-    console.log("former");
     if (slideshow.current.children.length > 0) {
       const index = slideshow.current.children.length - 1;
       const lastElement = slideshow.current.children[index];
@@ -53,7 +52,6 @@ const Slideshow = () => {
       console.log("antes timeout");
 
       setTimeout(() => {
-        console.log("timeout");
         slideshow.current.style.transition = "500ms ease-out all";
         slideshow.current.style.transform = `translateX(0)`;
       }, 50);
@@ -66,7 +64,6 @@ const Slideshow = () => {
     }, 10000);
 
     slideshow.current.addEventListener("mouseenter", () => {
-      console.log("pause");
       clearInterval(slideshowInterval.current);
     });
 

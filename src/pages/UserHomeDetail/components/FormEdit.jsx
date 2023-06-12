@@ -1,8 +1,4 @@
 import { TextField, Button, Grid, Box } from "@mui/material";
-import {
-  getToken,
-  initAxiosInterceptor,
-} from "../../../AxiosHelper";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
 import { FormLayout } from "../../addReceipt/Components/styled-components/form-layout.styled";
@@ -16,6 +12,7 @@ import { getUserHouses } from "../../../services/get-user-houses.service";
 import { MyContext } from "../../../context/UserContext";
 import { Toaster, toast } from "react-hot-toast";
 import Swal from "sweetalert2";
+import Cookies from "js-cookie";
 
 const FormEdit = ({ userId, data }) => {
   const apiUrl = import.meta.env.VITE_API_RECEIPT;
@@ -29,12 +26,11 @@ const FormEdit = ({ userId, data }) => {
   const [selectedHouse, setSelectedHouse] = useState(null);
   const [allHouses, setAllHouses] = useState([]);
   const navigate = useNavigate();
+  const accessToken = Cookies.get("token");
 
   const notifyUpdate = () => toast.success("Update successfully.");
 
   useEffect(() => {
-    initAxiosInterceptor();
-    tokenExist();
     getHouses();
   }, [userId]);
 
@@ -65,44 +61,21 @@ const FormEdit = ({ userId, data }) => {
     setReceipt({ ...receipt, house: { name: name } });
   };
 
-  const tokenExist = () => {
-    if (!getToken()) {
-      3;
-      navigate("/");
-    }
-  };
-
-  const sessionExpired = () => {
-    Swal.fire({
-      title: "Your session has expired!",
-      text: "You will have to log in again!",
-      icon: "error",
-      confirmButtonColor: "#3085d6",
-      confirmButtonText: "Ok, login again",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        navigate("/");
-        return;
-      }
-    });
-  };
-
   const handleHouseChange = (event, value) => {
     setSelectedHouse(value);
     setReceipt({ ...receipt, house: value });
   };
 
   const getHouses = async () => {
-    if (getToken()) {
-      let accesToken = getToken();
-      const data = await axios.get(`${apiHouse}/getHouseName/${userData.id}`);
-      try {
-        setAllHouses(data.data);
-      } catch (err) {
-        console.log(err);
-      }
-    } else {
-      sessionExpired();
+    const data = await axios.get(`${apiHouse}/getHouseName/${userData.id}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    try {
+      setAllHouses(data.data);
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -123,66 +96,58 @@ const FormEdit = ({ userId, data }) => {
     } else if (!regexPrice.test(receipt.price)) {
       errors.price = "El 'Precio' solo debe contener números.";
     }
-
-    /*     if (!receipt.amount.trim()) {
-      errors.amount = "Debe existir una cantidad del recibo.";
-    } else if (!regexQuantity.test(receipt.amount)) {
-      errors.amount =
-        "La 'Cantidad' solo debe contener números y la parte decimal máximo 3 números";
-    } */
-
     return errors;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const err = onValidate(receipt);
+    setErrors(err);
 
-    if (getToken()) {
-      const err = onValidate(receipt);
-      setErrors(err);
+    setIsLoading(true);
 
-      setIsLoading(true);
+    const updatedReceipt = {
+      ...receipt,
+      typeService: {
+        type: receiptType,
+      },
+    };
 
-      const updatedReceipt = {
-        ...receipt,
+    if (Object.keys(err).length === 0) {
+      try {
+        const response = await axios.put(
+          `${apiUrl}/update/${data.id}`,
+          updatedReceipt,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+        notifyUpdate();
+        getUserHouses(setHouses, userData?.id);
+      } catch (error) {
+        console.log(error);
+      }
+
+      // Se setea el recibo a vacio para que se limpie el formulario
+      setReceipt({
+        receiptName: "",
+        price: "",
+        amount: "",
+        date: "",
         typeService: {
           type: receiptType,
         },
-      };
+        house: {
+          name: "",
+        },
+      });
 
-      if (Object.keys(err).length === 0) {
-        try {
-          const response = await axios.put(
-            `${apiUrl}/update/${data.id}`,
-            updatedReceipt
-          );
-          notifyUpdate();
-          getUserHouses(setHouses, userData?.id);
-        } catch (error) {
-          console.log(error.message);
-        }
-
-        // Se setea el recibo a vacio para que se limpie el formulario
-        setReceipt({
-          receiptName: "",
-          price: "",
-          amount: "",
-          date: "",
-          typeService: {
-            type: receiptType,
-          },
-          house: {
-            name: "",
-          },
-        });
-
-        setIsLoading(false);
-      } else {
-        setErrors(err);
-        setIsLoading(false);
-      }
+      setIsLoading(false);
     } else {
-      sessionExpired();
+      setErrors(err);
+      setIsLoading(false);
     }
   };
 
@@ -284,7 +249,11 @@ const FormEdit = ({ userId, data }) => {
               <Alert severity="warning"> {errors.amount} </Alert>
             )}
           </Grid>
-          <Grid item xs style={{ display: "flex", justifyContent: "space-between" }}>
+          <Grid
+            item
+            xs
+            style={{ display: "flex", justifyContent: "space-between" }}
+          >
             <Grid item xs={6}>
               <Tooltip
                 disableFocusListener

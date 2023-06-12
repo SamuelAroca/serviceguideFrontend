@@ -1,5 +1,4 @@
 import { TextField, Button, Grid, Box } from "@mui/material";
-import { getToken, initAxiosInterceptor } from "../../../AxiosHelper";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
 import { FormLayout } from "./styled-components/form-layout.styled";
@@ -13,6 +12,7 @@ import { MyContext } from "../../../context/UserContext";
 import { getUserHousesService } from "../../../services/get-user-houses.service";
 import { Toaster, toast } from "react-hot-toast";
 import Swal from "sweetalert2";
+import Cookies from "js-cookie";
 
 const ReceiptForm = ({ userId }) => {
   const apiUrl = import.meta.env.VITE_API_RECEIPT;
@@ -23,13 +23,12 @@ const ReceiptForm = ({ userId }) => {
   const [selectedHouse, setSelectedHouse] = useState(null);
   const [allHouses, setAllHouses] = useState([]);
   const navigate = useNavigate();
+  let accessToken = Cookies.get("token");
 
   const { setHouses, userData } = useContext(MyContext);
   const notify = () => toast.success("Recibo agregado correctamente");
 
   useEffect(() => {
-    initAxiosInterceptor();
-    tokenExist();
     getHouses();
   }, [userId]);
 
@@ -43,53 +42,28 @@ const ReceiptForm = ({ userId }) => {
     },
     house: {
       name: "",
-    }
+    },
   });
 
-  const handleSelect = (name) =>{
-    setReceipt({...receipt, house: {name: name} })
-  }
-
-  const tokenExist = () => {
-    if (!getToken()) {
-      3;
-      navigate("/");
-    }
-  };
-
-  const sessionExpired = () => {
-    Swal.fire({
-      title: "Your session has expired!",
-      text: "You will have to log in again!",
-      icon: "error",
-      confirmButtonColor: "#3085d6",
-      confirmButtonText: "Ok, login again",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        navigate("/");
-        return;
-      }
-    });
+  const handleSelect = (name) => {
+    setReceipt({ ...receipt, house: { name: name } });
   };
 
   const handleHouseChange = (event, value) => {
     setSelectedHouse(value);
-    setReceipt({ ...receipt, house: value})
+    setReceipt({ ...receipt, house: value });
   };
 
   const getHouses = async () => {
-    if (getToken()) {
-      let accesToken = getToken();
-      const data = await axios.get(
-        `${apiHouse}/getHouseName/${userData?.id}`
-      );
-      try {
-        setAllHouses(data.data);
-      } catch (err) {
-        console.log(err);
-      }
-    } else {
-      sessionExpired();
+    const data = await axios.get(`${apiHouse}/getHouseName/${userData?.id}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    try {
+      setAllHouses(data.data);
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -124,63 +98,63 @@ const ReceiptForm = ({ userId }) => {
     if (!receipt.amount.trim()) {
       errors.amount = "Debe existir una cantidad del recibo.";
     } else if (!regexQuantity.test(receipt.amount)) {
-      errors.amount = "La 'Cantidad' solo debe contener números y la parte decimal maximo 3 números";
+      errors.amount =
+        "La 'Cantidad' solo debe contener números y la parte decimal maximo 3 números";
     }
-
     return errors;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const err = onValidate(receipt);
+    setErrors(err);
 
-    if (getToken()) {
-      
-      const err = onValidate(receipt);
-      setErrors(err);
-  
-      const updatedReceipt ={
-        ...receipt,
+    const updatedReceipt = {
+      ...receipt,
+      typeService: {
+        type: receiptType,
+      },
+    };
+
+    if (Object.keys(err).length === 0) {
+      try {
+        const response = await axios.post(
+          `${apiUrl}/add/${userData.id}`,
+          updatedReceipt,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+        getUserHouses(setHouses, userData?.id);
+        Swal.fire("¡Recibo registrado correctamente!", "", "success");
+        notify();
+      } catch (error) {
+        let response = error;
+        let message = response.response.data.message;
+        console.log(error);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: message,
+        });
+      }
+
+      setReceipt({
+        receiptName: "",
+        price: "",
+        amount: "",
+        date: "",
         typeService: {
           type: receiptType,
         },
-      };
-      
-      if (Object.keys(err).length === 0) {
-        try {
-          const response = await axios.post(
-            `${apiUrl}/add/${userData.id}`,
-            updatedReceipt
-          );
-          getUserHouses(setHouses, userData?.id);
-          notify();
-        } catch (error) {
-          let response = error;
-          console.log(response.response.data.message);
-          let message = response.response.data.message;
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: message
-          });
-        }
-    
-        setReceipt({
-          receiptName: "",
-          price: "",
-          amount: "",
-          date: "",
-          typeService: {
-            type: receiptType,
-          },
-          house: {
-            name: "",
-          }
-        });
-      } else {
-        setErrors(err);
-      }
+        house: {
+          name: "",
+        },
+      });
     } else {
-      sessionExpired();
+      setErrors(err);
     }
   };
 
@@ -282,7 +256,7 @@ const ReceiptForm = ({ userId }) => {
               <Alert severity="warning"> {errors.amount} </Alert>
             )}
           </Grid>
-          <Grid item xs style={{display: "flex", gap: "10px"}}>
+          <Grid item xs style={{ display: "flex", gap: "10px" }}>
             <Grid item xs={6}>
               <Tooltip
                 disableFocusListener
@@ -316,7 +290,7 @@ const ReceiptForm = ({ userId }) => {
               type="submit"
               variant="contained"
               color="primary"
-              style={{width: "20%"}}
+              style={{ width: "20%" }}
             >
               Guardar Recibo
             </Button>

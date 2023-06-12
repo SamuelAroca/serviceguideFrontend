@@ -1,5 +1,5 @@
-import styles from "../styles/Footer.module.css";;
-import { BsFacebook, BsLinkedin, BsInstagram, BsTwitter } from "react-icons/bs"
+import styles from "../styles/Footer.module.css";
+import { BsFacebook, BsLinkedin, BsInstagram, BsTwitter } from "react-icons/bs";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
@@ -13,26 +13,72 @@ const Footer = () => {
       </div>
       <ul className={styles.social_icon}>
         <li className={styles.li}>
-          <a className={styles.a} href="https://www.facebook.com/profile.php?id=100092335245939&is_tour_completed=true" target="_blank"><BsFacebook /></a>
+          <a
+            className={styles.a}
+            href="https://www.facebook.com/profile.php?id=100092335245939&is_tour_completed=true"
+            target="_blank"
+          >
+            <BsFacebook />
+          </a>
         </li>
         <li className={styles.li}>
-          <a className={styles.a} href="https://twitter.com/ServiceGuide_" target="_blank"><BsTwitter /></a>
+          <a
+            className={styles.a}
+            href="https://twitter.com/ServiceGuide_"
+            target="_blank"
+          >
+            <BsTwitter />
+          </a>
         </li>
         <li className={styles.li}>
-          <a className={styles.a} href="https://www.linkedin.com/in/service-guide-255575275/" target="_blank"><BsLinkedin /></a>
+          <a
+            className={styles.a}
+            href="https://www.linkedin.com/in/service-guide-255575275/"
+            target="_blank"
+          >
+            <BsLinkedin />
+          </a>
         </li>
         <li className={styles.li}>
-          <a className={styles.a} href="https://www.instagram.com/serviceguide_/" target="_blank"><BsInstagram /></a>
+          <a
+            className={styles.a}
+            href="https://www.instagram.com/serviceguide_/"
+            target="_blank"
+          >
+            <BsInstagram />
+          </a>
         </li>
       </ul>
       <ul className={styles.menu}>
-        <li className={styles.li}><a className={styles.a} href="#home">Inicio</a></li>
-        <li className={styles.li}><a className={styles.a} href="#aboutUs">Nosotros</a></li>
-        <li className={styles.li}><a className={styles.a} href="#team">Equipo</a></li>
-        <li className={styles.li}><Link className={styles.a} to={"/register"}>Registro</Link></li>
-        <li className={styles.li}><Link className={styles.a} to={"/login"}>Iniciar Sesión</Link></li>
+        <li className={styles.li}>
+          <a className={styles.a} href="#home">
+            Inicio
+          </a>
+        </li>
+        <li className={styles.li}>
+          <a className={styles.a} href="#aboutUs">
+            Nosotros
+          </a>
+        </li>
+        <li className={styles.li}>
+          <a className={styles.a} href="#team">
+            Equipo
+          </a>
+        </li>
+        <li className={styles.li}>
+          <Link className={styles.a} to={"/register"}>
+            Registro
+          </Link>
+        </li>
+        <li className={styles.li}>
+          <Link className={styles.a} to={"/login"}>
+            Iniciar Sesión
+          </Link>
+        </li>
       </ul>
-      <p className={styles.p}>©2023 ServiceGuide | Todos los derechos reservados</p>
+      <p className={styles.p}>
+        ©2023 ServiceGuide | Todos los derechos reservados
+      </p>
       <div className={styles.line} />
     </div>
   );

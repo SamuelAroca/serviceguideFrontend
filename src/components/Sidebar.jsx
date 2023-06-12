@@ -11,22 +11,16 @@ import {
   BiDownArrow,
   BiReceipt,
 } from "react-icons/bi";
-import { TbTicket } from "react-icons/tb";
-import { RiCustomerService2Line, RiUserSettingsLine } from "react-icons/ri";
+import { RiUserSettingsLine } from "react-icons/ri";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
-import { IoMdNotificationsOutline } from "react-icons/io";
 import { useContext } from "react";
 import { MyContext } from "../context/UserContext";
 import { BluePaleteColors } from "../palete-colors/blue-colors.palete";
 import { GrayPaleteColors } from "../palete-colors/gray-colors.palete";
-import { initAxiosInterceptor } from "../AxiosHelper";
-import axios from "axios";
 import Logo from "../assets/Logo.png";
 import Cookies from "js-cookie";
 import Swal from "sweetalert2";
-
-initAxiosInterceptor();
 
 const StyledLink = styled(Link)`
   background-color: ${(props) =>
@@ -100,9 +94,7 @@ const Sidebar = () => {
       confirmButtonText: "Sí, cerrar sesión",
     }).then((result) => {
       if (result.isConfirmed) {
-        /* document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:01 GMT;"; */
         Cookies.remove("token");
-        console.log(Cookies.get("token", "TOKEN LOGOUT"));
         setUserData([]);
         navigate("/");
       }

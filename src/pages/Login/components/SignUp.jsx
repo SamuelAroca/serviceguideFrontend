@@ -12,7 +12,7 @@ import { RiWaterFlashFill } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { SignUpLayout } from "../styled-components/signup-layout.styled";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -54,13 +54,10 @@ const SignUp = () => {
       });
 
       if (response.status == 201) {
-        document.cookie = `token=${response.data.token}; max-age=${
-          3600 * 5
-        }; path=/; samesite=strict`;
         registerAlert();
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
 
@@ -156,14 +153,13 @@ const SignUp = () => {
                 Iniciar sesión
               </Link>
             </span>
-            
+
             <Link to={"/"}>
               <span className="back">
                 <ArrowBackIcon />
                 <p>Volver al inicio</p>
               </span>
             </Link>
-
           </form>
         </div>
       </SignUpLayout>

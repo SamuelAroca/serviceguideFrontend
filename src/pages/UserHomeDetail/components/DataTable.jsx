@@ -9,18 +9,20 @@ import {
   Paper,
   TextField,
 } from "@mui/material";
-import { FormatDate, formatPrice } from "../../../AxiosHelper";
+import { FormatDate, formatPrice } from "../../../Utilities";
 import { BsTrash, BsPencil } from "react-icons/bs";
-import axios from "axios";
 import { MyContext } from "../../../context/UserContext";
 import { getUserDataService } from "../../../services/get-user-data.service";
 import { toast, Toaster } from "react-hot-toast";
 import { getUserHousesService } from "../../../services/get-user-houses.service";
+import axios from "axios";
 import Modal from "./Modal";
 import FormEdit from "./FormEdit";
 import Swal from "sweetalert2";
+import Cookies from "js-cookie";
 
 const DataTable = ({ data }) => {
+  const accessToken = Cookies.get("token");
   const [filters, setFilters] = useState({
     date: "",
     amount: "",
@@ -45,7 +47,7 @@ const DataTable = ({ data }) => {
       const data = await getUserHousesService(userData.id);
       setHouses(data);
     } catch (err) {
-      console.log(err.message);
+      console.log(err);
     }
   };
 
@@ -79,7 +81,7 @@ const DataTable = ({ data }) => {
 
   const handleDeleteRow = async (id) => {
     Swal.fire({
-      title: `¿Deseas eliminar ${filters.receiptName}?`,
+      title: `¿Deseas eliminar el recibo?`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -88,11 +90,15 @@ const DataTable = ({ data }) => {
     }).then((result) => {
       if (result.isConfirmed) {
         try {
-          const data = axios.delete(`${apiUrl}/delete/${id}`);
+          const data = axios.delete(`${apiUrl}/delete/${id}`, {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          });
           getUserHouses(setHouses, userData?.id);
           notify();
         } catch (error) {
-          console.log(error.message);
+          console.log(error);
         }
       }
     });

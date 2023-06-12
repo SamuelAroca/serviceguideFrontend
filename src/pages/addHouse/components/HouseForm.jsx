@@ -1,16 +1,16 @@
 import { useEffect, useState, useContext } from "react";
 import { HouseFormLayout } from "../styled-components/houseform-layout.styled.js";
 import { TextField, Button, Grid, Tooltip } from "@mui/material";
-import { getToken, initAxiosInterceptor } from "../../../AxiosHelper";
 import { useNavigate } from "react-router-dom";
 import { Alert } from "@mui/material";
 import { myID } from "../AddHouse";
 import SelectCity from "../components/SelectCity";
 import axios from "axios";
 import { MyContext } from "../../../context/UserContext";
-import styles from "../styles/AddHouse.module.css";
 import { getUserHouses } from "../../../services/get-user-houses.service";
 import { Toaster, toast } from "react-hot-toast";
+import Cookies from "js-cookie";
+import Swal from "sweetalert2";
 
 const HouseForm = () => {
   const apiUrl = import.meta.env.VITE_API_HOUSE;
@@ -22,13 +22,12 @@ const HouseForm = () => {
   const [selectedCity, setSelectedCity] = useState(null);
   const [allCities, setAllCities] = useState([]);
   const navigate = useNavigate();
+  const accessToken = Cookies.get("token");
 
   const { userData, setHouses } = useContext(MyContext);
   const notify = () => toast.success("House update successfully");
 
   useEffect(() => {
-    initAxiosInterceptor();
-    tokenExist();
     fetchUserID();
     getCities();
   }, [myID]);
@@ -58,42 +57,21 @@ const HouseForm = () => {
     setIsLoading(false);
   };
 
-  const tokenExist = () => {
-    if (!getToken()) {
-      sessionExpired();
-    }
-  };
-
-  const sessionExpired = () => {
-    Swal.fire({
-      title: "Your session has expired!",
-      text: "You will have to log in again!",
-      icon: "error",
-      confirmButtonColor: "#3085d6",
-      confirmButtonText: "Ok, login again",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        navigate("/");
-        return;
-      }
-    });
-  };
-
   const handleCityChange = (event, value) => {
     setSelectedCity(value);
     setHouse({ ...house, cities: value });
   };
 
   const getCities = async (e) => {
-    if (getToken()) {
-      const data = await axios.get(`${apiCity}/listAll`);
-      try {
-        setAllCities(data.data);
-      } catch (err) {
-        console.log(err);
-      }
-    } else {
-      sessionExpired();
+    const data = await axios.get(`${apiCity}/listAll`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    try {
+      setAllCities(data.data);
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -141,54 +119,55 @@ const HouseForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const err = onValidate(house);
+    setErrors(err);
 
-    if (getToken()) {
-      const err = onValidate(house);
-      setErrors(err);
+    setIsLoading(true); // Empieza la carga
 
-      setIsLoading(true); // Empieza la carga
+    const updatedHouse = {
+      ...house,
+      user: {
+        id: userID,
+      },
+    };
 
-      const updatedHouse = {
-        ...house,
+    if (Object.keys(err).length === 0) {
+      try {
+        const response = await axios.post(
+          `${apiUrl}/add/${userData.id}`,
+          updatedHouse,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+        getUserHouses(setHouses, userData?.id);
+        Swal.fire("¡Casa registrada correctamente!", "", "success");
+        notify();
+      } catch (error) {
+        console.log(error);
+      }
+
+      setHouse({
+        name: "",
+        stratum: "",
+        neighborhood: "",
+        address: "",
+        contract: "",
+        cities: {
+          city: "",
+        },
         user: {
           id: userID,
         },
-      };
+      });
 
-      if (Object.keys(err).length === 0) {
-        try {
-          const response = await axios.post(
-            `${apiUrl}/add/${userData.id}`,
-            updatedHouse
-          );
-          getUserHouses(setHouses, userData?.id);
-          notify();
-        } catch (error) {
-          console.log(error);
-        }
-
-        setHouse({
-          name: "",
-          stratum: "",
-          neighborhood: "",
-          address: "",
-          contract: "",
-          cities: {
-            city: "",
-          },
-          user: {
-            id: userID,
-          },
-        });
-
-        setIsLoading(false);
-        // Se setea el form de la casa a vacio para que se limpie el formulario
-      } else {
-        setErrors(err);
-        setIsLoading(false);
-      }
+      setIsLoading(false);
+      // Se setea el form de la casa a vacio para que se limpie el formulario
     } else {
-      sessionExpired();
+      setErrors(err);
+      setIsLoading(false);
     }
   };
 

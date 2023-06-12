@@ -1,11 +1,12 @@
+import Cookies from "js-cookie";
 import HouseForm from "./components/HouseForm";
-import styles from "./styles/AddHouse.module.css";
 import axios from "axios";
 
 const myID = async () => {
   const apiUrl = import.meta.env.VITE_API_AUTH;
 
-  let accessToken = document.cookie.replace("token=", "");
+  const accessToken = Cookies.get("token");
+
   try {
     const result = await axios.get(`${apiUrl}/whoismyid/${accessToken}`);
     return result.data;

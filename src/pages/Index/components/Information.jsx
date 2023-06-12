@@ -17,18 +17,32 @@ const Information = () => {
             <div className={styles.paragraph_us}>
               <VscQuote className={styles.icon_paragraph} />
               <p className={styles.text_us}>
-              "El crecimiento personal y del equipo es fundamental para alcanzar los objetivos
-                 en la vida. Al trabajar juntos, podemos continuamente
-                 aprender y mejorar. Al invertir en nuestro crecimiento, podemos aumentar
-                 nuestra capacidad de liderazgo, colaboración y resolución de problemas,
-                 permitiéndonos enfrentar los desafíos con confianza y alcanzar nuestro
-                 potencial completo."
+                "El crecimiento personal y del equipo es fundamental para
+                alcanzar los objetivos en la vida. Al trabajar juntos, podemos
+                continuamente aprender y mejorar. Al invertir en nuestro
+                crecimiento, podemos aumentar nuestra capacidad de liderazgo,
+                colaboración y resolución de problemas, permitiéndonos enfrentar
+                los desafíos con confianza y alcanzar nuestro potencial
+                completo."
               </p>
               <div className={styles.container_us}>
                 <p className={styles.name_us}>
-                  <a target="blank" href="https://www.linkedin.com/in/jim-diaz-del-castilllo-a91913165/" className={styles.name_us}>Jim Díaz </a>
-                   y
-                  <a target="blank" href="https://www.linkedin.com/in/samuel-aroca-266421249/" className={styles.name_us}> Samuel Aroca</a>
+                  <a
+                    target="blank"
+                    href="https://www.linkedin.com/in/jim-diaz-del-castilllo-a91913165/"
+                    className={styles.name_us}
+                  >
+                    Jim Díaz{" "}
+                  </a>
+                  y
+                  <a
+                    target="blank"
+                    href="https://www.linkedin.com/in/samuel-aroca-266421249/"
+                    className={styles.name_us}
+                  >
+                    {" "}
+                    Samuel Aroca
+                  </a>
                 </p>
               </div>
             </div>

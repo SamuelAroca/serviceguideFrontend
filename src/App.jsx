@@ -12,16 +12,12 @@ import {
   getUserInformation,
 } from "./services/get-user-data.service";
 import { getUserHousesService } from "./services/get-user-houses.service";
-import { initAxiosInterceptor } from "./AxiosHelper";
 import NotFound from "./components/NotFound";
 import Cookies from "js-cookie";
-
-initAxiosInterceptor();
 
 const App = () => {
   const { updateUserData, setHouses, setUserData, userData } =
     useContext(MyContext);
-  console.log(userData, "INFROMACIÓN USUARIO APP");
 
   const accesTocken = Cookies.get("token");
 
