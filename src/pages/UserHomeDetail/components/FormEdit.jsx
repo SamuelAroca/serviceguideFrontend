@@ -14,7 +14,7 @@ import { Toaster, toast } from "react-hot-toast";
 import Swal from "sweetalert2";
 import Cookies from "js-cookie";
 
-const FormEdit = ({ userId, data }) => {
+const FormEdit = ({ userId, data, onClose }) => {
   const apiUrl = import.meta.env.VITE_API_RECEIPT;
   const apiHouse = import.meta.env.VITE_API_HOUSE;
 
@@ -126,8 +126,16 @@ const FormEdit = ({ userId, data }) => {
         );
         notifyUpdate();
         getUserHouses(setHouses, userData?.id);
+        onClose();
       } catch (error) {
+        let response = error;
         console.log(error);
+        let message = response.response.data.message;
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: message,
+        });
       }
 
       // Se setea el recibo a vacio para que se limpie el formulario

@@ -202,7 +202,7 @@ const DataTable = ({ data }) => {
         </Table>
       </TableContainer>
       <Modal isOpen={openModal} onClose={onCloseShare}>
-        {selectedItem && <FormEdit data={selectedItem} />}
+        {selectedItem && <FormEdit data={selectedItem} onClose={onCloseShare} />}
       </Modal>
       <Toaster position="bottom-right" />
     </div>

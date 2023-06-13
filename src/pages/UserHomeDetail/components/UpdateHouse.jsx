@@ -87,6 +87,14 @@ const UpdateHouse = ({ data, onClose }) => {
       errors.address = "La casa debe tener una 'Dirección'.";
     }
 
+    if (!house.stratum.trim()) {
+      errors.stratum = "Debe existir un estrato de la casa.";
+    } else if (!regexNumbers.test(house.stratum)) {
+      errors.stratum = "El 'Estrato' solo debe contener números.";
+    } else if (!regexStratum.test(house.stratum)) {
+      errors.stratum = "El 'Estrato' es únicamente del 1 al 6.";
+    }
+
     if (!house.contract.trim()) {
       errors.contract = "La casa debe tener un 'Contrato'.";
     } else if (!regexNumbers.test(house.contract)) {
