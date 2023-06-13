@@ -19,7 +19,7 @@ export { myID };
 
 const AddHouse = () => {
   return (
-    <div className={styles.div_main}>
+    <div>
       <div>
         <HouseForm />
       </div>
