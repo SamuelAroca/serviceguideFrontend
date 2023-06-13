@@ -131,6 +131,7 @@ const FormEdit = ({ userId, data, onClose }) => {
         let response = error;
         console.log(error);
         let message = response.response.data.message;
+        onClose();
         Swal.fire({
           icon: "error",
           title: "Oops...",
