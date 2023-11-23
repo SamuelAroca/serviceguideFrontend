@@ -130,6 +130,18 @@ const ReceiptForm = ({ userId }) => {
         getUserHouses(setHouses, userData?.id);
         Swal.fire("¡Recibo registrado correctamente!", "", "success");
         notify();
+        setReceipt({
+          receiptName: "",
+          price: "",
+          amount: "",
+          date: "",
+          typeService: {
+            type: receiptType,
+          },
+          house: {
+            name: "",
+          },
+        });
       } catch (error) {
         let response = error;
         let message = response.response.data.message;
@@ -140,19 +152,6 @@ const ReceiptForm = ({ userId }) => {
           text: message,
         });
       }
-
-      setReceipt({
-        receiptName: "",
-        price: "",
-        amount: "",
-        date: "",
-        typeService: {
-          type: receiptType,
-        },
-        house: {
-          name: "",
-        },
-      });
     } else {
       setErrors(err);
     }
