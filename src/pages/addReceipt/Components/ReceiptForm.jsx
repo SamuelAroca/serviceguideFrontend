@@ -1,4 +1,12 @@
-import { TextField, Button, Grid, Box } from "@mui/material";
+import {
+  TextField,
+  Button,
+  Grid,
+  Box,
+  FormControl,
+  FormControlLabel,
+  Switch,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
 import { FormLayout } from "./styled-components/form-layout.styled";
@@ -22,6 +30,8 @@ const ReceiptForm = ({ userId }) => {
   const [errors, setErrors] = useState([]);
   const [selectedHouse, setSelectedHouse] = useState(null);
   const [allHouses, setAllHouses] = useState([]);
+  const [disabled, setDisabled] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
   const navigate = useNavigate();
   let accessToken = Cookies.get("token");
 
@@ -106,54 +116,58 @@ const ReceiptForm = ({ userId }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const err = onValidate(receipt);
-    setErrors(err);
-
-    const updatedReceipt = {
-      ...receipt,
-      typeService: {
-        type: receiptType,
-      },
-    };
-
-    if (Object.keys(err).length === 0) {
-      try {
-        const response = await axios.post(
-          `${apiUrl}/add/${userData.id}`,
-          updatedReceipt,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
-        getUserHouses(setHouses, userData?.id);
-        Swal.fire("¡Recibo registrado correctamente!", "", "success");
-        notify();
-        setReceipt({
-          receiptName: "",
-          price: "",
-          amount: "",
-          date: "",
-          typeService: {
-            type: receiptType,
-          },
-          house: {
-            name: "",
-          },
-        });
-      } catch (error) {
-        let response = error;
-        let message = response.response.data.message;
-        console.log(error);
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: message,
-        });
-      }
+    if (disabled) {
+      handleUpload();
     } else {
+      const err = onValidate(receipt);
       setErrors(err);
+
+      const updatedReceipt = {
+        ...receipt,
+        typeService: {
+          type: receiptType,
+        },
+      };
+
+      if (Object.keys(err).length === 0) {
+        try {
+          const response = await axios.post(
+            `${apiUrl}/add/${userData.id}`,
+            updatedReceipt,
+            {
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+              },
+            }
+          );
+          getUserHouses(setHouses, userData?.id);
+          Swal.fire("¡Recibo registrado correctamente!", "", "success");
+          notify();
+          setReceipt({
+            receiptName: "",
+            price: "",
+            amount: "",
+            date: "",
+            typeService: {
+              type: receiptType,
+            },
+            house: {
+              name: "",
+            },
+          });
+        } catch (error) {
+          let response = error;
+          let message = response.response.data.message;
+          console.log(error);
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: message,
+          });
+        }
+      } else {
+        setErrors(err);
+      }
     }
   };
 
@@ -165,28 +179,85 @@ const ReceiptForm = ({ userId }) => {
     }));
   };
 
+  const switchChange = () => {
+    setDisabled(!disabled);
+  };
+
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
+
+  const handleUpload = async () => {
+    try {
+      if (!selectedFile) {
+        Swal.fire({
+          title: "Select a file first!",
+          text: "In PDF format",
+          icon: "danger",
+        });
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("archivoPdf", selectedFile);
+
+      const response = await axios.post(`${apiUrl}/read`, formData, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      if (response.status !== 200) {
+        Swal.fire({
+          title: "Good job!",
+          text: response.response.data.message,
+          icon: "success",
+        });
+        setSelectedFile(null);
+        getUserHouses(setHouses, userData?.id);
+      }
+    } catch (error) {
+      console.error("Error al subir el archivo:", error);
+    }
+  };
+
   return (
     <FormLayout>
       <h1>{receiptType.toUpperCase()}</h1>
       <div className="buttons-container">
-        <button onClick={() => setReceiptType("water")} className="type-button">
+        <FormControlLabel
+          control={<Switch />}
+          label="Subir PDF"
+          onChange={switchChange}
+        />
+        <button
+          onClick={() => setReceiptType("water")}
+          className="type-button"
+          disabled={disabled}
+        >
           <BsWater />
           Agua
         </button>
         <button
           onClick={() => setReceiptType("energy")}
           className="type-button"
+          disabled={disabled}
         >
           <BsFillLightbulbFill />
           Energia
         </button>
-        <button onClick={() => setReceiptType("gas")} className="type-button">
+        <button
+          onClick={() => setReceiptType("gas")}
+          className="type-button"
+          disabled={disabled}
+        >
           <BsFillCloudFill />
           Gas
         </button>
         <button
           onClick={() => setReceiptType("Sewerage")}
           className="type-button"
+          disabled={disabled}
         >
           <FaToilet />
           Alcantarillado
@@ -209,6 +280,7 @@ const ReceiptForm = ({ userId }) => {
                 type="text"
                 value={receipt.receiptName}
                 onChange={handleInputChange}
+                disabled={disabled}
               />
             </Tooltip>
             {errors.receiptName && (
@@ -230,6 +302,7 @@ const ReceiptForm = ({ userId }) => {
                 step="0.01"
                 value={receipt.price}
                 onChange={handleInputChange}
+                disabled={disabled}
               />
             </Tooltip>
             {errors.price && <Alert severity="warning"> {errors.price} </Alert>}
@@ -249,6 +322,7 @@ const ReceiptForm = ({ userId }) => {
                 step="0.01"
                 value={receipt.amount}
                 onChange={handleInputChange}
+                disabled={disabled}
               />
             </Tooltip>
             {errors.amount && (
@@ -269,6 +343,7 @@ const ReceiptForm = ({ userId }) => {
                   type="date"
                   value={receipt.date}
                   onChange={handleInputChange}
+                  disabled={disabled}
                 />
               </Tooltip>
               {errors.date && <Alert severity="warning"> {errors.date} </Alert>}
@@ -279,20 +354,33 @@ const ReceiptForm = ({ userId }) => {
                 onChange={handleHouseChange}
                 handleSelect={handleSelect}
                 receipt={receipt}
+                disabled={disabled}
               />
             </Grid>
           </Grid>
 
-          <Grid sx={{ display: "flex", justifyContent: "end" }} item xs={12}>
-            <Button
-              onClick={handleSubmit}
-              type="submit"
-              variant="contained"
-              color="primary"
-              style={{ width: "20%" }}
-            >
-              Guardar Recibo
-            </Button>
+          <Grid item xs={12} style={{ display: "flex", gap: "10px" }}>
+            <Grid item xs={6}>
+              <TextField
+                name="receiptPdf"
+                type="file"
+                accept="application/pdf"
+                onChange={handleFileChange}
+                fullWidth
+                disabled={!disabled}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <Button
+                onClick={handleSubmit}
+                type="submit"
+                variant="contained"
+                color="primary"
+                style={{ width: "100%", height: "100%" }}
+              >
+                Guardar Recibo
+              </Button>
+            </Grid>
           </Grid>
         </Grid>
       </form>
