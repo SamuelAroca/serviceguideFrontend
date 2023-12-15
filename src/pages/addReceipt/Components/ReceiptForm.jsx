@@ -193,7 +193,7 @@ const ReceiptForm = ({ userId }) => {
         Swal.fire({
           title: "Select a file first!",
           text: "In PDF format",
-          icon: "danger",
+          icon: "warning",
         });
         return;
       }
@@ -207,10 +207,10 @@ const ReceiptForm = ({ userId }) => {
         },
       });
 
-      if (response.status !== 200) {
+      if (response.status === 200) {
         Swal.fire({
           title: "Good job!",
-          text: response.response.data.message,
+          text: response.data.message,
           icon: "success",
         });
         setSelectedFile(null);
