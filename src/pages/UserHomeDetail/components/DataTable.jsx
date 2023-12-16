@@ -69,7 +69,7 @@ const DataTable = ({ data }) => {
         return formattedDate.includes(filters[key]);
       }
       if (key === "typeService") {
-        return item[key].type
+        return item[key]
           .toLowerCase()
           .includes(filters[key].toLowerCase());
       }
@@ -185,7 +185,7 @@ const DataTable = ({ data }) => {
                 </TableCell>
                 <TableCell>{formatPrice(item.price)}</TableCell>
                 <TableCell>{item.receiptName}</TableCell>
-                <TableCell>{item.typeService.type}</TableCell>
+                <TableCell>{item.typeService}</TableCell>
                 <TableCell>
                   <BsTrash
                     onClick={() => handleDeleteRow(item.id)}

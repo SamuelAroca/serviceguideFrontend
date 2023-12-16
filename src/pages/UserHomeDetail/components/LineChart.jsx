@@ -6,7 +6,7 @@ const LineChart = ({ data }) => {
   const chartRef = useRef(null);
 
   // Obtener los tipos de factura únicos
-  const types = Array.from(new Set(data?.map((item) => item.typeService.type)));
+  const types = Array.from(new Set(data?.map((item) => item.typeService)));
 
   // Colores de las líneas
   const colors = ["#F79F39", "#0ea5e9", "#F7C52D", "#0369a1"];
@@ -18,10 +18,10 @@ const LineChart = ({ data }) => {
     if (!monthlyData[month]) {
       monthlyData[month] = {};
     }
-    if (!monthlyData[month][item.typeService.type]) {
-      monthlyData[month][item.typeService.type] = 0;
+    if (!monthlyData[month][item.typeService]) {
+      monthlyData[month][item.typeService] = 0;
     }
-    monthlyData[month][item.typeService.type] += item.price;
+    monthlyData[month][item.typeService] += item.price;
   });
 
   // Crear un objeto de datasets para cada tipo de factura
