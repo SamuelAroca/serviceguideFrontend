@@ -47,9 +47,7 @@ const ReceiptForm = ({ userId }) => {
     price: "",
     amount: "",
     date: "",
-    typeService: {
-      type: receiptType,
-    },
+    typeService: receiptType,
     house: {
       name: "",
     },
@@ -148,9 +146,7 @@ const ReceiptForm = ({ userId }) => {
             price: "",
             amount: "",
             date: "",
-            typeService: {
-              type: receiptType,
-            },
+            typeService: receiptType,
             house: {
               name: "",
             },
@@ -231,7 +227,7 @@ const ReceiptForm = ({ userId }) => {
           onChange={switchChange}
         />
         <button
-          onClick={() => setReceiptType("water")}
+          onClick={() => setReceiptType("WATER")}
           className="type-button"
           disabled={disabled}
         >
@@ -239,7 +235,7 @@ const ReceiptForm = ({ userId }) => {
           Agua
         </button>
         <button
-          onClick={() => setReceiptType("energy")}
+          onClick={() => setReceiptType("ENERGY")}
           className="type-button"
           disabled={disabled}
         >
@@ -247,7 +243,7 @@ const ReceiptForm = ({ userId }) => {
           Energia
         </button>
         <button
-          onClick={() => setReceiptType("gas")}
+          onClick={() => setReceiptType("GAS")}
           className="type-button"
           disabled={disabled}
         >
@@ -255,7 +251,7 @@ const ReceiptForm = ({ userId }) => {
           Gas
         </button>
         <button
-          onClick={() => setReceiptType("Sewerage")}
+          onClick={() => setReceiptType("SEWERAGE")}
           className="type-button"
           disabled={disabled}
         >
