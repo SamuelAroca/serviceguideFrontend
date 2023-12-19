@@ -20,7 +20,7 @@ const FormEdit = ({ userId, data, onClose }) => {
 
   const { setHouses, userData } = useContext(MyContext);
 
-  const [receiptType, setReceiptType] = useState("water");
+  const [receiptType, setReceiptType] = useState(data?.typeService || "WATER");
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState([]);
   const [selectedHouse, setSelectedHouse] = useState(null);
@@ -29,6 +29,7 @@ const FormEdit = ({ userId, data, onClose }) => {
   const accessToken = Cookies.get("token");
 
   const notifyUpdate = () => toast.success("Update successfully.");
+  //setReceiptType(data?.typeService);
 
   useEffect(() => {
     getHouses();
@@ -49,9 +50,7 @@ const FormEdit = ({ userId, data, onClose }) => {
     price: data?.price,
     amount: data?.amount,
     date: date,
-    typeService: {
-      type: data?.typeService.type,
-    },
+    typeService: data?.typeService,
     house: {
       name: data?.houseName,
     },
@@ -108,9 +107,7 @@ const FormEdit = ({ userId, data, onClose }) => {
 
     const updatedReceipt = {
       ...receipt,
-      typeService: {
-        type: receiptType,
-      },
+      typeService: receiptType,
     };
 
     if (Object.keys(err).length === 0) {
@@ -145,9 +142,7 @@ const FormEdit = ({ userId, data, onClose }) => {
         price: "",
         amount: "",
         date: "",
-        typeService: {
-          type: receiptType,
-        },
+        typeService: receiptType,
         house: {
           name: "",
         },
@@ -172,23 +167,23 @@ const FormEdit = ({ userId, data, onClose }) => {
     <FormLayout style={{ height: "90vh" }}>
       <h1>{receiptType.toUpperCase()}</h1>
       <div className="buttons-container">
-        <button onClick={() => setReceiptType("water")} className="type-button">
+        <button onClick={() => setReceiptType("WATER")} className="type-button">
           <BsWater />
           Agua
         </button>
         <button
-          onClick={() => setReceiptType("energy")}
+          onClick={() => setReceiptType("ENERGY")}
           className="type-button"
         >
           <BsFillLightbulbFill />
           Energía
         </button>
-        <button onClick={() => setReceiptType("gas")} className="type-button">
+        <button onClick={() => setReceiptType("GAS")} className="type-button">
           <BsFillCloudFill />
           Gas
         </button>
         <button
-          onClick={() => setReceiptType("Sewerage")}
+          onClick={() => setReceiptType("SEWERAGE")}
           className="type-button"
         >
           <FaToilet />

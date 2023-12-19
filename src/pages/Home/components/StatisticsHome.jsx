@@ -40,7 +40,7 @@ const StatisticsHome = ({ idReceipt, typeReceipt }) => {
 
   const getData = async () => {
     const data = await axios.get(
-      `${apiUrl}/individualReceipt/BAR/${typeReceipt?.typeService.type}/${idReceipt?.id}`,
+      `${apiUrl}/individualReceipt/BAR/${typeReceipt?.typeService}/${idReceipt?.id}`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -50,7 +50,7 @@ const StatisticsHome = ({ idReceipt, typeReceipt }) => {
     setLabel(data.data.label);
     setPrice(data.data.price);
     setAmount(data.data.amount);
-    setType(typeReceipt.typeService.type);
+    setType(typeReceipt.typeService);
   };
 
   useEffect(() => {
