@@ -21,6 +21,7 @@ import { GrayPaleteColors } from "../palete-colors/gray-colors.palete";
 import Logo from "../assets/Logo.png";
 import Cookies from "js-cookie";
 import Swal from "sweetalert2";
+import axios from "axios";
 
 const StyledLink = styled(Link)`
   background-color: ${(props) =>
@@ -83,6 +84,8 @@ const Sidebar = () => {
 
   const { pathname } = useLocation();
 
+  const url = import.meta.env.VITE_API_AUTH;
+
   const handleLogout = async () => {
     Swal.fire({
       title: "¿Deseas cerrar sesión?",
@@ -94,11 +97,26 @@ const Sidebar = () => {
       confirmButtonText: "Sí, cerrar sesión",
     }).then((result) => {
       if (result.isConfirmed) {
+        logout();
+      }
+    });
+  };
+
+  const logout = async () => {
+    try {
+      const response = await axios.post(`${url}/logout`, null, {
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        },
+      });
+      if (response.status === 200) {
         Cookies.remove("token");
         setUserData([]);
         navigate("/");
       }
-    });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

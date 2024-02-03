@@ -72,7 +72,9 @@ const SignIn = () => {
         let response = await axios.post(`${url}/login`, email);
 
         if (response.status === 200) {
-          Cookies.set("token", response.data.token);
+          const currentDate = new Date();
+          const expirationDate = new Date(currentDate.getTime() + 24 * 60 *60 * 1000);
+          Cookies.set("token", response.data.token, { expires: expirationDate });
           getUserData();
           navigate("/private/major/home/");
         }

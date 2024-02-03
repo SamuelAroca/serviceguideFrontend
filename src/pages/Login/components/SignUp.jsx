@@ -53,7 +53,7 @@ const SignUp = () => {
         password: password,
       });
 
-      if (response.status == 201) {
+      if (response.status == 200) {
         registerAlert();
       }
     } catch (error) {

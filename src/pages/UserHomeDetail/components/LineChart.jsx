@@ -29,7 +29,7 @@ const LineChart = ({ data }) => {
     const prices = Object.values(monthlyData).map(
       (monthData) => monthData[type] || 0
     );
-    //prices.reverse();
+    prices.reverse();
     return {
       label: type,
       data: prices,
