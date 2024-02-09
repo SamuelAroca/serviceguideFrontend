@@ -181,7 +181,7 @@ const DataTable = ({ data }) => {
                 <TableCell>{FormatDate(item.date)}</TableCell>
                 <TableCell>
                   {item.amount}{" "}
-                  {item.typeService.type === "ENERGY" ? "KWh" : " m³"}
+                  {item.typeService === "ENERGY" ? "kwh" : " m³"}
                 </TableCell>
                 <TableCell>{formatPrice(item.price)}</TableCell>
                 <TableCell>{item.receiptName}</TableCell>
