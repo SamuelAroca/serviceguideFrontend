@@ -6,6 +6,7 @@ import {
   FormControl,
   FormControlLabel,
   Switch,
+  Typography,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
@@ -21,16 +22,16 @@ import { getUserHousesService } from "../../../services/get-user-houses.service"
 import { Toaster, toast } from "react-hot-toast";
 import Swal from "sweetalert2";
 import Cookies from "js-cookie";
+import { IoIosWarning } from "react-icons/io";
 
 const ReceiptForm = ({ userId }) => {
   const apiUrl = import.meta.env.VITE_API_RECEIPT;
   const apiHouse = import.meta.env.VITE_API_HOUSE;
 
-  const [receiptType, setReceiptType] = useState("water");
+  const [receiptType, setReceiptType] = useState("WATER");
   const [errors, setErrors] = useState([]);
   const [selectedHouse, setSelectedHouse] = useState(null);
   const [allHouses, setAllHouses] = useState([]);
-  const [disabled, setDisabled] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const navigate = useNavigate();
   let accessToken = Cookies.get("token");
@@ -114,7 +115,7 @@ const ReceiptForm = ({ userId }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (disabled) {
+    if (selectedFile != null) {
       handleUpload();
     } else {
       const err = onValidate(receipt);
@@ -122,9 +123,7 @@ const ReceiptForm = ({ userId }) => {
 
       const updatedReceipt = {
         ...receipt,
-        typeService: {
-          type: receiptType,
-        },
+        typeService: receiptType,
       };
 
       if (Object.keys(err).length === 0) {
@@ -175,10 +174,6 @@ const ReceiptForm = ({ userId }) => {
     }));
   };
 
-  const switchChange = () => {
-    setDisabled(!disabled);
-  };
-
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
   };
@@ -221,39 +216,24 @@ const ReceiptForm = ({ userId }) => {
     <FormLayout>
       <h1>{receiptType.toUpperCase()}</h1>
       <div className="buttons-container">
-        <FormControlLabel
-          control={<Switch />}
-          label="Subir PDF"
-          onChange={switchChange}
-        />
-        <button
-          onClick={() => setReceiptType("WATER")}
-          className="type-button"
-          disabled={disabled}
-        >
+        <button onClick={() => setReceiptType("WATER")} className="type-button">
           <BsWater />
           Agua
         </button>
         <button
           onClick={() => setReceiptType("ENERGY")}
           className="type-button"
-          disabled={disabled}
         >
           <BsFillLightbulbFill />
           Energia
         </button>
-        <button
-          onClick={() => setReceiptType("GAS")}
-          className="type-button"
-          disabled={disabled}
-        >
+        <button onClick={() => setReceiptType("GAS")} className="type-button">
           <BsFillCloudFill />
           Gas
         </button>
         <button
           onClick={() => setReceiptType("SEWERAGE")}
           className="type-button"
-          disabled={disabled}
         >
           <FaToilet />
           Alcantarillado
@@ -276,7 +256,6 @@ const ReceiptForm = ({ userId }) => {
                 type="text"
                 value={receipt.receiptName}
                 onChange={handleInputChange}
-                disabled={disabled}
               />
             </Tooltip>
             {errors.receiptName && (
@@ -298,7 +277,6 @@ const ReceiptForm = ({ userId }) => {
                 step="0.01"
                 value={receipt.price}
                 onChange={handleInputChange}
-                disabled={disabled}
               />
             </Tooltip>
             {errors.price && <Alert severity="warning"> {errors.price} </Alert>}
@@ -318,7 +296,6 @@ const ReceiptForm = ({ userId }) => {
                 step="0.01"
                 value={receipt.amount}
                 onChange={handleInputChange}
-                disabled={disabled}
               />
             </Tooltip>
             {errors.amount && (
@@ -339,7 +316,6 @@ const ReceiptForm = ({ userId }) => {
                   type="date"
                   value={receipt.date}
                   onChange={handleInputChange}
-                  disabled={disabled}
                 />
               </Tooltip>
               {errors.date && <Alert severity="warning"> {errors.date} </Alert>}
@@ -350,21 +326,36 @@ const ReceiptForm = ({ userId }) => {
                 onChange={handleHouseChange}
                 handleSelect={handleSelect}
                 receipt={receipt}
-                disabled={disabled}
               />
             </Grid>
           </Grid>
 
-          <Grid item xs={12} style={{ display: "flex", gap: "10px" }}>
+          <Grid item xs={12} style={{ display: "flex", gap: "10px", marginTop:"4rem" }}>
             <Grid item xs={6}>
-              <TextField
-                name="receiptPdf"
-                type="file"
-                accept="application/pdf"
-                onChange={handleFileChange}
-                fullWidth
-                disabled={!disabled}
-              />
+              <Tooltip
+                title={
+                  <Typography
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <IoIosWarning style={{ color: "yellow" }} />
+                    Solo si vas a subir un recibo en PDF
+                  </Typography>
+                }
+                placement="top-start"
+                open={true}
+              >
+                <TextField
+                  name="receiptPdf"
+                  type="file"
+                  accept="application/pdf"
+                  onChange={handleFileChange}
+                  fullWidth
+                />
+              </Tooltip>
             </Grid>
             <Grid item xs={6}>
               <Button
