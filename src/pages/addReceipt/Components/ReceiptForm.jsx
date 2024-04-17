@@ -208,7 +208,14 @@ const ReceiptForm = ({ userId }) => {
         getUserHouses(setHouses, userData?.id);
       }
     } catch (error) {
-      console.error("Error al subir el archivo:", error);
+      let response = error;
+      let message = response.response.data.message;
+      console.log(error);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: message,
+      });
     }
   };
 
@@ -330,7 +337,11 @@ const ReceiptForm = ({ userId }) => {
             </Grid>
           </Grid>
 
-          <Grid item xs={12} style={{ display: "flex", gap: "10px", marginTop:"4rem" }}>
+          <Grid
+            item
+            xs={12}
+            style={{ display: "flex", gap: "10px", marginTop: "4rem" }}
+          >
             <Grid item xs={6}>
               <Tooltip
                 title={
