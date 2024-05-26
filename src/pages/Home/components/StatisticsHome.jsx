@@ -47,6 +47,7 @@ const StatisticsHome = ({ idReceipt, typeReceipt }) => {
         },
       }
     );
+    console.log(data);
     setLabel(data.data.label);
     setPrice(data.data.price);
     setAmount(data.data.amount);

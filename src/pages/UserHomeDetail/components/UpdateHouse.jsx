@@ -11,6 +11,8 @@ import { Toaster, toast } from "react-hot-toast";
 import styles from "../Styles/UpdateHouse.module.css";
 import Swal from "sweetalert2";
 import Cookies from "js-cookie";
+import Select from "react-select";
+import { Height } from "@mui/icons-material";
 
 const UpdateHouse = ({ data, onClose }) => {
   const apiUrl = import.meta.env.VITE_API_HOUSE;
@@ -29,6 +31,13 @@ const UpdateHouse = ({ data, onClose }) => {
     getCities();
   }, []);
 
+  useEffect(() => {
+    if (data?.cities?.city) {
+      // Si hay una ciudad en los datos, establecerla como la ciudad seleccionada
+      setSelectedCity({ label: data.cities.city, value: data.cities.city });
+    }
+  }, [data]);
+
   const [house, setHouse] = useState({
     name: data?.name,
     stratum: data?.stratum,
@@ -40,13 +49,15 @@ const UpdateHouse = ({ data, onClose }) => {
     },
   });
 
+  console.log(house);
+
   const handleSelect = (city) => {
     setHouse({ ...house, cities: { city: city } });
   };
 
-  const handleCityChange = (event, value) => {
-    setSelectedCity(value);
-    setHouse({ ...house, cities: value });
+  const handleCityChange = (selectedOption) => {
+    setSelectedCity(selectedOption);
+    setHouse({ ...house, cities: { city: selectedOption.value } });
   };
 
   const getCities = async (e) => {
@@ -109,6 +120,7 @@ const UpdateHouse = ({ data, onClose }) => {
     setErrors(err);
 
     setIsLoading(true); // Empieza la carga
+    console.log(house);
 
     if (Object.keys(err).length === 0) {
       try {
@@ -149,6 +161,11 @@ const UpdateHouse = ({ data, onClose }) => {
       [name]: value,
     }));
   }
+
+  const cityOptions = allCities.map((city) => ({
+    label: city.city,
+    value: city.city,
+  }));
 
   return (
     <HouseFormLayout>
@@ -256,12 +273,11 @@ const UpdateHouse = ({ data, onClose }) => {
             )}
           </Grid>
           <Grid item xs={12}>
-            <SelectCity
-              fullWidth
-              options={allCities}
+            <Select
+              value={selectedCity}
               onChange={handleCityChange}
-              handleSelect={handleSelect}
-              house={house}
+              options={cityOptions}
+              placeholder="Seleccionar ciudad"
             />
           </Grid>
           <Grid item xs={12} className={styles.div_button}>

@@ -1,5 +1,4 @@
-import { TextField, Button, Grid, Box } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { TextField, Button, Grid } from "@mui/material";
 import { useEffect, useState, useContext } from "react";
 import { FormLayout } from "../../addReceipt/Components/styled-components/form-layout.styled";
 import { BsWater, BsFillLightbulbFill, BsFillCloudFill } from "react-icons/bs";
@@ -7,12 +6,12 @@ import { FaToilet } from "react-icons/fa";
 import { Tooltip } from "@mui/material";
 import { Alert } from "@mui/material";
 import axios from "axios";
-import SelectHouse from "../../addReceipt/Components/SelectHouse";
 import { getUserHouses } from "../../../services/get-user-houses.service";
 import { MyContext } from "../../../context/UserContext";
-import { Toaster, toast } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import Swal from "sweetalert2";
 import Cookies from "js-cookie";
+import Select from "react-select";
 
 const FormEdit = ({ userId, data, onClose }) => {
   const apiUrl = import.meta.env.VITE_API_RECEIPT;
@@ -25,15 +24,19 @@ const FormEdit = ({ userId, data, onClose }) => {
   const [errors, setErrors] = useState([]);
   const [selectedHouse, setSelectedHouse] = useState(null);
   const [allHouses, setAllHouses] = useState([]);
-  const navigate = useNavigate();
   const accessToken = Cookies.get("token");
 
   const notifyUpdate = () => toast.success("Update successfully.");
-  //setReceiptType(data?.typeService);
 
   useEffect(() => {
     getHouses();
   }, [userId]);
+
+  useEffect(() => {
+    if (data?.houseName) {
+      setSelectedHouse({ label: data?.houseName, value: data?.houseName });
+    }
+  }, [data]);
 
   const formatDate = (timestamp) => {
     const date = new Date(timestamp);
@@ -56,13 +59,9 @@ const FormEdit = ({ userId, data, onClose }) => {
     },
   });
 
-  const handleSelect = (name) => {
-    setReceipt({ ...receipt, house: { name: name } });
-  };
-
-  const handleHouseChange = (event, value) => {
-    setSelectedHouse(value);
-    setReceipt({ ...receipt, house: value });
+  const handleHouseChange = (name) => {
+    setSelectedHouse(name);
+    setReceipt({ ...receipt, house: { name: name.value } });
   };
 
   const getHouses = async () => {
@@ -82,7 +81,6 @@ const FormEdit = ({ userId, data, onClose }) => {
     let errors = {};
     const regexTitle = /^[a-zA-Z0-9\s-]+$/; // Expresión regular para validar nombres
     const regexPrice = /^[0-9]+(\.[0-9]{1,2})?$/; // Expresión regular para validar precios
-    const regexQuantity = /^[0-9]+(\.[0-9]{1,3})?$/; // Expresión regular para validar cantidades
 
     if (!receipt.receiptName.trim()) {
       errors.receiptName = "Debe existir un nombre del recibo.";
@@ -162,6 +160,11 @@ const FormEdit = ({ userId, data, onClose }) => {
       [name]: value,
     }));
   };
+
+  const houseOptions = allHouses.map((house) => ({
+    label: house,
+    value: house,
+  }));
 
   return (
     <FormLayout style={{ height: "90vh" }}>
@@ -277,11 +280,21 @@ const FormEdit = ({ userId, data, onClose }) => {
               {errors.date && <Alert severity="warning"> {errors.date} </Alert>}
             </Grid>
             <Grid item xs={5.7}>
-              <SelectHouse
-                options={allHouses}
+              <Select
+                value={selectedHouse}
                 onChange={handleHouseChange}
-                handleSelect={handleSelect}
-                receipt={receipt}
+                options={houseOptions}
+                placeholder="Seleccione la casa"
+                styles={{
+                  container: (provided) => ({
+                    ...provided,
+                    height: '100%',
+                  }),
+                  control: (provided) => ({
+                    ...provided,
+                    height: "100%",
+                  }),
+                }}
               />
             </Grid>
           </Grid>
