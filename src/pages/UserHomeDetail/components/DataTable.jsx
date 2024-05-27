@@ -171,7 +171,7 @@ const DataTable = ({ data }) => {
               </TableCell>
               <TableCell>
                 <BsTrash />
-                <BsPencil style={{ cursor: "pointer", marginLeft: "10px" }} />
+                <BsPencil style={{ marginLeft: "10px" }} />
               </TableCell>
             </TableRow>
           </TableHead>
