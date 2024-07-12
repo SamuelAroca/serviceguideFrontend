@@ -211,7 +211,7 @@ const HouseForm = () => {
       if (response.status === 200) {
         Swal.fire({
           title: "Good job!",
-          text: response.data.message,
+          text: "House saved successfully",
           icon: "success",
         });
         setSelectedFile(null);
