@@ -24,12 +24,14 @@ const LineChart = ({ data }) => {
     monthlyData[month][item.typeService] += item.price;
   });
 
-  // Crear un objeto de datasets para cada tipo de factura
+  // Crear las etiquetas de mes ordenadas
+  const labels = Object.keys(monthlyData).sort(
+    (a, b) => moment(a, "MMM YYYY").toDate() - moment(b, "MMM YYYY").toDate()
+  );
+
+  // Crear un objeto de datasets para cada tipo de factura con los datos ordenados
   const datasets = types?.map((type, index) => {
-    const prices = Object.values(monthlyData).map(
-      (monthData) => monthData[type] || 0
-    );
-    //prices.reverse();
+    const prices = labels.map((label) => monthlyData[label]?.[type] || 0);
     return {
       label: type,
       data: prices,
@@ -40,11 +42,6 @@ const LineChart = ({ data }) => {
       pointRadius: 0,
       borderWidth: 2,
     };
-  });
-
-  // Crear las etiquetas de mes
-  const labels = Object.keys(monthlyData).sort((a, b) => {
-    return moment(a, "MMM YYYY").toDate() - moment(b, "MMM YYYY").toDate();
   });
 
   // Crear el objeto de configuración para el gráfico
@@ -69,13 +66,13 @@ const LineChart = ({ data }) => {
     };
   }, []);
 
-  //Estilos del gráfico
+  // Estilos del gráfico
   const chartOptions = {
     maintainAspectRatio: false,
     scales: {
       x: {
         grid: {
-          display: false,
+          display: true,
         },
       },
       y: {
