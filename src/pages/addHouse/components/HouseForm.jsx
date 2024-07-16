@@ -1,6 +1,13 @@
 import { useEffect, useState, useContext } from "react";
 import { HouseFormLayout } from "../styled-components/houseform-layout.styled.js";
-import { TextField, Button, Grid, Tooltip, Typography } from "@mui/material";
+import {
+  TextField,
+  Button,
+  Grid,
+  Tooltip,
+  Typography,
+  CircularProgress,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { Alert } from "@mui/material";
 import { myID } from "../AddHouse";
@@ -190,12 +197,14 @@ const HouseForm = () => {
 
   const handleUpload = async () => {
     try {
+      setIsLoading(true);
       if (!selectedFile) {
         Swal.fire({
           title: "Select a file first!",
           text: "In PDF format",
           icon: "warning",
         });
+        setIsLoading(false);
         return;
       }
 
@@ -214,6 +223,7 @@ const HouseForm = () => {
           text: "House saved successfully",
           icon: "success",
         });
+        setIsLoading(false);
         setSelectedFile(null);
         getUserHouses(setHouses, userData?.id);
       }
@@ -377,10 +387,13 @@ const HouseForm = () => {
               type="submit"
               variant="contained"
               color="primary"
-              disabled={isLoading}
-              style={{ width: "100%", height: "100%" }}
+              style={{ width: "100%", height: "100%", position: "relative" }}
             >
-              Guardar Casa
+              {isLoading ? (
+                <CircularProgress size={24} style={{ color: "white" }} />
+              ) : (
+                "Guardar Casa"
+              )}
             </Button>
           </Grid>
         </Grid>

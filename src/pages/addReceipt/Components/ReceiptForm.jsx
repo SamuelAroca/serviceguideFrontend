@@ -7,6 +7,7 @@ import {
   FormControlLabel,
   Switch,
   Typography,
+  CircularProgress,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
@@ -29,6 +30,7 @@ const ReceiptForm = ({ userId }) => {
   const apiHouse = import.meta.env.VITE_API_HOUSE;
 
   const [receiptType, setReceiptType] = useState("WATER");
+  const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState([]);
   const [selectedHouse, setSelectedHouse] = useState(null);
   const [allHouses, setAllHouses] = useState([]);
@@ -115,6 +117,7 @@ const ReceiptForm = ({ userId }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     if (selectedFile != null) {
       handleUpload();
     } else {
@@ -151,6 +154,7 @@ const ReceiptForm = ({ userId }) => {
             },
           });
         } catch (error) {
+          setIsLoading(false);
           let response = error;
           let message = response.response.data.message;
           console.log(error);
@@ -161,6 +165,7 @@ const ReceiptForm = ({ userId }) => {
           });
         }
       } else {
+        setIsLoading(false);
         setErrors(err);
       }
     }
@@ -186,6 +191,7 @@ const ReceiptForm = ({ userId }) => {
           text: "In PDF format",
           icon: "warning",
         });
+        setIsLoading(false);
         return;
       }
 
@@ -204,10 +210,12 @@ const ReceiptForm = ({ userId }) => {
           text: response.data.message,
           icon: "success",
         });
+        setIsLoading(false);
         setSelectedFile(null);
         getUserHouses(setHouses, userData?.id);
       }
     } catch (error) {
+      setIsLoading(false);
       let response = error;
       let message = response.response.data.message;
       console.log(error);
@@ -376,7 +384,11 @@ const ReceiptForm = ({ userId }) => {
                 color="primary"
                 style={{ width: "100%", height: "100%" }}
               >
-                Guardar Recibo
+                {isLoading ? (
+                  <CircularProgress size={30} style={{ color: "white" }} />
+                ) : (
+                  "Guardar Recibo"
+                )}
               </Button>
             </Grid>
           </Grid>
