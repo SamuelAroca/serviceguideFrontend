@@ -49,8 +49,6 @@ const UpdateHouse = ({ data, onClose }) => {
     },
   });
 
-  console.log(house);
-
   const handleSelect = (city) => {
     setHouse({ ...house, cities: { city: city } });
   };
@@ -120,7 +118,6 @@ const UpdateHouse = ({ data, onClose }) => {
     setErrors(err);
 
     setIsLoading(true); // Empieza la carga
-    console.log(house);
 
     if (Object.keys(err).length === 0) {
       try {

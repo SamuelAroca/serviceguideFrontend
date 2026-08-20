@@ -49,7 +49,6 @@ const Slideshow = () => {
       const slideSize = slideshow.current.children[0].offsetWidth;
 
       slideshow.current.style.transform = `translate(-${slideSize}px)`;
-      console.log("antes timeout");
 
       setTimeout(() => {
         slideshow.current.style.transition = "500ms ease-out all";

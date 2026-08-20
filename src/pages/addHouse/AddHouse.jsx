@@ -4,11 +4,14 @@ import axios from "axios";
 
 const myID = async () => {
   const apiUrl = import.meta.env.VITE_API_AUTH;
-
   const accessToken = Cookies.get("token");
 
   try {
-    const result = await axios.get(`${apiUrl}/whoismyid/${accessToken}`);
+    const result = await axios.get(`${apiUrl}/whoismyid`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
     return result.data;
   } catch (error) {
     console.log(error);
