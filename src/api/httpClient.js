@@ -14,4 +14,28 @@ httpClient.interceptors.request.use((config) => {
   return config;
 });
 
+// Si el backend responde 401 teniendo cookie de token, es que el token
+// dejó de ser válido (p. ej. se inició sesión en otro navegador, lo que
+// revoca los tokens anteriores). Sin esto, el usuario se queda viendo
+// una interfaz "logueada" donde ninguna petición carga nada.
+let isRedirectingToLogin = false;
+
+httpClient.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const hadToken = Boolean(Cookies.get("token"));
+    if (
+      error.response?.status === 401 &&
+      hadToken &&
+      !isRedirectingToLogin &&
+      !window.location.pathname.startsWith("/login")
+    ) {
+      isRedirectingToLogin = true;
+      Cookies.remove("token");
+      window.location.href = "/login/signIn?reason=session-expired";
+    }
+    return Promise.reject(error);
+  }
+);
+
 export default httpClient;

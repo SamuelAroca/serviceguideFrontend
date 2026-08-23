@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import styles from "../styles/Login.module.css";
 import CarouselDemo from "../../../components/CarouselDemo";
 import TextField from "@mui/material/TextField";
@@ -7,7 +7,7 @@ import img2 from "../../../assets/alcantarillado.webp";
 import img3 from "../../../assets/Electricistas-scaled.webp";
 import img4 from "../../../assets/gas-natural.webp";
 import httpClient from "../../../api/httpClient";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { RiWaterFlashFill } from "react-icons/ri";
 import { RiEyeLine } from "react-icons/ri";
 import { Alert } from "@mui/material";
@@ -44,8 +44,20 @@ const SignIn = () => {
 
   const [errors, setErrors] = useState([]);
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const url = import.meta.env.VITE_API_AUTH;
+
+  useEffect(() => {
+    if (searchParams.get("reason") === "session-expired") {
+      Swal.fire({
+        icon: "info",
+        title: "Tu sesión expiró",
+        text: "Iniciaste sesión en otro lugar o tu sesión ya no es válida. Vuelve a iniciar sesión.",
+      });
+      setSearchParams({}, { replace: true });
+    }
+  }, []);
 
   const onValidate = () => {
     let errors = {};
