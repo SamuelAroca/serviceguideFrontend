@@ -63,3 +63,13 @@
     height: auto;
   }
 }
+
+@media (max-width: 1024px) {
+  .main {
+    height: auto;
+  }
+
+  .container_services {
+    flex-direction: column;
+  }
+}

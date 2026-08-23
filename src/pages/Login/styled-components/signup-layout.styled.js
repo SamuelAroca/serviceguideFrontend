@@ -93,4 +93,17 @@ export const SignUpLayout = styled.div`
   p {
     margin: 0;
   }
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+    width: 92vw;
+    height: auto;
+    padding: 2rem 0;
+
+    .form_container form {
+      min-width: unset;
+      max-width: 100%;
+      width: 100%;
+    }
+  }
 `;
