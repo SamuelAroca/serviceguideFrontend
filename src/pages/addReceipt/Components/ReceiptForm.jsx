@@ -350,7 +350,6 @@ const ReceiptForm = ({ userId }) => {
                   </Typography>
                 }
                 placement="top-start"
-                open={true}
               >
                 <TextField
                   name="receiptPdf"

@@ -25,21 +25,21 @@ import httpClient from "../api/httpClient";
 
 const StyledLink = styled(Link)`
   background-color: ${(props) =>
-    props.rute === true ? `${BluePaleteColors.C50}` : ""};
+    props.$rute === true ? `${BluePaleteColors.C50}` : ""};
   .icon {
     color: ${(props) =>
-      props.rute === true
+      props.$rute === true
         ? `${BluePaleteColors.C500}`
         : `${GrayPaleteColors.C300}`};
   }
   p {
     color: ${(props) =>
-      props.rute === true
+      props.$rute === true
         ? `${BluePaleteColors.C500}`
         : `${GrayPaleteColors.C300}`};
   }
   border: ${(props) =>
-    props.rute === true ? `1px solid ${BluePaleteColors.C100}` : ""};
+    props.$rute === true ? `1px solid ${BluePaleteColors.C100}` : ""};
 `;
 
 const StyledHouseLink = styled(Link)`
@@ -53,7 +53,7 @@ const StyledHouseLink = styled(Link)`
   transition: 0.2s all;
   p {
     color: ${(props) =>
-      props.rute === true
+      props.$rute === true
         ? `${BluePaleteColors.C600}`
         : `${GrayPaleteColors.C300}`};
   }
@@ -64,10 +64,10 @@ const StyledHouseLink = styled(Link)`
     border-radius: 4px;
     margin-right: 10px;
     background-color: ${(props) =>
-      props.rute === true
+      props.$rute === true
         ? `${BluePaleteColors.C600}`
         : `${GrayPaleteColors.C300}`};
-    opacity: ${(props) => (props.rute === true ? `100%` : `50%`)};
+    opacity: ${(props) => (props.$rute === true ? `100%` : `50%`)};
   }
 
   &:hover {
@@ -124,28 +124,28 @@ const Sidebar = () => {
       <div className="middle_sidebar">
         <StyledLink
           to={`/private/major/home`}
-          rute={pathname === `/private/major/home`}
+          $rute={pathname === `/private/major/home`}
         >
           <BiHomeAlt className="icon" />
           <p>Inicio</p>
         </StyledLink>
         <StyledLink
           to={`/private/major/houses/addhouse`}
-          rute={pathname === ``}
+          $rute={pathname === `/private/major/houses/addhouse`}
         >
           <BiAddToQueue className="icon" />
           <p>Agregar casa</p>
         </StyledLink>
         <StyledLink
           to={`/private/major/receipts/addreceipt`}
-          rute={pathname === `/private/house-detail`}
+          $rute={pathname === `/private/major/receipts/addreceipt`}
         >
           <BiReceipt className="icon" />
           <p>Agregar recibo</p>
         </StyledLink>
         <StyledLink
           onClick={() => setIsSessionOpen(!isSessionOpen)}
-          rute={pathname.includes(`house-detail`)}
+          $rute={pathname.includes(`house-detail`)}
         >
           <BiDownArrow
             className="arrow_icon"
@@ -169,14 +169,17 @@ const Sidebar = () => {
             <li key={c.id}>
               <StyledHouseLink
                 to={`/private/house-detail/${c.id}`}
-                rute={pathname === `/private/house-detail/${c.id}`}
+                $rute={pathname === `/private/house-detail/${c.id}`}
               >
                 <p>{c.name}</p>
               </StyledHouseLink>
             </li>
           ))}
         </motion.ul>
-        <StyledLink to={`/private/major/user/settings`} rute={pathname === ``}>
+        <StyledLink
+          to={`/private/major/user/settings`}
+          $rute={pathname === `/private/major/user/settings`}
+        >
           <RiUserSettingsLine className="icon" />
           <p>Ajustes de usuario</p>
         </StyledLink>

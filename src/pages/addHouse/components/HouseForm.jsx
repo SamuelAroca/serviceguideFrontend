@@ -357,7 +357,6 @@ const HouseForm = () => {
                 </Typography>
               }
               placement="top-start"
-              open={true}
             >
               <TextField
                 name="receiptPdf"

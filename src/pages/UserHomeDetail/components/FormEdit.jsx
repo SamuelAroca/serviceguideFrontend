@@ -156,7 +156,7 @@ const FormEdit = ({ userId, data, onClose }) => {
   }));
 
   return (
-    <FormLayout style={{ height: "90vh" }}>
+    <FormLayout>
       <h1>{receiptType.toUpperCase()}</h1>
       <div className="buttons-container">
         <button onClick={() => setReceiptType("WATER")} className="type-button">

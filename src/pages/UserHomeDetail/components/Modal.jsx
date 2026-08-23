@@ -16,15 +16,16 @@ const ModalOverlay = styled.div`
 `;
 
 const ModalContainer = styled.div`
-  padding: 1rem;
+  padding: 1.5rem;
   border-radius: 0.5rem;
   max-height: calc(100vh - 40px);
-  height: calc(100vh - 40px);
-  max-width: auto;
+  width: min(90vw, 560px);
+  max-width: 90vw;
   overflow: auto;
   box-sizing: border-box;
   position: relative;
   background-color: ${GrayPaleteColors.C50};
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   .close_icon {
     position: absolute;
     top: 10px;
