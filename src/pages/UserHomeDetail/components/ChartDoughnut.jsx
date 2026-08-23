@@ -3,6 +3,7 @@ import { Doughnut } from "react-chartjs-2";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { Button } from "@mui/material";
+import "../../../chartSetup";
 
 const ChartDoughnut = ({ datos, percentages, value }) => {
   const [changeChart, setChangeChart] = useState(false);

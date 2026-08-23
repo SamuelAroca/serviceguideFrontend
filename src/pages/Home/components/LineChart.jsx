@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import { Line } from "react-chartjs-2";
 import moment from "moment";
+import "../../../chartSetup";
 
 const LineChart = ({ data }) => {
   const chartRef = useRef(null);

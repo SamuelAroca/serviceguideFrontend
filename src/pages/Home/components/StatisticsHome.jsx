@@ -1,33 +1,8 @@
 import React, { useEffect, useState } from "react";
 import styles from "../Styles/StatisticHome.module.css";
 import { Bar } from "react-chartjs-2";
-import {
-  Chart as ChartJS,
-  BarElement,
-  ArcElement,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-  Filler,
-} from "chart.js";
+import "../../../chartSetup";
 import httpClient from "../../../api/httpClient";
-
-ChartJS.register(
-  ArcElement,
-  BarElement,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-  Filler
-);
 
 const StatisticsHome = ({ idReceipt, typeReceipt }) => {
   const apiUrl = import.meta.env.VITE_API_STATISTIC;
