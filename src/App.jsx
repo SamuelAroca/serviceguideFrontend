@@ -56,6 +56,7 @@ const App = () => {
   };
 
   useEffect(() => {
+    if (!accesTocken) return;
     getUserData();
     getUser();
   }, [accesTocken]);

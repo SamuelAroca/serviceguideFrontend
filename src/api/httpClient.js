@@ -14,19 +14,26 @@ httpClient.interceptors.request.use((config) => {
   return config;
 });
 
-// Si el backend responde 401 teniendo cookie de token, es que el token
-// dejó de ser válido (p. ej. se inició sesión en otro navegador, lo que
-// revoca los tokens anteriores). Sin esto, el usuario se queda viendo
-// una interfaz "logueada" donde ninguna petición carga nada.
+// Si una petición que SÍ llevaba token recibe 401, es que ese token dejó
+// de ser válido (p. ej. se inició sesión en otro navegador, lo que revoca
+// los tokens anteriores). Sin esto, el usuario se queda viendo una
+// interfaz "logueada" donde ninguna petición carga nada.
+//
+// Importante: nos fijamos en si ESTA petición concreta llevaba el header
+// Authorization al enviarse (error.config), no en si hay cookie AHORA.
+// La app dispara llamadas sin token en el montaje inicial (usuario
+// anónimo); si esas respuestas 401 llegan tarde, justo después de un
+// login exitoso, mirar la cookie actual las confundiría con una sesión
+// caída y borraría el token recién creado.
 let isRedirectingToLogin = false;
 
 httpClient.interceptors.response.use(
   (response) => response,
   (error) => {
-    const hadToken = Boolean(Cookies.get("token"));
+    const requestWasAuthenticated = Boolean(error.config?.headers?.Authorization);
     if (
       error.response?.status === 401 &&
-      hadToken &&
+      requestWasAuthenticated &&
       !isRedirectingToLogin &&
       !window.location.pathname.startsWith("/login")
     ) {
