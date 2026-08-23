@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { RiWaterFlashFill } from "react-icons/ri";
 import { FaBars, FaTimes } from "react-icons/fa";
 import "../styled-sheets/NavbarComp.css";
@@ -7,15 +7,14 @@ import "../styled-sheets/NavbarComp.css";
 const NavbarComp = () => {
   const [fix, setFix] = useState(false);
 
-  const setFixed = () => {
-    if (window.scrollY >= 613) {
-      setFix(true);
-    } else {
-      setFix(false);
-    }
-  };
+  useEffect(() => {
+    const setFixed = () => {
+      setFix(window.scrollY >= 613);
+    };
 
-  window.addEventListener("scroll", setFixed);
+    window.addEventListener("scroll", setFixed);
+    return () => window.removeEventListener("scroll", setFixed);
+  }, []);
 
   const navRef = useRef();
 

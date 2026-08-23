@@ -1,23 +1,24 @@
 import React from "react";
-import styled from "../styled-sheets/NotFound.module.css";
+import { Link } from "react-router-dom";
+import styles from "../styled-sheets/NotFound.module.css";
 
 const NotFound = () => {
   return (
-    <section className={styled.page_404}>
-      <div className={styled.container}>
-        <div className={styled.row}>
-          <div className={styled.col_sm_12}>
-            <div className={styled.col_sm_10}>
-              <div className={styled.four_zero_four_bg}>
-                <h1 className={styled.text_center}>404</h1>
-                <div className={styled.image}></div>
+    <section className={styles.page_404}>
+      <div className={styles.container}>
+        <div className={styles.row}>
+          <div className={styles.col_sm_12}>
+            <div className={styles.col_sm_10}>
+              <div className={styles.four_zero_four_bg}>
+                <h1 className={styles.text_center}>404</h1>
+                <div className={styles.image}></div>
               </div>
-              <div className={styled.messagge}>
-                <h3 className={styled.h2}>Look Like you're lost</h3>
-                <p>the page you are looking for not available!</p>
-                <a href="" className={styled.link_404}>
-                  Go to Home
-                </a>
+              <div className={styles.messagge}>
+                <h3 className={styles.h2}>Parece que estás perdido</h3>
+                <p>¡La página que buscas no está disponible!</p>
+                <Link to="/" className={styles.link_404}>
+                  Ir al inicio
+                </Link>
               </div>
             </div>
           </div>

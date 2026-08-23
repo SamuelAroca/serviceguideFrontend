@@ -17,6 +17,7 @@ const Footer = () => {
             className={styles.a}
             href="https://www.facebook.com/profile.php?id=100092335245939&is_tour_completed=true"
             target="_blank"
+            rel="noopener noreferrer"
           >
             <BsFacebook />
           </a>
@@ -26,6 +27,7 @@ const Footer = () => {
             className={styles.a}
             href="https://twitter.com/ServiceGuide_"
             target="_blank"
+            rel="noopener noreferrer"
           >
             <BsTwitter />
           </a>
@@ -35,6 +37,7 @@ const Footer = () => {
             className={styles.a}
             href="https://www.linkedin.com/in/service-guide-255575275/"
             target="_blank"
+            rel="noopener noreferrer"
           >
             <BsLinkedin />
           </a>
@@ -44,6 +47,7 @@ const Footer = () => {
             className={styles.a}
             href="https://www.instagram.com/serviceguide_/"
             target="_blank"
+            rel="noopener noreferrer"
           >
             <BsInstagram />
           </a>
@@ -66,7 +70,7 @@ const Footer = () => {
           </a>
         </li>
         <li className={styles.li}>
-          <Link className={styles.a} to={"/register"}>
+          <Link className={styles.a} to={"/login/signUp"}>
             Registro
           </Link>
         </li>
