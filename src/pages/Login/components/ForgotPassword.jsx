@@ -8,7 +8,7 @@ import img1 from "../../../assets/agua-potable.webp";
 import img2 from "../../../assets/alcantarillado.webp";
 import img3 from "../../../assets/Electricistas-scaled.webp";
 import img4 from "../../../assets/gas-natural.webp";
-import axios from "axios";
+import httpClient from "../../../api/httpClient";
 import { Alert } from "@mui/material";
 import Swal from "sweetalert2";
 import { ForgotPasswordLayout } from "../styled-components/forgotpassword-layout";
@@ -40,7 +40,7 @@ const ForgotPassword = () => {
     setErrors(err);
     if (Object.keys(err).length === 0) {
       try {
-        const response = await axios.post(`${url}/send-email`, email);
+        const response = await httpClient.post(`${url}/send-email`, email);
         if (!response.status != 200) {
           Swal.fire(
             "¡Email enviado!",

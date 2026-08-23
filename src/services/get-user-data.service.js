@@ -1,16 +1,10 @@
-import axios from "axios";
-import Cookies from "js-cookie";
+import httpClient from "../api/httpClient";
 
 export const getUserDataService = async () => {
   const url = import.meta.env.VITE_API_AUTH;
-  const accessToken = Cookies.get("token");
 
   try {
-    const { data: user } = await axios.get(`${url}/myName`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+    const { data: user } = await httpClient.get(`${url}/myName`);
     return user;
   } catch (error) {
     console.log(error);
@@ -19,14 +13,9 @@ export const getUserDataService = async () => {
 
 export const getUserInformation = async () => {
   const url = import.meta.env.VITE_API_USER;
-  const accessToken = Cookies.get("token");
 
   try {
-    const { data: user } = await axios.get(`${url}/findById`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+    const { data: user } = await httpClient.get(`${url}/findById`);
     return user;
   } catch (error) {
     console.log(error);

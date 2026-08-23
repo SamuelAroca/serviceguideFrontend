@@ -14,8 +14,7 @@ import {
   Legend,
   Filler,
 } from "chart.js";
-import axios from "axios";
-import Cookies from "js-cookie";
+import httpClient from "../../../api/httpClient";
 
 ChartJS.register(
   ArcElement,
@@ -36,21 +35,20 @@ const StatisticsHome = ({ idReceipt, typeReceipt }) => {
   const [price, setPrice] = useState([]);
   const [amount, setAmount] = useState([]);
   const [type, setType] = useState("");
-  const accessToken = Cookies.get("token");
 
   const getData = async () => {
-    const data = await axios.get(
-      `${apiUrl}/individualReceipt/BAR/${typeReceipt?.typeService}/${idReceipt?.id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
-    setLabel(data.data.label);
-    setPrice(data.data.price);
-    setAmount(data.data.amount);
-    setType(typeReceipt.typeService);
+    if (!idReceipt?.id || !typeReceipt?.typeService) return;
+    try {
+      const data = await httpClient.get(
+        `${apiUrl}/individualReceipt/BAR/${typeReceipt.typeService}/${idReceipt.id}`
+      );
+      setLabel(data.data.label);
+      setPrice(data.data.price);
+      setAmount(data.data.amount);
+      setType(typeReceipt.typeService);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   useEffect(() => {

@@ -4,13 +4,12 @@ import { TextField, Button, Grid, Tooltip } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { Alert } from "@mui/material";
 import SelectCity from "../../addHouse/components/SelectCity";
-import axios from "axios";
+import httpClient from "../../../api/httpClient";
 import { getUserHouses } from "../../../services/get-user-houses.service";
 import { MyContext } from "../../../context/UserContext";
 import { Toaster, toast } from "react-hot-toast";
 import styles from "../Styles/UpdateHouse.module.css";
 import Swal from "sweetalert2";
-import Cookies from "js-cookie";
 import Select from "react-select";
 import { Height } from "@mui/icons-material";
 
@@ -22,7 +21,6 @@ const UpdateHouse = ({ data, onClose }) => {
   const [errors, setErrors] = useState([]);
   const [selectedCity, setSelectedCity] = useState(null);
   const [allCities, setAllCities] = useState([]);
-  const accessToken = Cookies.get("token");
 
   const { setHouses, userData } = useContext(MyContext);
   const notify = () => toast.success("House update successfully");
@@ -59,11 +57,7 @@ const UpdateHouse = ({ data, onClose }) => {
   };
 
   const getCities = async (e) => {
-    const data = await axios.get(`${apiCity}/listAll`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+    const data = await httpClient.get(`${apiCity}/listAll`);
     try {
       setAllCities(data.data);
     } catch (err) {
@@ -121,11 +115,7 @@ const UpdateHouse = ({ data, onClose }) => {
 
     if (Object.keys(err).length === 0) {
       try {
-        const response = await axios.put(`${apiUrl}/update/${data.id}`, house, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
+        const response = await httpClient.put(`${apiUrl}/update/${data.id}`, house);
         notify();
         getUserHouses(setHouses, userData?.id);
         onClose();

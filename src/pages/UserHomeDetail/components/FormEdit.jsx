@@ -5,12 +5,11 @@ import { BsWater, BsFillLightbulbFill, BsFillCloudFill } from "react-icons/bs";
 import { FaToilet } from "react-icons/fa";
 import { Tooltip } from "@mui/material";
 import { Alert } from "@mui/material";
-import axios from "axios";
+import httpClient from "../../../api/httpClient";
 import { getUserHouses } from "../../../services/get-user-houses.service";
 import { MyContext } from "../../../context/UserContext";
 import { toast } from "react-hot-toast";
 import Swal from "sweetalert2";
-import Cookies from "js-cookie";
 import Select from "react-select";
 
 const FormEdit = ({ userId, data, onClose }) => {
@@ -24,7 +23,6 @@ const FormEdit = ({ userId, data, onClose }) => {
   const [errors, setErrors] = useState([]);
   const [selectedHouse, setSelectedHouse] = useState(null);
   const [allHouses, setAllHouses] = useState([]);
-  const accessToken = Cookies.get("token");
 
   const notifyUpdate = () => toast.success("Update successfully.");
 
@@ -65,11 +63,7 @@ const FormEdit = ({ userId, data, onClose }) => {
   };
 
   const getHouses = async () => {
-    const data = await axios.get(`${apiHouse}/getHouseName/${userData.id}`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+    const data = await httpClient.get(`${apiHouse}/getHouseName/${userData.id}`);
     try {
       setAllHouses(data.data);
     } catch (err) {
@@ -110,14 +104,9 @@ const FormEdit = ({ userId, data, onClose }) => {
 
     if (Object.keys(err).length === 0) {
       try {
-        const response = await axios.put(
+        const response = await httpClient.put(
           `${apiUrl}/update/${data.id}`,
-          updatedReceipt,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
+          updatedReceipt
         );
         notifyUpdate();
         getUserHouses(setHouses, userData?.id);

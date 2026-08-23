@@ -6,13 +6,12 @@ import ChartDoughnut from "./components/ChartDoughnut";
 import DataTable from "./components/DataTable";
 import LineChart from "./components/LineChart";
 import Totals from "./components/Totals";
-import axios from "axios";
+import httpClient from "../../api/httpClient";
 import Modal from "./components/Modal";
 import UpdateHouse from "./components/UpdateHouse";
 import { getUserHouses } from "../../services/get-user-houses.service";
 import { Button } from "@mui/material";
 import Swal from "sweetalert2";
-import Cookies from "js-cookie";
 
 const UserHomeDetail = () => {
   const apiUrl = import.meta.env.VITE_API_STATISTIC;
@@ -21,7 +20,6 @@ const UserHomeDetail = () => {
   const [sum, setSum] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const navigate = useNavigate();
-  const accessToken = Cookies.get("token");
 
   const { setHouses, userData } = useContext(MyContext);
 
@@ -34,12 +32,6 @@ const UserHomeDetail = () => {
   const [house, setHouse] = useState(null);
   const [receipts, setReceipts] = useState(null);
 
-  const LAST_MONT_RECEIPTS = receipts?.filter((receipt) => {
-    const date = new Date(receipt.date);
-    const month = date.getMonth() + 1;
-    return month === 10;
-  });
-
   const { houses } = useContext(MyContext);
 
   useEffect(() => {
@@ -51,13 +43,8 @@ const UserHomeDetail = () => {
     if (house) {
       const getTotals = async () => {
         let idHouse = house.id;
-        const response = await axios.get(
-          `${apiUrl}/informationReceipt/${idHouse}`,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
+        const response = await httpClient.get(
+          `${apiUrl}/informationReceipt/${idHouse}`
         );
         const data = response.data;
         return data;
@@ -65,13 +52,8 @@ const UserHomeDetail = () => {
 
       const getSum = async () => {
         try {
-          const response = await axios.get(
-            `${apiUrl}/sumStatisticByType/${house.name}/${userData.id}`,
-            {
-              headers: {
-                Authorization: `Bearer ${accessToken}`,
-              },
-            }
+          const response = await httpClient.get(
+            `${apiUrl}/sumStatisticByType/${house.name}/${userData.id}`
           );
           const data = response.data;
           return data;
@@ -92,11 +74,7 @@ const UserHomeDetail = () => {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`${apiHouse}/delete/${house.id}`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
+      await httpClient.delete(`${apiHouse}/delete/${house.id}`);
       getUserHouses(setHouses, userData?.id);
       navigate("/private/major/home");
     } catch (error) {

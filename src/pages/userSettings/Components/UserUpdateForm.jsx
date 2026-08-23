@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { FormLayout } from "../../addReceipt/Components/styled-components/form-layout.styled";
 import { Button, Grid, TextField, Tooltip } from "@mui/material";
-import axios from "axios";
+import httpClient from "../../../api/httpClient";
 import toast from "react-hot-toast";
 import { MyContext } from "../../../context/UserContext";
 import { useNavigate } from "react-router-dom";
@@ -14,7 +14,6 @@ const UserUpdateForm = () => {
   const [message, setMessage] = useState("");
   const notify = () => toast.success("Usuario actualizado correctamente");
   const navigate = useNavigate();
-  const accessToken = Cookies.get("token");
   const [user, setUser] = useState({
     email: "",
     firstName: "",
@@ -32,11 +31,7 @@ const UserUpdateForm = () => {
 
   const loadUser = async () => {
     try {
-      const dataUser = await axios.get(`${url}/loadUser/${userData.id}`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
+      const dataUser = await httpClient.get(`${url}/loadUser/${userData.id}`);
       setUser({
         email: dataUser.data.email,
         firstName: dataUser.data.firstName,
@@ -54,19 +49,20 @@ const UserUpdateForm = () => {
 
   const handleSubmit = async () => {
     try {
-      const updatedUser = await axios.put(
+      const updatedUser = await httpClient.put(
         `${url}/update/${userData.id}`,
-        user,
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
+        user
       );
       Swal.fire("¡Usuario actualizzado correctamente!", "", "success");
       setMessage(updatedUser.data);
       if (updatedUser.status === 200) {
-        Cookies.set("token", updatedUser.data.token);
+        const currentDate = new Date();
+        const expirationDate = new Date(currentDate.getTime() + 24 * 60 * 60 * 1000);
+        Cookies.set("token", updatedUser.data.token, {
+          expires: expirationDate,
+          secure: window.location.protocol === "https:",
+          sameSite: "lax",
+        });
         notify();
         updateUserData(`${user.firstName} ${user.lastName}`);
       }
@@ -86,11 +82,7 @@ const UserUpdateForm = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`${url}/delete/${userData.id}`, {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          });
+          await httpClient.delete(`${url}/delete/${userData.id}`);
           notify();
           Cookies.remove("token");
           navigate("/");

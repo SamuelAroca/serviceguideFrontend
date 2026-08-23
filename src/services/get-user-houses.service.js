@@ -1,17 +1,10 @@
-import axios from "axios";
-import Cookies from "js-cookie";
+import httpClient from "../api/httpClient";
 
 export const getUserHousesService = async (id) => {
   const url = import.meta.env.VITE_API_HOUSE;
 
-  const accessToken = Cookies.get("token");
-
   try {
-    const { data } = await axios.get(`${url}/findAllByUserOrderById/${id}`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+    const { data } = await httpClient.get(`${url}/findAllByUserOrderById/${id}`);
     return data;
   } catch (error) {
     console.log(error);

@@ -8,7 +8,7 @@ import img1 from "../../../assets/agua-potable.webp";
 import img2 from "../../../assets/alcantarillado.webp";
 import img3 from "../../../assets/Electricistas-scaled.webp";
 import img4 from "../../../assets/gas-natural.webp";
-import axios from "axios";
+import httpClient from "../../../api/httpClient";
 import { Alert } from "@mui/material";
 import Swal from "sweetalert2";
 import { ChangePasswordLayout } from "../styled-components/changepassword-layout";
@@ -57,7 +57,7 @@ const ChangePasword = () => {
     setErrors(err);
     if (Object.keys(err).length === 0) {
       try {
-        let response = await axios.post(`${url}/change-password`, password);
+        let response = await httpClient.post(`${url}/change-password`, password);
         let message = response.data.message;
         if (response.status == 200) {
           Swal.fire({

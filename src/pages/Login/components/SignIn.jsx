@@ -6,7 +6,7 @@ import img1 from "../../../assets/agua-potable.webp";
 import img2 from "../../../assets/alcantarillado.webp";
 import img3 from "../../../assets/Electricistas-scaled.webp";
 import img4 from "../../../assets/gas-natural.webp";
-import axios from "axios";
+import httpClient from "../../../api/httpClient";
 import { Link, useNavigate } from "react-router-dom";
 import { RiWaterFlashFill } from "react-icons/ri";
 import { RiEyeLine } from "react-icons/ri";
@@ -69,12 +69,16 @@ const SignIn = () => {
     setErrors(err);
     if (Object.keys(err).length === 0) {
       try {
-        let response = await axios.post(`${url}/login`, email);
+        let response = await httpClient.post(`${url}/login`, email);
 
         if (response.status === 200) {
           const currentDate = new Date();
           const expirationDate = new Date(currentDate.getTime() + 24 * 60 *60 * 1000);
-          Cookies.set("token", response.data.token, { expires: expirationDate });
+          Cookies.set("token", response.data.token, {
+            expires: expirationDate,
+            secure: window.location.protocol === "https:",
+            sameSite: "lax",
+          });
           getUserData();
           navigate("/private/major/home/");
         }

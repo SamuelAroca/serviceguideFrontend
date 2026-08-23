@@ -1,7 +1,7 @@
 import styles from "../styles/SignUp.module.css";
 import CarouselDemo from "../../../components/CarouselDemo.jsx";
 import TextField from "@mui/material/TextField";
-import axios from "axios";
+import httpClient from "../../../api/httpClient";
 import img1 from "../../../assets/agua-potable.webp";
 import img2 from "../../../assets/alcantarillado.webp";
 import img3 from "../../../assets/Electricistas-scaled.webp";
@@ -46,7 +46,7 @@ const SignUp = () => {
   const save = async (e) => {
     e.preventDefault();
     try {
-      let response = await axios.post(`${url}/register`, {
+      let response = await httpClient.post(`${url}/register`, {
         firstName: name,
         lastName: lastName,
         email: email,
@@ -141,8 +141,8 @@ const SignUp = () => {
             <div>
               <button onClick={save}>
                 Registrarse
-                <div class={styles.arrow_wrapper}>
-                  <div class={styles.arrow}></div>
+                <div className={styles.arrow_wrapper}>
+                  <div className={styles.arrow}></div>
                 </div>
               </button>
             </div>

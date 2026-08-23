@@ -15,14 +15,12 @@ import { MyContext } from "../../../context/UserContext";
 import { getUserDataService } from "../../../services/get-user-data.service";
 import { toast, Toaster } from "react-hot-toast";
 import { getUserHousesService } from "../../../services/get-user-houses.service";
-import axios from "axios";
+import httpClient from "../../../api/httpClient";
 import Modal from "./Modal";
 import FormEdit from "./FormEdit";
 import Swal from "sweetalert2";
-import Cookies from "js-cookie";
 
 const DataTable = ({ data }) => {
-  const accessToken = Cookies.get("token");
   const [filters, setFilters] = useState({
     date: "",
     amount: "",
@@ -87,14 +85,10 @@ const DataTable = ({ data }) => {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Sí, eliminar recibo",
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          const data = axios.delete(`${apiUrl}/delete/${id}`, {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          });
+          await httpClient.delete(`${apiUrl}/delete/${id}`);
           getUserHouses(setHouses, userData?.id);
           notify();
         } catch (error) {

@@ -12,12 +12,11 @@ import { useNavigate } from "react-router-dom";
 import { Alert } from "@mui/material";
 import { myID } from "../AddHouse";
 import SelectCity from "../components/SelectCity";
-import axios from "axios";
+import httpClient from "../../../api/httpClient";
 import { MyContext } from "../../../context/UserContext";
 import { getUserHouses } from "../../../services/get-user-houses.service";
 import Swal from "sweetalert2";
 import { Toaster, toast } from "react-hot-toast";
-import Cookies from "js-cookie";
 import { IoIosWarning } from "react-icons/io";
 
 const HouseForm = () => {
@@ -30,7 +29,6 @@ const HouseForm = () => {
   const [selectedCity, setSelectedCity] = useState(null);
   const [allCities, setAllCities] = useState([]);
   const navigate = useNavigate();
-  const accessToken = Cookies.get("token");
   const [selectedFile, setSelectedFile] = useState(null);
 
   const { userData, setHouses } = useContext(MyContext);
@@ -76,11 +74,7 @@ const HouseForm = () => {
   };
 
   const getCities = async (e) => {
-    const data = await axios.get(`${apiCity}/listAll`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+    const data = await httpClient.get(`${apiCity}/listAll`);
     try {
       setAllCities(data.data);
     } catch (err) {
@@ -148,14 +142,9 @@ const HouseForm = () => {
 
       if (Object.keys(err).length === 0) {
         try {
-          const response = await axios.post(
+          const response = await httpClient.post(
             `${apiUrl}/add/${userData.id}`,
-            updatedHouse,
-            {
-              headers: {
-                Authorization: `Bearer ${accessToken}`,
-              },
-            }
+            updatedHouse
           );
           getUserHouses(setHouses, userData?.id);
           Swal.fire("¡Casa registrada correctamente!", "", "success");
@@ -211,11 +200,7 @@ const HouseForm = () => {
       const formData = new FormData();
       formData.append("archivoPdf", selectedFile);
 
-      const response = await axios.post(`${apiUrl}/read`, formData, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
+      const response = await httpClient.post(`${apiUrl}/read`, formData);
 
       if (response.status === 200) {
         Swal.fire({

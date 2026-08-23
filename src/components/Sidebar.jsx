@@ -21,7 +21,7 @@ import { GrayPaleteColors } from "../palete-colors/gray-colors.palete";
 import Logo from "../assets/Logo.png";
 import Cookies from "js-cookie";
 import Swal from "sweetalert2";
-import axios from "axios";
+import httpClient from "../api/httpClient";
 
 const StyledLink = styled(Link)`
   background-color: ${(props) =>
@@ -104,11 +104,7 @@ const Sidebar = () => {
 
   const logout = async () => {
     try {
-      const response = await axios.post(`${url}/logout`, null, {
-        headers: {
-          Authorization: `Bearer ${Cookies.get("token")}`,
-        },
-      });
+      const response = await httpClient.post(`${url}/logout`);
       if (response.status === 200) {
         Cookies.remove("token");
         setUserData([]);

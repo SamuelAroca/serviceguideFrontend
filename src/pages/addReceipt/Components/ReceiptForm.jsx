@@ -16,13 +16,12 @@ import { BsWater, BsFillLightbulbFill, BsFillCloudFill } from "react-icons/bs";
 import { FaToilet } from "react-icons/fa";
 import { Tooltip } from "@mui/material";
 import { Alert } from "@mui/material";
-import axios from "axios";
+import httpClient from "../../../api/httpClient";
 import SelectHouse from "./SelectHouse";
 import { MyContext } from "../../../context/UserContext";
 import { getUserHousesService } from "../../../services/get-user-houses.service";
 import { Toaster, toast } from "react-hot-toast";
 import Swal from "sweetalert2";
-import Cookies from "js-cookie";
 import { IoIosWarning } from "react-icons/io";
 
 const ReceiptForm = ({ userId }) => {
@@ -36,7 +35,6 @@ const ReceiptForm = ({ userId }) => {
   const [allHouses, setAllHouses] = useState([]);
   const [selectedFile, setSelectedFile] = useState(null);
   const navigate = useNavigate();
-  let accessToken = Cookies.get("token");
 
   const { setHouses, userData } = useContext(MyContext);
   const notify = () => toast.success("Recibo agregado correctamente");
@@ -66,11 +64,7 @@ const ReceiptForm = ({ userId }) => {
   };
 
   const getHouses = async () => {
-    const data = await axios.get(`${apiHouse}/getHouseName/${userData?.id}`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+    const data = await httpClient.get(`${apiHouse}/getHouseName/${userData?.id}`);
     try {
       setAllHouses(data.data);
     } catch (err) {
@@ -131,14 +125,9 @@ const ReceiptForm = ({ userId }) => {
 
       if (Object.keys(err).length === 0) {
         try {
-          const response = await axios.post(
+          const response = await httpClient.post(
             `${apiUrl}/add/${userData.id}`,
-            updatedReceipt,
-            {
-              headers: {
-                Authorization: `Bearer ${accessToken}`,
-              },
-            }
+            updatedReceipt
           );
           getUserHouses(setHouses, userData?.id);
           Swal.fire("¡Recibo registrado correctamente!", "", "success");
@@ -198,11 +187,7 @@ const ReceiptForm = ({ userId }) => {
       const formData = new FormData();
       formData.append("archivoPdf", selectedFile);
 
-      const response = await axios.post(`${apiUrl}/read`, formData, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
+      const response = await httpClient.post(`${apiUrl}/read`, formData);
 
       if (response.status === 200) {
         Swal.fire({

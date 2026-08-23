@@ -1,4 +1,4 @@
-import axios from "axios";
+import httpClient from "../../api/httpClient";
 import styles from "./Styles/Home.module.css";
 import GetLastReceipts from "./components/GetLastReceipts";
 import StatisticsHome from "./components/StatisticsHome";
@@ -6,11 +6,9 @@ import { MyContext } from "../../context/UserContext";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
 import LineChart from "./components/LineChart";
-import Cookies from "js-cookie";
 
 const Home = () => {
   const apiUrl = import.meta.env.VITE_API_RECEIPT;
-  const accessToken = Cookies.get("token");
   const navigate = useNavigate();
   const [allReceipts, setAllReceipts] = useState(null);
   const [receipts, setReceipts] = useState(null);
@@ -24,13 +22,8 @@ const Home = () => {
   }, [userData]);
 
   const getReceipts = async () => {
-    const receipt = await axios.get(
-      `${apiUrl}/getLastReceipt/${userData?.id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
+    const receipt = await httpClient.get(
+      `${apiUrl}/getLastReceipt/${userData?.id}`
     );
     try {
       setAllReceipts(receipt.data);
@@ -41,13 +34,8 @@ const Home = () => {
 
   const getAllReceipts = async () => {
     try {
-      const receipts = await axios.get(
-        `${apiUrl}/allReceiptsByUserId/${userData?.id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
+      const receipts = await httpClient.get(
+        `${apiUrl}/allReceiptsByUserId/${userData?.id}`
       );
       setReceipts(receipts.data);
     } catch (err) {
