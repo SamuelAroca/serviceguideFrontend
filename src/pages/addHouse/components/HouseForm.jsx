@@ -22,6 +22,7 @@ import { IoIosWarning } from "react-icons/io";
 const HouseForm = () => {
   const apiUrl = import.meta.env.VITE_API_HOUSE;
   const apiCity = import.meta.env.VITE_API_CITY;
+  const apiReceipt = import.meta.env.VITE_API_RECEIPT;
 
   const [userID, setUserID] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -200,12 +201,16 @@ const HouseForm = () => {
       const formData = new FormData();
       formData.append("archivoPdf", selectedFile);
 
-      const response = await httpClient.post(`${apiUrl}/read`, formData);
+      // Sube al endpoint de recibos (no al de casas): ese es el que crea
+      // la casa Y el recibo en un solo paso. El endpoint de casas
+      // (`${apiUrl}/read`) solo crea la casa, así que subir ahí obligaba
+      // a volver a subir el mismo PDF desde "Agregar recibo".
+      const response = await httpClient.post(`${apiReceipt}/read`, formData);
 
       if (response.status === 200) {
         Swal.fire({
           title: "Good job!",
-          text: "House saved successfully",
+          text: response.data.message,
           icon: "success",
         });
         setIsLoading(false);
