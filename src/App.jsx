@@ -1,19 +1,26 @@
 import "./App.css";
-import Index from "./pages/Index/Index";
-import ChangePasword from "./pages/Index/components/ChangePasword";
 import AuthGuard from "./guards/AuthGuard";
-import Login from "./pages/Login/Login";
-import PrivateRoutes from "./pages/PrivateRoutes/PrivateRoutes";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { MyContext } from "./context/UserContext";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, lazy, Suspense } from "react";
 import {
   getUserDataService,
   getUserInformation,
 } from "./services/get-user-data.service";
 import { getUserHousesService } from "./services/get-user-houses.service";
-import NotFound from "./components/NotFound";
 import Cookies from "js-cookie";
+
+// Carga perezosa por sección: quien visite la landing pública no debería
+// descargar el bundle del dashboard privado (charts, tablas, etc.) y viceversa.
+const Index = lazy(() => import("./pages/Index/Index"));
+const ChangePasword = lazy(() =>
+  import("./pages/Index/components/ChangePasword")
+);
+const Login = lazy(() => import("./pages/Login/Login"));
+const PrivateRoutes = lazy(() =>
+  import("./pages/PrivateRoutes/PrivateRoutes")
+);
+const NotFound = lazy(() => import("./components/NotFound"));
 
 const App = () => {
   const { updateUserData, setHouses, setUserData, userData } =
@@ -60,18 +67,20 @@ const App = () => {
   }, [userData]);
 
   return (
-    <Routes>
-      <Route path="/" element={<Index />} />
-      <Route path="/login/*" element={<Login />} />
-      <Route
-        path="/change-password/:passwordToken"
-        element={<ChangePasword />}
-      />
-      <Route element={<AuthGuard />}>
-        <Route path="/private/*" element={<PrivateRoutes />} />
-      </Route>
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+    <Suspense fallback={null}>
+      <Routes>
+        <Route path="/" element={<Index />} />
+        <Route path="/login/*" element={<Login />} />
+        <Route
+          path="/change-password/:passwordToken"
+          element={<ChangePasword />}
+        />
+        <Route element={<AuthGuard />}>
+          <Route path="/private/*" element={<PrivateRoutes />} />
+        </Route>
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </Suspense>
   );
 };
 

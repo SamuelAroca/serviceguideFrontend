@@ -1,12 +1,14 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import Home from "../Home/Home";
-import AddReceipt from "../addReceipt/AddReceipt";
+import { lazy, Suspense } from "react";
 import { DashboardGrid } from "../../styled-components/dashboard-grid.styled";
-import AddHouse from "../addHouse/AddHouse";
 import Sidebar from "../../components/Sidebar";
-import UserHomeDetail from "../UserHomeDetail/UserHomeDetail";
-import UserSettings from "../userSettings/UserSettings";
-import NotFound from "../../components/NotFound";
+
+const Home = lazy(() => import("../Home/Home"));
+const AddReceipt = lazy(() => import("../addReceipt/AddReceipt"));
+const AddHouse = lazy(() => import("../addHouse/AddHouse"));
+const UserHomeDetail = lazy(() => import("../UserHomeDetail/UserHomeDetail"));
+const UserSettings = lazy(() => import("../userSettings/UserSettings"));
+const NotFound = lazy(() => import("../../components/NotFound"));
 
 const PrivateRoutes = () => {
   return (
@@ -15,15 +17,17 @@ const PrivateRoutes = () => {
         <Sidebar />
       </div>
       <div className="content">
-        <Routes>
-          <Route path="/" element={<Navigate to="/major/home/*" replace />} />
-          <Route path="/major/home/*" element={<Home />} />
-          <Route path="/major/receipts/addreceipt" element={<AddReceipt />} />
-          <Route path="/house-detail/:id" element={<UserHomeDetail />} />
-          <Route path="/major/houses/addhouse" element={<AddHouse />} />
-          <Route path="/major/user/settings" element={<UserSettings />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <Suspense fallback={null}>
+          <Routes>
+            <Route path="/" element={<Navigate to="/major/home/*" replace />} />
+            <Route path="/major/home/*" element={<Home />} />
+            <Route path="/major/receipts/addreceipt" element={<AddReceipt />} />
+            <Route path="/house-detail/:id" element={<UserHomeDetail />} />
+            <Route path="/major/houses/addhouse" element={<AddHouse />} />
+            <Route path="/major/user/settings" element={<UserSettings />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
       </div>
     </DashboardGrid>
   );
