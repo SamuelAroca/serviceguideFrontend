@@ -229,6 +229,8 @@ const UpdateHouse = ({ data, onClose }) => {
               onChange={handleCityChange}
               options={cityOptions}
               placeholder="Seleccionar ciudad"
+              menuPortalTarget={document.body}
+              styles={{ menuPortal: (base) => ({ ...base, zIndex: 1400 }) }}
             />
           </Grid>
           <Grid item xs={12} className={styles.div_button}>

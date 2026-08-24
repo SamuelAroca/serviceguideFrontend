@@ -246,6 +246,7 @@ const FormEdit = ({ userId, data, onClose }) => {
                 onChange={handleHouseChange}
                 options={houseOptions}
                 placeholder="Seleccione la casa"
+                menuPortalTarget={document.body}
                 styles={{
                   container: (provided) => ({
                     ...provided,
@@ -255,6 +256,7 @@ const FormEdit = ({ userId, data, onClose }) => {
                     ...provided,
                     height: "100%",
                   }),
+                  menuPortal: (provided) => ({ ...provided, zIndex: 1400 }),
                 }}
               />
             </Grid>
