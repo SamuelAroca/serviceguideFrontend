@@ -237,7 +237,7 @@ const UpdateHouse = ({ data, onClose }) => {
               type="submit"
               variant="contained"
               color="primary"
-              style={{ width: "20%" }}
+              sx={{ px: 4, py: 1.25, whiteSpace: "nowrap" }}
             >
               Actualizar Casa
             </Button>

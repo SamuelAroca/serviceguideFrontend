@@ -6,22 +6,25 @@ export const FormLayout = styled.div`
 
   .buttons-container {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    gap: 1rem;
+    gap: 0.5rem;
     margin-bottom: 1rem;
   }
 
   .type-button {
     display: flex;
-    gap: 1rem;
+    align-items: center;
+    gap: 0.5rem;
     border: none;
     box-sizing: border-box;
-    padding: 1rem 2rem;
+    padding: 0.6rem 1rem;
     border-radius: 0.5rem;
     border: 1px solid #219ebc;
     background-color: #219ebc;
     color: white;
+    white-space: nowrap;
     transition: 0.3s all;
     &:hover {
       cursor: pointer;
