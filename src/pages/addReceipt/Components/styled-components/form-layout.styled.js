@@ -3,6 +3,10 @@ import styled from "styled-components";
 export const FormLayout = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  box-sizing: border-box;
 
   .buttons-container {
     display: flex;
