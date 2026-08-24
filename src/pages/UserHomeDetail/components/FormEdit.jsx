@@ -3,7 +3,6 @@ import { useEffect, useState, useContext } from "react";
 import { FormLayout } from "../../addReceipt/Components/styled-components/form-layout.styled";
 import { BsWater, BsFillLightbulbFill, BsFillCloudFill } from "react-icons/bs";
 import { FaToilet } from "react-icons/fa";
-import { Tooltip } from "@mui/material";
 import { Alert } from "@mui/material";
 import httpClient from "../../../api/httpClient";
 import { getUserHouses } from "../../../services/get-user-houses.service";
@@ -186,12 +185,6 @@ const FormEdit = ({ userId, data, onClose }) => {
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <Tooltip
-              disableFocusListener
-              disableTouchListener
-              title="Agregar nombre"
-              placement="bottom-start"
-            >
               <TextField
                 fullWidth
                 label="Nombre"
@@ -200,47 +193,32 @@ const FormEdit = ({ userId, data, onClose }) => {
                 value={receipt.receiptName}
                 onChange={handleInputChange}
               />
-            </Tooltip>
             {errors.receiptName && (
               <Alert severity="warning"> {errors.receiptName} </Alert>
             )}
           </Grid>
           <Grid item xs={12}>
-            <Tooltip
-              disableFocusListener
-              disableTouchListener
-              title="Agregar precio"
-              placement="bottom-start"
-            >
-              <TextField
-                fullWidth
-                label="Precio"
-                name="price"
-                type="number"
-                step="0.01"
-                value={receipt.price}
-                onChange={handleInputChange}
-              />
-            </Tooltip>
+            <TextField
+              fullWidth
+              label="Precio"
+              name="price"
+              type="number"
+              step="0.01"
+              value={receipt.price}
+              onChange={handleInputChange}
+            />
             {errors.price && <Alert severity="warning"> {errors.price} </Alert>}
           </Grid>
           <Grid item xs={12}>
-            <Tooltip
-              disableFocusListener
-              disableTouchListener
-              title="Agregar cantidad"
-              placement="bottom-start"
-            >
-              <TextField
-                fullWidth
-                label="Cantidad"
-                name="amount"
-                type="number"
-                step="0.01"
-                value={receipt.amount}
-                onChange={handleInputChange}
-              />
-            </Tooltip>
+            <TextField
+              fullWidth
+              label="Cantidad"
+              name="amount"
+              type="number"
+              step="0.01"
+              value={receipt.amount}
+              onChange={handleInputChange}
+            />
             {errors.amount && (
               <Alert severity="warning"> {errors.amount} </Alert>
             )}
@@ -251,21 +229,15 @@ const FormEdit = ({ userId, data, onClose }) => {
             style={{ display: "flex", justifyContent: "space-between" }}
           >
             <Grid item xs={6}>
-              <Tooltip
-                disableFocusListener
-                disableTouchListener
-                title="Agregar fecha"
-                placement="bottom-start"
-              >
-                <TextField
-                  fullWidth
-                  label=""
-                  name="date"
-                  type="date"
-                  value={receipt.date}
-                  onChange={handleInputChange}
-                />
-              </Tooltip>
+              <TextField
+                fullWidth
+                label="Fecha"
+                InputLabelProps={{ shrink: true }}
+                name="date"
+                type="date"
+                value={receipt.date}
+                onChange={handleInputChange}
+              />
               {errors.date && <Alert severity="warning"> {errors.date} </Alert>}
             </Grid>
             <Grid item xs={5.7}>

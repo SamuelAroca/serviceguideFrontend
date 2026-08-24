@@ -232,99 +232,64 @@ const HouseForm = () => {
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <Tooltip
-              disableFocusListener
-              disableTouchListener
-              title="Agregar nombre"
-              placement="bottom-start"
-            >
-              <TextField
-                fullWidth
-                label="Nombre"
-                name="name"
-                type="text"
-                value={house.name}
-                onChange={handleInputChange}
-              />
-            </Tooltip>
+            <TextField
+              fullWidth
+              label="Nombre"
+              name="name"
+              type="text"
+              value={house.name}
+              onChange={handleInputChange}
+            />
             {errors.name && <Alert severity="warning"> {errors.name} </Alert>}
           </Grid>
           <Grid item xs={12}>
-            <Tooltip
-              disableFocusListener
-              disableTouchListener
-              title="Agregar estrato"
-              placement="bottom-start"
-            >
-              <TextField
-                fullWidth
-                label="Estrato"
-                name="stratum"
-                type="number"
-                value={house.stratum}
-                onChange={handleInputChange}
-              />
-            </Tooltip>
+            <TextField
+              fullWidth
+              label="Estrato"
+              name="stratum"
+              type="number"
+              value={house.stratum}
+              onChange={handleInputChange}
+            />
             {errors.stratum && (
               <Alert severity="warning"> {errors.stratum} </Alert>
             )}
           </Grid>
           <Grid item xs={12}>
-            <Tooltip
-              disableFocusListener
-              disableTouchListener
-              title="Agregar barrio"
-              placement="bottom-start"
-            >
-              <TextField
-                fullWidth
-                label="Barrio"
-                name="neighborhood"
-                type="text"
-                value={house.neighborhood}
-                onChange={handleInputChange}
-              />
-            </Tooltip>
+            <TextField
+              fullWidth
+              label="Barrio"
+              name="neighborhood"
+              type="text"
+              value={house.neighborhood}
+              onChange={handleInputChange}
+            />
             {errors.neighborhood && (
               <Alert severity="warning"> {errors.neighborhood} </Alert>
             )}
           </Grid>
           <Grid item xs={12}>
-            <Tooltip
-              disableFocusListener
-              disableTouchListener
-              title="Agregar dirección"
-              placement="bottom-start"
-            >
-              <TextField
-                fullWidth
-                label="Dirección"
-                name="address"
-                type="text"
-                value={house.address}
-                onChange={handleInputChange}
-              />
-            </Tooltip>
+            <TextField
+              fullWidth
+              label="Dirección"
+              name="address"
+              type="text"
+              value={house.address}
+              onChange={handleInputChange}
+            />
             {errors.address && (
               <Alert severity="warning"> {errors.address} </Alert>
             )}
           </Grid>
           <Grid item xs={12}>
-            <Tooltip
-              disableFocusListener
-              disableTouchListener
-              title="Agregar contrato"
-              placement="bottom-start"
-            >
-              <TextField
-                fullWidth
-                label="Contrato"
-                name="contract"
-                type="number"
-                value={house.contract}
-                onChange={handleInputChange}
-              />
-            </Tooltip>
+            <TextField
+              fullWidth
+              label="Contrato"
+              name="contract"
+              type="number"
+              value={house.contract}
+              onChange={handleInputChange}
+            />
             {errors.contract && (
               <Alert severity="warning"> {errors.contract} </Alert>
             )}

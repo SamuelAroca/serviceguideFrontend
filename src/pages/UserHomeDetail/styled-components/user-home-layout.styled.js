@@ -87,21 +87,10 @@ export const UserHomeLayout = styled.div`
     width: 100%;
     height: 100%;
     grid-area: 5 / 1 / 13 / 8;
-    overflow: auto;
-    &::-webkit-scrollbar {
-      width: 6px;
-      background-color: none;
-    }
-
-    &::-webkit-scrollbar-track {
-      background-color: none;
-      background-color: white;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      border-radius: 10px;
-      background-color: #ddd;
-    }
+    /* El scroll ahora pasa dentro de DataTable (su TableContainer), no
+       aquí, para que el título "Facturas" y el header de la tabla se
+       queden fijos en vez de desplazarse junto con las filas. */
+    overflow: hidden;
   }
 
   .container_charts {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { FormLayout } from "../../addReceipt/Components/styled-components/form-layout.styled";
-import { Button, Grid, TextField, Tooltip } from "@mui/material";
+import { Button, Grid, TextField } from "@mui/material";
 import httpClient from "../../../api/httpClient";
 import toast from "react-hot-toast";
 import { MyContext } from "../../../context/UserContext";
@@ -103,68 +103,44 @@ const UserUpdateForm = () => {
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <Tooltip
-              disableFocusListener
-              disableTouchListener
-              title="Nombre"
-              placement="bottom-start"
-            >
-              <TextField
-                fullWidth
-                name="firstName"
-                type="text"
-                value={user.firstName}
-                onChange={handleChange}
-              />
-            </Tooltip>
+            <TextField
+              fullWidth
+              label="Nombre"
+              name="firstName"
+              type="text"
+              value={user.firstName}
+              onChange={handleChange}
+            />
           </Grid>
           <Grid item xs={12}>
-            <Tooltip
-              disableFocusListener
-              disableTouchListener
-              title="Apellido"
-              placement="bottom-start"
-            >
-              <TextField
-                fullWidth
-                name="lastName"
-                type="text"
-                value={user.lastName}
-                onChange={handleChange}
-              />
-            </Tooltip>
+            <TextField
+              fullWidth
+              label="Apellido"
+              name="lastName"
+              type="text"
+              value={user.lastName}
+              onChange={handleChange}
+            />
           </Grid>
           <Grid item xs={12}>
-            <Tooltip
-              disableFocusListener
-              disableTouchListener
-              title="Email"
-              placement="bottom-start"
-            >
-              <TextField
-                fullWidth
-                name="email"
-                type="email"
-                value={user.email}
-                onChange={handleChange}
-              />
-            </Tooltip>
+            <TextField
+              fullWidth
+              label="Email"
+              name="email"
+              type="email"
+              value={user.email}
+              onChange={handleChange}
+            />
           </Grid>
           <Grid item xs={12}>
-            <Tooltip
-              disableFocusListener
-              disableTouchListener
-              title="Contraseña"
-              placement="bottom-start"
-            >
-              <TextField
-                fullWidth
-                name="password"
-                type="password"
-                value={user.password}
-                onChange={handleChange}
-              />
-            </Tooltip>
+            <TextField
+              fullWidth
+              label="Contraseña"
+              name="password"
+              type="password"
+              value={user.password}
+              onChange={handleChange}
+            />
           </Grid>
         </Grid>
         <Grid

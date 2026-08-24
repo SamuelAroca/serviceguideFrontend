@@ -129,14 +129,34 @@ const DataTable = ({ data }) => {
   );
 
   return (
-    <div>
-      <h1>Facturas</h1>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        height: "100%",
+        minHeight: 0,
+      }}
+    >
+      <h1 style={{ flexShrink: 0 }}>Facturas</h1>
       <TableContainer
         component={Paper}
         sx={{
           borderRadius: "1rem",
           boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.08)",
-          maxHeight: "100%",
+          flex: 1,
+          minHeight: 0,
+          overflow: "auto",
+          "&::-webkit-scrollbar": {
+            width: "6px",
+            height: "6px",
+          },
+          "&::-webkit-scrollbar-track": {
+            backgroundColor: "white",
+          },
+          "&::-webkit-scrollbar-thumb": {
+            borderRadius: "10px",
+            backgroundColor: "#ddd",
+          },
         }}
       >
         <Table stickyHeader size="small">
