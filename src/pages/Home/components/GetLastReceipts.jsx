@@ -1,31 +1,20 @@
-import moment from "moment-timezone";
 import styles from "../Styles/GetLastReceipt.module.css";
 import { ReceiptCardContainer } from "../Styles/card-container.styled";
 import { useState } from "react";
+import { FormatDate, formatPrice } from "../../../Utilities";
 
 const GetLastReceipts = ({ receipt }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const FormatDate = (date) => {
-    const timedifference = -1440; // diferencia horaria en minutos
-    const dateColombia = moment(date).subtract(timedifference, "minutes");
-    const formatDate = dateColombia.locale("es").format("DD-MM-YYYY");
-    return formatDate;
-  };
-
-  const formatPrice = (price) => {
-    let format_number = price.toLocaleString();
-    return format_number;
-  };
-
   return (
     <ReceiptCardContainer
       open={isOpen}
-      initial={{ height: "12rem", backgroundColor: "white" }}
+      initial={{ height: "14rem", backgroundColor: "white" }}
     >
       <p className={styles.receipt_name}>{receipt.receiptName}</p>
+      <p className={styles.receipt_data}>{FormatDate(receipt.date)}</p>
       <p className={styles.receipt_data}>
-        Precio: {formatPrice(receipt.price)}
+        Precio: ${formatPrice(receipt.price)}
       </p>
       <p className={styles.receipt_data}>
         Cantidad: {formatPrice(receipt.amount)}

@@ -8,17 +8,20 @@ import {
   TableRow,
   Paper,
   TextField,
+  Tooltip,
+  InputAdornment,
 } from "@mui/material";
 import { FormatDate, formatPrice } from "../../../Utilities";
-import { BsTrash, BsPencil } from "react-icons/bs";
+import { BsTrash, BsPencil, BsSearch } from "react-icons/bs";
 import { MyContext } from "../../../context/UserContext";
-import { getUserDataService } from "../../../services/get-user-data.service";
 import { toast, Toaster } from "react-hot-toast";
 import { getUserHousesService } from "../../../services/get-user-houses.service";
 import httpClient from "../../../api/httpClient";
 import Modal from "./Modal";
 import FormEdit from "./FormEdit";
 import Swal from "sweetalert2";
+import { BluePaleteColors } from "../../../palete-colors/blue-colors.palete";
+import { GrayPaleteColors } from "../../../palete-colors/gray-colors.palete";
 
 const DataTable = ({ data }) => {
   const [filters, setFilters] = useState({
@@ -59,23 +62,25 @@ const DataTable = ({ data }) => {
 
   const notify = () => toast.success("Deleted successfully.");
 
-  const filteredData = data?.filter((item) => {
-    return Object.keys(filters).every((key) => {
-      if (filters[key] === "") return true;
-      if (key === "date") {
-        const formattedDate = new Date(item[key]).toLocaleDateString();
-        return formattedDate.includes(filters[key]);
-      }
-      if (key === "typeService") {
-        return item[key]
+  // Más recientes primero. .filter() ya devuelve un arreglo nuevo, así que
+  // .sort() no muta la lista de recibos original.
+  const filteredData = data
+    ?.filter((item) => {
+      return Object.keys(filters).every((key) => {
+        if (filters[key] === "") return true;
+        if (key === "date") {
+          const formattedDate = new Date(item[key]).toLocaleDateString();
+          return formattedDate.includes(filters[key]);
+        }
+        if (key === "typeService") {
+          return item[key].toLowerCase().includes(filters[key].toLowerCase());
+        }
+        return String(item[key])
           .toLowerCase()
           .includes(filters[key].toLowerCase());
-      }
-      return String(item[key])
-        .toLowerCase()
-        .includes(filters[key].toLowerCase());
-    });
-  });
+      });
+    })
+    .sort((a, b) => new Date(b.date) - new Date(a.date));
 
   const handleDeleteRow = async (id) => {
     Swal.fire({
@@ -103,95 +108,126 @@ const DataTable = ({ data }) => {
     setOpenModal(true);
   };
 
+  const filterField = (name, placeholder) => (
+    <TextField
+      name={name}
+      value={filters[name]}
+      onChange={handleFilterChange}
+      placeholder={placeholder}
+      variant="standard"
+      size="small"
+      fullWidth
+      InputProps={{
+        disableUnderline: true,
+        startAdornment: (
+          <InputAdornment position="start">
+            <BsSearch size={12} color={GrayPaleteColors.C400} />
+          </InputAdornment>
+        ),
+      }}
+    />
+  );
+
   return (
     <div>
       <h1>Facturas</h1>
-      <TableContainer component={Paper}>
-        <Table>
+      <TableContainer
+        component={Paper}
+        sx={{
+          borderRadius: "1rem",
+          boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.08)",
+          maxHeight: "100%",
+        }}
+      >
+        <Table stickyHeader size="small">
           <TableHead>
             <TableRow>
-              <TableCell>Fecha</TableCell>
-              <TableCell>Cantidad</TableCell>
-              <TableCell>Precio</TableCell>
-              <TableCell>Nombre</TableCell>
-              <TableCell>Tipo de Servicio</TableCell>
-              <TableCell>Acciones</TableCell>
+              {["Fecha", "Cantidad", "Precio", "Nombre", "Tipo de Servicio", "Acciones"].map(
+                (label) => (
+                  <TableCell
+                    key={label}
+                    sx={{
+                      backgroundColor: BluePaleteColors.C600,
+                      color: "#fff",
+                      fontWeight: 600,
+                    }}
+                  >
+                    {label}
+                  </TableCell>
+                )
+              )}
             </TableRow>
             <TableRow>
-              <TableCell>
-                <TextField
-                  name="date"
-                  value={filters.date}
-                  onChange={handleFilterChange}
-                  variant="outlined"
-                  size="small"
-                />
+              <TableCell sx={{ backgroundColor: GrayPaleteColors.C50 }}>
+                {filterField("date", "Buscar fecha")}
               </TableCell>
-              <TableCell>
-                <TextField
-                  name="amount"
-                  value={filters.amount}
-                  onChange={handleFilterChange}
-                  variant="outlined"
-                  size="small"
-                />
+              <TableCell sx={{ backgroundColor: GrayPaleteColors.C50 }}>
+                {filterField("amount", "Buscar cantidad")}
               </TableCell>
-              <TableCell>
-                <TextField
-                  name="price"
-                  value={filters.price}
-                  onChange={handleFilterChange}
-                  variant="outlined"
-                  size="small"
-                />
+              <TableCell sx={{ backgroundColor: GrayPaleteColors.C50 }}>
+                {filterField("price", "Buscar precio")}
               </TableCell>
-              <TableCell>
-                <TextField
-                  name="receiptName"
-                  value={filters.receiptName}
-                  onChange={handleFilterChange}
-                  variant="outlined"
-                  size="small"
-                />
+              <TableCell sx={{ backgroundColor: GrayPaleteColors.C50 }}>
+                {filterField("receiptName", "Buscar nombre")}
               </TableCell>
-              <TableCell>
-                <TextField
-                  name="typeService"
-                  value={filters.typeService}
-                  onChange={handleFilterChange}
-                  variant="outlined"
-                  size="small"
-                />
+              <TableCell sx={{ backgroundColor: GrayPaleteColors.C50 }}>
+                {filterField("typeService", "Buscar tipo")}
               </TableCell>
-              <TableCell>
-                <BsTrash />
-                <BsPencil style={{ marginLeft: "10px" }} />
-              </TableCell>
+              <TableCell sx={{ backgroundColor: GrayPaleteColors.C50 }} />
             </TableRow>
           </TableHead>
           <TableBody>
-            {filteredData?.map((item) => (
-              <TableRow key={item.id}>
-                <TableCell>{FormatDate(item.date)}</TableCell>
-                <TableCell>
-                  {item.amount}{" "}
-                  {item.typeService === "ENERGY" ? "kwh" : " m³"}
-                </TableCell>
-                <TableCell>{formatPrice(item.price)}</TableCell>
-                <TableCell>{item.receiptName}</TableCell>
-                <TableCell>{item.typeService}</TableCell>
-                <TableCell>
-                  <BsTrash
-                    onClick={() => handleDeleteRow(item.id)}
-                    style={{ cursor: "pointer" }}
-                  />
-                  <BsPencil
-                    onClick={() => handleEditRow(item)}
-                    style={{ cursor: "pointer", marginLeft: "10px" }}
-                  />
+            {filteredData?.length ? (
+              filteredData.map((item) => (
+                <TableRow
+                  key={item.id}
+                  hover
+                  sx={{
+                    "&:nth-of-type(odd)": {
+                      backgroundColor: GrayPaleteColors.C50,
+                    },
+                  }}
+                >
+                  <TableCell>{FormatDate(item.date)}</TableCell>
+                  <TableCell>
+                    {item.amount} {item.typeService === "ENERGY" ? "kwh" : "m³"}
+                  </TableCell>
+                  <TableCell>${formatPrice(item.price)}</TableCell>
+                  <TableCell>{item.receiptName}</TableCell>
+                  <TableCell>{item.typeService}</TableCell>
+                  <TableCell>
+                    <Tooltip title="Eliminar recibo">
+                      <span>
+                        <BsTrash
+                          onClick={() => handleDeleteRow(item.id)}
+                          style={{ cursor: "pointer" }}
+                        />
+                      </span>
+                    </Tooltip>
+                    <Tooltip title="Editar recibo">
+                      <span>
+                        <BsPencil
+                          onClick={() => handleEditRow(item)}
+                          style={{ cursor: "pointer", marginLeft: "10px" }}
+                        />
+                      </span>
+                    </Tooltip>
+                  </TableCell>
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell
+                  colSpan={6}
+                  align="center"
+                  sx={{ color: GrayPaleteColors.C400, py: 4 }}
+                >
+                  {data?.length
+                    ? "Ningún recibo coincide con los filtros."
+                    : "Todavía no tienes recibos registrados."}
                 </TableCell>
               </TableRow>
-            ))}
+            )}
           </TableBody>
         </Table>
       </TableContainer>
