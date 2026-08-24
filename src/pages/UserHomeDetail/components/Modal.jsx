@@ -13,6 +13,10 @@ const ModalOverlay = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  /* Sin esto, el header "sticky" de la tabla (position: sticky, con su
+     propio z-index) queda pintado por encima del overlay del modal
+     porque el overlay nunca declaraba un z-index propio. */
+  z-index: 1300;
 `;
 
 const ModalContainer = styled.div`
