@@ -4,12 +4,10 @@ export const HouseFormLayout = styled.div`
   display: grid;
   align-items: center;
   width: 100%;
-  max-width: 640px;
-  margin: 0 auto;
   box-sizing: border-box;
 
   form {
-    margin: 2rem;
+    margin: 2rem 0;
   }
 
   .title {

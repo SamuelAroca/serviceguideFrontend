@@ -255,7 +255,7 @@ const ReceiptForm = ({ userId }) => {
               <Alert severity="warning"> {errors.receiptName} </Alert>
             )}
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} sm={6}>
             <TextField
               fullWidth
               label="Precio"
@@ -267,7 +267,7 @@ const ReceiptForm = ({ userId }) => {
             />
             {errors.price && <Alert severity="warning"> {errors.price} </Alert>}
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} sm={6}>
             <TextField
               fullWidth
               label="Cantidad"
@@ -307,7 +307,7 @@ const ReceiptForm = ({ userId }) => {
           <Grid
             item
             xs={12}
-            style={{ display: "flex", gap: "10px", marginTop: "4rem" }}
+            style={{ display: "flex", gap: "10px", marginTop: "2rem" }}
           >
             <Grid item xs={6}>
               <Tooltip

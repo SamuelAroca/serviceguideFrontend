@@ -1,12 +1,19 @@
 import styled from "styled-components";
+import { GrayPaleteColors } from "../../../../palete-colors/gray-colors.palete";
 
 export const FormLayout = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 640px;
-  margin: 0 auto;
   box-sizing: border-box;
+
+  h1 {
+    margin: 0 0 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: ${GrayPaleteColors.C600};
+    text-align: center;
+  }
 
   .buttons-container {
     display: flex;

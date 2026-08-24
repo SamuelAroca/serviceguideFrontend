@@ -226,9 +226,6 @@ const HouseForm = () => {
 
   return (
     <HouseFormLayout>
-      <div className="title">
-        <h1>AGREGAR CASA</h1>
-      </div>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
@@ -242,7 +239,20 @@ const HouseForm = () => {
             />
             {errors.name && <Alert severity="warning"> {errors.name} </Alert>}
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              fullWidth
+              label="Barrio"
+              name="neighborhood"
+              type="text"
+              value={house.neighborhood}
+              onChange={handleInputChange}
+            />
+            {errors.neighborhood && (
+              <Alert severity="warning"> {errors.neighborhood} </Alert>
+            )}
+          </Grid>
+          <Grid item xs={12} sm={6}>
             <TextField
               fullWidth
               label="Estrato"
@@ -258,19 +268,6 @@ const HouseForm = () => {
           <Grid item xs={12}>
             <TextField
               fullWidth
-              label="Barrio"
-              name="neighborhood"
-              type="text"
-              value={house.neighborhood}
-              onChange={handleInputChange}
-            />
-            {errors.neighborhood && (
-              <Alert severity="warning"> {errors.neighborhood} </Alert>
-            )}
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
               label="Dirección"
               name="address"
               type="text"
@@ -281,7 +278,7 @@ const HouseForm = () => {
               <Alert severity="warning"> {errors.address} </Alert>
             )}
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} sm={6}>
             <TextField
               fullWidth
               label="Contrato"
@@ -294,7 +291,7 @@ const HouseForm = () => {
               <Alert severity="warning"> {errors.contract} </Alert>
             )}
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} sm={6}>
             <SelectCity
               fullWidth
               options={allCities}
@@ -304,7 +301,7 @@ const HouseForm = () => {
             />
           </Grid>
           <Grid
-            sx={{ display: "flex", gap: "10px", marginTop: "4rem" }}
+            sx={{ display: "flex", gap: "10px", marginTop: "2rem" }}
             item
             xs={12}
           >

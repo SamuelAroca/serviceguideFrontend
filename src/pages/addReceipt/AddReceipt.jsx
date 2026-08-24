@@ -1,12 +1,25 @@
 import React from "react";
 import ReceiptForm from "./Components/ReceiptForm";
-import styles from "./styles/ReceiptForm.module.css";
+import {
+  AddPageWrapper,
+  AddPageCard,
+  AddPageHeader,
+  AddPageBody,
+} from "../../styled-components/add-page-card.styled";
 
 const AddReceipt = () => {
   return (
-    <div className={styles.div_main}>
-      <ReceiptForm />
-    </div>
+    <AddPageWrapper>
+      <AddPageCard>
+        <AddPageHeader>
+          <h1>Agregar recibo</h1>
+          <p>Sube manualmente la información de un recibo o cárgalo en PDF</p>
+        </AddPageHeader>
+        <AddPageBody>
+          <ReceiptForm />
+        </AddPageBody>
+      </AddPageCard>
+    </AddPageWrapper>
   );
 };
 
