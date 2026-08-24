@@ -27,4 +27,19 @@ export const DashboardGrid = styled.div`
   a {
     text-decoration: none;
   }
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+
+    .sidenav {
+      width: auto;
+      height: auto;
+      grid-area: auto;
+    }
+
+    .content {
+      grid-area: auto;
+      grid-column: 1 / -1;
+    }
+  }
 `;

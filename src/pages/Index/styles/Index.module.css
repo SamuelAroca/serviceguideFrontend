@@ -57,3 +57,19 @@
     font-size: 2.4rem;
   }
 }
+
+@media (max-width: 600px) {
+  .container_title {
+    top: 6rem;
+    left: 1.5rem;
+    right: 1.5rem;
+  }
+
+  .container_title .h1 {
+    font-size: 1.8rem;
+  }
+
+  .subtitle_header {
+    font-size: 1rem;
+  }
+}

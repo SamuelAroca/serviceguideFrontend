@@ -14,3 +14,9 @@
   min-height: 100%;
   max-height: 100%;
 }
+
+@media (max-width: 700px) {
+  .charts_container {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,5 +1,9 @@
-import { useState } from "react";
-import { SidebarLayout } from "../styled-components/sidebar-layout.styled";
+import { useEffect, useState } from "react";
+import {
+  SidebarLayout,
+  SidebarToggleButton,
+  SidebarBackdrop,
+} from "../styled-components/sidebar-layout.styled";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
@@ -10,6 +14,8 @@ import {
   BiUser,
   BiDownArrow,
   BiReceipt,
+  BiMenu,
+  BiX,
 } from "react-icons/bi";
 import { RiUserSettingsLine } from "react-icons/ri";
 import { useLocation } from "react-router-dom";
@@ -77,12 +83,17 @@ const StyledHouseLink = styled(Link)`
 
 const Sidebar = () => {
   const [isSessionOpen, setIsSessionOpen] = useState(true);
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   const { user, houses, updateUserData, setUserData } = useContext(MyContext);
 
   const navigate = useNavigate();
 
   const { pathname } = useLocation();
+
+  useEffect(() => {
+    setIsMobileOpen(false);
+  }, [pathname]);
 
   const url = import.meta.env.VITE_API_AUTH;
 
@@ -116,7 +127,18 @@ const Sidebar = () => {
   };
 
   return (
-    <SidebarLayout>
+    <>
+      <SidebarToggleButton
+        onClick={() => setIsMobileOpen(!isMobileOpen)}
+        aria-label={isMobileOpen ? "Cerrar menú" : "Abrir menú"}
+      >
+        {isMobileOpen ? <BiX /> : <BiMenu />}
+      </SidebarToggleButton>
+      <SidebarBackdrop
+        $open={isMobileOpen}
+        onClick={() => setIsMobileOpen(false)}
+      />
+      <SidebarLayout className={isMobileOpen ? "open" : ""}>
       <div className="top_sidebar">
         <img src={Logo} alt="logo" loading="lazy" />
         <p>{user !== null ? user : ""}</p>
@@ -190,7 +212,8 @@ const Sidebar = () => {
           Cerrar sesión
         </div>
       </div>
-    </SidebarLayout>
+      </SidebarLayout>
+    </>
   );
 };
 

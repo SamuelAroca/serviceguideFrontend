@@ -87,3 +87,36 @@ a:active {
   background-size: cover;
   background-position: center;
 }
+
+@media (max-width: 900px) {
+  .us {
+    width: 100%;
+    height: auto;
+    padding: 3rem 1rem;
+  }
+
+  .us h2 {
+    font-size: 2.2rem;
+    padding: 1.5rem;
+  }
+
+  .flex_container {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .container_picture {
+    width: min(80vw, 320px);
+    height: 260px;
+  }
+
+  .picture {
+    width: 100%;
+    height: 100%;
+  }
+
+  .paragraph_us {
+    width: 100%;
+    height: auto;
+  }
+}

@@ -136,4 +136,31 @@ export const UserHomeLayout = styled.div`
   p {
     margin: 0;
   }
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    gap: 1.5rem;
+    padding: 1rem;
+
+    .house_title,
+    .donut,
+    .line_chart_container,
+    .totals,
+    .data_table {
+      grid-area: auto;
+      width: 100%;
+      height: auto;
+    }
+
+    .house_title {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .container_charts {
+      grid-template-columns: 1fr;
+    }
+  }
 `;
