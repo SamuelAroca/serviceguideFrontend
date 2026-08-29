@@ -1,7 +1,8 @@
-version: '3.9'
+version: "3.9"
 services:
   frontend:
     container_name: ServiceGuideFront
+    restart: unless-stopped
     build:
       context: .
       dockerfile: Dockerfile
