@@ -159,6 +159,14 @@ export const UserHomeLayout = styled.div`
       gap: 1rem;
     }
 
+    .data_table {
+      /* El DataTable interno usa height:100% para su scroll propio con
+         header fijo; en móvil necesita una altura explícita porque su
+         padre ya no la hereda de un grid-area con filas fijas. */
+      height: 28rem;
+      overflow: hidden;
+    }
+
     .container_charts {
       grid-template-columns: 1fr;
     }

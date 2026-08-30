@@ -301,7 +301,12 @@ const HouseForm = () => {
             />
           </Grid>
           <Grid
-            sx={{ display: "flex", gap: "10px", marginTop: "2rem" }}
+            sx={{
+              display: "flex",
+              flexWrap: "wrap",
+              gap: "10px",
+              marginTop: "2rem",
+            }}
             item
             xs={12}
           >
@@ -325,7 +330,7 @@ const HouseForm = () => {
                 type="file"
                 accept="application/pdf"
                 onChange={handleFileChange}
-                fullWidth
+                sx={{ flex: "1 1 220px" }}
               />
             </Tooltip>
             <Button
@@ -333,7 +338,7 @@ const HouseForm = () => {
               type="submit"
               variant="contained"
               color="primary"
-              style={{ width: "100%", height: "100%", position: "relative" }}
+              sx={{ flex: "1 1 160px", minHeight: "56px", position: "relative" }}
             >
               {isLoading ? (
                 <CircularProgress size={24} style={{ color: "white" }} />

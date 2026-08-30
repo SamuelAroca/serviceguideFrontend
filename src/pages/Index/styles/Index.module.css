@@ -2,6 +2,12 @@
   height: 82.5vh;
   width: 100%;
   position: relative;
+  /* El navbar es "sticky" y por lo tanto sí ocupa su propio espacio en
+     el flujo normal (a diferencia de "fixed"). Este margen negativo,
+     igual a la altura del navbar (80px), recupera el efecto original
+     de que el header quede flotando transparente sobre la imagen del
+     hero en vez de empujarla hacia abajo. */
+  margin-top: -80px;
 }
 
 .header {

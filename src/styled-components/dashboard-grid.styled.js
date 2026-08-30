@@ -40,6 +40,8 @@ export const DashboardGrid = styled.div`
     .content {
       grid-area: auto;
       grid-column: 1 / -1;
+      padding-top: 4.5rem;
+      box-sizing: border-box;
     }
   }
 `;

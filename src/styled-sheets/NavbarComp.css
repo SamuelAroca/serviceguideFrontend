@@ -7,8 +7,14 @@
   box-sizing: border-box;
   background-color: transparent;
   color: #fff;
-  position: fixed;
-  width: 100vw;
+  /* "sticky" en vez de "fixed": Chrome en Android tiene un bug conocido
+     donde un header fixed queda recortado/pegado a mitad de camino al
+     ocultarse la barra de direcciones durante el scroll. Sticky no
+     sufre ese bug porque el navegador lo recalcula junto al scroll
+     nativo en vez de anclarlo al viewport. */
+  position: sticky;
+  top: 0;
+  width: 100%;
   z-index: 10;
   user-select: none;
 }
@@ -117,44 +123,82 @@
     color: black;
   }
 
-  .header-main.fixed > .nav-main .nav-close-btn {
-    color: black;
-  }
-
-  .header-main.fixed > .nav-main > .link::before {
-    background: black;
+  /* El menú desplegado a pantalla completa siempre tiene fondo oscuro,
+     así que sus enlaces deben seguir en blanco aunque el header ya esté
+     en su estado "fixed" (scrolleado, fondo blanco) — si no, quedarían
+     en negro sobre fondo oscuro e ilegibles. Mismo selector y
+     especificidad que la regla base, pero declarado después para que
+     gane dentro de este breakpoint. */
+  .header-main.fixed > .nav-main > .link {
+    color: #fff;
   }
 
   .header-main .nav-main {
     position: fixed;
-    top: -100%;
-    /* bottom: -100%; */
-    left: 0vw;
-    height: 50%;
-    width: 100%;
+    inset: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 3rem;
-    /* padding-left: 2rem; */
-    background-color: var(--mainColorLight);
-    transition: 0.5s;
+    gap: 2.25rem;
+    background: linear-gradient(165deg, #04121f 0%, #0c2c47 100%);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-1rem) scale(0.98);
+    transition: opacity 0.35s ease, transform 0.35s ease;
   }
 
-  .header-main .responsive_nav {
-    transform: translateY(106.7vh);
+  .header-main .nav-main.responsive_nav {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
+  }
+
+  /* El botón de hamburguesa y la "X" para cerrar quedan superpuestos
+     porque ocupan la misma esquina; se oculta la hamburguesa mientras
+     el menú está abierto. */
+  .header-main:has(.nav-main.responsive_nav) > .nav-btn {
+    visibility: hidden;
   }
 
   .nav-main .nav-close-btn {
     position: absolute;
-    top: 1.1rem;
-    right: 1.4rem;
+    top: 1.25rem;
+    right: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.08);
+    /* Su fondo circular siempre es oscuro, así que el ícono debe seguir
+       blanco aunque el header ya esté en su estado "fixed" (color:black). */
+    color: #fff;
+    transition: background-color 0.2s ease;
+  }
+
+  .nav-main .nav-close-btn:hover {
+    background-color: rgba(255, 255, 255, 0.18);
   }
 
   .nav-main .link {
-    position: absolute;
-    top: 0.2rem;
-    font-size: 1.5rem;
+    position: static;
+    font-size: 1.4rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    transition: color 0.2s ease, background-color 0.2s ease;
+  }
+
+  .nav-main .link:hover,
+  .nav-main .link:active {
+    color: #33a7ff;
+    background-color: rgba(255, 255, 255, 0.06);
+  }
+
+  .nav-main .link::before {
+    display: none;
   }
 }

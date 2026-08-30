@@ -32,7 +32,9 @@ export const SidebarLayout = styled.div`
     align-items: center;
     justify-content: flex-start;
     gap: 0.5rem;
+    flex-shrink: 0;
     height: 10%;
+    min-height: 3rem;
     width: 100%;
     position: relative;
     padding-left: 3.5rem;
@@ -80,7 +82,9 @@ export const SidebarLayout = styled.div`
   // Menu items
 
   .middle_sidebar {
-    height: 80%;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
   }
 
   .sessions_list {
@@ -92,7 +96,9 @@ export const SidebarLayout = styled.div`
   // Logout button
 
   .bottom_sidebar {
-    height: 10%;
+    flex-shrink: 0;
+    height: auto;
+    padding-top: 0.5rem;
     .logout_button {
       display: flex;
       align-items: center;

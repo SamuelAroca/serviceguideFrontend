@@ -307,9 +307,11 @@ const ReceiptForm = ({ userId }) => {
           <Grid
             item
             xs={12}
-            style={{ display: "flex", gap: "10px", marginTop: "2rem" }}
+            container
+            spacing={2}
+            style={{ marginTop: "0.5rem" }}
           >
-            <Grid item xs={6}>
+            <Grid item xs={12} sm={6}>
               <Tooltip
                 title={
                   <Typography
@@ -334,13 +336,13 @@ const ReceiptForm = ({ userId }) => {
                 />
               </Tooltip>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} sm={6}>
               <Button
                 onClick={handleSubmit}
                 type="submit"
                 variant="contained"
                 color="primary"
-                style={{ width: "100%", height: "100%" }}
+                style={{ width: "100%", height: "100%", minHeight: "56px" }}
               >
                 {isLoading ? (
                   <CircularProgress size={30} style={{ color: "white" }} />

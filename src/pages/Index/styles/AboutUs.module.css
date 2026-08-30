@@ -73,3 +73,21 @@
     flex-direction: column;
   }
 }
+
+@media (max-width: 600px) {
+  .subtitle_abs .h2 {
+    font-size: 1.9rem;
+    margin: 1.5rem 1rem 0.5rem;
+    padding: 0;
+  }
+
+  .subtitle {
+    font-size: 1.5rem;
+    margin: 0.5rem 1rem 1.5rem;
+    padding: 0;
+  }
+
+  .container_services {
+    margin: 1rem;
+  }
+}

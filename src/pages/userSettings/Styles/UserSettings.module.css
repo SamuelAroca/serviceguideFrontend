@@ -4,4 +4,18 @@
   justify-content: center;
   text-align: center;
   height: 70vh;
+  padding: 0 1.5rem;
+  box-sizing: border-box;
+}
+
+.div_main > * {
+  width: 100%;
+  max-width: 420px;
+}
+
+@media (max-width: 500px) {
+  .div_main {
+    height: auto;
+    padding: 2rem 1.25rem;
+  }
 }
