@@ -149,7 +149,7 @@ const SignUp = () => {
 
             <span className="signup">
               <p>¿Ya tienes una cuenta?</p>
-              <Link className="forgot_password" to={"/login"}>
+              <Link className="forgot_password" to={"/login/signIn"}>
                 Iniciar sesión
               </Link>
             </span>

@@ -106,7 +106,7 @@ const ForgotPassword = () => {
 
             <span className="signup">
               <p>¿Recordaste tu contraseña?</p>
-              <Link to="/login">Iniciar Sesión</Link>
+              <Link to="/login/signIn">Iniciar Sesión</Link>
             </span>
           </form>
         </div>

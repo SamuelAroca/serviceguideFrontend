@@ -3,6 +3,7 @@ import AuthGuard from "./guards/AuthGuard";
 import { Routes, Route } from "react-router-dom";
 import { MyContext } from "./context/UserContext";
 import { useContext, useEffect, lazy, Suspense } from "react";
+import RouteLoader from "./components/RouteLoader";
 import {
   getUserDataService,
   getUserInformation,
@@ -68,7 +69,7 @@ const App = () => {
   }, [userData]);
 
   return (
-    <Suspense fallback={null}>
+    <Suspense fallback={<RouteLoader />}>
       <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/login/*" element={<Login />} />

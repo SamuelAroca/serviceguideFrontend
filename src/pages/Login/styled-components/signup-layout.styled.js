@@ -57,8 +57,10 @@ export const SignUpLayout = styled.div`
     color: ${GrayPaleteColors.C400};
     gap: 5px;
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+    text-align: center;
     a {
       color: ${BluePaleteColors.C500};
     }
@@ -96,9 +98,13 @@ export const SignUpLayout = styled.div`
 
   @media (max-width: 900px) {
     grid-template-columns: 1fr;
-    width: 92vw;
+    width: 90vw;
+    max-width: 420px;
     height: auto;
-    padding: 2rem 0;
+    padding: 2.5rem 1.5rem;
+    border-radius: 1.25rem;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
 
     .form_container form {
       min-width: unset;

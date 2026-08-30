@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import { DashboardGrid } from "../../styled-components/dashboard-grid.styled";
 import Sidebar from "../../components/Sidebar";
+import RouteLoader from "../../components/RouteLoader";
 
 const Home = lazy(() => import("../Home/Home"));
 const AddReceipt = lazy(() => import("../addReceipt/AddReceipt"));
@@ -17,7 +18,7 @@ const PrivateRoutes = () => {
         <Sidebar />
       </div>
       <div className="content">
-        <Suspense fallback={null}>
+        <Suspense fallback={<RouteLoader fullScreen={false} />}>
           <Routes>
             <Route path="/" element={<Navigate to="/major/home/*" replace />} />
             <Route path="/major/home/*" element={<Home />} />
