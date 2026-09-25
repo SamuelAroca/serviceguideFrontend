@@ -16,12 +16,15 @@ import {
   BiReceipt,
   BiMenu,
   BiX,
+  BiSun,
+  BiMoon,
 } from "react-icons/bi";
 import { RiUserSettingsLine } from "react-icons/ri";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { useContext } from "react";
 import { MyContext } from "../context/UserContext";
+import { useThemeMode } from "../context/ThemeContext";
 import { BluePaleteColors } from "../palete-colors/blue-colors.palete";
 import { GrayPaleteColors } from "../palete-colors/gray-colors.palete";
 import Logo from "../assets/Logo.png";
@@ -86,6 +89,7 @@ const Sidebar = () => {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   const { user, houses, updateUserData, setUserData } = useContext(MyContext);
+  const { theme, toggleTheme } = useThemeMode();
 
   const navigate = useNavigate();
 
@@ -211,6 +215,14 @@ const Sidebar = () => {
         </StyledLink>
       </div>
       <div className="bottom_sidebar">
+        <div className="logout_button" onClick={toggleTheme}>
+          {theme === "dark" ? (
+            <BiSun className="icon" />
+          ) : (
+            <BiMoon className="icon" />
+          )}
+          {theme === "dark" ? "Modo claro" : "Modo oscuro"}
+        </div>
         <div className="logout_button" onClick={handleLogout}>
           <BiLogOut className="icon" />
           Cerrar sesión

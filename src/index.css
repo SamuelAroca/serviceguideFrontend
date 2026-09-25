@@ -1,3 +1,34 @@
+:root {
+  --bg-color: #f5f5f6;
+  --surface-color: #ffffff;
+  --surface-alt-color: #f5f5f6;
+  --text-color: #242329;
+  --text-secondary-color: #646377;
+  --border-color: #e4e4e9;
+  --stat-tint-1: #bae6fd;
+  --stat-tint-2: #e0f2fe;
+  --stat-tint-3: #f0f9ff;
+}
+
+:root[data-theme="dark"] {
+  --bg-color: #16181d;
+  --surface-color: #1f222a;
+  --surface-alt-color: #262a33;
+  --text-color: #e8e8ea;
+  --text-secondary-color: #a9a9b7;
+  --border-color: #33363f;
+  --stat-tint-1: #0c4a6e;
+  --stat-tint-2: #0b3a58;
+  --stat-tint-3: #0a2c44;
+}
+
+/* Nota: el body NO usa las variables de tema (se queda en blanco fijo,
+   como antes). El modo oscuro solo aplica dentro del area privada
+   (DashboardGrid), que declara su propio background-color/color; las
+   paginas publicas (landing, login, etc.) no tienen color de texto
+   explicito en varios de sus bloques y confian en heredar el default del
+   navegador (negro) - si el body cambiara de color con el tema, ese
+   texto quedaria casi invisible ahi cuando el modo oscuro esta activo. */
 body {
   margin: 0;
   padding: 0;

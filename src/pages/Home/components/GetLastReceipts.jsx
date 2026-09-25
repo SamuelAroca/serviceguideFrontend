@@ -9,7 +9,7 @@ const GetLastReceipts = ({ receipt }) => {
   return (
     <ReceiptCardContainer
       open={isOpen}
-      initial={{ height: "14rem", backgroundColor: "white" }}
+      initial={{ height: "14rem", backgroundColor: "var(--surface-color)" }}
     >
       <p className={styles.receipt_name}>{receipt.receiptName}</p>
       <p className={styles.receipt_data}>{FormatDate(receipt.date)}</p>

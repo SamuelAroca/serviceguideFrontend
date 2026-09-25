@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { GrayPaleteColors } from "../../../palete-colors/gray-colors.palete";
-import { BluePaleteColors } from "../../../palete-colors/blue-colors.palete";
 
 export const UserHomeLayout = styled.div`
   display: grid;
@@ -111,20 +110,24 @@ export const UserHomeLayout = styled.div`
       overflow: hidden;
     }
     .chart_div:nth-child(1) {
-      background-color: ${BluePaleteColors.C200};
+      background-color: var(--stat-tint-1);
+      color: var(--text-color);
     }
     .chart_div:nth-child(2) {
-      background-color: ${BluePaleteColors.C100};
+      background-color: var(--stat-tint-2);
+      color: var(--text-color);
     }
     .chart_div:nth-child(3) {
-      background-color: ${BluePaleteColors.C50};
+      background-color: var(--stat-tint-3);
+      color: var(--text-color);
     }
   }
 
   .section {
-    border: 1px solid ${GrayPaleteColors.C100};
+    border: 1px solid var(--border-color);
     box-shadow: 0px 0px 10px 0px ${GrayPaleteColors.C100};
-    background-color: white;
+    background-color: var(--surface-color);
+    color: var(--text-color);
     border-radius: 2rem;
     box-sizing: border-box;
     padding: 1rem;

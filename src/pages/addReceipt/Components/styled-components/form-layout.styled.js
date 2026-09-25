@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { GrayPaleteColors } from "../../../../palete-colors/gray-colors.palete";
 
 export const FormLayout = styled.div`
   display: flex;
@@ -11,7 +10,7 @@ export const FormLayout = styled.div`
     margin: 0 0 1rem;
     font-size: 1.1rem;
     font-weight: 600;
-    color: ${GrayPaleteColors.C600};
+    color: var(--text-secondary-color);
     text-align: center;
   }
 

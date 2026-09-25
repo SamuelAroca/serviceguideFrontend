@@ -6,8 +6,9 @@ export const SidebarLayout = styled.div`
   flex-direction: column;
   height: 100%;
   padding: 0 1.5rem 0.5rem 1.5rem;
-  background-color: white;
-  border-right: 1px solid ${GrayPaleteColors.C100};
+  background-color: var(--surface-color);
+  color: var(--text-color);
+  border-right: 1px solid var(--border-color);
   box-sizing: border-box;
 
   @media (max-width: 900px) {
@@ -110,12 +111,12 @@ export const SidebarLayout = styled.div`
       padding: 0.5rem 1rem;
       border-radius: 0.8rem;
       transition: 0.3s all;
-      color: gray;
+      color: var(--text-secondary-color);
       .icon {
         font-size: 1.2rem;
       }
       &:hover {
-        color: black;
+        color: var(--text-color);
         cursor: pointer;
       }
     }
@@ -132,11 +133,11 @@ export const SidebarToggleButton = styled.button`
   height: 2.75rem;
   align-items: center;
   justify-content: center;
-  border: 1px solid ${GrayPaleteColors.C100};
+  border: 1px solid var(--border-color);
   border-radius: 50%;
-  background-color: white;
+  background-color: var(--surface-color);
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.15);
-  color: ${GrayPaleteColors.C800};
+  color: var(--text-color);
   font-size: 1.3rem;
   cursor: pointer;
 

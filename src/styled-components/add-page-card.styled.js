@@ -17,7 +17,8 @@ export const AddPageCard = styled.div`
   width: 100%;
   max-width: 760px;
   height: fit-content;
-  background-color: #fff;
+  background-color: var(--surface-color);
+  color: var(--text-color);
   border-radius: 1.25rem;
   box-shadow: 0px 4px 24px 0px rgba(0, 0, 0, 0.08);
   overflow: hidden;

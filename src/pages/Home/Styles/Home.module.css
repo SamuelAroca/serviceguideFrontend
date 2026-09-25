@@ -20,7 +20,8 @@
   height: 20rem;
   border-radius: 0.5rem;
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
-  background-color: white;
+  background-color: var(--surface-color);
+  color: var(--text-color);
 }
 
 .card {

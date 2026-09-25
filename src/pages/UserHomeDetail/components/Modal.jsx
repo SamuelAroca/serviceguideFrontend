@@ -28,7 +28,8 @@ const ModalContainer = styled.div`
   overflow: auto;
   box-sizing: border-box;
   position: relative;
-  background-color: ${GrayPaleteColors.C50};
+  background-color: var(--surface-color);
+  color: var(--text-color);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   .close_icon {
     position: absolute;

@@ -156,7 +156,7 @@ const DataTable = ({ data, onReceiptChange }) => {
             height: "6px",
           },
           "&::-webkit-scrollbar-track": {
-            backgroundColor: "white",
+            backgroundColor: "var(--surface-color)",
           },
           "&::-webkit-scrollbar-thumb": {
             borderRadius: "10px",
@@ -183,22 +183,22 @@ const DataTable = ({ data, onReceiptChange }) => {
               )}
             </TableRow>
             <TableRow>
-              <TableCell sx={{ backgroundColor: GrayPaleteColors.C50 }}>
+              <TableCell sx={{ backgroundColor: "var(--surface-alt-color)" }}>
                 {filterField("date", "Buscar fecha")}
               </TableCell>
-              <TableCell sx={{ backgroundColor: GrayPaleteColors.C50 }}>
+              <TableCell sx={{ backgroundColor: "var(--surface-alt-color)" }}>
                 {filterField("amount", "Buscar cantidad")}
               </TableCell>
-              <TableCell sx={{ backgroundColor: GrayPaleteColors.C50 }}>
+              <TableCell sx={{ backgroundColor: "var(--surface-alt-color)" }}>
                 {filterField("price", "Buscar precio")}
               </TableCell>
-              <TableCell sx={{ backgroundColor: GrayPaleteColors.C50 }}>
+              <TableCell sx={{ backgroundColor: "var(--surface-alt-color)" }}>
                 {filterField("receiptName", "Buscar nombre")}
               </TableCell>
-              <TableCell sx={{ backgroundColor: GrayPaleteColors.C50 }}>
+              <TableCell sx={{ backgroundColor: "var(--surface-alt-color)" }}>
                 {filterField("typeService", "Buscar tipo")}
               </TableCell>
-              <TableCell sx={{ backgroundColor: GrayPaleteColors.C50 }} />
+              <TableCell sx={{ backgroundColor: "var(--surface-alt-color)" }} />
             </TableRow>
           </TableHead>
           <TableBody>
@@ -209,7 +209,7 @@ const DataTable = ({ data, onReceiptChange }) => {
                   hover
                   sx={{
                     "&:nth-of-type(odd)": {
-                      backgroundColor: GrayPaleteColors.C50,
+                      backgroundColor: "var(--surface-alt-color)",
                     },
                   }}
                 >
