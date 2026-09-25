@@ -8,7 +8,8 @@ export const SignInLayout = styled.div`
   gap: 2rem;
   height: 72vh;
   width: 80vw;
-  background-color: #fff;
+  background-color: var(--surface-color);
+  color: var(--text-color);
   box-sizing: border-box;
 
   .form_container {
@@ -78,7 +79,7 @@ export const SignInLayout = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: ${GrayPaleteColors.C100};
+    background-color: var(--surface-alt-color);
   }
 
   a {
@@ -89,7 +90,7 @@ export const SignInLayout = styled.div`
 
   .inputsMaterial {
     width: 100%;
-    background-color: ${GrayPaleteColors.C50};
+    background-color: var(--surface-alt-color);
   }
 
   h1,

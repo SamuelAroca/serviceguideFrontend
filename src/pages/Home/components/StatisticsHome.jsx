@@ -3,9 +3,16 @@ import styles from "../Styles/StatisticHome.module.css";
 import { Bar } from "react-chartjs-2";
 import "../../../chartSetup";
 import httpClient from "../../../api/httpClient";
+import { useThemeMode } from "../../../context/ThemeContext";
 
 const StatisticsHome = ({ idReceipt, typeReceipt }) => {
   const apiUrl = import.meta.env.VITE_API_STATISTIC;
+  const { theme } = useThemeMode();
+  // Chart.js dibuja en canvas y no resuelve variables CSS, asi que los
+  // colores del tema se pasan como valores concretos (mismos que
+  // --text-color/--border-color en index.css) en vez de var(--...).
+  const tickColor = theme === "dark" ? "#e8e8ea" : "#242329";
+  const gridColor = theme === "dark" ? "#33363f" : "#e4e4e9";
   const [label, setLabel] = useState([]);
   const [price, setPrice] = useState([]);
   const [amount, setAmount] = useState([]);
@@ -70,14 +77,18 @@ const StatisticsHome = ({ idReceipt, typeReceipt }) => {
     scales: {
       y: {
         min: 0,
+        ticks: { color: tickColor },
+        grid: { color: gridColor },
       },
       x: {
-        ticks: { color: "black" },
+        ticks: { color: tickColor },
+        grid: { color: gridColor },
       },
     },
     plugins: {
       legend: {
         display: true,
+        labels: { color: tickColor },
       },
     },
   };
