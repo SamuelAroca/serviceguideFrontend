@@ -63,7 +63,7 @@
 }
 
 .header-main.fixed > .nav-main > .link::before {
-  background: black;
+  background: var(--text-color);
 }
 
 .nav-btn {
@@ -83,13 +83,13 @@
 }
 
 .header-main.fixed {
-  background-color: white;
+  background-color: var(--surface-color);
   transition: 0.3s ease-in-out;
-  color: black;
+  color: var(--text-color);
 }
 
 .header-main.fixed > .nav-main > .link {
-  color: black;
+  color: var(--text-color);
 }
 
 .logo_container {
@@ -106,6 +106,25 @@
   color: #33a7ff;
 }
 
+.theme-toggle-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  border: none;
+  background-color: transparent;
+  color: inherit;
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.theme-toggle-btn:hover {
+  background-color: color-mix(in srgb, currentColor 15%, transparent);
+}
+
 @media only screen and (max-width: 1119px) {
   .nav-btn {
     display: block;
@@ -120,7 +139,7 @@
   }
 
   .header-main.fixed > .nav-btn {
-    color: black;
+    color: var(--text-color);
   }
 
   /* El menú desplegado a pantalla completa siempre tiene fondo oscuro,
@@ -130,6 +149,10 @@
      especificidad que la regla base, pero declarado después para que
      gane dentro de este breakpoint. */
   .header-main.fixed > .nav-main > .link {
+    color: #fff;
+  }
+
+  .header-main.fixed > .nav-main .theme-toggle-btn {
     color: #fff;
   }
 
