@@ -14,7 +14,13 @@ export const getUserHousesService = async (id) => {
 export const getUserHouses = async (setHouses, id) => {
   try {
     const data = await getUserHousesService(id);
-    setHouses(data);
+    // El backend puede devolver algo que no es un array (una casa suelta
+    // sin envolver en lista, un objeto de paginacion, etc.). `houses` en
+    // el contexto se usa con .map() en varios lugares (Sidebar entre
+    // otros); si llega algo no-array esos .map() explotan. Se normaliza
+    // aca, en el unico punto por el que pasan todos los que refrescan
+    // `houses`, en vez de defender cada .map() por separado.
+    setHouses(Array.isArray(data) ? data : []);
   } catch (err) {
     console.log(err.message);
   }

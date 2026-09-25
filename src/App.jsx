@@ -8,7 +8,7 @@ import {
   getUserDataService,
   getUserInformation,
 } from "./services/get-user-data.service";
-import { getUserHousesService } from "./services/get-user-houses.service";
+import { getUserHouses } from "./services/get-user-houses.service";
 import Cookies from "js-cookie";
 
 // Carga perezosa por sección: quien visite la landing pública no debería
@@ -47,15 +47,6 @@ const App = () => {
     }
   };
 
-  const getUserHouses = async () => {
-    try {
-      const data = await getUserHousesService(userData.id);
-      setHouses(data);
-    } catch (err) {
-      console.log(err.message);
-    }
-  };
-
   useEffect(() => {
     if (!accesTocken) return;
     getUserData();
@@ -64,7 +55,7 @@ const App = () => {
 
   useEffect(() => {
     if (userData !== null) {
-      getUserHouses();
+      getUserHouses(setHouses, userData.id);
     }
   }, [userData]);
 
