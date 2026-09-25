@@ -13,7 +13,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Alert } from "@mui/material";
 import Swal from "sweetalert2";
 import { AuthLayout } from "../../../styled-components/auth-layout.styled";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { ArrowBack as ArrowBackIcon } from "@mui/icons-material";
 import { getErrorMessage, isValidEmail } from "../../../Utilities";
 
 const SignUp = () => {

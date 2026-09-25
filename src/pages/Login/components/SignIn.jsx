@@ -16,7 +16,7 @@ import { MyContext } from "../../../context/UserContext";
 import Cookies from "js-cookie";
 import Swal from "sweetalert2";
 import { AuthLayout } from "../../../styled-components/auth-layout.styled";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { ArrowBack as ArrowBackIcon } from "@mui/icons-material";
 import { getErrorMessage, isValidEmail } from "../../../Utilities";
 
 const SignIn = () => {
