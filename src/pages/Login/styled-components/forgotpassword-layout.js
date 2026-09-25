@@ -8,7 +8,8 @@ export const ForgotPasswordLayout = styled.div`
   gap: 1rem;
   height: 72vh;
   width: 80vw;
-  background-color: #fff;
+  background-color: var(--surface-color);
+  color: var(--text-color);
   box-sizing: border-box;
 
   .form_container {
@@ -74,7 +75,7 @@ export const ForgotPasswordLayout = styled.div`
 
   .inputsMaterial {
     width: 100%;
-    background-color: ${GrayPaleteColors.C50};
+    background-color: var(--surface-alt-color);
   }
 
   h1,

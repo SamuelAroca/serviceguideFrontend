@@ -26,7 +26,6 @@ import { useContext } from "react";
 import { MyContext } from "../context/UserContext";
 import { useThemeMode } from "../context/ThemeContext";
 import { BluePaleteColors } from "../palete-colors/blue-colors.palete";
-import { GrayPaleteColors } from "../palete-colors/gray-colors.palete";
 import Logo from "../assets/Logo.png";
 import Cookies from "js-cookie";
 import Swal from "sweetalert2";
@@ -34,21 +33,21 @@ import httpClient from "../api/httpClient";
 
 const StyledLink = styled(Link)`
   background-color: ${(props) =>
-    props.$rute === true ? `${BluePaleteColors.C50}` : ""};
+    props.$rute === true ? `var(--stat-tint-3)` : ""};
   .icon {
     color: ${(props) =>
       props.$rute === true
         ? `${BluePaleteColors.C500}`
-        : `${GrayPaleteColors.C300}`};
+        : `var(--text-secondary-color)`};
   }
   p {
     color: ${(props) =>
       props.$rute === true
         ? `${BluePaleteColors.C500}`
-        : `${GrayPaleteColors.C300}`};
+        : `var(--text-secondary-color)`};
   }
   border: ${(props) =>
-    props.$rute === true ? `1px solid ${BluePaleteColors.C100}` : ""};
+    props.$rute === true ? `1px solid var(--stat-tint-2)` : ""};
 `;
 
 const StyledHouseLink = styled(Link)`
@@ -64,7 +63,7 @@ const StyledHouseLink = styled(Link)`
     color: ${(props) =>
       props.$rute === true
         ? `${BluePaleteColors.C600}`
-        : `${GrayPaleteColors.C300}`};
+        : `var(--text-secondary-color)`};
   }
   &::before {
     content: "";
@@ -75,12 +74,12 @@ const StyledHouseLink = styled(Link)`
     background-color: ${(props) =>
       props.$rute === true
         ? `${BluePaleteColors.C600}`
-        : `${GrayPaleteColors.C300}`};
+        : `var(--text-secondary-color)`};
     opacity: ${(props) => (props.$rute === true ? `100%` : `50%`)};
   }
 
   &:hover {
-    color: ${GrayPaleteColors.C800};
+    color: var(--text-color);
   }
 `;
 
