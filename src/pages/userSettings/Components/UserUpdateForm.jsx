@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "../Styles/UserSettings.module.css";
 import Cookies from "js-cookie";
 import Swal from "sweetalert2";
-import { getErrorMessage } from "../../../Utilities";
+import { getErrorMessage, isValidEmail } from "../../../Utilities";
 
 const UserUpdateForm = () => {
   const url = import.meta.env.VITE_API_USER;
@@ -54,13 +54,12 @@ const UserUpdateForm = () => {
 
   const onValidate = () => {
     const errors = {};
-    const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
     if (!user.firstName.trim()) errors.firstName = "Debes poner un nombre";
     if (!user.lastName.trim()) errors.lastName = "Debes poner un apellido";
     if (!user.email.trim()) {
       errors.email = "Debes poner un email";
-    } else if (!regexEmail.test(user.email)) {
+    } else if (!isValidEmail(user.email)) {
       errors.email = "Debe tener un formato de correo electrónico válido";
     }
     // Vacio = no cambiar la contrasena; si trae algo, exige el minimo del backend.
@@ -77,9 +76,14 @@ const UserUpdateForm = () => {
     if (Object.keys(err).length > 0) return;
 
     try {
+      // No se manda el campo password si esta vacio: en vez de confiar en
+      // que el backend interprete "" como "no cambiar la contraseña",
+      // directamente no se envia, asi no depende de ese contrato implicito.
+      const { password, ...rest } = user;
+      const payload = password ? user : rest;
       const updatedUser = await httpClient.put(
         `${url}/update/${userData.id}`,
-        user
+        payload
       );
       if (updatedUser.status === 200) {
         const currentDate = new Date();

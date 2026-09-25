@@ -85,10 +85,14 @@ const UserHomeDetail = () => {
       };
 
       const fetchData = async () => {
-        const totals = await getTotals();
-        const sumData = await getSum();
-        setPercentages(totals);
-        setSum(sumData);
+        try {
+          const totals = await getTotals();
+          const sumData = await getSum();
+          setPercentages(totals);
+          setSum(sumData);
+        } catch (error) {
+          console.log(error);
+        }
       };
       fetchData();
     }

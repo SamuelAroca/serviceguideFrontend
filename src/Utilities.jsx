@@ -22,4 +22,10 @@ const getErrorMessage = (error) => {
   );
 };
 
-export { FormatDate, formatPrice, getErrorMessage };
+// La regex anterior (\.\w{2,3} al final) rechazaba TLDs validos de mas de 3
+// caracteres (.travel, .museum, .online) y el "+" del local-part
+// (user+tag@gmail.com). Esta no intenta validar RFC 5322 completo, solo
+// "algo@algo.algo" sin espacios, que es lo que de verdad hace falta aqui.
+const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+export { FormatDate, formatPrice, getErrorMessage, isValidEmail };

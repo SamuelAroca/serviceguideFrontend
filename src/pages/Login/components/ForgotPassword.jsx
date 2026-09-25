@@ -12,7 +12,7 @@ import httpClient from "../../../api/httpClient";
 import { Alert } from "@mui/material";
 import Swal from "sweetalert2";
 import { ForgotPasswordLayout } from "../styled-components/forgotpassword-layout";
-import { getErrorMessage } from "../../../Utilities";
+import { getErrorMessage, isValidEmail } from "../../../Utilities";
 
 const ForgotPassword = () => {
   const [errors, setErrors] = useState([]);
@@ -25,11 +25,10 @@ const ForgotPassword = () => {
 
   const onValidate = () => {
     let errors = {};
-    const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; // Expresión regular para validar email
 
     if (!email.mailTo.trim()) {
       errors.mailTo = "Debes poner un email";
-    } else if (!regexEmail.test(email.mailTo)) {
+    } else if (!isValidEmail(email.mailTo)) {
       errors.mailTo = "You must have a valid email format";
     }
     return errors;

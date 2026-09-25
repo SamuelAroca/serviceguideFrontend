@@ -75,6 +75,7 @@ const FormEdit = ({ userId, data, onClose, onReceiptChange }) => {
     let errors = {};
     const regexTitle = /^[\p{L}0-9\s-]+$/u; // Letras (incluye tildes/ñ), números, espacios y guiones
     const regexPrice = /^[0-9]+(\.[0-9]{1,2})?$/; // Expresión regular para validar precios
+    const regexQuantity = /^[0-9]+(\.[0-9]{1,3})?$/; // Expresión regular para validar cantidades
 
     if (!receipt.receiptName.trim()) {
       errors.receiptName = "Debe existir un nombre del recibo.";
@@ -86,6 +87,13 @@ const FormEdit = ({ userId, data, onClose, onReceiptChange }) => {
       errors.price = "Debe existir un precio del recibo.";
     } else if (!regexPrice.test(receipt.price)) {
       errors.price = "El 'Precio' solo debe contener números.";
+    }
+
+    if (!receipt.amount) {
+      errors.amount = "Debe existir una cantidad del recibo.";
+    } else if (!regexQuantity.test(receipt.amount)) {
+      errors.amount =
+        "La 'Cantidad' solo debe contener números y la parte decimal maximo 3 números";
     }
     return errors;
   };

@@ -13,6 +13,7 @@ import { Alert } from "@mui/material";
 import Swal from "sweetalert2";
 import { ChangePasswordLayout } from "../styled-components/changepassword-layout";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { getErrorMessage } from "../../../Utilities";
 
 const ChangePasword = () => {
   let params = useParams();
@@ -31,6 +32,8 @@ const ChangePasword = () => {
 
     if (!password.password.trim()) {
       errors.password = "Debes poner una contraseña";
+    } else if (password.password.length < 8) {
+      errors.password = "La contraseña debe tener al menos 8 caracteres";
     }
     if (!password.confirmPassword.trim()) {
       errors.confirmPassword = "Debes confirmar la contraseña";
@@ -72,12 +75,10 @@ const ChangePasword = () => {
           });
         }
       } catch (error) {
-        let response = error;
-        let message = response.response.data.message;
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: message,
+          text: getErrorMessage(error),
         });
       }
 

@@ -14,7 +14,7 @@ import { Alert } from "@mui/material";
 import Swal from "sweetalert2";
 import { SignUpLayout } from "../styled-components/signup-layout.styled";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { getErrorMessage } from "../../../Utilities";
+import { getErrorMessage, isValidEmail } from "../../../Utilities";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -35,13 +35,12 @@ const SignUp = () => {
 
   const onValidate = () => {
     const errors = {};
-    const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
     if (!name.trim()) errors.name = "Debes poner un nombre";
     if (!lastName.trim()) errors.lastName = "Debes poner un apellido";
     if (!email.trim()) {
       errors.email = "Debes poner un email";
-    } else if (!regexEmail.test(email)) {
+    } else if (!isValidEmail(email)) {
       errors.email = "Debe tener un formato de correo electrónico válido";
     }
     if (password.length < 8) {

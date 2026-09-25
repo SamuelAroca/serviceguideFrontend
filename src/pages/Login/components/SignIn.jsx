@@ -17,7 +17,7 @@ import Cookies from "js-cookie";
 import Swal from "sweetalert2";
 import { SignInLayout } from "../styled-components/singin-layout.styled";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { getErrorMessage } from "../../../Utilities";
+import { getErrorMessage, isValidEmail } from "../../../Utilities";
 
 const SignIn = () => {
   // Logica para obtener los datos del usuario
@@ -62,11 +62,10 @@ const SignIn = () => {
 
   const onValidate = () => {
     let errors = {};
-    const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; // Expresión regular para validar email
 
     if (!email.email.trim()) {
       errors.email = "No puede estar vacio";
-    } else if (!regexEmail.test(email.email)) {
+    } else if (!isValidEmail(email.email)) {
       errors.email = "Debe tener un formato de correo electrónico válido";
     }
 
@@ -97,11 +96,18 @@ const SignIn = () => {
         }
       } catch (error) {
         console.log(error);
+        // footer se pasa como HTMLElement (no como string) para que
+        // SweetAlert2 lo inserte con appendChild en vez de innerHTML:
+        // si en el futuro este bloque cambia y termina metiendo texto
+        // dinamico ahi, no hay forma de que se interprete como HTML.
+        const footerLink = document.createElement("a");
+        footerLink.href = "/forgot-password";
+        footerLink.textContent = "¿Has olvidado tu contraseña?";
         Swal.fire({
           icon: "error",
           title: "Oops...",
           text: getErrorMessage(error),
-          footer: '<a href="/forgot-password">¿Has olvidado tu contraseña?</a>',
+          footer: footerLink,
         });
       }
       setEmail({
