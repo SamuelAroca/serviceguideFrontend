@@ -2,11 +2,14 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { RiWaterFlashFill } from "react-icons/ri";
 import { FaBars, FaTimes } from "react-icons/fa";
+import { BiSun, BiMoon } from "react-icons/bi";
+import { useThemeMode } from "../context/ThemeContext";
 import "../styled-sheets/NavbarComp.css";
 
 const NavbarComp = () => {
   const [fix, setFix] = useState(false);
   const [showResponsiveNav, setShowResponsiveNav] = useState(false);
+  const { theme, toggleTheme } = useThemeMode();
 
   useEffect(() => {
     const setFixed = () => {
@@ -48,6 +51,15 @@ const NavbarComp = () => {
           <Link className="link" to={"/login"}>
             Iniciar Sesión
           </Link>
+          <button
+            className="theme-toggle-btn"
+            onClick={toggleTheme}
+            aria-label={
+              theme === "dark" ? "Cambiar a modo claro" : "Cambiar a modo oscuro"
+            }
+          >
+            {theme === "dark" ? <BiSun /> : <BiMoon />}
+          </button>
           <button className="nav-btn nav-close-btn" onClick={showNavbar}>
             <FaTimes />
           </button>
