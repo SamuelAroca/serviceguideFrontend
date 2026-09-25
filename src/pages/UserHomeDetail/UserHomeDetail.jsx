@@ -16,6 +16,7 @@ import Swal from "sweetalert2";
 const UserHomeDetail = () => {
   const apiUrl = import.meta.env.VITE_API_STATISTIC;
   const apiHouse = import.meta.env.VITE_API_HOUSE;
+  const apiReceipt = import.meta.env.VITE_API_RECEIPT;
   const [percentages, setPercentages] = useState(null);
   const [sum, setSum] = useState([]);
   const [openModal, setOpenModal] = useState(false);
@@ -36,8 +37,27 @@ const UserHomeDetail = () => {
 
   useEffect(() => {
     setHouse(houses?.find((house) => Number(house.id) === Number(id)));
-    setReceipts(house?.receipts);
-  }, [id, house, houses]);
+  }, [id, houses]);
+
+  // Antes esto leia house.receipts (embebido en la respuesta de casas), lo
+  // que forzaba al backend a mandar TODOS los recibos de TODAS las casas en
+  // cada carga del listado. Ahora se piden solo los de esta casa, y se
+  // vuelve a pedir cuando DataTable/FormEdit avisan que algo cambio.
+  const getReceipts = async () => {
+    if (!userData?.id || !id) return;
+    try {
+      const response = await httpClient.get(
+        `${apiReceipt}/getReceiptsByHouseAndUser/${userData.id}/${id}`
+      );
+      setReceipts(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getReceipts();
+  }, [id, userData?.id]);
 
   const getStatistic = () => {
     if (house) {
@@ -107,7 +127,7 @@ const UserHomeDetail = () => {
         <div className="house_information">
           <h2>Información de la casa</h2>
           <p>{house?.name}</p>
-          <p>Cantidad Facturas: {house?.receipts?.length}</p>
+          <p>Cantidad Facturas: {receipts?.length ?? 0}</p>
         </div>
         <div className="actions">
           <Button
@@ -156,7 +176,7 @@ const UserHomeDetail = () => {
       </div>
 
       <div className="data_table section">
-        <DataTable data={receipts} />
+        <DataTable data={receipts} onReceiptChange={getReceipts} />
       </div>
 
       <Modal isOpen={openModal} onClose={onCloseShare}>

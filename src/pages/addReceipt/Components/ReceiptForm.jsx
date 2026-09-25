@@ -84,7 +84,7 @@ const ReceiptForm = ({ userId }) => {
 
   const onValidate = (receipt) => {
     let errors = {};
-    const regexTitle = /^[a-zA-Z0-9\s-]+$/; // Expresión regular para validar nombres
+    const regexTitle = /^[\p{L}0-9\s-]+$/u; // Letras (incluye tildes/ñ), números, espacios y guiones
     const regexPrice = /^[0-9]+(\.[0-9]{1,2})?$/; // Expresión regular para validar precios
     const regexQuantity = /^[0-9]+(\.[0-9]{1,3})?$/; // Expresión regular para validar cantidades
     const regexDate = /^(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])-(19|20)\d{2}$/; // Expresión regular para validar fechas en formato MM-DD-YYYY

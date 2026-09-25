@@ -24,7 +24,7 @@ import { BluePaleteColors } from "../../../palete-colors/blue-colors.palete";
 import { GrayPaleteColors } from "../../../palete-colors/gray-colors.palete";
 import { getErrorMessage } from "../../../Utilities";
 
-const DataTable = ({ data }) => {
+const DataTable = ({ data, onReceiptChange }) => {
   const [filters, setFilters] = useState({
     date: "",
     amount: "",
@@ -98,6 +98,7 @@ const DataTable = ({ data }) => {
         try {
           await httpClient.delete(`${apiUrl}/delete/${id}`);
           getUserHouses(setHouses, userData?.id);
+          onReceiptChange?.();
           notify();
         } catch (error) {
           console.log(error);
@@ -256,7 +257,13 @@ const DataTable = ({ data }) => {
         </Table>
       </TableContainer>
       <Modal isOpen={openModal} onClose={onCloseShare}>
-        {selectedItem && <FormEdit data={selectedItem} onClose={onCloseShare} />}
+        {selectedItem && (
+          <FormEdit
+            data={selectedItem}
+            onClose={onCloseShare}
+            onReceiptChange={onReceiptChange}
+          />
+        )}
       </Modal>
       <Toaster position="bottom-right" />
     </div>

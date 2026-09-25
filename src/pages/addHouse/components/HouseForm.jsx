@@ -85,7 +85,7 @@ const HouseForm = () => {
 
   const onValidate = (house) => {
     let errors = {};
-    const regexLettersNumbers = /^[\w\s]+(?:\s+[a-zA-Z]+\d{0,2})*$/; // Expresión regular para validar precios
+    const regexLettersNumbers = /^[\p{L}0-9\s]+(?:\s+[\p{L}]+\d{0,2})*$/u; // Letras (incluye tildes/ñ), números y espacios
     const regexNumbers = /^[0-9]+$/; // Expresión regular para validar cantidades
     const regexStratum = /^[1-6]$/; // Validar estrato
 

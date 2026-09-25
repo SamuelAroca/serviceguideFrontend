@@ -12,7 +12,7 @@ import Swal from "sweetalert2";
 import Select from "react-select";
 import { getErrorMessage } from "../../../Utilities";
 
-const FormEdit = ({ userId, data, onClose }) => {
+const FormEdit = ({ userId, data, onClose, onReceiptChange }) => {
   const apiUrl = import.meta.env.VITE_API_RECEIPT;
   const apiHouse = import.meta.env.VITE_API_HOUSE;
 
@@ -73,7 +73,7 @@ const FormEdit = ({ userId, data, onClose }) => {
 
   const onValidate = (receipt) => {
     let errors = {};
-    const regexTitle = /^[a-zA-Z0-9\s-]+$/; // Expresión regular para validar nombres
+    const regexTitle = /^[\p{L}0-9\s-]+$/u; // Letras (incluye tildes/ñ), números, espacios y guiones
     const regexPrice = /^[0-9]+(\.[0-9]{1,2})?$/; // Expresión regular para validar precios
 
     if (!receipt.receiptName.trim()) {
@@ -110,6 +110,7 @@ const FormEdit = ({ userId, data, onClose }) => {
         );
         notifyUpdate();
         getUserHouses(setHouses, userData?.id);
+        onReceiptChange?.();
         onClose();
       } catch (error) {
         console.log(error);
