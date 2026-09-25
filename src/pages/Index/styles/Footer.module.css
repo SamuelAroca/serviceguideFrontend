@@ -14,7 +14,7 @@
 .div_main {
   position: relative;
   width: 100%;
-  background: #59a5f5;
+  background: var(--footer-bg);
   min-height: 300px;
   display: flex;
   justify-content: center;
@@ -67,7 +67,7 @@
 }
 
 .p {
-  color: #000;
+  color: var(--text-color);
   text-align: center;
   margin-top: 15px;
   margin-bottom: 10px;
@@ -75,7 +75,7 @@
 }
 
 .line {
-  border-top: 1px solid #000;
+  border-top: 1px solid var(--text-color);
   height: 2px;
   width: 80%;
   padding: 0;

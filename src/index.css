@@ -8,6 +8,7 @@
   --stat-tint-1: #bae6fd;
   --stat-tint-2: #e0f2fe;
   --stat-tint-3: #f0f9ff;
+  --footer-bg: #59a5f5;
 }
 
 :root[data-theme="dark"] {
@@ -20,6 +21,7 @@
   --stat-tint-1: #0c4a6e;
   --stat-tint-2: #0b3a58;
   --stat-tint-3: #0a2c44;
+  --footer-bg: #14395c;
 }
 
 /* Nota: el body NO usa las variables de tema (se queda en blanco fijo,

@@ -5,6 +5,10 @@
   color: var(--text-color);
   position: relative;
   font-family: "Nunito", sans-serif;
+  /* Sin esto, el margin-top del h2 dentro de .subtitle_abs (y el
+     margin-bottom del ultimo <p>) colapsa a traves de .main hacia sus
+     vecinos, dejando ver el fondo de .main_container entre secciones. */
+  display: flow-root;
 }
 
 .subtitle_abs .h2 {
