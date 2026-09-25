@@ -16,10 +16,16 @@ const DEFAULT_COLORS = ["#606470", "#764f51", "#F7C52D", "#0369a1"];
 const ReceiptLineChart = ({ data, colors = DEFAULT_COLORS, showGrid = false }) => {
   const chartRef = useRef(null);
 
-  const types = Array.from(new Set(data?.map((item) => item.typeService)));
+  // "?." solo cubre null/undefined: si el backend responde con algo que
+  // no es un array (un recibo suelto sin envolver en lista, un objeto de
+  // paginacion, etc.) sigue siendo truthy y .map()/.forEach() explotan
+  // igual. Se normaliza una sola vez aca.
+  const receipts = Array.isArray(data) ? data : [];
+
+  const types = Array.from(new Set(receipts.map((item) => item.typeService)));
 
   const monthlyData = {};
-  data?.forEach((item) => {
+  receipts.forEach((item) => {
     const month = moment(item.date).format("MMM YYYY");
     if (!monthlyData[month]) {
       monthlyData[month] = {};
@@ -34,7 +40,7 @@ const ReceiptLineChart = ({ data, colors = DEFAULT_COLORS, showGrid = false }) =
     (a, b) => moment(a, "MMM YYYY").toDate() - moment(b, "MMM YYYY").toDate()
   );
 
-  const datasets = types?.map((type, index) => {
+  const datasets = types.map((type, index) => {
     const prices = labels.map((label) => monthlyData[label]?.[type] || 0);
     return {
       label: type,

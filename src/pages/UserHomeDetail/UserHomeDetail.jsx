@@ -51,7 +51,10 @@ const UserHomeDetail = () => {
       const response = await httpClient.get(
         `${apiReceipt}/getReceiptsByHouseAndUser/${userData.id}/${id}`
       );
-      setReceipts(response.data);
+      // "?." en LineChart/DataTable solo cubre null/undefined: si esto
+      // no es un array (backend cambia forma, error envuelto en un
+      // objeto, etc.) sus .map()/.filter() truenan igual.
+      setReceipts(Array.isArray(response.data) ? response.data : []);
     } catch (error) {
       console.log(error);
     }
