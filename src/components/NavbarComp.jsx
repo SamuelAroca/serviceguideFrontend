@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { RiWaterFlashFill } from "react-icons/ri";
 import { FaBars, FaTimes } from "react-icons/fa";
 import "../styled-sheets/NavbarComp.css";
 
 const NavbarComp = () => {
   const [fix, setFix] = useState(false);
+  const [showResponsiveNav, setShowResponsiveNav] = useState(false);
 
   useEffect(() => {
     const setFixed = () => {
@@ -16,10 +17,8 @@ const NavbarComp = () => {
     return () => window.removeEventListener("scroll", setFixed);
   }, []);
 
-  const navRef = useRef();
-
   const showNavbar = () => {
-    navRef.current.classList.toggle("responsive_nav");
+    setShowResponsiveNav((prev) => !prev);
   };
 
   return (
@@ -29,7 +28,11 @@ const NavbarComp = () => {
           <RiWaterFlashFill className="main-logo" />
           ServiceGuide
         </div>
-        <nav className="nav-main" ref={navRef}>
+        <nav
+          className={
+            showResponsiveNav ? "nav-main responsive_nav" : "nav-main"
+          }
+        >
           <a className="link" href="#home">
             Inicio
           </a>

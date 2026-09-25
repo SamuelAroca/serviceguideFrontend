@@ -1,18 +1,23 @@
-import React, { useRef, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import { Line } from "react-chartjs-2";
 import moment from "moment";
-import "../../../chartSetup";
+import "../chartSetup";
 
-const LineChart = ({ data }) => {
+const DEFAULT_COLORS = ["#606470", "#764f51", "#F7C52D", "#0369a1"];
+
+// Antes esto vivia duplicado en Home/components/LineChart.jsx y
+// UserHomeDetail/components/LineChart.jsx, casi identicos salvo colores y
+// grid. La version de Home ademas tenia un bug: armaba los precios con
+// Object.values(monthlyData).reverse(), asumiendo que el orden de insercion
+// del objeto coincidia con el orden cronologico inverso de las etiquetas
+// (que se ordenan aparte); si los recibos no llegaban perfectamente
+// ordenados por fecha, el precio quedaba bajo el mes equivocado. Aqui los
+// precios se leen directo de las etiquetas ya ordenadas, sin ese supuesto.
+const ReceiptLineChart = ({ data, colors = DEFAULT_COLORS, showGrid = false }) => {
   const chartRef = useRef(null);
 
-  // Obtener los tipos de factura únicos
   const types = Array.from(new Set(data?.map((item) => item.typeService)));
 
-  // Colores de las líneas
-  const colors = ["#606470", "#764f51", "#F7C52D", "#0369a1"];
-
-  // Agrupar los datos por mes
   const monthlyData = {};
   data?.forEach((item) => {
     const month = moment(item.date).format("MMM YYYY");
@@ -25,12 +30,12 @@ const LineChart = ({ data }) => {
     monthlyData[month][item.typeService] += item.price;
   });
 
-  // Crear un objeto de datasets para cada tipo de factura
+  const labels = Object.keys(monthlyData).sort(
+    (a, b) => moment(a, "MMM YYYY").toDate() - moment(b, "MMM YYYY").toDate()
+  );
+
   const datasets = types?.map((type, index) => {
-    const prices = Object.values(monthlyData).map(
-      (monthData) => monthData[type] || 0
-    );
-    prices.reverse();
+    const prices = labels.map((label) => monthlyData[label]?.[type] || 0);
     return {
       label: type,
       data: prices,
@@ -43,16 +48,7 @@ const LineChart = ({ data }) => {
     };
   });
 
-  // Crear las etiquetas de mes
-  const labels = Object.keys(monthlyData).sort((a, b) => {
-    return moment(a, "MMM YYYY").toDate() - moment(b, "MMM YYYY").toDate();
-  });
-
-  // Crear el objeto de configuración para el gráfico
-  const chartData = {
-    labels: labels,
-    datasets: datasets,
-  };
+  const chartData = { labels, datasets };
 
   useEffect(() => {
     const resizeObserver = new ResizeObserver(() => {
@@ -70,23 +66,18 @@ const LineChart = ({ data }) => {
     };
   }, []);
 
-  // Estilos del gráfico
   const chartOptions = {
     maintainAspectRatio: false,
     scales: {
       x: {
-        grid: {
-          display: false,
-        },
+        grid: { display: showGrid },
         drawBorder: false,
-        drawOnChartArea: false, // Oculta las líneas del eje X
+        drawOnChartArea: showGrid,
       },
       y: {
-        grid: {
-          display: false,
-        },
+        grid: { display: showGrid },
         drawBorder: false,
-        drawOnChartArea: false, // Oculta las líneas del eje Y
+        drawOnChartArea: showGrid,
       },
     },
     plugins: {
@@ -100,4 +91,4 @@ const LineChart = ({ data }) => {
   return <Line ref={chartRef} data={chartData} options={chartOptions} />;
 };
 
-export default LineChart;
+export default ReceiptLineChart;

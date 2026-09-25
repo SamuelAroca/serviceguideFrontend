@@ -1,10 +1,10 @@
-import moment from "moment-timezone";
+import moment from "moment";
 
+// No usa ninguna funcion especifica de zona horaria (nunca llama .tz()), asi
+// que traerlo con moment-timezone solo agregaba ~250KB+ de datos de husos
+// horarios al bundle sin ningun beneficio real.
 const FormatDate = (date) => {
-  const timedifference = 0; // diferencia horaria en minutos -1440
-  const dateColombia = moment(date).subtract(timedifference, "minutes");
-  const formatDate = dateColombia.locale("es").format("MM/DD/YYYY");
-  return formatDate;
+  return moment(date).locale("es").format("MM/DD/YYYY");
 };
 
 const formatPrice = (price) => {

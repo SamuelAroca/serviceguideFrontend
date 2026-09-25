@@ -4,7 +4,9 @@ import { useContext, useEffect, useState } from "react";
 import { UserHomeLayout } from "./styled-components/user-home-layout.styled";
 import ChartDoughnut from "./components/ChartDoughnut";
 import DataTable from "./components/DataTable";
-import LineChart from "./components/LineChart";
+import LineChart from "../../components/ReceiptLineChart";
+
+const USER_HOME_DETAIL_CHART_COLORS = ["#F79F39", "#0ea5e9", "#F7C52D", "#0369a1"];
 import Totals from "./components/Totals";
 import httpClient from "../../api/httpClient";
 import Modal from "./components/Modal";
@@ -148,7 +150,7 @@ const UserHomeDetail = () => {
       </div>
 
       <div className="line_chart_container section">
-        <LineChart data={receipts} />
+        <LineChart data={receipts} colors={USER_HOME_DETAIL_CHART_COLORS} showGrid />
       </div>
 
       <div className="totals container_charts">

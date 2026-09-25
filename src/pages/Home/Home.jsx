@@ -5,7 +5,7 @@ import StatisticsHome from "./components/StatisticsHome";
 import { MyContext } from "../../context/UserContext";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
-import LineChart from "./components/LineChart";
+import LineChart from "../../components/ReceiptLineChart";
 
 const Home = () => {
   const apiUrl = import.meta.env.VITE_API_RECEIPT;
