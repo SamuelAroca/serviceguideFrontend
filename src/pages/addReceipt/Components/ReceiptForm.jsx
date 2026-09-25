@@ -24,6 +24,7 @@ import { Toaster, toast } from "react-hot-toast";
 import Swal from "sweetalert2";
 import { IoIosWarning } from "react-icons/io";
 import { getErrorMessage } from "../../../Utilities";
+import { useFormState } from "../../../hooks/useFormState";
 
 const ReceiptForm = ({ userId }) => {
   const apiUrl = import.meta.env.VITE_API_RECEIPT;
@@ -43,7 +44,7 @@ const ReceiptForm = ({ userId }) => {
     getHouses();
   }, [userId]);
 
-  const [receipt, setReceipt] = useState({
+  const [receipt, setReceipt, handleInputChange] = useFormState({
     receiptName: "",
     price: "",
     amount: "",
@@ -129,7 +130,6 @@ const ReceiptForm = ({ userId }) => {
             },
           });
         } catch (error) {
-          setIsLoading(false);
           console.log(error);
           Swal.fire({
             icon: "error",
@@ -137,19 +137,15 @@ const ReceiptForm = ({ userId }) => {
             text: getErrorMessage(error),
           });
         }
+        // Antes esto solo se llamaba dentro del catch: si el guardado
+        // salia bien, isLoading se quedaba en true para siempre y el
+        // boton seguia mostrando el spinner.
+        setIsLoading(false);
       } else {
         setIsLoading(false);
         setErrors(err);
       }
     }
-  };
-
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setReceipt((prevReceipt) => ({
-      ...prevReceipt,
-      [name]: value,
-    }));
   };
 
   const handleFileChange = (event) => {

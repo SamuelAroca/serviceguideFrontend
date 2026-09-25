@@ -12,6 +12,7 @@ import styles from "../Styles/UpdateHouse.module.css";
 import Swal from "sweetalert2";
 import Select from "react-select";
 import { getErrorMessage } from "../../../Utilities";
+import { useFormState } from "../../../hooks/useFormState";
 
 const UpdateHouse = ({ data, onClose }) => {
   const apiUrl = import.meta.env.VITE_API_HOUSE;
@@ -36,7 +37,7 @@ const UpdateHouse = ({ data, onClose }) => {
     }
   }, [data]);
 
-  const [house, setHouse] = useState({
+  const [house, setHouse, handleInputChange] = useFormState({
     name: data?.name,
     stratum: data?.stratum,
     neighborhood: data?.neighborhood,
@@ -141,14 +142,6 @@ const UpdateHouse = ({ data, onClose }) => {
       setIsLoading(false);
     }
   };
-
-  function handleInputChange(event) {
-    const { name, value } = event.target;
-    setHouse((prevHouse) => ({
-      ...prevHouse,
-      [name]: value,
-    }));
-  }
 
   const cityOptions = allCities.map((city) => ({
     label: city.city,

@@ -19,6 +19,7 @@ import Swal from "sweetalert2";
 import { Toaster, toast } from "react-hot-toast";
 import { IoIosWarning } from "react-icons/io";
 import { getErrorMessage } from "../../../Utilities";
+import { useFormState } from "../../../hooks/useFormState";
 
 const HouseForm = () => {
   const apiUrl = import.meta.env.VITE_API_HOUSE;
@@ -39,7 +40,7 @@ const HouseForm = () => {
     getCities();
   }, [myID]);
 
-  const [house, setHouse] = useState({
+  const [house, setHouse, handleInputChange] = useFormState({
     name: "",
     stratum: "",
     neighborhood: "",
@@ -171,14 +172,6 @@ const HouseForm = () => {
       }
     }
   };
-
-  function handleInputChange(event) {
-    const { name, value } = event.target;
-    setHouse((prevHouse) => ({
-      ...prevHouse,
-      [name]: value,
-    }));
-  }
 
   const handleUpload = async () => {
     try {

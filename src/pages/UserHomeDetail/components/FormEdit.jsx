@@ -11,6 +11,7 @@ import { toast } from "react-hot-toast";
 import Swal from "sweetalert2";
 import Select from "react-select";
 import { getErrorMessage } from "../../../Utilities";
+import { useFormState } from "../../../hooks/useFormState";
 
 const FormEdit = ({ userId, data, onClose, onReceiptChange }) => {
   const apiUrl = import.meta.env.VITE_API_RECEIPT;
@@ -46,7 +47,7 @@ const FormEdit = ({ userId, data, onClose, onReceiptChange }) => {
 
   const date = formatDate(data?.date);
 
-  const [receipt, setReceipt] = useState({
+  const [receipt, setReceipt, handleInputChange] = useFormState({
     receiptName: data?.receiptName,
     price: data?.price,
     amount: data?.amount,
@@ -147,14 +148,6 @@ const FormEdit = ({ userId, data, onClose, onReceiptChange }) => {
       setErrors(err);
       setIsLoading(false);
     }
-  };
-
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setReceipt((prevReceipt) => ({
-      ...prevReceipt,
-      [name]: value,
-    }));
   };
 
   const houseOptions = allHouses.map((house) => ({
