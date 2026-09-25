@@ -81,7 +81,7 @@ const Footer = () => {
         </li>
       </ul>
       <p className={styles.p}>
-        ©2023 ServiceGuide | Todos los derechos reservados
+        ©{new Date().getFullYear()} ServiceGuide | Todos los derechos reservados
       </p>
       <div className={styles.line} />
     </div>

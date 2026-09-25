@@ -173,6 +173,9 @@ const Sidebar = () => {
           <p>Agregar recibo</p>
         </StyledLink>
         <StyledLink
+          as="button"
+          type="button"
+          className="link_button"
           onClick={() => setIsSessionOpen(!isSessionOpen)}
           $rute={pathname.includes(`house-detail`)}
         >
@@ -214,18 +217,18 @@ const Sidebar = () => {
         </StyledLink>
       </div>
       <div className="bottom_sidebar">
-        <div className="logout_button" onClick={toggleTheme}>
+        <button type="button" className="logout_button" onClick={toggleTheme}>
           {theme === "dark" ? (
             <BiSun className="icon" />
           ) : (
             <BiMoon className="icon" />
           )}
           {theme === "dark" ? "Modo claro" : "Modo oscuro"}
-        </div>
-        <div className="logout_button" onClick={handleLogout}>
+        </button>
+        <button type="button" className="logout_button" onClick={handleLogout}>
           <BiLogOut className="icon" />
           Cerrar sesión
-        </div>
+        </button>
       </div>
       </SidebarLayout>
     </>

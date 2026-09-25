@@ -24,6 +24,22 @@ import { BluePaleteColors } from "../../../palete-colors/blue-colors.palete";
 import { GrayPaleteColors } from "../../../palete-colors/gray-colors.palete";
 import { getErrorMessage } from "../../../Utilities";
 
+// Antes BsTrash/BsPencil llevaban el onClick directo sobre el <svg>: sin
+// nombre accesible y sin foco por teclado (Tooltip solo muestra texto al
+// pasar el mouse). Envueltos en un <button> real con aria-label, se
+// resetea el chrome nativo del boton para que el icono se vea igual.
+const ICON_BUTTON_STYLE = {
+  background: "none",
+  border: "none",
+  padding: 0,
+  margin: 0,
+  color: "inherit",
+  font: "inherit",
+  cursor: "pointer",
+  display: "inline-flex",
+  alignItems: "center",
+};
+
 const DataTable = ({ data, onReceiptChange }) => {
   const [filters, setFilters] = useState({
     date: "",
@@ -213,20 +229,24 @@ const DataTable = ({ data, onReceiptChange }) => {
                   <TableCell>{item.typeService}</TableCell>
                   <TableCell>
                     <Tooltip title="Eliminar recibo">
-                      <span>
-                        <BsTrash
-                          onClick={() => handleDeleteRow(item.id)}
-                          style={{ cursor: "pointer" }}
-                        />
-                      </span>
+                      <button
+                        type="button"
+                        aria-label="Eliminar recibo"
+                        onClick={() => handleDeleteRow(item.id)}
+                        style={ICON_BUTTON_STYLE}
+                      >
+                        <BsTrash />
+                      </button>
                     </Tooltip>
                     <Tooltip title="Editar recibo">
-                      <span>
-                        <BsPencil
-                          onClick={() => handleEditRow(item)}
-                          style={{ cursor: "pointer", marginLeft: "10px" }}
-                        />
-                      </span>
+                      <button
+                        type="button"
+                        aria-label="Editar recibo"
+                        onClick={() => handleEditRow(item)}
+                        style={{ ...ICON_BUTTON_STYLE, marginLeft: "10px" }}
+                      >
+                        <BsPencil />
+                      </button>
                     </Tooltip>
                   </TableCell>
                 </TableRow>

@@ -53,7 +53,8 @@ export const SidebarLayout = styled.div`
     }
   }
 
-  a {
+  a,
+  .link_button {
     display: flex;
     align-items: center;
     font-size: 1rem;
@@ -62,6 +63,16 @@ export const SidebarLayout = styled.div`
     box-sizing: border-box;
     border-radius: 0.5rem;
     transition: 0.3s all;
+    /* .link_button es un <button> real (el toggle "Casas" no navega a
+       ningun lado, asi que no debe ser un <a> sin href): se resetea el
+       chrome nativo para que se vea igual que los <a> de al lado. */
+    background: none;
+    border: none;
+    padding: 0;
+    width: 100%;
+    text-align: left;
+    font-family: inherit;
+    cursor: pointer;
     .arrow_icon {
       width: 3rem;
       font-size: 0.7rem;
@@ -112,12 +123,19 @@ export const SidebarLayout = styled.div`
       border-radius: 0.8rem;
       transition: 0.3s all;
       color: var(--text-secondary-color);
+      /* Son <button> reales (antes divs con onClick, sin foco/teclado);
+         se resetea el chrome nativo para que se vean igual que antes. */
+      background: none;
+      border: none;
+      width: 100%;
+      text-align: left;
+      font-family: inherit;
+      cursor: pointer;
       .icon {
         font-size: 1.2rem;
       }
       &:hover {
         color: var(--text-color);
-        cursor: pointer;
       }
     }
   }
