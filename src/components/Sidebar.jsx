@@ -114,15 +114,19 @@ const Sidebar = () => {
   };
 
   const logout = async () => {
+    // Cerrar sesion debe funcionar para el usuario aunque la llamada al
+    // backend falle (red caida, token ya vencido, etc.): antes, si esa
+    // llamada fallaba, el usuario se quedaba "atascado" logueado sin
+    // ningun aviso. Revocar el token en el server es best-effort; borrar
+    // la cookie local y sacarlo de la app no deberia depender de eso.
     try {
-      const response = await httpClient.post(`${url}/logout`);
-      if (response.status === 200) {
-        Cookies.remove("token");
-        setUserData([]);
-        navigate("/");
-      }
+      await httpClient.post(`${url}/logout`);
     } catch (error) {
       console.log(error);
+    } finally {
+      Cookies.remove("token");
+      setUserData([]);
+      navigate("/");
     }
   };
 

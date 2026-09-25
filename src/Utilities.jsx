@@ -8,8 +8,18 @@ const FormatDate = (date) => {
 };
 
 const formatPrice = (price) => {
-  let format_number = price.toLocaleString();
-  return format_number;
+  return (price ?? 0).toLocaleString();
 };
 
-export { FormatDate, formatPrice };
+// Extrae un mensaje de error legible de una respuesta axios. error.response
+// no existe en fallos de red/timeout (sin respuesta del servidor), asi que
+// leer error.response.data.message directamente revienta el catch entero
+// y deja al usuario sin ningun aviso.
+const getErrorMessage = (error) => {
+  return (
+    error?.response?.data?.message ||
+    "Ocurrió un error, inténtalo de nuevo más tarde."
+  );
+};
+
+export { FormatDate, formatPrice, getErrorMessage };

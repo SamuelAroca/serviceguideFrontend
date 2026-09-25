@@ -10,6 +10,7 @@ import { MyContext } from "../../../context/UserContext";
 import { toast } from "react-hot-toast";
 import Swal from "sweetalert2";
 import Select from "react-select";
+import { getErrorMessage } from "../../../Utilities";
 
 const FormEdit = ({ userId, data, onClose }) => {
   const apiUrl = import.meta.env.VITE_API_RECEIPT;
@@ -62,8 +63,8 @@ const FormEdit = ({ userId, data, onClose }) => {
   };
 
   const getHouses = async () => {
-    const data = await httpClient.get(`${apiHouse}/getHouseName/${userData.id}`);
     try {
+      const data = await httpClient.get(`${apiHouse}/getHouseName/${userData.id}`);
       setAllHouses(data.data);
     } catch (err) {
       console.log(err);
@@ -111,14 +112,12 @@ const FormEdit = ({ userId, data, onClose }) => {
         getUserHouses(setHouses, userData?.id);
         onClose();
       } catch (error) {
-        let response = error;
         console.log(error);
-        let message = response.response.data.message;
         onClose();
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: message,
+          text: getErrorMessage(error),
         });
       }
 

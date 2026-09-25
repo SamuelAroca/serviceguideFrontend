@@ -10,9 +10,11 @@ import { RiEyeLine } from "react-icons/ri";
 import { useState } from "react";
 import { RiWaterFlashFill } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
+import { Alert } from "@mui/material";
 import Swal from "sweetalert2";
 import { SignUpLayout } from "../styled-components/signup-layout.styled";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { getErrorMessage } from "../../../Utilities";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -27,8 +29,26 @@ const SignUp = () => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({});
 
   const url = import.meta.env.VITE_API_AUTH;
+
+  const onValidate = () => {
+    const errors = {};
+    const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+    if (!name.trim()) errors.name = "Debes poner un nombre";
+    if (!lastName.trim()) errors.lastName = "Debes poner un apellido";
+    if (!email.trim()) {
+      errors.email = "Debes poner un email";
+    } else if (!regexEmail.test(email)) {
+      errors.email = "Debe tener un formato de correo electrónico válido";
+    }
+    if (password.length < 8) {
+      errors.password = "La contraseña debe tener al menos 8 caracteres";
+    }
+    return errors;
+  };
 
   const registerAlert = () => {
     Swal.fire("Usuario registrado satisfactoriamente", "", "success", {
@@ -45,19 +65,28 @@ const SignUp = () => {
 
   const save = async (e) => {
     e.preventDefault();
+    const err = onValidate();
+    setErrors(err);
+    if (Object.keys(err).length > 0) return;
+
     try {
-      let response = await httpClient.post(`${url}/register`, {
+      const response = await httpClient.post(`${url}/register`, {
         firstName: name,
         lastName: lastName,
         email: email,
         password: password,
       });
 
-      if (response.status == 200) {
+      if (response.status === 200) {
         registerAlert();
       }
     } catch (error) {
       console.log(error);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: getErrorMessage(error),
+      });
     }
   };
 
@@ -74,7 +103,7 @@ const SignUp = () => {
           <CarouselDemo img1={img1} img2={img2} img3={img3} img4={img4} />
         </div>
         <div className="form_container">
-          <form>
+          <form onSubmit={save}>
             <h1>Registro</h1>
             <p className="subtitle">
               Empieza a gestionar tus finanzas más rápido y mejor
@@ -92,6 +121,7 @@ const SignUp = () => {
                 setName(e.target.value);
               }}
             />
+            {errors.name && <Alert severity="warning">{errors.name}</Alert>}
             <TextField
               className="inputsMaterial"
               label="Apellido"
@@ -105,6 +135,9 @@ const SignUp = () => {
                 setLastName(e.target.value);
               }}
             />
+            {errors.lastName && (
+              <Alert severity="warning">{errors.lastName}</Alert>
+            )}
             <TextField
               className="inputsMaterial"
               label="Correo electrónico"
@@ -118,6 +151,7 @@ const SignUp = () => {
                 setEmail(e.target.value);
               }}
             />
+            {errors.email && <Alert severity="warning">{errors.email}</Alert>}
             <div className={styles.password_container}>
               <TextField
                 className="inputsMaterial"
@@ -138,6 +172,9 @@ const SignUp = () => {
                 onClick={handleShow}
               />
             </div>
+            {errors.password && (
+              <Alert severity="warning">{errors.password}</Alert>
+            )}
             <div>
               <button onClick={save}>
                 Registrarse

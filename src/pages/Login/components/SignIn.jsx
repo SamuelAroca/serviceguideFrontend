@@ -17,6 +17,7 @@ import Cookies from "js-cookie";
 import Swal from "sweetalert2";
 import { SignInLayout } from "../styled-components/singin-layout.styled";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { getErrorMessage } from "../../../Utilities";
 
 const SignIn = () => {
   // Logica para obtener los datos del usuario
@@ -95,13 +96,11 @@ const SignIn = () => {
           navigate("/private/major/home/");
         }
       } catch (error) {
-        let response = error;
         console.log(error);
-        let message = response.response.data.message;
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: message,
+          text: getErrorMessage(error),
           footer: '<a href="/forgot-password">¿Has olvidado tu contraseña?</a>',
         });
       }

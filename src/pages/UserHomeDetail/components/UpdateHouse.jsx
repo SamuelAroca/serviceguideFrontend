@@ -11,6 +11,7 @@ import { Toaster, toast } from "react-hot-toast";
 import styles from "../Styles/UpdateHouse.module.css";
 import Swal from "sweetalert2";
 import Select from "react-select";
+import { getErrorMessage } from "../../../Utilities";
 
 const UpdateHouse = ({ data, onClose }) => {
   const apiUrl = import.meta.env.VITE_API_HOUSE;
@@ -55,9 +56,9 @@ const UpdateHouse = ({ data, onClose }) => {
     setHouse({ ...house, cities: { city: selectedOption.value } });
   };
 
-  const getCities = async (e) => {
-    const data = await httpClient.get(`${apiCity}/listAll`);
+  const getCities = async () => {
     try {
+      const data = await httpClient.get(`${apiCity}/listAll`);
       setAllCities(data.data);
     } catch (err) {
       console.log(err);
@@ -120,6 +121,7 @@ const UpdateHouse = ({ data, onClose }) => {
         onClose();
       } catch (error) {
         console.log(error);
+        Swal.fire({ icon: "error", title: "Oops...", text: getErrorMessage(error) });
       }
 
       setHouse({

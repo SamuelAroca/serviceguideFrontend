@@ -18,6 +18,7 @@ import { getUserHouses } from "../../../services/get-user-houses.service";
 import Swal from "sweetalert2";
 import { Toaster, toast } from "react-hot-toast";
 import { IoIosWarning } from "react-icons/io";
+import { getErrorMessage } from "../../../Utilities";
 
 const HouseForm = () => {
   const apiUrl = import.meta.env.VITE_API_HOUSE;
@@ -73,9 +74,9 @@ const HouseForm = () => {
     setSelectedFile(event.target.files[0]);
   };
 
-  const getCities = async (e) => {
-    const data = await httpClient.get(`${apiCity}/listAll`);
+  const getCities = async () => {
     try {
+      const data = await httpClient.get(`${apiCity}/listAll`);
       setAllCities(data.data);
     } catch (err) {
       console.log(err);
@@ -151,6 +152,7 @@ const HouseForm = () => {
           notify();
         } catch (error) {
           console.log(error);
+          Swal.fire({ icon: "error", title: "Oops...", text: getErrorMessage(error) });
         }
 
         setHouse({
@@ -213,13 +215,12 @@ const HouseForm = () => {
         getUserHouses(setHouses, userData?.id);
       }
     } catch (error) {
-      let response = error;
-      let message = response.response.data.message;
       console.log(error);
+      setIsLoading(false);
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: message,
+        text: getErrorMessage(error),
       });
     }
   };

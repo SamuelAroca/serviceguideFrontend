@@ -22,6 +22,7 @@ import FormEdit from "./FormEdit";
 import Swal from "sweetalert2";
 import { BluePaleteColors } from "../../../palete-colors/blue-colors.palete";
 import { GrayPaleteColors } from "../../../palete-colors/gray-colors.palete";
+import { getErrorMessage } from "../../../Utilities";
 
 const DataTable = ({ data }) => {
   const [filters, setFilters] = useState({
@@ -73,7 +74,9 @@ const DataTable = ({ data }) => {
           return formattedDate.includes(filters[key]);
         }
         if (key === "typeService") {
-          return item[key].toLowerCase().includes(filters[key].toLowerCase());
+          return (item[key] ?? "")
+            .toLowerCase()
+            .includes(filters[key].toLowerCase());
         }
         return String(item[key])
           .toLowerCase()
@@ -98,6 +101,7 @@ const DataTable = ({ data }) => {
           notify();
         } catch (error) {
           console.log(error);
+          Swal.fire({ icon: "error", title: "Oops...", text: getErrorMessage(error) });
         }
       }
     });

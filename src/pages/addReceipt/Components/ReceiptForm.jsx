@@ -23,6 +23,7 @@ import { getUserHousesService } from "../../../services/get-user-houses.service"
 import { Toaster, toast } from "react-hot-toast";
 import Swal from "sweetalert2";
 import { IoIosWarning } from "react-icons/io";
+import { getErrorMessage } from "../../../Utilities";
 
 const ReceiptForm = ({ userId }) => {
   const apiUrl = import.meta.env.VITE_API_RECEIPT;
@@ -64,8 +65,8 @@ const ReceiptForm = ({ userId }) => {
   };
 
   const getHouses = async () => {
-    const data = await httpClient.get(`${apiHouse}/getHouseName/${userData?.id}`);
     try {
+      const data = await httpClient.get(`${apiHouse}/getHouseName/${userData?.id}`);
       setAllHouses(data.data);
     } catch (err) {
       console.log(err);
@@ -144,13 +145,11 @@ const ReceiptForm = ({ userId }) => {
           });
         } catch (error) {
           setIsLoading(false);
-          let response = error;
-          let message = response.response.data.message;
           console.log(error);
           Swal.fire({
             icon: "error",
             title: "Oops...",
-            text: message,
+            text: getErrorMessage(error),
           });
         }
       } else {
@@ -201,13 +200,11 @@ const ReceiptForm = ({ userId }) => {
       }
     } catch (error) {
       setIsLoading(false);
-      let response = error;
-      let message = response.response.data.message;
       console.log(error);
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: message,
+        text: getErrorMessage(error),
       });
     }
   };

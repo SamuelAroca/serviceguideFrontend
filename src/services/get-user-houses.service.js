@@ -3,12 +3,12 @@ import httpClient from "../api/httpClient";
 export const getUserHousesService = async (id) => {
   const url = import.meta.env.VITE_API_HOUSE;
 
-  try {
-    const { data } = await httpClient.get(`${url}/findAllByUserOrderById/${id}`);
-    return data;
-  } catch (error) {
-    console.log(error);
-  }
+  // No atrapar el error aqui: si se traga la falla y devuelve undefined,
+  // el catch de quien llama nunca se dispara (ve una "respuesta exitosa"
+  // vacia) y el usuario se queda viendo una pantalla en blanco sin pista
+  // de que algo fallo.
+  const { data } = await httpClient.get(`${url}/findAllByUserOrderById/${id}`);
+  return data;
 };
 
 export const getUserHouses = async (setHouses, id) => {

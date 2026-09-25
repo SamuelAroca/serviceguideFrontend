@@ -12,6 +12,7 @@ import httpClient from "../../../api/httpClient";
 import { Alert } from "@mui/material";
 import Swal from "sweetalert2";
 import { ForgotPasswordLayout } from "../styled-components/forgotpassword-layout";
+import { getErrorMessage } from "../../../Utilities";
 
 const ForgotPassword = () => {
   const [errors, setErrors] = useState([]);
@@ -41,7 +42,7 @@ const ForgotPassword = () => {
     if (Object.keys(err).length === 0) {
       try {
         const response = await httpClient.post(`${url}/send-email`, email);
-        if (!response.status != 200) {
+        if (response.status === 200) {
           Swal.fire(
             "¡Email enviado!",
             "¡Ve a tu correo y revisa el correo que te enviamos!, Revisa el spam",
@@ -49,13 +50,11 @@ const ForgotPassword = () => {
           );
         }
       } catch (error) {
-        let response = error;
         console.log(error);
-        let message = response.response.data.message;
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: message,
+          text: getErrorMessage(error),
         });
       }
 
