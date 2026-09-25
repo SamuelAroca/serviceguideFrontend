@@ -22,10 +22,10 @@ const Home = () => {
   }, [userData]);
 
   const getReceipts = async () => {
-    const receipt = await httpClient.get(
-      `${apiUrl}/getLastReceipt/${userData?.id}`
-    );
     try {
+      const receipt = await httpClient.get(
+        `${apiUrl}/getLastReceipt/${userData?.id}`
+      );
       setAllReceipts(receipt.data);
     } catch (err) {
       console.log(err, "Error recibo ultimo");

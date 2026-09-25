@@ -21,7 +21,7 @@ const Login = () => {
       <Routes>
         <Route
           path="/"
-          element={<Navigate to="signIn" replace />} // Redirige a "/signIn" por defecto
+          element={<Navigate to="/login/signIn" replace />} // Redirige a "/login/signIn" por defecto
         />
         <Route path="/signIn" element={<SignIn />} />
         <Route path="/signUp" element={<SignUp />} />
