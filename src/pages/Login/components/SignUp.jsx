@@ -12,7 +12,7 @@ import { RiWaterFlashFill } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
 import { Alert } from "@mui/material";
 import Swal from "sweetalert2";
-import { SignUpLayout } from "../styled-components/signup-layout.styled";
+import { AuthLayout } from "../../../styled-components/auth-layout.styled";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { getErrorMessage, isValidEmail } from "../../../Utilities";
 
@@ -97,7 +97,7 @@ const SignUp = () => {
 
   return (
     <div className={styles.components}>
-      <SignUpLayout>
+      <AuthLayout>
         <div className={styles.carouselDemo}>
           <CarouselDemo img1={img1} img2={img2} img3={img3} img4={img4} />
         </div>
@@ -198,7 +198,7 @@ const SignUp = () => {
             </Link>
           </form>
         </div>
-      </SignUpLayout>
+      </AuthLayout>
     </div>
   );
 };

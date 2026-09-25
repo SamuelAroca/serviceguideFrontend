@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import { useState, useContext } from "react";
 import {
   Table,
   TableBody,
@@ -15,7 +15,7 @@ import { FormatDate, formatPrice } from "../../../Utilities";
 import { BsTrash, BsPencil, BsSearch } from "react-icons/bs";
 import { MyContext } from "../../../context/UserContext";
 import { toast, Toaster } from "react-hot-toast";
-import { getUserHousesService } from "../../../services/get-user-houses.service";
+import { getUserHouses } from "../../../services/get-user-houses.service";
 import httpClient from "../../../api/httpClient";
 import Modal from "./Modal";
 import FormEdit from "./FormEdit";
@@ -42,15 +42,6 @@ const DataTable = ({ data, onReceiptChange }) => {
 
   const onCloseShare = () => {
     setOpenModal(false);
-  };
-
-  const getUserHouses = async () => {
-    try {
-      const data = await getUserHousesService(userData.id);
-      setHouses(data);
-    } catch (err) {
-      console.log(err);
-    }
   };
 
   const handleFilterChange = (e) => {

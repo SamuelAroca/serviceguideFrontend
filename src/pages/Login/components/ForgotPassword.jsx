@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styles from "../styles/ForgotPassword.module.css";
 import { RiWaterFlashFill } from "react-icons/ri";
 import CarouselDemo from "../../../components/CarouselDemo";
@@ -11,7 +11,7 @@ import img4 from "../../../assets/gas-natural.webp";
 import httpClient from "../../../api/httpClient";
 import { Alert } from "@mui/material";
 import Swal from "sweetalert2";
-import { ForgotPasswordLayout } from "../styled-components/forgotpassword-layout";
+import { AuthLayout } from "../../../styled-components/auth-layout.styled";
 import { getErrorMessage, isValidEmail } from "../../../Utilities";
 
 const ForgotPassword = () => {
@@ -75,7 +75,7 @@ const ForgotPassword = () => {
 
   return (
     <div className={styles.components}>
-      <ForgotPasswordLayout>
+      <AuthLayout>
         <div className="form_container">
           <form onSubmit={sendEmail}>
             <h1>Recuperar Contraseña</h1>
@@ -111,7 +111,7 @@ const ForgotPassword = () => {
         <div className={styles.carouselDemo}>
           <CarouselDemo img1={img1} img2={img2} img3={img3} img4={img4} />
         </div>
-      </ForgotPasswordLayout>
+      </AuthLayout>
     </div>
   );
 };

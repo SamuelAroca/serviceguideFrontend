@@ -19,7 +19,7 @@ import { Alert } from "@mui/material";
 import httpClient from "../../../api/httpClient";
 import SelectHouse from "./SelectHouse";
 import { MyContext } from "../../../context/UserContext";
-import { getUserHousesService } from "../../../services/get-user-houses.service";
+import { getUserHouses } from "../../../services/get-user-houses.service";
 import { Toaster, toast } from "react-hot-toast";
 import Swal from "sweetalert2";
 import { IoIosWarning } from "react-icons/io";
@@ -32,7 +32,6 @@ const ReceiptForm = ({ userId }) => {
   const [receiptType, setReceiptType] = useState("WATER");
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState([]);
-  const [selectedHouse, setSelectedHouse] = useState(null);
   const [allHouses, setAllHouses] = useState([]);
   const [selectedFile, setSelectedFile] = useState(null);
   const navigate = useNavigate();
@@ -59,26 +58,12 @@ const ReceiptForm = ({ userId }) => {
     setReceipt({ ...receipt, house: { name: name } });
   };
 
-  const handleHouseChange = (event, value) => {
-    setSelectedHouse(value);
-    setReceipt({ ...receipt, house: value });
-  };
-
   const getHouses = async () => {
     try {
       const data = await httpClient.get(`${apiHouse}/getHouseName/${userData?.id}`);
       setAllHouses(data.data);
     } catch (err) {
       console.log(err);
-    }
-  };
-
-  const getUserHouses = async () => {
-    try {
-      const data = await getUserHousesService(userData.id);
-      setHouses(data);
-    } catch (err) {
-      console.log(err.message);
     }
   };
 
@@ -292,12 +277,7 @@ const ReceiptForm = ({ userId }) => {
               {errors.date && <Alert severity="warning"> {errors.date} </Alert>}
             </Grid>
             <Grid item xs={6}>
-              <SelectHouse
-                options={allHouses}
-                onChange={handleHouseChange}
-                handleSelect={handleSelect}
-                receipt={receipt}
-              />
+              <SelectHouse options={allHouses} handleSelect={handleSelect} />
             </Grid>
           </Grid>
 

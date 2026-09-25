@@ -51,14 +51,17 @@ const ReceiptLineChart = ({ data, colors = DEFAULT_COLORS, showGrid = false }) =
   const chartData = { labels, datasets };
 
   useEffect(() => {
+    // react-chartjs-2 v5 pone la instancia de Chart.js directamente en el
+    // ref (metodo resize() incluido), no en ref.current.chartInstance
+    // (esa era la API de v2). El contenedor a observar tampoco es
+    // ref.current.container (no existe); es el padre del <canvas>.
     const resizeObserver = new ResizeObserver(() => {
-      if (chartRef.current && chartRef.current.chartInstance) {
-        chartRef.current.chartInstance.resize();
-      }
+      chartRef.current?.resize();
     });
 
-    if (chartRef.current && chartRef.current.container) {
-      resizeObserver.observe(chartRef.current.container);
+    const container = chartRef.current?.canvas?.parentElement;
+    if (container) {
+      resizeObserver.observe(container);
     }
 
     return () => {

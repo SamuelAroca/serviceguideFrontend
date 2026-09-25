@@ -12,12 +12,24 @@ const NavbarComp = () => {
   const { theme, toggleTheme } = useThemeMode();
 
   useEffect(() => {
+    // rAF coalesca los scroll events (pueden disparar decenas por segundo)
+    // a como mucho un setFix por frame; passive:true le dice al navegador
+    // que este listener nunca hace preventDefault, asi no bloquea el
+    // scroll nativo esperando a que termine de correr.
+    let ticking = false;
     const setFixed = () => {
       setFix(window.scrollY >= 613);
+      ticking = false;
+    };
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(setFixed);
+      }
     };
 
-    window.addEventListener("scroll", setFixed);
-    return () => window.removeEventListener("scroll", setFixed);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   const showNavbar = () => {

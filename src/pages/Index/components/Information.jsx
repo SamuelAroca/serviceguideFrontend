@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "../styles/Information.module.css";
 import { VscQuote } from "react-icons/vsc";
 

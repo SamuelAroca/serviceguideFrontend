@@ -27,7 +27,6 @@ const HouseForm = () => {
   const [userID, setUserID] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState([]);
-  const [selectedCity, setSelectedCity] = useState(null);
   const [allCities, setAllCities] = useState([]);
   const navigate = useNavigate();
   const [selectedFile, setSelectedFile] = useState(null);
@@ -63,11 +62,6 @@ const HouseForm = () => {
     const id = await myID();
     setUserID(id);
     setIsLoading(false);
-  };
-
-  const handleCityChange = (event, value) => {
-    setSelectedCity(value);
-    setHouse({ ...house, cities: value });
   };
 
   const handleFileChange = (event) => {
@@ -296,9 +290,7 @@ const HouseForm = () => {
             <SelectCity
               fullWidth
               options={allCities}
-              onChange={handleCityChange}
               handleSelect={handleSelect}
-              house={house}
             />
           </Grid>
           <Grid

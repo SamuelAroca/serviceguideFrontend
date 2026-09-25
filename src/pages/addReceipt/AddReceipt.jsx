@@ -1,4 +1,3 @@
-import React from "react";
 import ReceiptForm from "./Components/ReceiptForm";
 import {
   AddPageWrapper,

@@ -1,11 +1,17 @@
 import styled from "styled-components";
-import { BluePaleteColors } from "../../../palete-colors/blue-colors.palete";
-import { GrayPaleteColors } from "../../../palete-colors/gray-colors.palete";
+import { BluePaleteColors } from "../palete-colors/blue-colors.palete";
+import { GrayPaleteColors } from "../palete-colors/gray-colors.palete";
 
-export const SignUpLayout = styled.div`
+// Layout compartido por SignIn/SignUp/ForgotPassword/ChangePassword: las
+// 4 pantallas de auth eran ~450 lineas de CSS casi identico, copiado y
+// pegado en 4 archivos. Las clases que solo usa alguna pantalla
+// (.forgot_password, .back) no hacen nada si esa pantalla no las
+// renderiza, asi que no hace falta condicionarlas: viven aqui una sola
+// vez y cada pantalla usa las que necesita.
+export const AuthLayout = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+  gap: ${(props) => props.$gap || "1rem"};
   height: 72vh;
   width: 80vw;
   background-color: var(--surface-color);
@@ -52,6 +58,12 @@ export const SignUpLayout = styled.div`
   .subtitle {
     font-size: 1rem;
     color: ${GrayPaleteColors.C400};
+  }
+
+  .forgot_password {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
   }
 
   .signup {

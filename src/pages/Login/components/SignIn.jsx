@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect } from "react";
 import styles from "../styles/Login.module.css";
 import CarouselDemo from "../../../components/CarouselDemo";
 import TextField from "@mui/material/TextField";
@@ -15,7 +15,7 @@ import { getUserDataService } from "../../../services/get-user-data.service";
 import { MyContext } from "../../../context/UserContext";
 import Cookies from "js-cookie";
 import Swal from "sweetalert2";
-import { SignInLayout } from "../styled-components/singin-layout.styled";
+import { AuthLayout } from "../../../styled-components/auth-layout.styled";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { getErrorMessage, isValidEmail } from "../../../Utilities";
 
@@ -135,7 +135,7 @@ const SignIn = () => {
 
   return (
     <div className={styles.components}>
-      <SignInLayout>
+      <AuthLayout $gap="2rem">
         <div className="form_container">
           <form onSubmit={login}>
             <h1>¡Bienvenido de nuevo!</h1>
@@ -216,7 +216,7 @@ const SignIn = () => {
         <div className={styles.carouselDemo}>
           <CarouselDemo img1={img1} img2={img2} img3={img3} img4={img4} />
         </div>
-      </SignInLayout>
+      </AuthLayout>
     </div>
   );
 };

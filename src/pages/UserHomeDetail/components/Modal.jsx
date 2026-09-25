@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { MdOutlineClose } from "react-icons/md";
 import { GrayPaleteColors } from "../../../palete-colors/gray-colors.palete";

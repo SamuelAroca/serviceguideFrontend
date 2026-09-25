@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styles from "../styles/ChangePasword.module.css";
 import { RiWaterFlashFill, RiEyeLine } from "react-icons/ri";
 import CarouselDemo from "../../../components/CarouselDemo";
@@ -11,7 +11,7 @@ import img4 from "../../../assets/gas-natural.webp";
 import httpClient from "../../../api/httpClient";
 import { Alert } from "@mui/material";
 import Swal from "sweetalert2";
-import { ChangePasswordLayout } from "../styled-components/changepassword-layout";
+import { AuthLayout } from "../../../styled-components/auth-layout.styled";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { getErrorMessage } from "../../../Utilities";
 
@@ -102,7 +102,7 @@ const ChangePasword = () => {
 
   return (
     <div className={styles.components}>
-      <ChangePasswordLayout>
+      <AuthLayout $gap="2rem">
         <div className="form_container">
           <form onSubmit={changePassword}>
             <h1>Cambiar contraseña</h1>
@@ -162,7 +162,7 @@ const ChangePasword = () => {
         <div className={styles.carouselDemo}>
           <CarouselDemo img1={img1} img2={img2} img3={img3} img4={img4} />
         </div>
-      </ChangePasswordLayout>
+      </AuthLayout>
     </div>
   );
 };
