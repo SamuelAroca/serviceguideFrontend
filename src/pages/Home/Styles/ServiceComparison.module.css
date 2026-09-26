@@ -3,6 +3,12 @@
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 1rem;
   width: 100%;
+  /* Sin esto, un grid item (.card) con contenido que no puede achicarse
+     (numeros largos en una fila flex) empuja su columna mas alla del
+     minmax de arriba, y eso se propaga hasta desbordar la pagina
+     entera -- no solo esta grilla. min-width:0 en cascada (grid,
+     card, stat_row, stat) es lo que realmente lo evita. */
+  min-width: 0;
 }
 
 .card {
@@ -13,6 +19,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  min-width: 0;
 }
 
 .card_header {
@@ -32,11 +39,16 @@
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
+  min-width: 0;
 }
 
 .stat {
   display: flex;
   flex-direction: column;
+  /* Flex item por defecto no se achica mas alla del ancho de su
+     contenido (min-width:auto); con precios/consumos grandes eso
+     empuja .stat_row (y todo lo de arriba) mas ancho que la tarjeta. */
+  min-width: 0;
 }
 
 .stat_label {
@@ -48,6 +60,7 @@
   font-size: 1.1rem;
   font-weight: 600;
   color: var(--text-color);
+  overflow-wrap: break-word;
 }
 
 .delta_up,
@@ -79,6 +92,7 @@
   margin: 0;
   font-size: 0.8rem;
   color: var(--text-secondary-color);
+  overflow-wrap: break-word;
 }
 
 .empty_state {

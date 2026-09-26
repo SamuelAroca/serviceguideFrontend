@@ -5,6 +5,7 @@
   justify-content: center;
   align-items: center;
   overflow: auto;
+  overflow-x: hidden;
 }
 
 .last_graphic {
