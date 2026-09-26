@@ -22,6 +22,17 @@ export const DashboardGrid = styled.div`
     grid-area: 1 / 3 / 13 / 13;
     background-color: var(--bg-color);
     color: var(--text-color);
+    /* Sin esto, cuando el contenido de una pagina (ej. Home con varias
+       casas) crece mas alla de 100vh, .content lo desborda visualmente
+       en vez de recortarlo/scrollearlo -- y como nada mas en la cadena
+       tiene overflow, termina siendo el <body> el que hace scroll de
+       toda la pagina, arrastrando al sidebar con el (el sidebar deja de
+       verse "fijo"). Ademas ese desborde queda pintado con el fondo por
+       defecto del body (blanco) en vez de --bg-color, porque cae fuera
+       de esta caja. overflow-y:auto hace que SOLO esta columna scrollee,
+       dejando el sidenav quieto.  */
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 
   a {
