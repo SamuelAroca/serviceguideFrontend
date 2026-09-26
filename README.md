@@ -50,3 +50,5 @@ docker compose up --build
 ```
 
 Build multi-stage (Node para compilar, nginx para servir `dist/`), expuesto en el puerto `5002` (ver `Dockerfile`, `docker-compose.yml` y `ngnix/nginx.conf`).
+
+**Importante:** el `.env` debe existir en este directorio *antes* de correr `docker compose up --build`, con la IP/host real donde quede expuesto el backend (no `localhost`, salvo que backend y frontend corran en el mismo host). Vite hornea las `VITE_API_*` en el bundle durante el build (`npm run build`, que corre dentro de la imagen); si el `.env` no estaba ahí en ese momento, o cambiaste sus valores despues de la ultima imagen construida, hay que reconstruir con `--build` para que tome efecto — un `docker compose up` sin `--build` reusa la imagen vieja con los valores horneados anteriores.
