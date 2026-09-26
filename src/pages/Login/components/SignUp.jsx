@@ -11,7 +11,7 @@ import { useState } from "react";
 import { RiWaterFlashFill } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
 import { Alert } from "@mui/material";
-import Swal from "sweetalert2";
+import Swal from "../../../lib/swal";
 import { AuthLayout } from "../../../styled-components/auth-layout.styled";
 import { ArrowBack as ArrowBackIcon } from "@mui/icons-material";
 import { getErrorMessage, isValidEmail } from "../../../Utilities";

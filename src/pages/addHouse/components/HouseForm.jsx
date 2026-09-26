@@ -15,7 +15,7 @@ import SelectCity from "../components/SelectCity";
 import httpClient from "../../../api/httpClient";
 import { MyContext } from "../../../context/UserContext";
 import { getUserHouses } from "../../../services/get-user-houses.service";
-import Swal from "sweetalert2";
+import Swal from "../../../lib/swal";
 import { Toaster, toast } from "react-hot-toast";
 import { IoIosWarning } from "react-icons/io";
 import { getErrorMessage } from "../../../Utilities";

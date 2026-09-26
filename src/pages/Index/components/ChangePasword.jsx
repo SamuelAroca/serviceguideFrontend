@@ -10,7 +10,7 @@ import img3 from "../../../assets/Electricistas-scaled.webp";
 import img4 from "../../../assets/gas-natural.webp";
 import httpClient from "../../../api/httpClient";
 import { Alert } from "@mui/material";
-import Swal from "sweetalert2";
+import Swal from "../../../lib/swal";
 import { AuthLayout } from "../../../styled-components/auth-layout.styled";
 import { ArrowBack as ArrowBackIcon } from "@mui/icons-material";
 import { getErrorMessage } from "../../../Utilities";

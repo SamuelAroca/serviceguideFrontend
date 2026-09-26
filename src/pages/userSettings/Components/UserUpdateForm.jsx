@@ -7,7 +7,7 @@ import { MyContext } from "../../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 import styles from "../Styles/UserSettings.module.css";
 import Cookies from "js-cookie";
-import Swal from "sweetalert2";
+import Swal from "../../../lib/swal";
 import { getErrorMessage, isValidEmail } from "../../../Utilities";
 
 const UserUpdateForm = () => {

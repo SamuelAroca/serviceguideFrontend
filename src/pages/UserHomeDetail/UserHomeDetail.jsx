@@ -13,7 +13,7 @@ import Modal from "./components/Modal";
 import UpdateHouse from "./components/UpdateHouse";
 import { getUserHouses } from "../../services/get-user-houses.service";
 import { Button } from "@mui/material";
-import Swal from "sweetalert2";
+import Swal from "../../lib/swal";
 
 const UserHomeDetail = () => {
   const apiUrl = import.meta.env.VITE_API_STATISTIC;

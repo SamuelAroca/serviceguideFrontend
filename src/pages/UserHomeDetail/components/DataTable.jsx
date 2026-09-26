@@ -19,7 +19,7 @@ import { getUserHouses } from "../../../services/get-user-houses.service";
 import httpClient from "../../../api/httpClient";
 import Modal from "./Modal";
 import FormEdit from "./FormEdit";
-import Swal from "sweetalert2";
+import Swal from "../../../lib/swal";
 import { BluePaleteColors } from "../../../palete-colors/blue-colors.palete";
 import { GrayPaleteColors } from "../../../palete-colors/gray-colors.palete";
 import { getErrorMessage } from "../../../Utilities";

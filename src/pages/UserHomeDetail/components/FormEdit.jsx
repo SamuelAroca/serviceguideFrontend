@@ -8,7 +8,7 @@ import httpClient from "../../../api/httpClient";
 import { getUserHouses } from "../../../services/get-user-houses.service";
 import { MyContext } from "../../../context/UserContext";
 import { toast } from "react-hot-toast";
-import Swal from "sweetalert2";
+import Swal from "../../../lib/swal";
 import Select from "react-select";
 import { getErrorMessage } from "../../../Utilities";
 import { useFormState } from "../../../hooks/useFormState";

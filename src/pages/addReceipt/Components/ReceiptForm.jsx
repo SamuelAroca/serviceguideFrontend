@@ -21,7 +21,7 @@ import SelectHouse from "./SelectHouse";
 import { MyContext } from "../../../context/UserContext";
 import { getUserHouses } from "../../../services/get-user-houses.service";
 import { Toaster, toast } from "react-hot-toast";
-import Swal from "sweetalert2";
+import Swal from "../../../lib/swal";
 import { IoIosWarning } from "react-icons/io";
 import { getErrorMessage } from "../../../Utilities";
 import { useFormState } from "../../../hooks/useFormState";

@@ -28,7 +28,7 @@ import { useThemeMode } from "../context/ThemeContext";
 import { BluePaleteColors } from "../palete-colors/blue-colors.palete";
 import Logo from "../assets/Logo.png";
 import Cookies from "js-cookie";
-import Swal from "sweetalert2";
+import Swal from "../lib/swal";
 import httpClient from "../api/httpClient";
 
 const StyledLink = styled(Link)`
