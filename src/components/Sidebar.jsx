@@ -53,11 +53,9 @@ const StyledLink = styled(Link)`
 const StyledHouseLink = styled(Link)`
   display: flex;
   align-items: center;
-  padding: 0 1.1rem;
   padding: 0;
   font-size: 0.8rem;
   height: 2rem;
-  margin-left: 1.8rem;
   transition: 0.2s all;
   p {
     color: ${(props) =>

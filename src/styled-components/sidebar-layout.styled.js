@@ -97,12 +97,41 @@ export const SidebarLayout = styled.div`
     flex: 1 1 auto;
     min-height: 0;
     overflow-y: auto;
+    /* Sin esto, overflow-y:auto solo hace que overflow-x tambien
+       compute a "auto" (asi es la spec de CSS cuando un solo eje se
+       pone distinto de visible), y cualquier desborde horizontal por
+       minimo que sea dispara una segunda barra de scroll fea. Esto es
+       ademas del fix del ancho real en StyledHouseLink, como red de
+       seguridad. */
+    overflow-x: hidden;
+    /* Scrollbar delgada en vez de la nativa gorda que tapa contenido. */
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-color) transparent;
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--border-color);
+      border-radius: 3px;
+    }
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
   }
 
   .sessions_list {
     margin: 0;
     list-style: none;
     padding: 0;
+    li {
+      /* Indenta las casas respecto al resto del menu. Antes esto vivia
+         como margin-left en el <a> de cada casa (StyledHouseLink), pero
+         la regla "a{}" de mas arriba (selector clase+tag, mas especifico
+         que la clase propia de StyledHouseLink) le gana en la cascada a
+         cualquier padding/width que se intente poner ahi. Indentando el
+         <li> en cambio no compite con esa regla en absoluto. */
+      padding-left: 1.8rem;
+    }
   }
 
   // Logout button
