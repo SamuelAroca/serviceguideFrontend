@@ -1,4 +1,3 @@
-version: "3.9"
 services:
   frontend:
     container_name: ServiceGuideFront
@@ -8,3 +7,11 @@ services:
       dockerfile: Dockerfile
     ports:
       - 5002:5002
+    # Misma red que backend/postgres/proxy (ver deploy/reverse-proxy) para
+    # que Caddy pueda resolver este contenedor por nombre.
+    networks:
+      - serviceguide-postgres_default
+
+networks:
+  serviceguide-postgres_default:
+    external: true
