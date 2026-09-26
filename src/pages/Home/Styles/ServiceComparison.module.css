@@ -1,3 +1,22 @@
+.houses {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  min-width: 0;
+}
+
+.house_block {
+  width: 100%;
+  min-width: 0;
+}
+
+.house_title {
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
+  color: var(--text-color);
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));

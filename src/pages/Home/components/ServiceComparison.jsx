@@ -17,6 +17,13 @@ import { FormatDate, formatPrice } from "../../../Utilities";
 // servicio con al menos 2 recibos, calculado aca mismo a partir de la
 // lista de recibos que Home.jsx ya pide (sin pegarle a ese endpoint), y
 // la muestra como tarjetas simples en vez de graficas.
+//
+// receipts viene de /allReceiptsByUserId, es decir de TODAS las casas del
+// usuario mezcladas. Agrupar solo por typeService comparaba el ultimo
+// recibo de agua de la Casa 3 contra el anterior de la Casa 1 si ese fue
+// el ultimo agregado -- una comparacion sin sentido con varias casas.
+// Por eso se agrupa primero por casa y despues por tipo dentro de cada
+// casa.
 
 const TYPE_ORDER = ["WATER", "ENERGY", "GAS", "SEWERAGE"];
 
@@ -37,17 +44,25 @@ const TYPE_ICONS = {
 const TYPE_UNIT = (type) => (type === "ENERGY" ? "kwh" : "m³");
 
 const buildComparisons = (receipts) => {
-  const byType = {};
+  const byHouse = {};
   (receipts ?? []).forEach((r) => {
+    const houseName = r.houseName ?? "Sin casa";
+    const byType = (byHouse[houseName] ??= {});
     (byType[r.typeService] ??= []).push(r);
   });
 
-  return TYPE_ORDER.filter((type) => byType[type]?.length).map((type) => {
-    const [current, previous] = [...byType[type]].sort(
-      (a, b) => new Date(b.date) - new Date(a.date)
-    );
-    return { type, current, previous: previous ?? null };
-  });
+  return Object.entries(byHouse)
+    .map(([houseName, byType]) => ({
+      houseName,
+      services: TYPE_ORDER.filter((type) => byType[type]?.length).map((type) => {
+        const [current, previous] = [...byType[type]].sort(
+          (a, b) => new Date(b.date) - new Date(a.date)
+        );
+        return { type, current, previous: previous ?? null };
+      }),
+    }))
+    .filter((house) => house.services.length > 0)
+    .sort((a, b) => a.houseName.localeCompare(b.houseName));
 };
 
 const Delta = ({ current, previous }) => {
@@ -70,63 +85,71 @@ const Delta = ({ current, previous }) => {
 };
 
 const ServiceComparison = ({ receipts }) => {
-  const comparisons = buildComparisons(receipts);
+  const houses = buildComparisons(receipts);
 
-  if (comparisons.length === 0) {
+  if (houses.length === 0) {
     return (
       <div className={styles.empty_state}>
         <p>
           Todavía no hay suficientes recibos para comparar el consumo.
-          Agrega al menos dos recibos del mismo servicio para ver la
-          comparación acá.
+          Agrega al menos dos recibos del mismo servicio en una misma casa
+          para ver la comparación acá.
         </p>
       </div>
     );
   }
 
   return (
-    <div className={styles.grid}>
-      {comparisons.map(({ type, current, previous }) => {
-        const Icon = TYPE_ICONS[type];
-        return (
-          <div className={styles.card} key={type}>
-            <div className={styles.card_header}>
-              <Icon className={styles.icon} />
-              <span>{TYPE_LABELS[type]}</span>
-            </div>
+    <div className={styles.houses}>
+      {houses.map(({ houseName, services }) => (
+        <div className={styles.house_block} key={houseName}>
+          <h4 className={styles.house_title}>{houseName}</h4>
+          <div className={styles.grid}>
+            {services.map(({ type, current, previous }) => {
+              const Icon = TYPE_ICONS[type];
+              return (
+                <div className={styles.card} key={type}>
+                  <div className={styles.card_header}>
+                    <Icon className={styles.icon} />
+                    <span>{TYPE_LABELS[type]}</span>
+                  </div>
 
-            <div className={styles.stat_row}>
-              <div className={styles.stat}>
-                <span className={styles.stat_label}>Precio</span>
-                <span className={styles.stat_value}>
-                  ${formatPrice(current.price)}
-                </span>
-              </div>
-              <Delta current={current.price} previous={previous?.price} />
-            </div>
+                  <div className={styles.stat_row}>
+                    <div className={styles.stat}>
+                      <span className={styles.stat_label}>Precio</span>
+                      <span className={styles.stat_value}>
+                        ${formatPrice(current.price)}
+                      </span>
+                    </div>
+                    <Delta current={current.price} previous={previous?.price} />
+                  </div>
 
-            <div className={styles.stat_row}>
-              <div className={styles.stat}>
-                <span className={styles.stat_label}>Consumo</span>
-                <span className={styles.stat_value}>
-                  {formatPrice(current.amount)} {TYPE_UNIT(type)}
-                </span>
-              </div>
-              <Delta current={current.amount} previous={previous?.amount} />
-            </div>
+                  <div className={styles.stat_row}>
+                    <div className={styles.stat}>
+                      <span className={styles.stat_label}>Consumo</span>
+                      <span className={styles.stat_value}>
+                        {formatPrice(current.amount)} {TYPE_UNIT(type)}
+                      </span>
+                    </div>
+                    <Delta current={current.amount} previous={previous?.amount} />
+                  </div>
 
-            {previous ? (
-              <p className={styles.compare_note}>
-                vs ${formatPrice(previous.price)} el {FormatDate(previous.date)}
-              </p>
-            ) : (
-              <p className={styles.compare_note}>
-                Agrega otro recibo de {TYPE_LABELS[type]} para comparar.
-              </p>
-            )}
+                  {previous ? (
+                    <p className={styles.compare_note}>
+                      vs ${formatPrice(previous.price)} el{" "}
+                      {FormatDate(previous.date)}
+                    </p>
+                  ) : (
+                    <p className={styles.compare_note}>
+                      Agrega otro recibo de {TYPE_LABELS[type]} para comparar.
+                    </p>
+                  )}
+                </div>
+              );
+            })}
           </div>
-        );
-      })}
+        </div>
+      ))}
     </div>
   );
 };
