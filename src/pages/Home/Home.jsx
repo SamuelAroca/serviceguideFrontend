@@ -1,7 +1,7 @@
 import httpClient from "../../api/httpClient";
 import styles from "./Styles/Home.module.css";
 import GetLastReceipts from "./components/GetLastReceipts";
-import StatisticsHome from "./components/StatisticsHome";
+import ServiceComparison from "./components/ServiceComparison";
 import { MyContext } from "../../context/UserContext";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
@@ -68,7 +68,7 @@ const Home = () => {
         </div>
 
         <div className={styles.last_graphic}>
-          <StatisticsHome idReceipt={allReceipts} typeReceipt={allReceipts} />
+          <ServiceComparison receipts={receipts} />
         </div>
       </div>
     </div>
