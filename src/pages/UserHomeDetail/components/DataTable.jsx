@@ -120,6 +120,10 @@ const DataTable = ({ data, onReceiptChange }) => {
     setOpenModal(true);
   };
 
+  // Placeholders cortos: la lupa ya dice "buscar", asi que repetirlo
+  // ("Buscar fecha") le comia el poco ancho que le queda a cada columna
+  // despues del padding de TableCell + el icono, y el texto quedaba
+  // recortado a la mitad sin ningun "..." que avise que sigue.
   const filterField = (name, placeholder) => (
     <TextField
       name={name}
@@ -129,10 +133,15 @@ const DataTable = ({ data, onReceiptChange }) => {
       variant="standard"
       size="small"
       fullWidth
+      slotProps={{
+        input: {
+          style: { textOverflow: "ellipsis" },
+        },
+      }}
       InputProps={{
         disableUnderline: true,
         startAdornment: (
-          <InputAdornment position="start">
+          <InputAdornment position="start" sx={{ marginRight: "4px" }}>
             <BsSearch size={12} color={GrayPaleteColors.C400} />
           </InputAdornment>
         ),
@@ -190,20 +199,30 @@ const DataTable = ({ data, onReceiptChange }) => {
               )}
             </TableRow>
             <TableRow>
-              <TableCell sx={{ backgroundColor: "var(--surface-alt-color)" }}>
-                {filterField("date", "Buscar fecha")}
+              <TableCell
+                sx={{ backgroundColor: "var(--surface-alt-color)", padding: "4px 6px" }}
+              >
+                {filterField("date", "Fecha")}
               </TableCell>
-              <TableCell sx={{ backgroundColor: "var(--surface-alt-color)" }}>
-                {filterField("amount", "Buscar cantidad")}
+              <TableCell
+                sx={{ backgroundColor: "var(--surface-alt-color)", padding: "4px 6px" }}
+              >
+                {filterField("amount", "Cantidad")}
               </TableCell>
-              <TableCell sx={{ backgroundColor: "var(--surface-alt-color)" }}>
-                {filterField("price", "Buscar precio")}
+              <TableCell
+                sx={{ backgroundColor: "var(--surface-alt-color)", padding: "4px 6px" }}
+              >
+                {filterField("price", "Precio")}
               </TableCell>
-              <TableCell sx={{ backgroundColor: "var(--surface-alt-color)" }}>
-                {filterField("receiptName", "Buscar nombre")}
+              <TableCell
+                sx={{ backgroundColor: "var(--surface-alt-color)", padding: "4px 6px" }}
+              >
+                {filterField("receiptName", "Nombre")}
               </TableCell>
-              <TableCell sx={{ backgroundColor: "var(--surface-alt-color)" }}>
-                {filterField("typeService", "Buscar tipo")}
+              <TableCell
+                sx={{ backgroundColor: "var(--surface-alt-color)", padding: "4px 6px" }}
+              >
+                {filterField("typeService", "Tipo")}
               </TableCell>
               <TableCell sx={{ backgroundColor: "var(--surface-alt-color)" }} />
             </TableRow>
