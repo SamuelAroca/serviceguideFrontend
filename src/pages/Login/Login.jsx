@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
@@ -21,7 +21,7 @@ const Login = () => {
       <Routes>
         <Route
           path="/"
-          element={<Navigate to="signIn" replace />} // Redirige a "/signIn" por defecto
+          element={<Navigate to="/login/signIn" replace />} // Redirige a "/login/signIn" por defecto
         />
         <Route path="/signIn" element={<SignIn />} />
         <Route path="/signUp" element={<SignUp />} />

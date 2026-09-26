@@ -1,14 +1,21 @@
 import styled from "styled-components";
-import { BluePaleteColors } from "../../../palete-colors/blue-colors.palete";
-import { GrayPaleteColors } from "../../../palete-colors/gray-colors.palete";
+import { BluePaleteColors } from "../palete-colors/blue-colors.palete";
+import { GrayPaleteColors } from "../palete-colors/gray-colors.palete";
 
-export const SignInLayout = styled.div`
+// Layout compartido por SignIn/SignUp/ForgotPassword/ChangePassword: las
+// 4 pantallas de auth eran ~450 lineas de CSS casi identico, copiado y
+// pegado en 4 archivos. Las clases que solo usa alguna pantalla
+// (.forgot_password, .back) no hacen nada si esa pantalla no las
+// renderiza, asi que no hace falta condicionarlas: viven aqui una sola
+// vez y cada pantalla usa las que necesita.
+export const AuthLayout = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 2rem;
+  gap: ${(props) => props.$gap || "1rem"};
   height: 72vh;
   width: 80vw;
-  background-color: #fff;
+  background-color: var(--surface-color);
+  color: var(--text-color);
   box-sizing: border-box;
 
   .form_container {
@@ -63,8 +70,10 @@ export const SignInLayout = styled.div`
     color: ${GrayPaleteColors.C400};
     gap: 5px;
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+    text-align: center;
     a {
       color: ${BluePaleteColors.C500};
     }
@@ -76,7 +85,7 @@ export const SignInLayout = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: ${GrayPaleteColors.C100};
+    background-color: var(--surface-alt-color);
   }
 
   a {
@@ -87,7 +96,7 @@ export const SignInLayout = styled.div`
 
   .inputsMaterial {
     width: 100%;
-    background-color: ${GrayPaleteColors.C50};
+    background-color: var(--surface-alt-color);
   }
 
   h1,
@@ -98,5 +107,22 @@ export const SignInLayout = styled.div`
   h6,
   p {
     margin: 0;
+  }
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+    width: 90vw;
+    max-width: 420px;
+    height: auto;
+    padding: 2.5rem 1.5rem;
+    border-radius: 1.25rem;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+
+    .form_container form {
+      min-width: unset;
+      max-width: 100%;
+      width: 100%;
+    }
   }
 `;

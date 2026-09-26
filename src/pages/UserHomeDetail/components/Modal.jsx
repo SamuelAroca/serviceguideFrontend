@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { MdOutlineClose } from "react-icons/md";
 import { GrayPaleteColors } from "../../../palete-colors/gray-colors.palete";
@@ -13,18 +12,24 @@ const ModalOverlay = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  /* Sin esto, el header "sticky" de la tabla (position: sticky, con su
+     propio z-index) queda pintado por encima del overlay del modal
+     porque el overlay nunca declaraba un z-index propio. */
+  z-index: 1300;
 `;
 
 const ModalContainer = styled.div`
-  padding: 1rem;
+  padding: 1.5rem;
   border-radius: 0.5rem;
   max-height: calc(100vh - 40px);
-  height: calc(100vh - 40px);
-  max-width: auto;
+  width: min(90vw, 560px);
+  max-width: 90vw;
   overflow: auto;
   box-sizing: border-box;
   position: relative;
-  background-color: ${GrayPaleteColors.C50};
+  background-color: var(--surface-color);
+  color: var(--text-color);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   .close_icon {
     position: absolute;
     top: 10px;

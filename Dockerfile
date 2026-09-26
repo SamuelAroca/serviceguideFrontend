@@ -1,5 +1,6 @@
 # Etapa de construcción
-FROM node:18 as build
+# vite@8 requiere Node ^20.19 o >=22.12 (node:util#styleText); node:18 no lo trae.
+FROM node:22 AS build
 
 WORKDIR /app
 

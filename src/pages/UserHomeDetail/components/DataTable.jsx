@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import { useState, useContext } from "react";
 import {
   Table,
   TableBody,
@@ -8,21 +8,39 @@ import {
   TableRow,
   Paper,
   TextField,
+  Tooltip,
+  InputAdornment,
 } from "@mui/material";
 import { FormatDate, formatPrice } from "../../../Utilities";
-import { BsTrash, BsPencil } from "react-icons/bs";
+import { BsTrash, BsPencil, BsSearch } from "react-icons/bs";
 import { MyContext } from "../../../context/UserContext";
-import { getUserDataService } from "../../../services/get-user-data.service";
 import { toast, Toaster } from "react-hot-toast";
-import { getUserHousesService } from "../../../services/get-user-houses.service";
-import axios from "axios";
+import { getUserHouses } from "../../../services/get-user-houses.service";
+import httpClient from "../../../api/httpClient";
 import Modal from "./Modal";
 import FormEdit from "./FormEdit";
-import Swal from "sweetalert2";
-import Cookies from "js-cookie";
+import Swal from "../../../lib/swal";
+import { BluePaleteColors } from "../../../palete-colors/blue-colors.palete";
+import { GrayPaleteColors } from "../../../palete-colors/gray-colors.palete";
+import { getErrorMessage } from "../../../Utilities";
 
-const DataTable = ({ data }) => {
-  const accessToken = Cookies.get("token");
+// Antes BsTrash/BsPencil llevaban el onClick directo sobre el <svg>: sin
+// nombre accesible y sin foco por teclado (Tooltip solo muestra texto al
+// pasar el mouse). Envueltos en un <button> real con aria-label, se
+// resetea el chrome nativo del boton para que el icono se vea igual.
+const ICON_BUTTON_STYLE = {
+  background: "none",
+  border: "none",
+  padding: 0,
+  margin: 0,
+  color: "inherit",
+  font: "inherit",
+  cursor: "pointer",
+  display: "inline-flex",
+  alignItems: "center",
+};
+
+const DataTable = ({ data, onReceiptChange }) => {
   const [filters, setFilters] = useState({
     date: "",
     amount: "",
@@ -42,15 +60,6 @@ const DataTable = ({ data }) => {
     setOpenModal(false);
   };
 
-  const getUserHouses = async () => {
-    try {
-      const data = await getUserHousesService(userData.id);
-      setHouses(data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
     setFilters((prevFilters) => ({
@@ -61,23 +70,27 @@ const DataTable = ({ data }) => {
 
   const notify = () => toast.success("Deleted successfully.");
 
-  const filteredData = data?.filter((item) => {
-    return Object.keys(filters).every((key) => {
-      if (filters[key] === "") return true;
-      if (key === "date") {
-        const formattedDate = new Date(item[key]).toLocaleDateString();
-        return formattedDate.includes(filters[key]);
-      }
-      if (key === "typeService") {
-        return item[key]
+  // Más recientes primero. .filter() ya devuelve un arreglo nuevo, así que
+  // .sort() no muta la lista de recibos original.
+  const filteredData = data
+    ?.filter((item) => {
+      return Object.keys(filters).every((key) => {
+        if (filters[key] === "") return true;
+        if (key === "date") {
+          const formattedDate = new Date(item[key]).toLocaleDateString();
+          return formattedDate.includes(filters[key]);
+        }
+        if (key === "typeService") {
+          return (item[key] ?? "")
+            .toLowerCase()
+            .includes(filters[key].toLowerCase());
+        }
+        return String(item[key])
           .toLowerCase()
           .includes(filters[key].toLowerCase());
-      }
-      return String(item[key])
-        .toLowerCase()
-        .includes(filters[key].toLowerCase());
-    });
-  });
+      });
+    })
+    .sort((a, b) => new Date(b.date) - new Date(a.date));
 
   const handleDeleteRow = async (id) => {
     Swal.fire({
@@ -87,18 +100,16 @@ const DataTable = ({ data }) => {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Sí, eliminar recibo",
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          const data = axios.delete(`${apiUrl}/delete/${id}`, {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          });
+          await httpClient.delete(`${apiUrl}/delete/${id}`);
           getUserHouses(setHouses, userData?.id);
+          onReceiptChange?.();
           notify();
         } catch (error) {
           console.log(error);
+          Swal.fire({ icon: "error", title: "Oops...", text: getErrorMessage(error) });
         }
       }
     });
@@ -109,100 +120,180 @@ const DataTable = ({ data }) => {
     setOpenModal(true);
   };
 
+  // Placeholders cortos: la lupa ya dice "buscar", asi que repetirlo
+  // ("Buscar fecha") le comia el poco ancho que le queda a cada columna
+  // despues del padding de TableCell + el icono, y el texto quedaba
+  // recortado a la mitad sin ningun "..." que avise que sigue.
+  const filterField = (name, placeholder) => (
+    <TextField
+      name={name}
+      value={filters[name]}
+      onChange={handleFilterChange}
+      placeholder={placeholder}
+      variant="standard"
+      size="small"
+      fullWidth
+      slotProps={{
+        input: {
+          style: { textOverflow: "ellipsis" },
+        },
+      }}
+      InputProps={{
+        disableUnderline: true,
+        startAdornment: (
+          <InputAdornment position="start" sx={{ marginRight: "4px" }}>
+            <BsSearch size={12} color={GrayPaleteColors.C400} />
+          </InputAdornment>
+        ),
+      }}
+    />
+  );
+
   return (
-    <div>
-      <h1>Facturas</h1>
-      <TableContainer component={Paper}>
-        <Table>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        height: "100%",
+        minHeight: 0,
+      }}
+    >
+      <h1 style={{ flexShrink: 0 }}>Facturas</h1>
+      <TableContainer
+        component={Paper}
+        sx={{
+          borderRadius: "1rem",
+          boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.08)",
+          flex: 1,
+          minHeight: 0,
+          overflow: "auto",
+          "&::-webkit-scrollbar": {
+            width: "6px",
+            height: "6px",
+          },
+          "&::-webkit-scrollbar-track": {
+            backgroundColor: "var(--surface-color)",
+          },
+          "&::-webkit-scrollbar-thumb": {
+            borderRadius: "10px",
+            backgroundColor: "#ddd",
+          },
+        }}
+      >
+        <Table stickyHeader size="small">
           <TableHead>
             <TableRow>
-              <TableCell>Fecha</TableCell>
-              <TableCell>Cantidad</TableCell>
-              <TableCell>Precio</TableCell>
-              <TableCell>Nombre</TableCell>
-              <TableCell>Tipo de Servicio</TableCell>
-              <TableCell>Acciones</TableCell>
+              {["Fecha", "Cantidad", "Precio", "Nombre", "Tipo de Servicio", "Acciones"].map(
+                (label) => (
+                  <TableCell
+                    key={label}
+                    sx={{
+                      backgroundColor: BluePaleteColors.C600,
+                      color: "#fff",
+                      fontWeight: 600,
+                    }}
+                  >
+                    {label}
+                  </TableCell>
+                )
+              )}
             </TableRow>
             <TableRow>
-              <TableCell>
-                <TextField
-                  name="date"
-                  value={filters.date}
-                  onChange={handleFilterChange}
-                  variant="outlined"
-                  size="small"
-                />
+              <TableCell
+                sx={{ backgroundColor: "var(--surface-alt-color)", padding: "4px 6px" }}
+              >
+                {filterField("date", "Fecha")}
               </TableCell>
-              <TableCell>
-                <TextField
-                  name="amount"
-                  value={filters.amount}
-                  onChange={handleFilterChange}
-                  variant="outlined"
-                  size="small"
-                />
+              <TableCell
+                sx={{ backgroundColor: "var(--surface-alt-color)", padding: "4px 6px" }}
+              >
+                {filterField("amount", "Cantidad")}
               </TableCell>
-              <TableCell>
-                <TextField
-                  name="price"
-                  value={filters.price}
-                  onChange={handleFilterChange}
-                  variant="outlined"
-                  size="small"
-                />
+              <TableCell
+                sx={{ backgroundColor: "var(--surface-alt-color)", padding: "4px 6px" }}
+              >
+                {filterField("price", "Precio")}
               </TableCell>
-              <TableCell>
-                <TextField
-                  name="receiptName"
-                  value={filters.receiptName}
-                  onChange={handleFilterChange}
-                  variant="outlined"
-                  size="small"
-                />
+              <TableCell
+                sx={{ backgroundColor: "var(--surface-alt-color)", padding: "4px 6px" }}
+              >
+                {filterField("receiptName", "Nombre")}
               </TableCell>
-              <TableCell>
-                <TextField
-                  name="typeService"
-                  value={filters.typeService}
-                  onChange={handleFilterChange}
-                  variant="outlined"
-                  size="small"
-                />
+              <TableCell
+                sx={{ backgroundColor: "var(--surface-alt-color)", padding: "4px 6px" }}
+              >
+                {filterField("typeService", "Tipo")}
               </TableCell>
-              <TableCell>
-                <BsTrash />
-                <BsPencil style={{ marginLeft: "10px" }} />
-              </TableCell>
+              <TableCell sx={{ backgroundColor: "var(--surface-alt-color)" }} />
             </TableRow>
           </TableHead>
           <TableBody>
-            {filteredData?.map((item) => (
-              <TableRow key={item.id}>
-                <TableCell>{FormatDate(item.date)}</TableCell>
-                <TableCell>
-                  {item.amount}{" "}
-                  {item.typeService === "ENERGY" ? "kwh" : " m³"}
-                </TableCell>
-                <TableCell>{formatPrice(item.price)}</TableCell>
-                <TableCell>{item.receiptName}</TableCell>
-                <TableCell>{item.typeService}</TableCell>
-                <TableCell>
-                  <BsTrash
-                    onClick={() => handleDeleteRow(item.id)}
-                    style={{ cursor: "pointer" }}
-                  />
-                  <BsPencil
-                    onClick={() => handleEditRow(item)}
-                    style={{ cursor: "pointer", marginLeft: "10px" }}
-                  />
+            {filteredData?.length ? (
+              filteredData.map((item) => (
+                <TableRow
+                  key={item.id}
+                  hover
+                  sx={{
+                    "&:nth-of-type(odd)": {
+                      backgroundColor: "var(--surface-alt-color)",
+                    },
+                  }}
+                >
+                  <TableCell>{FormatDate(item.date)}</TableCell>
+                  <TableCell>
+                    {item.amount} {item.typeService === "ENERGY" ? "kwh" : "m³"}
+                  </TableCell>
+                  <TableCell>${formatPrice(item.price)}</TableCell>
+                  <TableCell>{item.receiptName}</TableCell>
+                  <TableCell>{item.typeService}</TableCell>
+                  <TableCell>
+                    <Tooltip title="Eliminar recibo">
+                      <button
+                        type="button"
+                        aria-label="Eliminar recibo"
+                        onClick={() => handleDeleteRow(item.id)}
+                        style={ICON_BUTTON_STYLE}
+                      >
+                        <BsTrash />
+                      </button>
+                    </Tooltip>
+                    <Tooltip title="Editar recibo">
+                      <button
+                        type="button"
+                        aria-label="Editar recibo"
+                        onClick={() => handleEditRow(item)}
+                        style={{ ...ICON_BUTTON_STYLE, marginLeft: "10px" }}
+                      >
+                        <BsPencil />
+                      </button>
+                    </Tooltip>
+                  </TableCell>
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell
+                  colSpan={6}
+                  align="center"
+                  sx={{ color: GrayPaleteColors.C400, py: 4 }}
+                >
+                  {data?.length
+                    ? "Ningún recibo coincide con los filtros."
+                    : "Todavía no tienes recibos registrados."}
                 </TableCell>
               </TableRow>
-            ))}
+            )}
           </TableBody>
         </Table>
       </TableContainer>
       <Modal isOpen={openModal} onClose={onCloseShare}>
-        {selectedItem && <FormEdit data={selectedItem} onClose={onCloseShare} />}
+        {selectedItem && (
+          <FormEdit
+            data={selectedItem}
+            onClose={onCloseShare}
+            onReceiptChange={onReceiptChange}
+          />
+        )}
       </Modal>
       <Toaster position="bottom-right" />
     </div>

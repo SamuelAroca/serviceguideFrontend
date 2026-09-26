@@ -1,9 +1,14 @@
 .main {
-  height: 100vh;
+  min-height: 100vh;
   width: 100%;
-  background-color: #ececec;
+  background-color: var(--surface-alt-color);
+  color: var(--text-color);
   position: relative;
   font-family: "Nunito", sans-serif;
+  /* Sin esto, el margin-top del h2 dentro de .subtitle_abs (y el
+     margin-bottom del ultimo <p>) colapsa a traves de .main hacia sus
+     vecinos, dejando ver el fondo de .main_container entre secciones. */
+  display: flow-root;
 }
 
 .subtitle_abs .h2 {
@@ -47,7 +52,7 @@
   height: 3.5rem;
   width: 3.5rem;
   margin-bottom: 10px;
-  background-color: #d9d9d9;
+  background-color: var(--surface-color);
   justify-content: center;
   place-items: center;
   border-radius: 0.7rem;
@@ -61,5 +66,33 @@
   .us,
   .container_info {
     height: auto;
+  }
+}
+
+@media (max-width: 1024px) {
+  .main {
+    height: auto;
+  }
+
+  .container_services {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 600px) {
+  .subtitle_abs .h2 {
+    font-size: 1.9rem;
+    margin: 1.5rem 1rem 0.5rem;
+    padding: 0;
+  }
+
+  .subtitle {
+    font-size: 1.5rem;
+    margin: 0.5rem 1rem 1.5rem;
+    padding: 0;
+  }
+
+  .container_services {
+    margin: 1rem;
   }
 }

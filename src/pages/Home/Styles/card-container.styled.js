@@ -2,13 +2,14 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 
 export const ReceiptCardContainer = styled(motion.div)`
-  min-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
   overflow: hidden;
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
   padding: 1rem;
   transition: 0.4s all;
   border-radius: 0.5rem;
-  margin: 1rem;
+  margin: 1rem 0;
 
   &:hover {
     cursor: pointer;

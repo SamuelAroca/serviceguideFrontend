@@ -1,4 +1,3 @@
-import React from "react";
 import { formatPrice } from "../../../Utilities";
 
 const Totals = ({ percentages }) => {
