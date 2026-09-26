@@ -34,7 +34,11 @@ import httpClient from "../api/httpClient";
 const StyledLink = styled(Link)`
   background-color: ${(props) =>
     props.$rute === true ? `var(--stat-tint-3)` : ""};
-  .icon {
+  .icon,
+  .arrow_icon {
+    /* .arrow_icon (la flecha de "Casas") no tenia color propio, asi
+       que heredaba el azul de link por defecto del navegador en vez
+       del color del tema -- se veia casi invisible en modo oscuro. */
     color: ${(props) =>
       props.$rute === true
         ? `${BluePaleteColors.C500}`
