@@ -3,17 +3,17 @@ import { useEffect, useState, useContext } from "react";
 import { FormLayout } from "../../addReceipt/Components/styled-components/form-layout.styled";
 import { BsWater, BsFillLightbulbFill, BsFillCloudFill } from "react-icons/bs";
 import { FaToilet } from "react-icons/fa";
-import { Tooltip } from "@mui/material";
 import { Alert } from "@mui/material";
-import axios from "axios";
+import httpClient from "../../../api/httpClient";
 import { getUserHouses } from "../../../services/get-user-houses.service";
 import { MyContext } from "../../../context/UserContext";
 import { toast } from "react-hot-toast";
-import Swal from "sweetalert2";
-import Cookies from "js-cookie";
+import Swal from "../../../lib/swal";
 import Select from "react-select";
+import { getErrorMessage } from "../../../Utilities";
+import { useFormState } from "../../../hooks/useFormState";
 
-const FormEdit = ({ userId, data, onClose }) => {
+const FormEdit = ({ userId, data, onClose, onReceiptChange }) => {
   const apiUrl = import.meta.env.VITE_API_RECEIPT;
   const apiHouse = import.meta.env.VITE_API_HOUSE;
 
@@ -24,7 +24,6 @@ const FormEdit = ({ userId, data, onClose }) => {
   const [errors, setErrors] = useState([]);
   const [selectedHouse, setSelectedHouse] = useState(null);
   const [allHouses, setAllHouses] = useState([]);
-  const accessToken = Cookies.get("token");
 
   const notifyUpdate = () => toast.success("Update successfully.");
 
@@ -48,7 +47,7 @@ const FormEdit = ({ userId, data, onClose }) => {
 
   const date = formatDate(data?.date);
 
-  const [receipt, setReceipt] = useState({
+  const [receipt, setReceipt, handleInputChange] = useFormState({
     receiptName: data?.receiptName,
     price: data?.price,
     amount: data?.amount,
@@ -65,12 +64,8 @@ const FormEdit = ({ userId, data, onClose }) => {
   };
 
   const getHouses = async () => {
-    const data = await axios.get(`${apiHouse}/getHouseName/${userData.id}`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
     try {
+      const data = await httpClient.get(`${apiHouse}/getHouseName/${userData.id}`);
       setAllHouses(data.data);
     } catch (err) {
       console.log(err);
@@ -79,8 +74,9 @@ const FormEdit = ({ userId, data, onClose }) => {
 
   const onValidate = (receipt) => {
     let errors = {};
-    const regexTitle = /^[a-zA-Z0-9\s-]+$/; // Expresión regular para validar nombres
+    const regexTitle = /^[\p{L}0-9\s-]+$/u; // Letras (incluye tildes/ñ), números, espacios y guiones
     const regexPrice = /^[0-9]+(\.[0-9]{1,2})?$/; // Expresión regular para validar precios
+    const regexQuantity = /^[0-9]+(\.[0-9]{1,3})?$/; // Expresión regular para validar cantidades
 
     if (!receipt.receiptName.trim()) {
       errors.receiptName = "Debe existir un nombre del recibo.";
@@ -92,6 +88,13 @@ const FormEdit = ({ userId, data, onClose }) => {
       errors.price = "Debe existir un precio del recibo.";
     } else if (!regexPrice.test(receipt.price)) {
       errors.price = "El 'Precio' solo debe contener números.";
+    }
+
+    if (!receipt.amount) {
+      errors.amount = "Debe existir una cantidad del recibo.";
+    } else if (!regexQuantity.test(receipt.amount)) {
+      errors.amount =
+        "La 'Cantidad' solo debe contener números y la parte decimal maximo 3 números";
     }
     return errors;
   };
@@ -110,27 +113,21 @@ const FormEdit = ({ userId, data, onClose }) => {
 
     if (Object.keys(err).length === 0) {
       try {
-        const response = await axios.put(
+        const response = await httpClient.put(
           `${apiUrl}/update/${data.id}`,
-          updatedReceipt,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
+          updatedReceipt
         );
         notifyUpdate();
         getUserHouses(setHouses, userData?.id);
+        onReceiptChange?.();
         onClose();
       } catch (error) {
-        let response = error;
         console.log(error);
-        let message = response.response.data.message;
         onClose();
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: message,
+          text: getErrorMessage(error),
         });
       }
 
@@ -153,21 +150,13 @@ const FormEdit = ({ userId, data, onClose }) => {
     }
   };
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setReceipt((prevReceipt) => ({
-      ...prevReceipt,
-      [name]: value,
-    }));
-  };
-
   const houseOptions = allHouses.map((house) => ({
     label: house,
     value: house,
   }));
 
   return (
-    <FormLayout style={{ height: "90vh" }}>
+    <FormLayout>
       <h1>{receiptType.toUpperCase()}</h1>
       <div className="buttons-container">
         <button onClick={() => setReceiptType("WATER")} className="type-button">
@@ -197,12 +186,6 @@ const FormEdit = ({ userId, data, onClose }) => {
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <Tooltip
-              disableFocusListener
-              disableTouchListener
-              title="Agregar nombre"
-              placement="bottom-start"
-            >
               <TextField
                 fullWidth
                 label="Nombre"
@@ -211,47 +194,32 @@ const FormEdit = ({ userId, data, onClose }) => {
                 value={receipt.receiptName}
                 onChange={handleInputChange}
               />
-            </Tooltip>
             {errors.receiptName && (
               <Alert severity="warning"> {errors.receiptName} </Alert>
             )}
           </Grid>
           <Grid item xs={12}>
-            <Tooltip
-              disableFocusListener
-              disableTouchListener
-              title="Agregar precio"
-              placement="bottom-start"
-            >
-              <TextField
-                fullWidth
-                label="Precio"
-                name="price"
-                type="number"
-                step="0.01"
-                value={receipt.price}
-                onChange={handleInputChange}
-              />
-            </Tooltip>
+            <TextField
+              fullWidth
+              label="Precio"
+              name="price"
+              type="number"
+              step="0.01"
+              value={receipt.price}
+              onChange={handleInputChange}
+            />
             {errors.price && <Alert severity="warning"> {errors.price} </Alert>}
           </Grid>
           <Grid item xs={12}>
-            <Tooltip
-              disableFocusListener
-              disableTouchListener
-              title="Agregar cantidad"
-              placement="bottom-start"
-            >
-              <TextField
-                fullWidth
-                label="Cantidad"
-                name="amount"
-                type="number"
-                step="0.01"
-                value={receipt.amount}
-                onChange={handleInputChange}
-              />
-            </Tooltip>
+            <TextField
+              fullWidth
+              label="Cantidad"
+              name="amount"
+              type="number"
+              step="0.01"
+              value={receipt.amount}
+              onChange={handleInputChange}
+            />
             {errors.amount && (
               <Alert severity="warning"> {errors.amount} </Alert>
             )}
@@ -262,21 +230,15 @@ const FormEdit = ({ userId, data, onClose }) => {
             style={{ display: "flex", justifyContent: "space-between" }}
           >
             <Grid item xs={6}>
-              <Tooltip
-                disableFocusListener
-                disableTouchListener
-                title="Agregar fecha"
-                placement="bottom-start"
-              >
-                <TextField
-                  fullWidth
-                  label=""
-                  name="date"
-                  type="date"
-                  value={receipt.date}
-                  onChange={handleInputChange}
-                />
-              </Tooltip>
+              <TextField
+                fullWidth
+                label="Fecha"
+                InputLabelProps={{ shrink: true }}
+                name="date"
+                type="date"
+                value={receipt.date}
+                onChange={handleInputChange}
+              />
               {errors.date && <Alert severity="warning"> {errors.date} </Alert>}
             </Grid>
             <Grid item xs={5.7}>
@@ -285,6 +247,7 @@ const FormEdit = ({ userId, data, onClose }) => {
                 onChange={handleHouseChange}
                 options={houseOptions}
                 placeholder="Seleccione la casa"
+                menuPortalTarget={document.body}
                 styles={{
                   container: (provided) => ({
                     ...provided,
@@ -294,6 +257,7 @@ const FormEdit = ({ userId, data, onClose }) => {
                     ...provided,
                     height: "100%",
                   }),
+                  menuPortal: (provided) => ({ ...provided, zIndex: 1400 }),
                 }}
               />
             </Grid>

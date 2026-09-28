@@ -1,0 +1,127 @@
+.houses {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  min-width: 0;
+}
+
+.house_block {
+  width: 100%;
+  min-width: 0;
+}
+
+.house_title {
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
+  color: var(--text-color);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  width: 100%;
+  /* Sin esto, un grid item (.card) con contenido que no puede achicarse
+     (numeros largos en una fila flex) empuja su columna mas alla del
+     minmax de arriba, y eso se propaga hasta desbordar la pagina
+     entera -- no solo esta grilla. min-width:0 en cascada (grid,
+     card, stat_row, stat) es lo que realmente lo evita. */
+  min-width: 0;
+}
+
+.card {
+  background-color: var(--surface-alt-color);
+  border: 1px solid var(--border-color);
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.card_header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.icon {
+  font-size: 1.3rem;
+}
+
+.stat_row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  /* Flex item por defecto no se achica mas alla del ancho de su
+     contenido (min-width:auto); con precios/consumos grandes eso
+     empuja .stat_row (y todo lo de arriba) mas ancho que la tarjeta. */
+  min-width: 0;
+}
+
+.stat_label {
+  font-size: 0.8rem;
+  color: var(--text-secondary-color);
+}
+
+.stat_value {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-color);
+  overflow-wrap: break-word;
+}
+
+.delta_up,
+.delta_down,
+.delta_flat {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Menos gasto/consumo es la buena noticia aca, no "mas" en abstracto:
+   subir de precio/consumo se marca en rojo, bajar en verde. */
+.delta_up {
+  color: #ef4444;
+}
+
+.delta_down {
+  color: #22c55e;
+}
+
+.delta_flat {
+  color: var(--text-secondary-color);
+}
+
+.compare_note {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--text-secondary-color);
+  overflow-wrap: break-word;
+}
+
+.empty_state {
+  width: 100%;
+  padding: 2rem 1rem;
+  text-align: center;
+  color: var(--text-secondary-color);
+}
+
+.empty_state p {
+  margin: 0 auto;
+  max-width: 32rem;
+}

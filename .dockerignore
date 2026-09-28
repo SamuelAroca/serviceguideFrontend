@@ -1,0 +1,16 @@
+# OJO: a proposito NO se excluye .env aca (a diferencia de .gitignore).
+# Vite hornea las VITE_API_* en el bundle durante `npm run build`, que
+# corre DENTRO de la imagen (ver Dockerfile). Si .env no esta en el
+# build context, ese build corre sin esas variables y todo import.meta.env.VITE_*
+# queda undefined en el JS compilado -> "http://host/undefined/login" en
+# runtime. No son secretos de verdad: terminan public en el bundle de
+# todas formas, asi que no hay beneficio de seguridad en excluirlo aca.
+.git
+node_modules
+dist
+dist-ssr
+*.local
+.vscode
+.idea
+.DS_Store
+npm-debug.log*

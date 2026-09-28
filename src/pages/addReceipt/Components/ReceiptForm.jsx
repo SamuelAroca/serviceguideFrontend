@@ -16,14 +16,15 @@ import { BsWater, BsFillLightbulbFill, BsFillCloudFill } from "react-icons/bs";
 import { FaToilet } from "react-icons/fa";
 import { Tooltip } from "@mui/material";
 import { Alert } from "@mui/material";
-import axios from "axios";
+import httpClient from "../../../api/httpClient";
 import SelectHouse from "./SelectHouse";
 import { MyContext } from "../../../context/UserContext";
-import { getUserHousesService } from "../../../services/get-user-houses.service";
+import { getUserHouses } from "../../../services/get-user-houses.service";
 import { Toaster, toast } from "react-hot-toast";
-import Swal from "sweetalert2";
-import Cookies from "js-cookie";
+import Swal from "../../../lib/swal";
 import { IoIosWarning } from "react-icons/io";
+import { getErrorMessage } from "../../../Utilities";
+import { useFormState } from "../../../hooks/useFormState";
 
 const ReceiptForm = ({ userId }) => {
   const apiUrl = import.meta.env.VITE_API_RECEIPT;
@@ -32,11 +33,9 @@ const ReceiptForm = ({ userId }) => {
   const [receiptType, setReceiptType] = useState("WATER");
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState([]);
-  const [selectedHouse, setSelectedHouse] = useState(null);
   const [allHouses, setAllHouses] = useState([]);
   const [selectedFile, setSelectedFile] = useState(null);
   const navigate = useNavigate();
-  let accessToken = Cookies.get("token");
 
   const { setHouses, userData } = useContext(MyContext);
   const notify = () => toast.success("Recibo agregado correctamente");
@@ -45,7 +44,7 @@ const ReceiptForm = ({ userId }) => {
     getHouses();
   }, [userId]);
 
-  const [receipt, setReceipt] = useState({
+  const [receipt, setReceipt, handleInputChange] = useFormState({
     receiptName: "",
     price: "",
     amount: "",
@@ -60,36 +59,18 @@ const ReceiptForm = ({ userId }) => {
     setReceipt({ ...receipt, house: { name: name } });
   };
 
-  const handleHouseChange = (event, value) => {
-    setSelectedHouse(value);
-    setReceipt({ ...receipt, house: value });
-  };
-
   const getHouses = async () => {
-    const data = await axios.get(`${apiHouse}/getHouseName/${userData?.id}`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
     try {
+      const data = await httpClient.get(`${apiHouse}/getHouseName/${userData?.id}`);
       setAllHouses(data.data);
     } catch (err) {
       console.log(err);
     }
   };
 
-  const getUserHouses = async () => {
-    try {
-      const data = await getUserHousesService(userData.id);
-      setHouses(data);
-    } catch (err) {
-      console.log(err.message);
-    }
-  };
-
   const onValidate = (receipt) => {
     let errors = {};
-    const regexTitle = /^[a-zA-Z0-9\s-]+$/; // Expresión regular para validar nombres
+    const regexTitle = /^[\p{L}0-9\s-]+$/u; // Letras (incluye tildes/ñ), números, espacios y guiones
     const regexPrice = /^[0-9]+(\.[0-9]{1,2})?$/; // Expresión regular para validar precios
     const regexQuantity = /^[0-9]+(\.[0-9]{1,3})?$/; // Expresión regular para validar cantidades
     const regexDate = /^(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])-(19|20)\d{2}$/; // Expresión regular para validar fechas en formato MM-DD-YYYY
@@ -131,14 +112,9 @@ const ReceiptForm = ({ userId }) => {
 
       if (Object.keys(err).length === 0) {
         try {
-          const response = await axios.post(
+          const response = await httpClient.post(
             `${apiUrl}/add/${userData.id}`,
-            updatedReceipt,
-            {
-              headers: {
-                Authorization: `Bearer ${accessToken}`,
-              },
-            }
+            updatedReceipt
           );
           getUserHouses(setHouses, userData?.id);
           Swal.fire("¡Recibo registrado correctamente!", "", "success");
@@ -154,29 +130,22 @@ const ReceiptForm = ({ userId }) => {
             },
           });
         } catch (error) {
-          setIsLoading(false);
-          let response = error;
-          let message = response.response.data.message;
           console.log(error);
           Swal.fire({
             icon: "error",
             title: "Oops...",
-            text: message,
+            text: getErrorMessage(error),
           });
         }
+        // Antes esto solo se llamaba dentro del catch: si el guardado
+        // salia bien, isLoading se quedaba en true para siempre y el
+        // boton seguia mostrando el spinner.
+        setIsLoading(false);
       } else {
         setIsLoading(false);
         setErrors(err);
       }
     }
-  };
-
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setReceipt((prevReceipt) => ({
-      ...prevReceipt,
-      [name]: value,
-    }));
   };
 
   const handleFileChange = (event) => {
@@ -198,11 +167,7 @@ const ReceiptForm = ({ userId }) => {
       const formData = new FormData();
       formData.append("archivoPdf", selectedFile);
 
-      const response = await axios.post(`${apiUrl}/read`, formData, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
+      const response = await httpClient.post(`${apiUrl}/read`, formData);
 
       if (response.status === 200) {
         Swal.fire({
@@ -216,13 +181,11 @@ const ReceiptForm = ({ userId }) => {
       }
     } catch (error) {
       setIsLoading(false);
-      let response = error;
-      let message = response.response.data.message;
       console.log(error);
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: message,
+        text: getErrorMessage(error),
       });
     }
   };
@@ -258,99 +221,70 @@ const ReceiptForm = ({ userId }) => {
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <Tooltip
-              disableFocusListener
-              disableTouchListener
-              title="Agregar nombre"
-              placement="bottom-start"
-            >
-              <TextField
-                fullWidth
-                label="Nombre"
-                name="receiptName"
-                type="text"
-                value={receipt.receiptName}
-                onChange={handleInputChange}
-              />
-            </Tooltip>
+            <TextField
+              fullWidth
+              label="Nombre"
+              name="receiptName"
+              type="text"
+              value={receipt.receiptName}
+              onChange={handleInputChange}
+            />
             {errors.receiptName && (
               <Alert severity="warning"> {errors.receiptName} </Alert>
             )}
           </Grid>
-          <Grid item xs={12}>
-            <Tooltip
-              disableFocusListener
-              disableTouchListener
-              title="Agregar precio"
-              placement="bottom-start"
-            >
-              <TextField
-                fullWidth
-                label="Precio"
-                name="price"
-                type="number"
-                step="0.01"
-                value={receipt.price}
-                onChange={handleInputChange}
-              />
-            </Tooltip>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              fullWidth
+              label="Precio"
+              name="price"
+              type="number"
+              step="0.01"
+              value={receipt.price}
+              onChange={handleInputChange}
+            />
             {errors.price && <Alert severity="warning"> {errors.price} </Alert>}
           </Grid>
-          <Grid item xs={12}>
-            <Tooltip
-              disableFocusListener
-              disableTouchListener
-              title="Agregar cantidad"
-              placement="bottom-start"
-            >
-              <TextField
-                fullWidth
-                label="Cantidad"
-                name="amount"
-                type="number"
-                step="0.01"
-                value={receipt.amount}
-                onChange={handleInputChange}
-              />
-            </Tooltip>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              fullWidth
+              label="Cantidad"
+              name="amount"
+              type="number"
+              step="0.01"
+              value={receipt.amount}
+              onChange={handleInputChange}
+            />
             {errors.amount && (
               <Alert severity="warning"> {errors.amount} </Alert>
             )}
           </Grid>
           <Grid item xs style={{ display: "flex", gap: "10px" }}>
             <Grid item xs={6}>
-              <Tooltip
-                disableFocusListener
-                disableTouchListener
-                title="Agregar fecha"
-                placement="bottom-start"
-              >
-                <TextField
-                  fullWidth
-                  name="date"
-                  type="date"
-                  value={receipt.date}
-                  onChange={handleInputChange}
-                />
-              </Tooltip>
+              <TextField
+                fullWidth
+                label="Fecha"
+                InputLabelProps={{ shrink: true }}
+                name="date"
+                type="date"
+                value={receipt.date}
+                onChange={handleInputChange}
+              />
               {errors.date && <Alert severity="warning"> {errors.date} </Alert>}
             </Grid>
             <Grid item xs={6}>
-              <SelectHouse
-                options={allHouses}
-                onChange={handleHouseChange}
-                handleSelect={handleSelect}
-                receipt={receipt}
-              />
+              <SelectHouse options={allHouses} handleSelect={handleSelect} />
             </Grid>
           </Grid>
 
           <Grid
             item
             xs={12}
-            style={{ display: "flex", gap: "10px", marginTop: "4rem" }}
+            container
+            spacing={2}
+            style={{ marginTop: "0.5rem" }}
           >
-            <Grid item xs={6}>
+            <Grid item xs={12} sm={6}>
               <Tooltip
                 title={
                   <Typography
@@ -365,7 +299,6 @@ const ReceiptForm = ({ userId }) => {
                   </Typography>
                 }
                 placement="top-start"
-                open={true}
               >
                 <TextField
                   name="receiptPdf"
@@ -376,13 +309,13 @@ const ReceiptForm = ({ userId }) => {
                 />
               </Tooltip>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} sm={6}>
               <Button
                 onClick={handleSubmit}
                 type="submit"
                 variant="contained"
                 color="primary"
-                style={{ width: "100%", height: "100%" }}
+                style={{ width: "100%", height: "100%", minHeight: "56px" }}
               >
                 {isLoading ? (
                   <CircularProgress size={30} style={{ color: "white" }} />

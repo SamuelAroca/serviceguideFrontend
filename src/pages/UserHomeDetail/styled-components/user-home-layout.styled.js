@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { GrayPaleteColors } from "../../../palete-colors/gray-colors.palete";
-import { BluePaleteColors } from "../../../palete-colors/blue-colors.palete";
 
 export const UserHomeLayout = styled.div`
   display: grid;
@@ -87,21 +86,10 @@ export const UserHomeLayout = styled.div`
     width: 100%;
     height: 100%;
     grid-area: 5 / 1 / 13 / 8;
-    overflow: auto;
-    &::-webkit-scrollbar {
-      width: 6px;
-      background-color: none;
-    }
-
-    &::-webkit-scrollbar-track {
-      background-color: none;
-      background-color: white;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      border-radius: 10px;
-      background-color: #ddd;
-    }
+    /* El scroll ahora pasa dentro de DataTable (su TableContainer), no
+       aquí, para que el título "Facturas" y el header de la tabla se
+       queden fijos en vez de desplazarse junto con las filas. */
+    overflow: hidden;
   }
 
   .container_charts {
@@ -122,20 +110,24 @@ export const UserHomeLayout = styled.div`
       overflow: hidden;
     }
     .chart_div:nth-child(1) {
-      background-color: ${BluePaleteColors.C200};
+      background-color: var(--stat-tint-1);
+      color: var(--text-color);
     }
     .chart_div:nth-child(2) {
-      background-color: ${BluePaleteColors.C100};
+      background-color: var(--stat-tint-2);
+      color: var(--text-color);
     }
     .chart_div:nth-child(3) {
-      background-color: ${BluePaleteColors.C50};
+      background-color: var(--stat-tint-3);
+      color: var(--text-color);
     }
   }
 
   .section {
-    border: 1px solid ${GrayPaleteColors.C100};
+    border: 1px solid var(--border-color);
     box-shadow: 0px 0px 10px 0px ${GrayPaleteColors.C100};
-    background-color: white;
+    background-color: var(--surface-color);
+    color: var(--text-color);
     border-radius: 2rem;
     box-sizing: border-box;
     padding: 1rem;
@@ -146,5 +138,40 @@ export const UserHomeLayout = styled.div`
   h2,
   p {
     margin: 0;
+  }
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    gap: 1.5rem;
+    padding: 1rem;
+
+    .house_title,
+    .donut,
+    .line_chart_container,
+    .totals,
+    .data_table {
+      grid-area: auto;
+      width: 100%;
+      height: auto;
+    }
+
+    .house_title {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .data_table {
+      /* El DataTable interno usa height:100% para su scroll propio con
+         header fijo; en móvil necesita una altura explícita porque su
+         padre ya no la hereda de un grid-area con filas fijas. */
+      height: 28rem;
+      overflow: hidden;
+    }
+
+    .container_charts {
+      grid-template-columns: 1fr;
+    }
   }
 `;

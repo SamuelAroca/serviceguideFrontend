@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { TextField, Autocomplete } from "@mui/material";
 
-const SelectHouse = ({ options, handleSelect, receipt }) => {
+const SelectHouse = ({ options, handleSelect }) => {
   const house = options?.map((name) => {
     return name;
   });

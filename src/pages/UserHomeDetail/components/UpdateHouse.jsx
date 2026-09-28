@@ -1,18 +1,18 @@
 import { useEffect, useState, useContext } from "react";
 import { HouseFormLayout } from "../../addHouse/styled-components/houseform-layout.styled";
-import { TextField, Button, Grid, Tooltip } from "@mui/material";
+import { TextField, Button, Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { Alert } from "@mui/material";
 import SelectCity from "../../addHouse/components/SelectCity";
-import axios from "axios";
+import httpClient from "../../../api/httpClient";
 import { getUserHouses } from "../../../services/get-user-houses.service";
 import { MyContext } from "../../../context/UserContext";
 import { Toaster, toast } from "react-hot-toast";
 import styles from "../Styles/UpdateHouse.module.css";
-import Swal from "sweetalert2";
-import Cookies from "js-cookie";
+import Swal from "../../../lib/swal";
 import Select from "react-select";
-import { Height } from "@mui/icons-material";
+import { getErrorMessage } from "../../../Utilities";
+import { useFormState } from "../../../hooks/useFormState";
 
 const UpdateHouse = ({ data, onClose }) => {
   const apiUrl = import.meta.env.VITE_API_HOUSE;
@@ -22,7 +22,6 @@ const UpdateHouse = ({ data, onClose }) => {
   const [errors, setErrors] = useState([]);
   const [selectedCity, setSelectedCity] = useState(null);
   const [allCities, setAllCities] = useState([]);
-  const accessToken = Cookies.get("token");
 
   const { setHouses, userData } = useContext(MyContext);
   const notify = () => toast.success("House update successfully");
@@ -38,7 +37,7 @@ const UpdateHouse = ({ data, onClose }) => {
     }
   }, [data]);
 
-  const [house, setHouse] = useState({
+  const [house, setHouse, handleInputChange] = useFormState({
     name: data?.name,
     stratum: data?.stratum,
     neighborhood: data?.neighborhood,
@@ -49,8 +48,6 @@ const UpdateHouse = ({ data, onClose }) => {
     },
   });
 
-  console.log(house);
-
   const handleSelect = (city) => {
     setHouse({ ...house, cities: { city: city } });
   };
@@ -60,13 +57,9 @@ const UpdateHouse = ({ data, onClose }) => {
     setHouse({ ...house, cities: { city: selectedOption.value } });
   };
 
-  const getCities = async (e) => {
-    const data = await axios.get(`${apiCity}/listAll`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+  const getCities = async () => {
     try {
+      const data = await httpClient.get(`${apiCity}/listAll`);
       setAllCities(data.data);
     } catch (err) {
       console.log(err);
@@ -76,7 +69,7 @@ const UpdateHouse = ({ data, onClose }) => {
   const onValidate = (house) => {
     let errors = {};
     const regexLetters = /^[a-zA-Z\s]+$/; // Expresión regular para validar nombres
-    const regexLettersNumbers = /^[\w\s]+(?:\s+[a-zA-Z]+\d{0,2})*$/; // Expresión regular para validar precios
+    const regexLettersNumbers = /^[\p{L}0-9\s]+(?:\s+[\p{L}]+\d{0,2})*$/u; // Letras (incluye tildes/ñ), números y espacios
     const regexNumbers = /^[0-9]+$/; // Expresión regular para validar cantidades
     const regexStratum = /^[1-6]$/; // Validar estrato
 
@@ -120,20 +113,16 @@ const UpdateHouse = ({ data, onClose }) => {
     setErrors(err);
 
     setIsLoading(true); // Empieza la carga
-    console.log(house);
 
     if (Object.keys(err).length === 0) {
       try {
-        const response = await axios.put(`${apiUrl}/update/${data.id}`, house, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
+        const response = await httpClient.put(`${apiUrl}/update/${data.id}`, house);
         notify();
         getUserHouses(setHouses, userData?.id);
         onClose();
       } catch (error) {
         console.log(error);
+        Swal.fire({ icon: "error", title: "Oops...", text: getErrorMessage(error) });
       }
 
       setHouse({
@@ -154,14 +143,6 @@ const UpdateHouse = ({ data, onClose }) => {
     }
   };
 
-  function handleInputChange(event) {
-    const { name, value } = event.target;
-    setHouse((prevHouse) => ({
-      ...prevHouse,
-      [name]: value,
-    }));
-  }
-
   const cityOptions = allCities.map((city) => ({
     label: city.city,
     value: city.city,
@@ -175,99 +156,64 @@ const UpdateHouse = ({ data, onClose }) => {
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <Tooltip
-              disableFocusListener
-              disableTouchListener
-              title="Agregar nombre"
-              placement="bottom-start"
-            >
-              <TextField
-                fullWidth
-                label="Nombre"
-                name="name"
-                type="text"
-                value={house.name}
-                onChange={handleInputChange}
-              />
-            </Tooltip>
+            <TextField
+              fullWidth
+              label="Nombre"
+              name="name"
+              type="text"
+              value={house.name}
+              onChange={handleInputChange}
+            />
             {errors.name && <Alert severity="warning"> {errors.name} </Alert>}
           </Grid>
           <Grid item xs={12}>
-            <Tooltip
-              disableFocusListener
-              disableTouchListener
-              title="Agregar estrato"
-              placement="bottom-start"
-            >
-              <TextField
-                fullWidth
-                label="Estrato"
-                name="stratum"
-                type="number"
-                value={house.stratum}
-                onChange={handleInputChange}
-              />
-            </Tooltip>
+            <TextField
+              fullWidth
+              label="Estrato"
+              name="stratum"
+              type="number"
+              value={house.stratum}
+              onChange={handleInputChange}
+            />
             {errors.stratum && (
               <Alert severity="warning"> {errors.stratum} </Alert>
             )}
           </Grid>
           <Grid item xs={12}>
-            <Tooltip
-              disableFocusListener
-              disableTouchListener
-              title="Agregar barrio"
-              placement="bottom-start"
-            >
-              <TextField
-                fullWidth
-                label="Barrio"
-                name="neighborhood"
-                type="text"
-                value={house.neighborhood}
-                onChange={handleInputChange}
-              />
-            </Tooltip>
+            <TextField
+              fullWidth
+              label="Barrio"
+              name="neighborhood"
+              type="text"
+              value={house.neighborhood}
+              onChange={handleInputChange}
+            />
             {errors.neighborhood && (
               <Alert severity="warning"> {errors.neighborhood} </Alert>
             )}
           </Grid>
           <Grid item xs={12}>
-            <Tooltip
-              disableFocusListener
-              disableTouchListener
-              title="Agregar dirección"
-              placement="bottom-start"
-            >
-              <TextField
-                fullWidth
-                label="Dirección"
-                name="address"
-                type="text"
-                value={house.address}
-                onChange={handleInputChange}
-              />
-            </Tooltip>
+            <TextField
+              fullWidth
+              label="Dirección"
+              name="address"
+              type="text"
+              value={house.address}
+              onChange={handleInputChange}
+            />
             {errors.address && (
               <Alert severity="warning"> {errors.address} </Alert>
             )}
           </Grid>
           <Grid item xs={12}>
-            <Tooltip
-              disableFocusListener
-              disableTouchListener
-              title="Agregar Contrato"
-              placement="bottom-start"
-            >
-              <TextField
-                fullWidth
-                label="Contrato"
-                name="contract"
-                type="number"
-                value={house.contract}
-                onChange={handleInputChange}
-              />
-            </Tooltip>
+            <TextField
+              fullWidth
+              label="Contrato"
+              name="contract"
+              type="number"
+              value={house.contract}
+              onChange={handleInputChange}
+            />
             {errors.contract && (
               <Alert severity="warning"> {errors.contract} </Alert>
             )}
@@ -278,6 +224,8 @@ const UpdateHouse = ({ data, onClose }) => {
               onChange={handleCityChange}
               options={cityOptions}
               placeholder="Seleccionar ciudad"
+              menuPortalTarget={document.body}
+              styles={{ menuPortal: (base) => ({ ...base, zIndex: 1400 }) }}
             />
           </Grid>
           <Grid item xs={12} className={styles.div_button}>
@@ -286,7 +234,7 @@ const UpdateHouse = ({ data, onClose }) => {
               type="submit"
               variant="contained"
               color="primary"
-              style={{ width: "20%" }}
+              sx={{ px: 4, py: 1.25, whiteSpace: "nowrap" }}
             >
               Actualizar Casa
             </Button>

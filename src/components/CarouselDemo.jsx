@@ -13,16 +13,16 @@ const CarouselDemo = ({ img1, img2, img3, img4 }) => {
       className={styles.carousel}
     >
       <div className={styles.container_slide}>
-        <img src={img1} alt="" />
+        <img src={img1} alt="Agua potable" />
       </div>
       <div className={styles.container_slide}>
-        <img src={img2} />
+        <img src={img2} alt="Alcantarillado" loading="lazy" />
       </div>
       <div className={styles.container_slide}>
-        <img src={img3} />
+        <img src={img3} alt="Electricistas" loading="lazy" />
       </div>
       <div className={styles.container_slide}>
-        <img src={img4} />
+        <img src={img4} alt="Gas natural" loading="lazy" />
       </div>
     </Carousel>
   );

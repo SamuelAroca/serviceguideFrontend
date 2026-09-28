@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import styles from "../styles/Login.module.css";
 import CarouselDemo from "../../../components/CarouselDemo";
 import TextField from "@mui/material/TextField";
@@ -6,17 +6,18 @@ import img1 from "../../../assets/agua-potable.webp";
 import img2 from "../../../assets/alcantarillado.webp";
 import img3 from "../../../assets/Electricistas-scaled.webp";
 import img4 from "../../../assets/gas-natural.webp";
-import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import httpClient from "../../../api/httpClient";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { RiWaterFlashFill } from "react-icons/ri";
 import { RiEyeLine } from "react-icons/ri";
 import { Alert } from "@mui/material";
 import { getUserDataService } from "../../../services/get-user-data.service";
 import { MyContext } from "../../../context/UserContext";
 import Cookies from "js-cookie";
-import Swal from "sweetalert2";
-import { SignInLayout } from "../styled-components/singin-layout.styled";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import Swal from "../../../lib/swal";
+import { AuthLayout } from "../../../styled-components/auth-layout.styled";
+import { ArrowBack as ArrowBackIcon } from "@mui/icons-material";
+import { getErrorMessage, isValidEmail } from "../../../Utilities";
 
 const SignIn = () => {
   // Logica para obtener los datos del usuario
@@ -44,16 +45,27 @@ const SignIn = () => {
 
   const [errors, setErrors] = useState([]);
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const url = import.meta.env.VITE_API_AUTH;
 
+  useEffect(() => {
+    if (searchParams.get("reason") === "session-expired") {
+      Swal.fire({
+        icon: "info",
+        title: "Tu sesión expiró",
+        text: "Iniciaste sesión en otro lugar o tu sesión ya no es válida. Vuelve a iniciar sesión.",
+      });
+      setSearchParams({}, { replace: true });
+    }
+  }, []);
+
   const onValidate = () => {
     let errors = {};
-    const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; // Expresión regular para validar email
 
     if (!email.email.trim()) {
       errors.email = "No puede estar vacio";
-    } else if (!regexEmail.test(email.email)) {
+    } else if (!isValidEmail(email.email)) {
       errors.email = "Debe tener un formato de correo electrónico válido";
     }
 
@@ -69,24 +81,33 @@ const SignIn = () => {
     setErrors(err);
     if (Object.keys(err).length === 0) {
       try {
-        let response = await axios.post(`${url}/login`, email);
+        let response = await httpClient.post(`${url}/login`, email);
 
         if (response.status === 200) {
           const currentDate = new Date();
           const expirationDate = new Date(currentDate.getTime() + 24 * 60 *60 * 1000);
-          Cookies.set("token", response.data.token, { expires: expirationDate });
+          Cookies.set("token", response.data.token, {
+            expires: expirationDate,
+            secure: window.location.protocol === "https:",
+            sameSite: "lax",
+          });
           getUserData();
           navigate("/private/major/home/");
         }
       } catch (error) {
-        let response = error;
         console.log(error);
-        let message = response.response.data.message;
+        // footer se pasa como HTMLElement (no como string) para que
+        // SweetAlert2 lo inserte con appendChild en vez de innerHTML:
+        // si en el futuro este bloque cambia y termina metiendo texto
+        // dinamico ahi, no hay forma de que se interprete como HTML.
+        const footerLink = document.createElement("a");
+        footerLink.href = "/forgot-password";
+        footerLink.textContent = "¿Has olvidado tu contraseña?";
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: message,
-          footer: '<a href="/forgot-password">¿Has olvidado tu contraseña?</a>',
+          text: getErrorMessage(error),
+          footer: footerLink,
         });
       }
       setEmail({
@@ -114,7 +135,7 @@ const SignIn = () => {
 
   return (
     <div className={styles.components}>
-      <SignInLayout>
+      <AuthLayout $gap="2rem">
         <div className="form_container">
           <form onSubmit={login}>
             <h1>¡Bienvenido de nuevo!</h1>
@@ -195,7 +216,7 @@ const SignIn = () => {
         <div className={styles.carouselDemo}>
           <CarouselDemo img1={img1} img2={img2} img3={img3} img4={img4} />
         </div>
-      </SignInLayout>
+      </AuthLayout>
     </div>
   );
 };

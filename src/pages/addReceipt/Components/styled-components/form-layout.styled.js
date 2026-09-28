@@ -3,25 +3,38 @@ import styled from "styled-components";
 export const FormLayout = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
+
+  h1 {
+    margin: 0 0 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-secondary-color);
+    text-align: center;
+  }
 
   .buttons-container {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    gap: 1rem;
+    gap: 0.5rem;
     margin-bottom: 1rem;
   }
 
   .type-button {
     display: flex;
-    gap: 1rem;
+    align-items: center;
+    gap: 0.5rem;
     border: none;
     box-sizing: border-box;
-    padding: 1rem 2rem;
+    padding: 0.6rem 1rem;
     border-radius: 0.5rem;
     border: 1px solid #219ebc;
     background-color: #219ebc;
     color: white;
+    white-space: nowrap;
     transition: 0.3s all;
     &:hover {
       cursor: pointer;

@@ -6,16 +6,36 @@ export const SidebarLayout = styled.div`
   flex-direction: column;
   height: 100%;
   padding: 0 1.5rem 0.5rem 1.5rem;
-  background-color: white;
-  border-right: 1px solid ${GrayPaleteColors.C100};
+  background-color: var(--surface-color);
+  color: var(--text-color);
+  border-right: 1px solid var(--border-color);
   box-sizing: border-box;
+
+  @media (max-width: 900px) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: min(80vw, 300px);
+    z-index: 1000;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);
+    padding-top: 4rem;
+
+    &.open {
+      transform: translateX(0);
+    }
+  }
 
   .top_sidebar {
     display: flex;
     align-items: center;
     justify-content: flex-start;
     gap: 0.5rem;
+    flex-shrink: 0;
     height: 10%;
+    min-height: 3rem;
     width: 100%;
     position: relative;
     padding-left: 3.5rem;
@@ -33,7 +53,8 @@ export const SidebarLayout = styled.div`
     }
   }
 
-  a {
+  a,
+  .link_button {
     display: flex;
     align-items: center;
     font-size: 1rem;
@@ -42,6 +63,16 @@ export const SidebarLayout = styled.div`
     box-sizing: border-box;
     border-radius: 0.5rem;
     transition: 0.3s all;
+    /* .link_button es un <button> real (el toggle "Casas" no navega a
+       ningun lado, asi que no debe ser un <a> sin href): se resetea el
+       chrome nativo para que se vea igual que los <a> de al lado. */
+    background: none;
+    border: none;
+    padding: 0;
+    width: 100%;
+    text-align: left;
+    font-family: inherit;
+    cursor: pointer;
     .arrow_icon {
       width: 3rem;
       font-size: 0.7rem;
@@ -63,19 +94,52 @@ export const SidebarLayout = styled.div`
   // Menu items
 
   .middle_sidebar {
-    height: 80%;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    /* Sin esto, overflow-y:auto solo hace que overflow-x tambien
+       compute a "auto" (asi es la spec de CSS cuando un solo eje se
+       pone distinto de visible), y cualquier desborde horizontal por
+       minimo que sea dispara una segunda barra de scroll fea. Esto es
+       ademas del fix del ancho real en StyledHouseLink, como red de
+       seguridad. */
+    overflow-x: hidden;
+    /* Scrollbar delgada en vez de la nativa gorda que tapa contenido. */
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-color) transparent;
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--border-color);
+      border-radius: 3px;
+    }
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
   }
 
   .sessions_list {
     margin: 0;
     list-style: none;
     padding: 0;
+    li {
+      /* Indenta las casas respecto al resto del menu. Antes esto vivia
+         como margin-left en el <a> de cada casa (StyledHouseLink), pero
+         la regla "a{}" de mas arriba (selector clase+tag, mas especifico
+         que la clase propia de StyledHouseLink) le gana en la cascada a
+         cualquier padding/width que se intente poner ahi. Indentando el
+         <li> en cambio no compite con esa regla en absoluto. */
+      padding-left: 1.8rem;
+    }
   }
 
   // Logout button
 
   .bottom_sidebar {
-    height: 10%;
+    flex-shrink: 0;
+    height: auto;
+    padding-top: 0.5rem;
     .logout_button {
       display: flex;
       align-items: center;
@@ -87,14 +151,56 @@ export const SidebarLayout = styled.div`
       padding: 0.5rem 1rem;
       border-radius: 0.8rem;
       transition: 0.3s all;
-      color: gray;
+      color: var(--text-secondary-color);
+      /* Son <button> reales (antes divs con onClick, sin foco/teclado);
+         se resetea el chrome nativo para que se vean igual que antes. */
+      background: none;
+      border: none;
+      width: 100%;
+      text-align: left;
+      font-family: inherit;
+      cursor: pointer;
       .icon {
         font-size: 1.2rem;
       }
       &:hover {
-        color: black;
-        cursor: pointer;
+        color: var(--text-color);
       }
     }
+  }
+`;
+
+export const SidebarToggleButton = styled.button`
+  display: none;
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1001;
+  width: 2.75rem;
+  height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-color);
+  border-radius: 50%;
+  background-color: var(--surface-color);
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.15);
+  color: var(--text-color);
+  font-size: 1.3rem;
+  cursor: pointer;
+
+  @media (max-width: 900px) {
+    display: flex;
+  }
+`;
+
+export const SidebarBackdrop = styled.div`
+  display: none;
+
+  @media (max-width: 900px) {
+    display: ${(props) => (props.$open ? "block" : "none")};
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 999;
   }
 `;

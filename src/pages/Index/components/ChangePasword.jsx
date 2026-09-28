@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styles from "../styles/ChangePasword.module.css";
 import { RiWaterFlashFill, RiEyeLine } from "react-icons/ri";
 import CarouselDemo from "../../../components/CarouselDemo";
@@ -8,11 +8,12 @@ import img1 from "../../../assets/agua-potable.webp";
 import img2 from "../../../assets/alcantarillado.webp";
 import img3 from "../../../assets/Electricistas-scaled.webp";
 import img4 from "../../../assets/gas-natural.webp";
-import axios from "axios";
+import httpClient from "../../../api/httpClient";
 import { Alert } from "@mui/material";
-import Swal from "sweetalert2";
-import { ChangePasswordLayout } from "../styled-components/changepassword-layout";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import Swal from "../../../lib/swal";
+import { AuthLayout } from "../../../styled-components/auth-layout.styled";
+import { ArrowBack as ArrowBackIcon } from "@mui/icons-material";
+import { getErrorMessage } from "../../../Utilities";
 
 const ChangePasword = () => {
   let params = useParams();
@@ -31,6 +32,8 @@ const ChangePasword = () => {
 
     if (!password.password.trim()) {
       errors.password = "Debes poner una contraseña";
+    } else if (password.password.length < 8) {
+      errors.password = "La contraseña debe tener al menos 8 caracteres";
     }
     if (!password.confirmPassword.trim()) {
       errors.confirmPassword = "Debes confirmar la contraseña";
@@ -57,7 +60,7 @@ const ChangePasword = () => {
     setErrors(err);
     if (Object.keys(err).length === 0) {
       try {
-        let response = await axios.post(`${url}/change-password`, password);
+        let response = await httpClient.post(`${url}/change-password`, password);
         let message = response.data.message;
         if (response.status == 200) {
           Swal.fire({
@@ -72,12 +75,10 @@ const ChangePasword = () => {
           });
         }
       } catch (error) {
-        let response = error;
-        let message = response.response.data.message;
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: message,
+          text: getErrorMessage(error),
         });
       }
 
@@ -101,7 +102,7 @@ const ChangePasword = () => {
 
   return (
     <div className={styles.components}>
-      <ChangePasswordLayout>
+      <AuthLayout $gap="2rem">
         <div className="form_container">
           <form onSubmit={changePassword}>
             <h1>Cambiar contraseña</h1>
@@ -161,7 +162,7 @@ const ChangePasword = () => {
         <div className={styles.carouselDemo}>
           <CarouselDemo img1={img1} img2={img2} img3={img3} img4={img4} />
         </div>
-      </ChangePasswordLayout>
+      </AuthLayout>
     </div>
   );
 };

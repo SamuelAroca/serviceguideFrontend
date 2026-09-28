@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "../styles/AboutUs.module.css";
 import { IoWaterOutline } from "react-icons/io5";
 import { SlEnergy } from "react-icons/sl";

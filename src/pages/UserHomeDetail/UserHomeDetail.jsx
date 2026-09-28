@@ -4,24 +4,25 @@ import { useContext, useEffect, useState } from "react";
 import { UserHomeLayout } from "./styled-components/user-home-layout.styled";
 import ChartDoughnut from "./components/ChartDoughnut";
 import DataTable from "./components/DataTable";
-import LineChart from "./components/LineChart";
+import LineChart from "../../components/ReceiptLineChart";
+
+const USER_HOME_DETAIL_CHART_COLORS = ["#F79F39", "#0ea5e9", "#F7C52D", "#0369a1"];
 import Totals from "./components/Totals";
-import axios from "axios";
+import httpClient from "../../api/httpClient";
 import Modal from "./components/Modal";
 import UpdateHouse from "./components/UpdateHouse";
 import { getUserHouses } from "../../services/get-user-houses.service";
 import { Button } from "@mui/material";
-import Swal from "sweetalert2";
-import Cookies from "js-cookie";
+import Swal from "../../lib/swal";
 
 const UserHomeDetail = () => {
   const apiUrl = import.meta.env.VITE_API_STATISTIC;
   const apiHouse = import.meta.env.VITE_API_HOUSE;
+  const apiReceipt = import.meta.env.VITE_API_RECEIPT;
   const [percentages, setPercentages] = useState(null);
   const [sum, setSum] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const navigate = useNavigate();
-  const accessToken = Cookies.get("token");
 
   const { setHouses, userData } = useContext(MyContext);
 
@@ -34,30 +35,41 @@ const UserHomeDetail = () => {
   const [house, setHouse] = useState(null);
   const [receipts, setReceipts] = useState(null);
 
-  const LAST_MONT_RECEIPTS = receipts?.filter((receipt) => {
-    const date = new Date(receipt.date);
-    const month = date.getMonth() + 1;
-    return month === 10;
-  });
-
   const { houses } = useContext(MyContext);
 
   useEffect(() => {
     setHouse(houses?.find((house) => Number(house.id) === Number(id)));
-    setReceipts(house?.receipts);
-  }, [id, house, houses]);
+  }, [id, houses]);
+
+  // Antes esto leia house.receipts (embebido en la respuesta de casas), lo
+  // que forzaba al backend a mandar TODOS los recibos de TODAS las casas en
+  // cada carga del listado. Ahora se piden solo los de esta casa, y se
+  // vuelve a pedir cuando DataTable/FormEdit avisan que algo cambio.
+  const getReceipts = async () => {
+    if (!userData?.id || !id) return;
+    try {
+      const response = await httpClient.get(
+        `${apiReceipt}/getReceiptsByHouseAndUser/${userData.id}/${id}`
+      );
+      // "?." en LineChart/DataTable solo cubre null/undefined: si esto
+      // no es un array (backend cambia forma, error envuelto en un
+      // objeto, etc.) sus .map()/.filter() truenan igual.
+      setReceipts(Array.isArray(response.data) ? response.data : []);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getReceipts();
+  }, [id, userData?.id]);
 
   const getStatistic = () => {
     if (house) {
       const getTotals = async () => {
         let idHouse = house.id;
-        const response = await axios.get(
-          `${apiUrl}/informationReceipt/${idHouse}`,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
+        const response = await httpClient.get(
+          `${apiUrl}/informationReceipt/${idHouse}`
         );
         const data = response.data;
         return data;
@@ -65,13 +77,8 @@ const UserHomeDetail = () => {
 
       const getSum = async () => {
         try {
-          const response = await axios.get(
-            `${apiUrl}/sumStatisticByType/${house.name}/${userData.id}`,
-            {
-              headers: {
-                Authorization: `Bearer ${accessToken}`,
-              },
-            }
+          const response = await httpClient.get(
+            `${apiUrl}/sumStatisticByType/${house.name}/${userData.id}`
           );
           const data = response.data;
           return data;
@@ -81,10 +88,14 @@ const UserHomeDetail = () => {
       };
 
       const fetchData = async () => {
-        const totals = await getTotals();
-        const sumData = await getSum();
-        setPercentages(totals);
-        setSum(sumData);
+        try {
+          const totals = await getTotals();
+          const sumData = await getSum();
+          setPercentages(totals);
+          setSum(sumData);
+        } catch (error) {
+          console.log(error);
+        }
       };
       fetchData();
     }
@@ -92,11 +103,7 @@ const UserHomeDetail = () => {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`${apiHouse}/delete/${house.id}`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
+      await httpClient.delete(`${apiHouse}/delete/${house.id}`);
       getUserHouses(setHouses, userData?.id);
       navigate("/private/major/home");
     } catch (error) {
@@ -129,7 +136,7 @@ const UserHomeDetail = () => {
         <div className="house_information">
           <h2>Información de la casa</h2>
           <p>{house?.name}</p>
-          <p>Cantidad Facturas: {house?.receipts?.length}</p>
+          <p>Cantidad Facturas: {receipts?.length ?? 0}</p>
         </div>
         <div className="actions">
           <Button
@@ -150,7 +157,7 @@ const UserHomeDetail = () => {
       </div>
 
       <div className="line_chart_container section">
-        <LineChart data={receipts} />
+        <LineChart data={receipts} colors={USER_HOME_DETAIL_CHART_COLORS} showGrid />
       </div>
 
       <div className="totals container_charts">
@@ -178,7 +185,7 @@ const UserHomeDetail = () => {
       </div>
 
       <div className="data_table section">
-        <DataTable data={receipts} />
+        <DataTable data={receipts} onReceiptChange={getReceipts} />
       </div>
 
       <Modal isOpen={openModal} onClose={onCloseShare}>

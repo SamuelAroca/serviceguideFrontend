@@ -1,0 +1,19 @@
+# Reverse proxy con TLS para ServiceGuide. `local_certs` hace que Caddy
+# firme el certificado con su propia CA interna en vez de pedir uno
+# publico (Let's Encrypt no emite para IPs privadas de LAN de todos
+# modos). El navegador va a marcar el sitio como "no seguro" la primera
+# vez -- eso es normal con una CA propia; instala su root para que deje
+# de avisar (ver deploy/reverse-proxy/README.md).
+{
+	local_certs
+}
+
+# Cambia esta IP por la IP/host real del servidor si no es 192.168.1.22.
+192.168.1.22 {
+	handle /api/* {
+		reverse_proxy ServiceGuideBack:5001
+	}
+	handle {
+		reverse_proxy ServiceGuideFront:5002
+	}
+}

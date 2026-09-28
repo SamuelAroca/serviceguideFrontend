@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "../styles/Information.module.css";
 import { VscQuote } from "react-icons/vsc";
 
@@ -28,7 +27,8 @@ const Information = () => {
               <div className={styles.container_us}>
                 <p className={styles.name_us}>
                   <a
-                    target="blank"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     href="https://www.linkedin.com/in/jim-diaz-del-castilllo-a91913165/"
                     className={styles.name_us}
                   >
@@ -36,7 +36,8 @@ const Information = () => {
                   </a>
                   y
                   <a
-                    target="blank"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     href="https://www.linkedin.com/in/samuel-aroca-266421249/"
                     className={styles.name_us}
                   >
