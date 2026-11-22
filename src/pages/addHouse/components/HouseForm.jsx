@@ -4,8 +4,6 @@ import {
   TextField,
   Button,
   Grid,
-  Tooltip,
-  Typography,
   CircularProgress,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -17,8 +15,8 @@ import { MyContext } from "../../../context/UserContext";
 import { getUserHouses } from "../../../services/get-user-houses.service";
 import Swal from "../../../lib/swal";
 import { Toaster, toast } from "react-hot-toast";
-import { IoIosWarning } from "react-icons/io";
 import { getErrorMessage } from "../../../Utilities";
+import PdfPicker from "../../../components/PdfPicker";
 import { uploadReceiptPdfs, showUploadSummary } from "../../../lib/uploadReceiptPdfs";
 import { useFormState } from "../../../hooks/useFormState";
 
@@ -32,8 +30,6 @@ const HouseForm = () => {
   const [allCities, setAllCities] = useState([]);
   const navigate = useNavigate();
   const [selectedFiles, setSelectedFiles] = useState([]);
-  // Cambiar el key remonta el input de archivos para limpiar su seleccion.
-  const [fileInputKey, setFileInputKey] = useState(0);
 
   const { userData, setHouses } = useContext(MyContext);
   const notify = () => toast.success("House update successfully");
@@ -66,10 +62,6 @@ const HouseForm = () => {
     const id = await myID();
     setUserID(id);
     setIsLoading(false);
-  };
-
-  const handleFileChange = (event) => {
-    setSelectedFiles(Array.from(event.target.files));
   };
 
   const getCities = async () => {
@@ -192,7 +184,6 @@ const HouseForm = () => {
 
     setIsLoading(false);
     setSelectedFiles([]);
-    setFileInputKey((k) => k + 1);
     if (results.some((r) => r.ok)) {
       getUserHouses(setHouses, userData?.id);
     }
@@ -283,30 +274,11 @@ const HouseForm = () => {
             item
             xs={12}
           >
-            <Tooltip
-              title={
-                <Typography
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <IoIosWarning style={{ color: "yellow" }} />
-                  Solo si vas a subir recibos en PDF (puedes elegir varios)
-                </Typography>
-              }
-              placement="top-start"
-            >
-              <TextField
-                key={fileInputKey}
-                name="receiptPdf"
-                type="file"
-                inputProps={{ accept: "application/pdf", multiple: true }}
-                onChange={handleFileChange}
-                sx={{ flex: "1 1 220px" }}
-              />
-            </Tooltip>
+            <PdfPicker
+              files={selectedFiles}
+              setFiles={setSelectedFiles}
+              sx={{ flex: "1 1 220px" }}
+            />
             <Button
               onClick={handleSubmit}
               type="submit"

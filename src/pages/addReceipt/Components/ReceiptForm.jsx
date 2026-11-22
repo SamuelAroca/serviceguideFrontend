@@ -6,7 +6,6 @@ import {
   FormControl,
   FormControlLabel,
   Switch,
-  Typography,
   CircularProgress,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -14,7 +13,6 @@ import { useEffect, useState, useContext } from "react";
 import { FormLayout } from "./styled-components/form-layout.styled";
 import { BsWater, BsFillLightbulbFill, BsFillCloudFill } from "react-icons/bs";
 import { FaToilet } from "react-icons/fa";
-import { Tooltip } from "@mui/material";
 import { Alert } from "@mui/material";
 import httpClient from "../../../api/httpClient";
 import SelectHouse from "./SelectHouse";
@@ -22,9 +20,9 @@ import { MyContext } from "../../../context/UserContext";
 import { getUserHouses } from "../../../services/get-user-houses.service";
 import { Toaster, toast } from "react-hot-toast";
 import Swal from "../../../lib/swal";
-import { IoIosWarning } from "react-icons/io";
 import { getErrorMessage } from "../../../Utilities";
 import { useFormState } from "../../../hooks/useFormState";
+import PdfPicker from "../../../components/PdfPicker";
 import { uploadReceiptPdfs, showUploadSummary } from "../../../lib/uploadReceiptPdfs";
 
 const ReceiptForm = ({ userId }) => {
@@ -36,8 +34,6 @@ const ReceiptForm = ({ userId }) => {
   const [errors, setErrors] = useState([]);
   const [allHouses, setAllHouses] = useState([]);
   const [selectedFiles, setSelectedFiles] = useState([]);
-  // Cambiar el key remonta el input de archivos para limpiar su seleccion.
-  const [fileInputKey, setFileInputKey] = useState(0);
   const navigate = useNavigate();
 
   const { setHouses, userData } = useContext(MyContext);
@@ -151,10 +147,6 @@ const ReceiptForm = ({ userId }) => {
     }
   };
 
-  const handleFileChange = (event) => {
-    setSelectedFiles(Array.from(event.target.files));
-  };
-
   const handleUpload = async () => {
     if (selectedFiles.length === 0) {
       Swal.fire({
@@ -170,7 +162,6 @@ const ReceiptForm = ({ userId }) => {
 
     setIsLoading(false);
     setSelectedFiles([]);
-    setFileInputKey((k) => k + 1);
     if (results.some((r) => r.ok)) {
       getUserHouses(setHouses, userData?.id);
     }
@@ -273,30 +264,7 @@ const ReceiptForm = ({ userId }) => {
             style={{ marginTop: "0.5rem" }}
           >
             <Grid item xs={12} sm={6}>
-              <Tooltip
-                title={
-                  <Typography
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <IoIosWarning style={{ color: "yellow" }} />
-                    Solo si vas a subir recibos en PDF (puedes elegir varios)
-                  </Typography>
-                }
-                placement="top-start"
-              >
-                <TextField
-                  key={fileInputKey}
-                  name="receiptPdf"
-                  type="file"
-                  inputProps={{ accept: "application/pdf", multiple: true }}
-                  onChange={handleFileChange}
-                  fullWidth
-                />
-              </Tooltip>
+              <PdfPicker files={selectedFiles} setFiles={setSelectedFiles} />
             </Grid>
             <Grid item xs={12} sm={6}>
               <Button
