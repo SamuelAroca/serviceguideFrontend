@@ -19,6 +19,7 @@ import Swal from "../../../lib/swal";
 import { Toaster, toast } from "react-hot-toast";
 import { IoIosWarning } from "react-icons/io";
 import { getErrorMessage } from "../../../Utilities";
+import { uploadReceiptPdfs, showUploadSummary } from "../../../lib/uploadReceiptPdfs";
 import { useFormState } from "../../../hooks/useFormState";
 
 const HouseForm = () => {
@@ -30,7 +31,9 @@ const HouseForm = () => {
   const [errors, setErrors] = useState([]);
   const [allCities, setAllCities] = useState([]);
   const navigate = useNavigate();
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFiles, setSelectedFiles] = useState([]);
+  // Cambiar el key remonta el input de archivos para limpiar su seleccion.
+  const [fileInputKey, setFileInputKey] = useState(0);
 
   const { userData, setHouses } = useContext(MyContext);
   const notify = () => toast.success("House update successfully");
@@ -66,7 +69,7 @@ const HouseForm = () => {
   };
 
   const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0]);
+    setSelectedFiles(Array.from(event.target.files));
   };
 
   const getCities = async () => {
@@ -121,7 +124,7 @@ const HouseForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (selectedFile != null) {
+    if (selectedFiles.length > 0) {
       handleUpload();
     } else {
       const err = onValidate(house);
@@ -174,42 +177,26 @@ const HouseForm = () => {
   };
 
   const handleUpload = async () => {
-    try {
-      setIsLoading(true);
-      if (!selectedFile) {
-        Swal.fire({
-          title: "Select a file first!",
-          text: "In PDF format",
-          icon: "warning",
-        });
-        setIsLoading(false);
-        return;
-      }
-
-      const formData = new FormData();
-      formData.append("archivoPdf", selectedFile);
-
-      const response = await httpClient.post(`${apiUrl}/read`, formData);
-
-      if (response.status === 200) {
-        Swal.fire({
-          title: "Good job!",
-          text: response.data.message,
-          icon: "success",
-        });
-        setIsLoading(false);
-        setSelectedFile(null);
-        getUserHouses(setHouses, userData?.id);
-      }
-    } catch (error) {
-      console.log(error);
-      setIsLoading(false);
+    setIsLoading(true);
+    if (selectedFiles.length === 0) {
       Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: getErrorMessage(error),
+        title: "Select a file first!",
+        text: "In PDF format",
+        icon: "warning",
       });
+      setIsLoading(false);
+      return;
     }
+
+    const results = await uploadReceiptPdfs(apiUrl, selectedFiles);
+
+    setIsLoading(false);
+    setSelectedFiles([]);
+    setFileInputKey((k) => k + 1);
+    if (results.some((r) => r.ok)) {
+      getUserHouses(setHouses, userData?.id);
+    }
+    showUploadSummary(results);
   };
 
   return (
@@ -306,15 +293,16 @@ const HouseForm = () => {
                   }}
                 >
                   <IoIosWarning style={{ color: "yellow" }} />
-                  Solo si vas a subir un recibo en PDF
+                  Solo si vas a subir recibos en PDF (puedes elegir varios)
                 </Typography>
               }
               placement="top-start"
             >
               <TextField
+                key={fileInputKey}
                 name="receiptPdf"
                 type="file"
-                accept="application/pdf"
+                inputProps={{ accept: "application/pdf", multiple: true }}
                 onChange={handleFileChange}
                 sx={{ flex: "1 1 220px" }}
               />

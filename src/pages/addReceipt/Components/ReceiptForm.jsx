@@ -25,6 +25,7 @@ import Swal from "../../../lib/swal";
 import { IoIosWarning } from "react-icons/io";
 import { getErrorMessage } from "../../../Utilities";
 import { useFormState } from "../../../hooks/useFormState";
+import { uploadReceiptPdfs, showUploadSummary } from "../../../lib/uploadReceiptPdfs";
 
 const ReceiptForm = ({ userId }) => {
   const apiUrl = import.meta.env.VITE_API_RECEIPT;
@@ -154,9 +155,6 @@ const ReceiptForm = ({ userId }) => {
     setSelectedFiles(Array.from(event.target.files));
   };
 
-  // Sube los PDF de a uno, en orden: el backend crea la casa si no existe,
-  // y en paralelo dos PDF de una casa nueva podrian intentar crearla a la vez.
-  // Un fallo no corta el resto; al final se muestra el resultado por archivo.
   const handleUpload = async () => {
     if (selectedFiles.length === 0) {
       Swal.fire({
@@ -168,18 +166,7 @@ const ReceiptForm = ({ userId }) => {
       return;
     }
 
-    const results = [];
-    for (const file of selectedFiles) {
-      try {
-        const formData = new FormData();
-        formData.append("archivoPdf", file);
-        const response = await httpClient.post(`${apiUrl}/read`, formData);
-        results.push({ name: file.name, ok: true, text: response.data.message });
-      } catch (error) {
-        console.log(error);
-        results.push({ name: file.name, ok: false, text: getErrorMessage(error) });
-      }
-    }
+    const results = await uploadReceiptPdfs(apiUrl, selectedFiles);
 
     setIsLoading(false);
     setSelectedFiles([]);
@@ -188,20 +175,7 @@ const ReceiptForm = ({ userId }) => {
       getUserHouses(setHouses, userData?.id);
     }
 
-    const failed = results.filter((r) => !r.ok);
-    const lines = results
-      .map((r) => `${r.ok ? "✔" : "✘"} ${r.name}: ${r.text}`)
-      .join("\n");
-    Swal.fire({
-      icon: failed.length === 0 ? "success" : failed.length === results.length ? "error" : "warning",
-      title:
-        failed.length === 0
-          ? `${results.length} recibo(s) subido(s)`
-          : `${results.length - failed.length} de ${results.length} subidos`,
-      html: `<pre style="text-align:left;white-space:pre-wrap;font-size:0.85rem">${lines
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")}</pre>`,
-    });
+    showUploadSummary(results);
   };
 
   return (
