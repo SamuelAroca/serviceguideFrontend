@@ -54,7 +54,10 @@ const App = () => {
   }, [accesTocken]);
 
   useEffect(() => {
-    if (userData !== null) {
+    // getUserInformation devuelve undefined si la peticion falla (backend
+    // caido, token invalido): `!== null` lo dejaba pasar y userData.id
+    // tumbaba toda la app con pantalla en blanco.
+    if (userData) {
       getUserHouses(setHouses, userData.id);
     }
   }, [userData]);
