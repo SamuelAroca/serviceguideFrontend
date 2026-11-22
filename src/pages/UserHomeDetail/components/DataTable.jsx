@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useRef, useLayoutEffect } from "react";
 import {
   Table,
   TableBody,
@@ -55,6 +55,19 @@ const DataTable = ({ data, onReceiptChange }) => {
 
   const [selectedItem, setSelectedItem] = useState(null);
   const [openModal, setOpenModal] = useState(false);
+
+  const headerRowRef = useRef(null);
+  const [headerHeight, setHeaderHeight] = useState(0);
+
+  useLayoutEffect(() => {
+    const row = headerRowRef.current;
+    if (!row) return;
+    const update = () => setHeaderHeight(row.getBoundingClientRect().height);
+    update();
+    const observer = new ResizeObserver(update);
+    observer.observe(row);
+    return () => observer.disconnect();
+  }, []);
 
   const onCloseShare = () => {
     setOpenModal(false);
@@ -124,6 +137,17 @@ const DataTable = ({ data, onReceiptChange }) => {
   // ("Buscar fecha") le comia el poco ancho que le queda a cada columna
   // despues del padding de TableCell + el icono, y el texto quedaba
   // recortado a la mitad sin ningun "..." que avise que sigue.
+  // Con stickyHeader cada celda del <thead> queda pegada en top: 0. Con dos
+  // filas (titulos + buscadores) las dos se pegaban en el mismo punto y los
+  // buscadores se montaban encima de los titulos al hacer scroll. La segunda
+  // fila debe pegarse justo debajo de la primera; su alto varia (p. ej.
+  // "Tipo de Servicio" parte en dos lineas), asi que se mide.
+  const filterCellSx = {
+    backgroundColor: "var(--surface-alt-color)",
+    padding: "4px 6px",
+    top: headerHeight,
+  };
+
   const filterField = (name, placeholder) => (
     <TextField
       name={name}
@@ -182,7 +206,7 @@ const DataTable = ({ data, onReceiptChange }) => {
       >
         <Table stickyHeader size="small">
           <TableHead>
-            <TableRow>
+            <TableRow ref={headerRowRef}>
               {["Fecha", "Cantidad", "Precio", "Nombre", "Tipo de Servicio", "Acciones"].map(
                 (label) => (
                   <TableCell
@@ -199,32 +223,12 @@ const DataTable = ({ data, onReceiptChange }) => {
               )}
             </TableRow>
             <TableRow>
-              <TableCell
-                sx={{ backgroundColor: "var(--surface-alt-color)", padding: "4px 6px" }}
-              >
-                {filterField("date", "Fecha")}
-              </TableCell>
-              <TableCell
-                sx={{ backgroundColor: "var(--surface-alt-color)", padding: "4px 6px" }}
-              >
-                {filterField("amount", "Cantidad")}
-              </TableCell>
-              <TableCell
-                sx={{ backgroundColor: "var(--surface-alt-color)", padding: "4px 6px" }}
-              >
-                {filterField("price", "Precio")}
-              </TableCell>
-              <TableCell
-                sx={{ backgroundColor: "var(--surface-alt-color)", padding: "4px 6px" }}
-              >
-                {filterField("receiptName", "Nombre")}
-              </TableCell>
-              <TableCell
-                sx={{ backgroundColor: "var(--surface-alt-color)", padding: "4px 6px" }}
-              >
-                {filterField("typeService", "Tipo")}
-              </TableCell>
-              <TableCell sx={{ backgroundColor: "var(--surface-alt-color)" }} />
+              <TableCell sx={filterCellSx}>{filterField("date", "Fecha")}</TableCell>
+              <TableCell sx={filterCellSx}>{filterField("amount", "Cantidad")}</TableCell>
+              <TableCell sx={filterCellSx}>{filterField("price", "Precio")}</TableCell>
+              <TableCell sx={filterCellSx}>{filterField("receiptName", "Nombre")}</TableCell>
+              <TableCell sx={filterCellSx}>{filterField("typeService", "Tipo")}</TableCell>
+              <TableCell sx={filterCellSx} />
             </TableRow>
           </TableHead>
           <TableBody>
