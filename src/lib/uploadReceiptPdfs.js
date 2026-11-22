@@ -29,7 +29,7 @@ export const uploadReceiptPdfs = async (apiUrl, files) => {
 export const showUploadSummary = (results) => {
   const failed = results.filter((r) => !r.ok).length;
   const lines = results
-    .map((r) => `${r.ok ? "✔" : "✘"} ${r.name}: ${r.text}`)
+    .map((r, i) => `${r.ok ? "✔" : "✘"} ${i + 1}. ${r.name}: ${r.text}`)
     .join("\n");
   let icon = "warning";
   if (failed === 0) icon = "success";

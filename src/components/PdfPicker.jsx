@@ -4,7 +4,10 @@ import { IoIosWarning } from "react-icons/io";
 
 const isPdf = (file) =>
   file.type === "application/pdf" || file.name.toLowerCase().endsWith(".pdf");
-const sameFile = (a, b) => a.name === b.name && a.size === b.size;
+// Dos facturas de casas distintas pueden llamarse igual (mismo nombre de
+// archivo): solo se descarta un archivo si nombre, tamano y fecha coinciden.
+const sameFile = (a, b) =>
+  a.name === b.name && a.size === b.size && a.lastModified === b.lastModified;
 
 // Selector de PDF acumulativo: cada seleccion (o arrastre) se SUMA a la
 // lista, asi no hace falta mantener Ctrl/Shift en el dialogo del sistema para
@@ -70,10 +73,11 @@ const PdfPicker = ({ files, setFiles, sx }) => {
       </Typography>
       {files.length > 0 && (
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5, mt: 1 }}>
-          {files.map((file) => (
+          {files.map((file, index) => (
             <Chip
-              key={`${file.name}-${file.size}`}
+              key={`${file.name}-${file.size}-${file.lastModified}-${index}`}
               label={file.name}
+              title={`${file.name} (${Math.round(file.size / 1024)} KB)`}
               size="small"
               onDelete={() => setFiles(files.filter((f) => f !== file))}
             />

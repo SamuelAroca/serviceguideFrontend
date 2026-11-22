@@ -272,7 +272,7 @@ const ReceiptForm = ({ userId }) => {
                 type="submit"
                 variant="contained"
                 color="primary"
-                style={{ width: "100%", height: "100%", minHeight: "56px" }}
+                style={{ width: "100%", height: "56px" }}
               >
                 {isLoading ? (
                   <CircularProgress size={30} style={{ color: "white" }} />

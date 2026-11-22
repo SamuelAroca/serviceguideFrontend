@@ -284,7 +284,7 @@ const HouseForm = () => {
               type="submit"
               variant="contained"
               color="primary"
-              sx={{ flex: "1 1 160px", minHeight: "56px", position: "relative" }}
+              sx={{ flex: "1 1 160px", height: "56px", alignSelf: "flex-start", position: "relative" }}
             >
               {isLoading ? (
                 <CircularProgress size={24} style={{ color: "white" }} />
