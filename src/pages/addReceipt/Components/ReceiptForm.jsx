@@ -34,7 +34,9 @@ const ReceiptForm = ({ userId }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState([]);
   const [allHouses, setAllHouses] = useState([]);
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFiles, setSelectedFiles] = useState([]);
+  // Cambiar el key remonta el input de archivos para limpiar su seleccion.
+  const [fileInputKey, setFileInputKey] = useState(0);
   const navigate = useNavigate();
 
   const { setHouses, userData } = useContext(MyContext);
@@ -99,7 +101,7 @@ const ReceiptForm = ({ userId }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    if (selectedFile != null) {
+    if (selectedFiles.length > 0) {
       handleUpload();
     } else {
       const err = onValidate(receipt);
@@ -149,45 +151,57 @@ const ReceiptForm = ({ userId }) => {
   };
 
   const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0]);
+    setSelectedFiles(Array.from(event.target.files));
   };
 
+  // Sube los PDF de a uno, en orden: el backend crea la casa si no existe,
+  // y en paralelo dos PDF de una casa nueva podrian intentar crearla a la vez.
+  // Un fallo no corta el resto; al final se muestra el resultado por archivo.
   const handleUpload = async () => {
-    try {
-      if (!selectedFile) {
-        Swal.fire({
-          title: "Select a file first!",
-          text: "In PDF format",
-          icon: "warning",
-        });
-        setIsLoading(false);
-        return;
-      }
-
-      const formData = new FormData();
-      formData.append("archivoPdf", selectedFile);
-
-      const response = await httpClient.post(`${apiUrl}/read`, formData);
-
-      if (response.status === 200) {
-        Swal.fire({
-          title: "Good job!",
-          text: response.data.message,
-          icon: "success",
-        });
-        setIsLoading(false);
-        setSelectedFile(null);
-        getUserHouses(setHouses, userData?.id);
-      }
-    } catch (error) {
-      setIsLoading(false);
-      console.log(error);
+    if (selectedFiles.length === 0) {
       Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: getErrorMessage(error),
+        title: "Select a file first!",
+        text: "In PDF format",
+        icon: "warning",
       });
+      setIsLoading(false);
+      return;
     }
+
+    const results = [];
+    for (const file of selectedFiles) {
+      try {
+        const formData = new FormData();
+        formData.append("archivoPdf", file);
+        const response = await httpClient.post(`${apiUrl}/read`, formData);
+        results.push({ name: file.name, ok: true, text: response.data.message });
+      } catch (error) {
+        console.log(error);
+        results.push({ name: file.name, ok: false, text: getErrorMessage(error) });
+      }
+    }
+
+    setIsLoading(false);
+    setSelectedFiles([]);
+    setFileInputKey((k) => k + 1);
+    if (results.some((r) => r.ok)) {
+      getUserHouses(setHouses, userData?.id);
+    }
+
+    const failed = results.filter((r) => !r.ok);
+    const lines = results
+      .map((r) => `${r.ok ? "✔" : "✘"} ${r.name}: ${r.text}`)
+      .join("\n");
+    Swal.fire({
+      icon: failed.length === 0 ? "success" : failed.length === results.length ? "error" : "warning",
+      title:
+        failed.length === 0
+          ? `${results.length} recibo(s) subido(s)`
+          : `${results.length - failed.length} de ${results.length} subidos`,
+      html: `<pre style="text-align:left;white-space:pre-wrap;font-size:0.85rem">${lines
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")}</pre>`,
+    });
   };
 
   return (
@@ -295,15 +309,16 @@ const ReceiptForm = ({ userId }) => {
                     }}
                   >
                     <IoIosWarning style={{ color: "yellow" }} />
-                    Solo si vas a subir un recibo en PDF
+                    Solo si vas a subir recibos en PDF (puedes elegir varios)
                   </Typography>
                 }
                 placement="top-start"
               >
                 <TextField
+                  key={fileInputKey}
                   name="receiptPdf"
                   type="file"
-                  accept="application/pdf"
+                  inputProps={{ accept: "application/pdf", multiple: true }}
                   onChange={handleFileChange}
                   fullWidth
                 />
